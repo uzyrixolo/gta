@@ -102,17 +102,17 @@
             x-show="activePrintArea === area.name"
             :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
           >
-            <template x-if="!artwork[area.name]">
+            <template x-if="!artwork[key(activeColor, area.name)]">
               <label class="gpl-cz__zone-cta">
                 <span>Upload Artwork</span>
                 <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff" hidden
-                  @change="uploadArtwork(area.name, $event.target.files[0]); $event.target.value=''">
+                  @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
               </label>
             </template>
           </div>
         </template>
         <div class="gpl-cz__fwrap"
-          :style="(artwork[activePrintArea] && (artwork[activePrintArea].localUrl || artwork[activePrintArea].url)) ? '' : 'pointer-events:none'">
+          :style="(artwork[key(activeColor, activePrintArea)] && (artwork[key(activeColor, activePrintArea)].localUrl || artwork[key(activeColor, activePrintArea)].url)) ? '' : 'pointer-events:none'">
           <canvas x-ref="fcanvas"></canvas>
         </div>
       </div>
@@ -163,8 +163,8 @@
               </svg>
             </span>
             <span class="gpl-cz__area-label" x-text="area.name"></span>
-            <span class="gpl-cz__area-x" x-show="artwork[area.name] && artwork[area.name].url"
-              @click.stop="removeArtwork(area.name)" title="Remove artwork">
+            <span class="gpl-cz__area-x" x-show="artwork[key(activeColor, area.name)] && artwork[key(activeColor, area.name)].url"
+              @click.stop="removeArtwork(activeColor, area.name)" title="Remove artwork">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
             </span>
           </button>
@@ -172,31 +172,36 @@
       </div>
 
       <div class="gpl-cz__upload-box">
-        <p class="gpl-cz__upload-title">Upload Artwork File <em>(Required)</em></p>
-        <p class="gpl-cz__upload-note">Max. file size 50MB. Preferred file types: png, svg, jpg, heic, tiff.</p>
+        <p class="gpl-cz__upload-title">
+          Upload Artwork File <em>(Required)</em>
+          <span class="gpl-cz__upload-for">
+            for <span class="gpl-cz__upload-for-swatch" :style="swatchStyle(activeColor)"></span><strong x-text="activeColor"></strong>
+          </span>
+        </p>
+        <p class="gpl-cz__upload-note">Max. file size 50MB. Preferred file types: png, svg, jpg, heic, tiff. Each colour needs its own artwork.</p>
         <template x-for="area in areas" :key="area.name">
           <div x-show="activePrintArea === area.name">
-            <template x-if="artwork[area.name]">
+            <template x-if="artwork[key(activeColor, area.name)]">
               <div class="gpl-cz__upload-file">
-                <span class="gpl-cz__upload-status" x-show="artwork[area.name].uploading">
+                <span class="gpl-cz__upload-status" x-show="artwork[key(activeColor, area.name)].uploading">
                   <svg class="gpl-cz__spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg>
                 </span>
-                <span class="gpl-cz__upload-status gpl-cz__upload-status--ok" x-show="!artwork[area.name].uploading">
+                <span class="gpl-cz__upload-status gpl-cz__upload-status--ok" x-show="!artwork[key(activeColor, area.name)].uploading">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>
                 </span>
-                <span class="gpl-cz__upload-name" x-text="artwork[area.name].uploading ? 'Uploading…' : artwork[area.name].filename + ' — saved'"></span>
+                <span class="gpl-cz__upload-name" x-text="artwork[key(activeColor, area.name)].uploading ? 'Uploading…' : artwork[key(activeColor, area.name)].filename + ' — saved'"></span>
                 <label class="gpl-cz__btn gpl-cz__btn--ghost">Replace
                   <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff" hidden
-                    @change="uploadArtwork(area.name, $event.target.files[0]); $event.target.value=''">
+                    @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
                 </label>
-                <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="removeArtwork(area.name)">Remove</button>
+                <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="removeArtwork(activeColor, area.name)">Remove</button>
               </div>
             </template>
-            <template x-if="!artwork[area.name]">
+            <template x-if="!artwork[key(activeColor, area.name)]">
               <label class="gpl-cz__btn gpl-cz__btn--upload">
-                <span>Add Artwork for <strong x-text="area.name"></strong></span>
+                <span>Add Artwork for <strong x-text="activeColor"></strong> — <strong x-text="area.name"></strong></span>
                 <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff" hidden
-                  @change="uploadArtwork(area.name, $event.target.files[0]); $event.target.value=''">
+                  @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
               </label>
             </template>
           </div>
@@ -449,8 +454,18 @@
   #gpl-cz-{{ section.id }} .gpl-cz__upload-box {
     margin-top: 12px; border: 1px solid #C9C9C9; border-radius: 6px; padding: 14px 16px;
   }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-title { margin: 0 0 2px; font-weight: 800; font-size: 13.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__upload-title { margin: 0 0 2px; font-weight: 800; font-size: 13.5px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
   #gpl-cz-{{ section.id }} .gpl-cz__upload-title em { font-weight: 400; font-style: italic; color: #777; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__upload-for {
+    display: inline-flex; align-items: center; gap: 5px; margin-left: auto;
+    padding: 3px 10px 3px 6px; border-radius: 999px; background: #F0F0F0;
+    font-weight: 700; font-size: 11.5px; text-transform: none; color: #444;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__upload-for strong { color: #111; text-transform: capitalize; }
+  #gpl-cz-{{ section.id }} .gpl-cz__upload-for-swatch {
+    width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2);
+    background-color: #DDD; background-size: cover; background-position: center; flex: 0 0 auto;
+  }
   #gpl-cz-{{ section.id }} .gpl-cz__notes-title { margin-top: 14px; }
   #gpl-cz-{{ section.id }} .gpl-cz__upload-note { margin: 0 0 10px; color: #555; font-size: 12.5px; }
   #gpl-cz-{{ section.id }} .gpl-cz__notes {

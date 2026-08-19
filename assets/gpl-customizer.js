@@ -18,8 +18,8 @@ window.gplQuickOrder = function (config) {
     openColors: [],
     showAddColor: false,
     qty: {},                          // "Color|Size" -> int
-    artwork: {},                      // area -> {url, filename, localUrl, uploading}
-    placement: {},                    // area -> {x,y,scale,angle} (filled by editor task)
+    artwork: {},                      // "Color|Area" -> {url, filename, localUrl, uploading} — each colour uploads its own
+    placement: {},                    // "Color|Area" -> {x,y,scale,angle} (filled by editor task)
     activeColor: config.colors.length ? config.colors[0].name : '',
     previewColorName: null,
     activePrintArea: config.areas.length ? config.areas[0].name : 'Front',
@@ -58,6 +58,7 @@ window.gplQuickOrder = function (config) {
       if (!this.openColors.includes(this.activeColor) && this.openColors.length) this.activeColor = this.openColors[0];
       this.$nextTick(() => this.initFabric());
       this.$watch('activePrintArea', () => this.loadAreaIntoFabric());
+      this.$watch('activeColor', () => this.loadAreaIntoFabric());
       window.addEventListener('gpl:artwork-changed', () => this.loadAreaIntoFabric());
       // belt-and-suspenders: flush to localStorage the moment the tab is hidden or
       // closed, so a mid-edit navigation away never drops an in-flight change.
@@ -118,14 +119,16 @@ window.gplQuickOrder = function (config) {
       fx.canvas.clear();
       fx.obj = null;
       const area = this.activePrintArea;
-      const art = this.artwork[area];
+      const color = this.activeColor;
+      const artKey = this.key(color, area);
+      const art = this.artwork[artKey];
       if (!art || !(art.localUrl || art.url)) { fx.canvas.requestRenderAll(); return; }
       const src = art.localUrl || art.url;
       fabric.Image.fromURL(src, (img) => {
-        if (!img || this.activePrintArea !== area) return;
+        if (!img || this.activePrintArea !== area || this.activeColor !== color) return;
         const z = this.zonePx(area);
         if (!z) return;
-        const p = this.placement[area];
+        const p = this.placement[artKey];
         if (p && p.w) {
           img.scaleToWidth(p.w * z.w);
           img.set({ left: z.x + p.cx * z.w, top: z.y + p.cy * z.h, angle: p.angle || 0, originX: 'center', originY: 'center' });
@@ -150,7 +153,7 @@ window.gplQuickOrder = function (config) {
       if (!fx.obj) return;
       const z = this.zonePx(this.activePrintArea);
       if (!z) return;
-      this.placement[this.activePrintArea] = {
+      this.placement[this.key(this.activeColor, this.activePrintArea)] = {
         cx: (fx.obj.left - z.x) / z.w,
         cy: (fx.obj.top - z.y) / z.h,
         w: (fx.obj.getScaledWidth()) / z.w,
@@ -272,12 +275,20 @@ window.gplQuickOrder = function (config) {
 
     // ---- variant resolution ----
     tierName(n) { return n <= 1 ? '1 Print Area' : n + ' Print Areas'; },
-    areasUsed() { return Object.keys(this.artwork).filter(a => this.artwork[a] && this.artwork[a].url).length; },
+    // # of print areas that have their own uploaded artwork, for ONE colour —
+    // each colour prices by its own coverage, since colours no longer share art.
+    areasUsedFor(color) {
+      return this.areas.filter(a => {
+        const art = this.artwork[this.key(color, a.name)];
+        return art && art.url;
+      }).length;
+    },
+    areasUsed() { return this.areasUsedFor(this.activeColor); },
     findVariant(color, size, tier) {
       return this.variants.find(v => v.color === color && v.size === size && v.tier === tier);
     },
     resolvedVariant(color, size) {
-      const tier = this.tierName(Math.max(1, this.areasUsed()));
+      const tier = this.tierName(Math.max(1, this.areasUsedFor(color)));
       return this.findVariant(color, size, tier) || this.findVariant(color, size, '1 Print Area');
     },
     priceFor(color, size) {
@@ -375,7 +386,11 @@ window.gplQuickOrder = function (config) {
     },
     removeColor(name) {
       this.openColors = this.openColors.filter(c => c !== name);
-      Object.keys(this.qty).forEach(k => { if (k.startsWith(name + '|')) delete this.qty[k]; });
+      const prefix = name + '|';
+      Object.keys(this.qty).forEach(k => { if (k.startsWith(prefix)) delete this.qty[k]; });
+      Object.keys(this.artwork).forEach(k => { if (k.startsWith(prefix)) delete this.artwork[k]; });
+      Object.keys(this.placement).forEach(k => { if (k.startsWith(prefix)) delete this.placement[k]; });
+      delete this.methodByColor[name];
       if (this.activeColor === name) this.activeColor = this.openColors[0] || '';
       this.persist();
     },
@@ -416,7 +431,10 @@ window.gplQuickOrder = function (config) {
     },
 
     // ---- artwork upload (Uploadcare REST) ----
-    hasArtwork() { return this.areasUsed() > 0; },
+    hasArtworkFor(color) { return this.areasUsedFor(color) > 0; },
+    // Every open colour must have its own artwork before checkout — colours no
+    // longer share a single upload.
+    hasArtwork() { return this.openColors.length > 0 && this.openColors.every(c => this.hasArtworkFor(c)); },
     // Phone photos are routinely 4000px+ / 5-15MB, which is most of the upload wait.
     // Downscale raster formats to a sane max dimension before sending — falls back
     // to the original file untouched on any failure, and skips vector/PDF/HEIC/TIFF
@@ -446,7 +464,7 @@ window.gplQuickOrder = function (config) {
         return file;
       }
     },
-    async uploadArtwork(area, file) {
+    async uploadArtwork(color, area, file) {
       this.errorMsg = '';
       if (!file) return;
       const okExt = /\.(png|jpe?g|svg|webp|pdf|heic|tiff?)$/i;
@@ -454,11 +472,12 @@ window.gplQuickOrder = function (config) {
       if (file.size > 50 * 1024 * 1024) return (this.errorMsg = 'File is too large (max 50 MB).');
       if (!this.uploadKey) return (this.errorMsg = 'Uploads are not configured yet — please contact us to place this order.');
 
-      this.artwork[area] = { url: '', filename: file.name, localUrl: URL.createObjectURL(file), uploading: true };
+      const artKey = this.key(color, area);
+      this.artwork[artKey] = { url: '', filename: file.name, localUrl: URL.createObjectURL(file), uploading: true };
       // Show the local preview on the canvas immediately — the real Uploadcare
       // upload below can take several seconds, and without this the design only
       // appears once that finishes, which reads as "upload doesn't work".
-      this.$dispatch('gpl:artwork-changed', { area });
+      this.$dispatch('gpl:artwork-changed', { color, area });
       try {
         const uploadFile = await this.downscaleForUpload(file);
         const fd = new FormData();
@@ -468,22 +487,23 @@ window.gplQuickOrder = function (config) {
         const res = await fetch('https://upload.uploadcare.com/base/', { method: 'POST', body: fd });
         if (!res.ok) throw new Error('upload failed');
         const data = await res.json();
-        this.artwork[area] = {
+        this.artwork[artKey] = {
           url: 'https://' + this.cdnBase + '/' + data.file + '/' + encodeURIComponent(file.name),
           filename: file.name,
-          localUrl: this.artwork[area].localUrl,
+          localUrl: this.artwork[artKey].localUrl,
           uploading: false,
         };
-        this.$dispatch('gpl:artwork-changed', { area });
+        this.$dispatch('gpl:artwork-changed', { color, area });
       } catch (e) {
-        delete this.artwork[area];
+        delete this.artwork[artKey];
         this.errorMsg = 'Artwork upload failed — please try again.';
       }
     },
-    removeArtwork(area) {
-      delete this.artwork[area];
-      delete this.placement[area];
-      this.$dispatch('gpl:artwork-changed', { area });
+    removeArtwork(color, area) {
+      const artKey = this.key(color, area);
+      delete this.artwork[artKey];
+      delete this.placement[artKey];
+      this.$dispatch('gpl:artwork-changed', { color, area });
     },
 
     // ---- submit ----
@@ -492,20 +512,26 @@ window.gplQuickOrder = function (config) {
         && !Object.values(this.artwork).some(a => a && a.uploading);
     },
     gateMessage() {
-      if (!this.hasArtwork()) return 'Please upload your artwork to start customizing your product';
+      if (!this.openColors.length) return 'Please select at least one colour';
+      const missing = this.openColors.filter(c => !this.hasArtworkFor(c));
+      if (missing.length) return 'Please upload artwork for ' + missing.join(', ');
       if (this.totalUnits() === 0) return 'Please enter quantities for at least one colour and size';
       return '';
     },
     lineProperties(colorName) {
-      const used = this.areas.map(a => a.name).filter(a => this.artwork[a] && this.artwork[a].url);
+      const used = this.areas.map(a => a.name).filter(a => {
+        const art = this.artwork[this.key(colorName, a)];
+        return art && art.url;
+      });
       const props = {
         'Print Method': this.methodFor(colorName),
         'Print Areas': used.join(', '),
       };
       if (this.designerNotes && this.designerNotes.trim()) props['Designer Notes'] = this.designerNotes.trim().slice(0, 500);
       used.forEach(a => {
-        props['Artwork — ' + a] = this.artwork[a].url;
-        if (this.placement[a]) props['_Placement ' + a] = JSON.stringify(this.placement[a]);
+        const artKey = this.key(colorName, a);
+        props['Artwork — ' + a] = this.artwork[artKey].url;
+        if (this.placement[artKey]) props['_Placement ' + a] = JSON.stringify(this.placement[artKey]);
       });
       return props;
     },
@@ -528,18 +554,19 @@ window.gplQuickOrder = function (config) {
         im.src = src;
       });
     },
-    async generatePreview(area) {
-      const art = this.artwork[area];
+    async generatePreview(color, area) {
+      const artKey = this.key(color, area);
+      const art = this.artwork[artKey];
       if (!art || !art.url) return null;
       const a = this.areas.find(x => x.name === area);
-      const mock = await this.loadImg(this.mockupFor(this.activeColor, area));
+      const mock = await this.loadImg(this.mockupFor(color, area));
       const artImg = await this.loadImg(art.url);
       const W = 900, H = Math.round(W * mock.height / mock.width);
       const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
       const g = cv.getContext('2d');
       g.drawImage(mock, 0, 0, W, H);
       const z = { x: a.zone.x * W, y: a.zone.y * H, w: a.zone.w * W, h: a.zone.h * H };
-      const p = this.placement[area] || { cx: 0.5, cy: 0.5, w: 0.85 };
+      const p = this.placement[artKey] || { cx: 0.5, cy: 0.5, w: 0.85 };
       const dw = p.w * z.w, dh = dw * artImg.height / artImg.width;
       g.save();
       g.translate(z.x + p.cx * z.w, z.y + p.cy * z.h);
@@ -548,21 +575,27 @@ window.gplQuickOrder = function (config) {
       g.restore();
       const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.85));
       if (!blob) return null;
-      return await this.uploadBlob('preview-' + area.toLowerCase().replace(/\s+/g, '-') + '.jpg', blob);
+      return await this.uploadBlob('preview-' + color.toLowerCase().replace(/\s+/g, '-') + '-' + area.toLowerCase().replace(/\s+/g, '-') + '.jpg', blob);
     },
     async addToCart() {
       if (!this.canSubmit()) return;
       this.submitting = true;
       this.errorMsg = '';
-      // Artwork/placement/notes are shared across every colour in the order — only
-      // the printing technique varies per colour — so previews are generated once
-      // and merged into each colour's own line properties below.
-      const previewProps = {};
+      // Each colour now has its own artwork, so previews are generated per colour
+      // (not once and shared) and merged into that colour's own line properties.
+      const previewsByColor = {};
       try {
-        const used = this.areas.map(x => x.name).filter(x => this.artwork[x] && this.artwork[x].url);
-        for (const area of used) {
-          const url = await this.generatePreview(area);
-          if (url) previewProps['Preview — ' + area] = url;
+        for (const color of this.openColors) {
+          const used = this.areas.map(x => x.name).filter(x => {
+            const art = this.artwork[this.key(color, x)];
+            return art && art.url;
+          });
+          const props = {};
+          for (const area of used) {
+            const url = await this.generatePreview(color, area);
+            if (url) props['Preview — ' + area] = url;
+          }
+          previewsByColor[color] = props;
         }
       } catch (e) { /* previews are best-effort */ }
       const items = [];
@@ -570,7 +603,7 @@ window.gplQuickOrder = function (config) {
         const [color, size] = k.split('|');
         const v = this.resolvedVariant(color, size);
         if (!v) { this.errorMsg = 'Missing variant for ' + color + ' / ' + size; this.submitting = false; return; }
-        const props = Object.assign(this.lineProperties(color), previewProps);
+        const props = Object.assign(this.lineProperties(color), previewsByColor[color] || {});
         items.push({ id: v.id, quantity: this.qty[k], properties: props });
       }
       try {

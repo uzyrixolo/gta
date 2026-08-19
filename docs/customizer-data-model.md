@@ -82,10 +82,19 @@ open any line item in Shopify admin and see method + artwork + placement.
 
 `Print Method` is chosen **per colour** (Step 4 in the UI), not once for the whole
 order — each colour added in Step 3 gets its own DTF/DTG/Embroidery pick, and only
-that colour's cart lines carry it. `Print Areas`, the `Artwork —` / `Preview —`
-URLs, and `_Placement` are shared across every colour in the order, since the
-uploaded artwork and its placement don't change per garment colour — only the
-production technique can.
+that colour's cart lines carry it.
+
+`Print Areas`, the `Artwork —` / `Preview —` URLs, and `_Placement` are also
+**per colour** — every colour uploads its own artwork per print area, keyed
+internally as `"<Colour>|<Area>"` (e.g. `artwork["Black|Front"]`,
+`placement["Navy|Front"]`), mirroring how `qty` is keyed `"<Colour>|<Size>"`.
+A colour's `# of Print Areas` pricing tier is resolved from its own artwork
+coverage only (`areasUsedFor(colour)`), not a site-wide count — two colours in
+the same order can land on different price tiers if one has more areas printed
+than the other. Add-to-cart is gated on **every open colour** having its own
+artwork before checkout is enabled (`hasArtwork()`), and `removeColor()` clears
+a colour's artwork/placement/technique together with its quantities when it's
+removed.
 
 ## 6. Uploads
 
