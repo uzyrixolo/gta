@@ -33,6 +33,20 @@
 
 {%- assign areas_meta = product.metafields.custom.print_areas.value -%}
 
+{%- comment -%}
+  First-paint fallback for the mockup image, before Alpine boots and currentMockup()
+  takes over. Prefer a Front-tagged product photo (a clean per-colour shot) over
+  product.featured_image, which on this catalogue is often an untagged lifestyle
+  photo with placeholder art baked into the pixels.
+{%- endcomment -%}
+{%- assign default_mockup = product.featured_image -%}
+{%- for pimg in product.images -%}
+  {%- if pimg.alt == 'Front' -%}
+    {%- assign default_mockup = pimg -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <section
   id="gpl-cz-{{ section.id }}"
   class="gpl-cz"
@@ -65,7 +79,7 @@
     areas: {% if areas_meta %}{{ areas_meta.areas | json }}{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
     mockups: {{ mockups_json | strip }},
     images: [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
-    fallbackImage: {{ product.featured_image | image_url: width: 1100 | json }},
+    fallbackImage: {{ default_mockup | image_url: width: 1100 | json }},
     uploadKey: {{ s.upload_public_key | json }},
     cdnBase: {{ s.upload_cdn_base | default: 'ucarecdn.com' | json }},
     shipMinDays: {{ s.ship_min_days | default: 8 }},
@@ -81,7 +95,7 @@
     {%- comment -%} ============ MEDIA / PREVIEW ============ {%- endcomment -%}
     <div class="gpl-cz__media">
       <div class="gpl-cz__stage" data-gpl-stage>
-        <img class="gpl-cz__mockup" src="{{ product.featured_image | image_url: width: 1100 }}" :src="currentMockup()" alt="{{ product.title | escape }}" loading="eager">
+        <img class="gpl-cz__mockup" src="{{ default_mockup | image_url: width: 1100 }}" :src="currentMockup()" alt="{{ product.title | escape }}" loading="eager">
         <template x-for="area in areas" :key="area.name">
           <div
             class="gpl-cz__zone"

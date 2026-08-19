@@ -174,8 +174,16 @@ window.gplQuickOrder = function (config) {
       };
       const norm = s => (s || '').toLowerCase().replace(/[^a-z]/g, '');
       for (const img of images) {
+        // Shopify's Liquid `image.alt` silently falls back to the product title when
+        // no alt text is set on the image — it's never actually blank. Only accept
+        // images explicitly tagged exactly "Front"/"Back" as clean per-colour photos,
+        // so an untagged lifestyle shot (alt == product title) can never win a
+        // colour|view slot over the real photo (e.g. "YOUR DESIGN HERE" baked into a
+        // hero shot's pixels beating out the genuine blank "black_front" photo).
+        const altRaw = (img.alt || '').trim();
+        if (!/^(front|back)$/i.test(altRaw)) continue;
         const fname = norm((img.src.split('/').pop() || '').split('?')[0]);
-        const view = /back/i.test(img.alt || '') ? 'Back' : 'Front';
+        const view = /^back$/i.test(altRaw) ? 'Back' : 'Front';
         for (const c of this.colors) {
           const keys = [norm(c.name)].concat((alias[c.name.toLowerCase()] || []).map(norm));
           if (keys.some(k => k && fname.includes(k))) {
