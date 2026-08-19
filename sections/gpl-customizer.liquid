@@ -360,15 +360,18 @@
   #gpl-cz-{{ section.id }} .gpl-cz__method-img { width: 64px; height: 48px; object-fit: cover; border-radius: 4px; flex: 0 0 auto; }
   #gpl-cz-{{ section.id }} .gpl-cz__method-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
   #gpl-cz-{{ section.id }} .gpl-cz__step {
-    margin: clamp(16px, 1.8vw, 26px) 0 10px;
+    margin: clamp(26px, 3vw, 40px) 0 12px;
+    padding-top: clamp(20px, 2.4vw, 30px);
+    border-top: 1px solid #ECECEC;
     font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
     font-size: clamp(13px, 1vw, 16px);
   }
+  #gpl-cz-{{ section.id }} .gpl-cz__step:first-of-type { margin-top: clamp(16px, 1.8vw, 26px); padding-top: 0; border-top: none; }
   #gpl-cz-{{ section.id }} .gpl-cz__step span { color: var(--cz-red); }
 
-  #gpl-cz-{{ section.id }} .gpl-cz__swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__swatches { display: flex; flex-wrap: wrap; gap: 10px; }
   #gpl-cz-{{ section.id }} .gpl-cz__swatch {
-    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
     border: 2px solid rgba(0,0,0,0.18);
     background-color: #DDD; background-size: cover; background-position: center;
     padding: 0;
@@ -534,14 +537,18 @@
       padding-bottom: 6px;
     }
     #gpl-cz-{{ section.id }} .gpl-cz__stage {
-      max-height: 44vh;
+      /* Kept intentionally small: this panel is pinned (sticky) while the form
+         scrolls beneath it, in the SAME single column on mobile (unlike desktop's
+         two-column split) — at the old 44vh it was tall enough to sit on top of
+         and hide Step 1's colour swatches for most of the scroll. */
+      max-height: 28vh;
       display: flex;
       justify-content: center;
     }
     #gpl-cz-{{ section.id }} .gpl-cz__stage .gpl-cz__mockup {
       width: auto;
       max-width: 100%;
-      max-height: 44vh;
+      max-height: 28vh;
     }
     #gpl-cz-{{ section.id }} .gpl-cz__stage-hint { display: none; }
   }
