@@ -101,13 +101,20 @@
 
     <div class="gpl-footer__bottom">
       <p class="gpl-footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'GTA Print Lab' }}. All Rights Reserved.</p>
+      {%- comment -%} Shopify's own policy objects, not the "footer" navigation menu —
+           that menu is used for unrelated links (e.g. Search) and would otherwise hide
+           these entirely. Each renders only if the merchant has actually set it up in
+           Settings -> Policies, so there's never a dead link here. {%- endcomment -%}
       <ul class="gpl-footer__legal">
-        {%- for link in linklists.footer.links -%}
-          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-        {%- else -%}
-          <li><a href="{{ section.settings.privacy_link | default: '#' }}">Privacy Policy</a></li>
-          <li><a href="{{ section.settings.terms_link | default: '#' }}">Terms &amp; Conditions</a></li>
-        {%- endfor -%}
+        {%- if shop.privacy_policy -%}
+          <li><a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a></li>
+        {%- endif -%}
+        {%- if shop.terms_of_service -%}
+          <li><a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a></li>
+        {%- endif -%}
+        {%- if shop.refund_policy -%}
+          <li><a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a></li>
+        {%- endif -%}
       </ul>
     </div>
   </div>
@@ -180,9 +187,7 @@
     { "type": "text", "id": "address", "label": "Address", "default": "123 Print Lab Way, Toronto, ON M1H 2X6" },
     { "type": "text", "id": "hours", "label": "Business hours", "default": "Mon – Fri: 9AM – 6PM, Sat: 10AM – 3PM" },
     { "type": "textarea", "id": "service_areas", "label": "Service areas", "default": "Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham, Pickering, Ajax, Whitby & More" },
-    { "type": "url", "id": "map_embed_url", "label": "Google Map embed URL" },
-    { "type": "url", "id": "privacy_link", "label": "Privacy policy link (used if no footer menu is set)" },
-    { "type": "url", "id": "terms_link", "label": "Terms & conditions link (used if no footer menu is set)" }
+    { "type": "url", "id": "map_embed_url", "label": "Google Map embed URL" }
   ],
   "blocks": [
     {

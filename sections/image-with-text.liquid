@@ -13,7 +13,7 @@
 
 {%- assign s = section.settings -%}
 
-<section class="gpl-how-{{ section.id }} gpl-how">
+<section id="how-it-works" class="gpl-how-{{ section.id }} gpl-how">
   <div class="gpl-how__hero">
     {%- if s.hero_image != blank -%}
       <div class="gpl-how__hero-bg">
@@ -162,6 +162,7 @@
 
 {% style %}
   .gpl-how-{{ section.id }} {
+    scroll-margin-top: 90px;
     --gpl-red: {{ s.color_accent | default: '#D71920' }};
     --gpl-ink: #111111;
     --gpl-radius: 14px;

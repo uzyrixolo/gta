@@ -50,7 +50,7 @@
           "type": "link",
           "settings": {
             "label": "Home",
-            "url": ""
+            "url": "/"
           }
         },
         "link_AkcWE3": {
@@ -64,14 +64,14 @@
           "type": "link",
           "settings": {
             "label": "Products",
-            "url": ""
+            "url": "/collections/all"
           }
         },
         "link_BMx6rW": {
           "type": "link",
           "settings": {
             "label": "How it Works",
-            "url": ""
+            "url": "/#how-it-works"
           }
         },
         "link_bW4jQi": {
@@ -85,7 +85,7 @@
           "type": "link",
           "settings": {
             "label": "Contact Us",
-            "url": ""
+            "url": "/pages/contact"
           }
         },
         "link_qdWxnd": {
@@ -121,9 +121,7 @@
         "address": "123 Print Lab Way, Toronto, ON M1H 2X6",
         "hours": "Mon – Fri: 9AM – 6PM, Sat: 10AM – 3PM",
         "service_areas": "Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham, Pickering, Ajax, Whitby & More",
-        "map_embed_url": "https://www.google.com/maps?q=123+Print+Lab+Way%2C+Toronto%2C+ON+M1H+2X6&output=embed",
-        "privacy_link": "#",
-        "terms_link": "#"
+        "map_embed_url": "https://www.google.com/maps?q=123+Print+Lab+Way%2C+Toronto%2C+ON+M1H+2X6&output=embed"
       }
     },
     "mobile-sticky-bar": {
