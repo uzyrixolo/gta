@@ -1,0 +1,125 @@
+<script>
+    window.addEventListener("load", function() {
+      window.__sfWindowLoaded = true
+    })
+  function __lightOrDark(color) {
+    var lightness = Number((color.match(/^hsl.*,(.*)%\)/) || ['', '100'])[1].trim());
+    return lightness > 50 ? 'light' : 'dark';
+  }
+  __detectBgSections = function () {
+    try {
+      var sections = document.querySelectorAll('[data-bg]');
+      for (var i = 0; i < sections.length; i++) {
+        var section = sections[i]
+        var lightness = __lightOrDark(section.dataset.bg)
+        section.classList.add('bg-' + lightness)
+      }
+    } catch (error) {
+      console.error("Failed to __detectBgSections.", error)
+    }
+  }
+  __detectBodyBg = function() {
+    if (document.body.dataset.bg) {
+      try {
+        var lightness = __lightOrDark(document.body.dataset.bg)
+        document.body.classList.add('bg-' + lightness)
+      } catch (error) {
+        console.error("Failed to __detectBodyBg.", error)
+      }
+    }
+  }
+  __detectBodyBg();
+  __detectBgSections();
+
+
+  {%- if request.design_mode -%}
+  window.addEventListener('shopify:section:load', function (e) {
+    __detectBodyBg();
+    __detectBgSections();
+  })
+  {%- endif -%}
+
+  // Fixed: Largest Contentful Paint image was lazily loaded
+  const first_image = document.querySelector('#MainContent .shopify-section img');
+  if (first_image) first_image.removeAttribute('loading');
+
+  // Fixed: Largest Contentful Paint image
+  let checkConfig = setInterval(() => {
+    const config = MinimogTheme.config
+    if (config) {
+      clearInterval(checkConfig)
+      {% if template.name == 'product' %}
+        const mediaDesktop = document.querySelector('.m-product-media--desktop')
+        const first_image_media = mediaDesktop && mediaDesktop.querySelector('img');
+        if (config.mqlMobile) {
+          if (first_image_media) first_image_media.setAttribute('loading', 'lazy')
+        } else {
+          if (first_image_media) first_image_media.removeAttribute('loading')
+        }
+      {% endif %}
+    }
+  }, 100)
+
+  var fader = document.querySelector('.m-page-transition')
+    function __fadeInPage() {
+  		if (!window.AnimationEvent || !fader) return;
+
+      let ignore_beforeunload = false;
+
+      document.querySelectorAll('a[href^=mailto], a[href^=tel]').forEach(link => {
+        link.addEventListener( 'click', () => {
+          ignore_beforeunload = true;
+        });
+      });
+
+      // Page transition
+      window.addEventListener('beforeunload', () => {
+        if(!ignore_beforeunload) fader.classList.add('fade-in');
+      });
+      window.addEventListener('DOMContentLoaded', () => {
+        document.documentElement.classList.remove('m\:overflow-hidden')
+  		  document.body.classList.remove('m\:overflow-hidden')
+
+        fader.classList.remove('fade-in')
+        fader.classList.add('fade-out')
+
+        document.dispatchEvent(new CustomEvent('page:loaded'));
+      });
+      window.addEventListener('pageshow', (event) => {
+        // Removes unload class when returning to page via history
+        if (event.persisted) {
+          fader.classList.remove('fade-in')
+          fader.classList.add('fade-out')
+        }
+      });
+  	}
+    __fadeInPage();
+
+    // Lazyload background image
+    function addIntersectionObserver(classSelector, newClass = '') {
+      let lazyImages = [].slice.call(document.getElementsByClassName(classSelector));
+      if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target;
+              lazyImage.classList.remove(classSelector);
+              newClass && lazyImage.classList.remove(newClass);
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        });
+
+        lazyImages.forEach(function(lazyImage) {
+          lazyImageObserver.observe(lazyImage);
+        });
+      }
+    }
+    function handleBackgroundImageLazyload() {
+      return addIntersectionObserver('m-bg-lazy');
+    }
+    handleBackgroundImageLazyload();
+</script>
+{% if request.design_mode %}
+  <script src="https://cdn.shopify.com/s/files/1/0594/4190/5837/files/theme-editor.js?v=1693223353" defer="defer"></script>
+{% endif %}

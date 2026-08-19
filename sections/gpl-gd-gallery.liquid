@@ -1,0 +1,233 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Design gallery (M4)
+  Filter pills are built automatically from the categories used by the image blocks.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+{%- assign cat_string = '' -%}
+{%- for block in section.blocks -%}
+  {%- if block.settings.category != blank -%}
+    {%- assign cat_string = cat_string | append: block.settings.category | append: '~' -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign cat_list = cat_string | split: '~' | uniq -%}
+
+<section id="gpl-gd-gal-{{ section.id }}" class="gpl-gd-gal" data-gpl-gallery>
+  <div class="gpl-gd-gal__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="gpl-gd-gal__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if cat_list.size > 0 -%}
+      <div class="gpl-gd-gal__filters" role="group" aria-label="{{ s.heading | default: 'Gallery' | escape }} filters">
+        <button type="button" class="gpl-gd-gal__pill is-active" data-gpl-filter="all" aria-pressed="true">
+          {{ s.all_label | default: 'All' }}
+        </button>
+        {%- for cat in cat_list -%}
+          <button type="button" class="gpl-gd-gal__pill" data-gpl-filter="{{ cat | handleize }}" aria-pressed="false">
+            {{ cat }}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-gd-gal__grid" data-gpl-gallery-grid>
+        {%- for block in section.blocks -%}
+          <figure class="gpl-gd-gal__item" data-gpl-cat="{{ block.settings.category | handleize }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(max-width: 749px) 45vw, 16vw',
+                  widths: '250, 400, 600, 800',
+                  alt: block.settings.caption | default: block.settings.image.alt | escape
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'gpl-gd-gal__ph' }}
+            {%- endif -%}
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank -%}
+      <div class="gpl-gd-gal__cta">
+        <a href="{{ s.button_link | default: '#' }}" class="gpl-gd-gal__btn">
+          <span>{{ s.button_text }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-gal-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__heading {
+    margin: 0 0 clamp(12px, 1.3vw, 18px);
+    text-align: center;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    font-size: clamp(22px, 2.6vw, 38px);
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: clamp(12px, 1.3vw, 18px);
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__pill {
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #1A1A1A;
+    color: #FFFFFF;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font: inherit;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(10px, 0.72vw, 12px);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__pill:hover { border-color: rgba(255, 255, 255, 0.5); }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__pill.is-active {
+    background: var(--gpl-accent);
+    border-color: var(--gpl-accent);
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__pill:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: clamp(6px, 0.6vw, 10px);
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__item {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #1E1E1E;
+    aspect-ratio: {{ s.tile_ratio }};
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__item[hidden] { display: none; }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__item img,
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__item svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__cta { margin-top: clamp(14px, 1.6vw, 22px); text-align: center; }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border: 2px solid var(--gpl-accent);
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(11px, 0.9vw, 13.5px);
+    transition: background-color 0.2s ease;
+  }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn:hover { background: var(--gpl-accent); }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+  #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn svg { width: 15px; height: 15px; }
+
+  @media screen and (max-width: 749px) {
+    #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn { width: 100%; max-width: 420px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__pill,
+    #gpl-gd-gal-{{ section.id }} .gpl-gd-gal__btn { transition: none; }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('gpl-gd-gal-{{ section.id }}');
+    if (!root) return;
+    var pills = root.querySelectorAll('[data-gpl-filter]');
+    var items = root.querySelectorAll('[data-gpl-cat]');
+
+    function apply(filter) {
+      for (var i = 0; i < items.length; i++) {
+        var show = filter === 'all' || items[i].getAttribute('data-gpl-cat') === filter;
+        items[i].hidden = !show;
+      }
+      for (var p = 0; p < pills.length; p++) {
+        var on = pills[p].getAttribute('data-gpl-filter') === filter;
+        pills[p].classList.toggle('is-active', on);
+        pills[p].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    }
+
+    for (var k = 0; k < pills.length; k++) {
+      pills[k].addEventListener('click', function () {
+        apply(this.getAttribute('data-gpl-filter'));
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "GD Gallery",
+  "tag": "section",
+  "class": "gpl-section-gd-gal",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Design Gallery" },
+    { "type": "text", "id": "all_label", "label": "\"All\" filter label", "default": "All" },
+    { "type": "select", "id": "tile_ratio", "label": "Tile shape", "default": "1 / 1", "options": [
+      { "value": "1 / 1", "label": "Square" },
+      { "value": "4 / 5", "label": "Portrait" },
+      { "value": "4 / 3", "label": "Landscape" }
+    ] },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "View Full Portfolio" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Gallery image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "category", "label": "Category", "info": "Becomes a filter pill. Reuse the exact same wording across images to group them.", "default": "Apparel" },
+        { "type": "text", "id": "caption", "label": "Alt text" }
+      ]
+    }
+  ],
+  "max_blocks": 48,
+  "presets": [{ "name": "GD Gallery" }]
+}
+{% endschema %}

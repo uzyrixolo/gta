@@ -1,0 +1,237 @@
+{%- comment -%}
+  GTA Print Lab — Print On Demand page: Services grid
+  Five vertical cards — image top, title, intro line, red-check feature list.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-pod-svc-{{ section.id }}" class="gpl-pod-svc">
+  <div class="gpl-pod-svc__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="gpl-pod-svc__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-pod-svc__grid">
+        {%- for block in section.blocks -%}
+          <article class="gpl-pod-svc-card" {{ block.shopify_attributes }}>
+            <div class="gpl-pod-svc-card__media">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 700
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(max-width: 749px) 90vw, (max-width: 1199px) 30vw, 18vw',
+                    widths: '250, 400, 550, 700',
+                    alt: block.settings.image.alt | escape
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'gpl-pod-svc-card__ph' }}
+              {%- endif -%}
+            </div>
+            <div class="gpl-pod-svc-card__body">
+              {%- if block.settings.title != blank -%}
+                <h3 class="gpl-pod-svc-card__title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.intro != blank -%}
+                <p class="gpl-pod-svc-card__intro">{{ block.settings.intro }}</p>
+              {%- endif -%}
+              {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
+              {%- if block.settings.features != blank -%}
+                <ul class="gpl-pod-svc-card__list">
+                  {%- for feature in features -%}
+                    {%- assign f = feature | strip -%}
+                    {%- if f != blank -%}
+                      <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>
+                        </svg>
+                        <span>{{ f }}</span>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank -%}
+      <div class="gpl-pod-svc__cta">
+        <a href="{{ s.button_link | default: '#' }}" class="gpl-pod-svc__btn">
+          <span>{{ s.button_text }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-pod-svc-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: clamp(30px, 3.6vw, 54px) 0;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__heading {
+    margin: 0 0 clamp(18px, 2vw, 30px);
+    text-align: center;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    font-size: clamp(22px, 2.6vw, 38px);
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__grid {
+    display: grid;
+    grid-template-columns: repeat({{ s.columns_desktop | default: 5 }}, minmax(0, 1fr));
+    gap: clamp(10px, 1.1vw, 17px);
+    align-items: stretch;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card {
+    display: flex;
+    flex-direction: column;
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    min-width: 0;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__media {
+    aspect-ratio: 1 / 1;
+    background: #1E1E1E;
+    overflow: hidden;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__media img,
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__media svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__body {
+    flex: 1 1 auto;
+    padding: clamp(12px, 1.2vw, 18px);
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__title {
+    margin: 0 0 6px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.12;
+    font-size: clamp(13.5px, 1.05vw, 17px);
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__intro {
+    margin: 0 0 clamp(9px, 0.9vw, 13px);
+    color: #A8A8A8;
+    font-size: clamp(10.5px, 0.74vw, 12.5px);
+    line-height: 1.45;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__list {
+    list-style: none;
+    margin: 0;
+    padding: clamp(9px, 0.9vw, 13px) 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5px, 0.5vw, 8px);
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    color: #DCDCDC;
+    font-size: clamp(10px, 0.7vw, 12px);
+    line-height: 1.35;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__list svg {
+    flex: 0 0 auto;
+    width: clamp(12px, 0.85vw, 14px);
+    height: clamp(12px, 0.85vw, 14px);
+    margin-top: 1px;
+    color: var(--gpl-accent);
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__cta { margin-top: clamp(18px, 2vw, 28px); text-align: center; }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border: 2px solid var(--gpl-accent);
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(11px, 0.9vw, 13.5px);
+    transition: background-color 0.2s ease;
+  }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn:hover { background: var(--gpl-accent); }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn svg { width: 15px; height: 15px; }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__title { font-size: 16px; }
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__intro { font-size: 12.5px; }
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__list li { font-size: 12px; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn { width: 100%; max-width: 420px; }
+  }
+  @media screen and (max-width: 419px) {
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__grid { grid-template-columns: minmax(0, 1fr); }
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__media { aspect-ratio: 16 / 9; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #gpl-pod-svc-{{ section.id }} .gpl-pod-svc__btn { transition: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "POD Services",
+  "tag": "section",
+  "class": "gpl-section-pod-svc",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Print On Demand Services" },
+    { "type": "select", "id": "columns_desktop", "label": "Desktop columns", "default": "5", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" }, { "value": "5", "label": "5" } ] },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "View All POD Products" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service card",
+      "limit": 8,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Optional — a placeholder shows until an image is set." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Apparel POD" },
+        { "type": "textarea", "id": "intro", "label": "Intro line", "default": "T-Shirts, Hoodies, Sweatshirts, Tank Tops, Long Sleeves & More." },
+        { "type": "textarea", "id": "features", "label": "Feature list", "info": "One item per line.", "default": "DTG, DTF, All Over Prints\nPremium Blank Options\nMen, Women, Youth\nPlus Sizes Available" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "POD Services" }]
+}
+{% endschema %}

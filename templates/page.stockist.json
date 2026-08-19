@@ -1,0 +1,236 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "settings": {}
+    },
+    "42f435e1-7fb5-4218-a3dc-d2347dfa393f": {
+      "type": "icon-box",
+      "blocks": {
+        "template--21621309309226__42f435e1-7fb5-4218-a3dc-d2347dfa393f-iconbox-1": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/2f26ca79-941b-485f-ae32-ce88765f9dda_TEXTURES2LR.jpg",
+            "image_by_url": "",
+            "title": "ABY CONCEPT",
+            "description": "<p> </p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "cef79801-3d91-4772-9601-bff53640ce31": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/md_Browns-SMS_e6af6d26-faa0-478e-a889-ccbf272c6cde.jpg",
+            "image_by_url": "",
+            "title": "BROWNS LONDON",
+            "description": "<p>24-27 S Molton Street London</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "482eeae0-102e-4bfe-be2e-387ec5f2f167": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/750x750bb.jpg",
+            "image_by_url": "",
+            "title": "DITTO AFRICA",
+            "description": "<p> Dittoafrica.com</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "98ef4785-1f26-449c-829a-7c8c6dd2b7b1": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/Screen_Shot_2020-08-04_at_9.21.02_PM_1d057673-9692-4f05-b368-67105bd0e754.png",
+            "image_by_url": "",
+            "title": "DE-ESSENTIA",
+            "description": "<p> </p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "f9d1218a-5b7e-439f-a88b-596773924161": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/Unknown.png",
+            "image_by_url": "",
+            "title": "INDUSTRIE AFRICA",
+            "description": "<p> https://industrieafrica.com/collections/orange-culture</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "ce6db984-6baf-445c-98f1-0b3917d25571": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/farfetch-shutterstock.jpg",
+            "image_by_url": "",
+            "title": "FARFETCH",
+            "description": "<p>https://www.farfetch.com/pt/shopping/men/designer-orange-culture/clothing-2/items.aspx</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "11d9f139-f486-43f2-a25f-0f274a9fad26": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/folklore.png",
+            "image_by_url": "",
+            "title": "THE FOLKLORE",
+            "description": "<p>Thefolklore.us</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "87be8ff4-0af6-4baa-b1e5-27e280801951": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/Lagos_dc7c8f81-2139-4368-b807-942e82e2f536.jpg",
+            "image_by_url": "",
+            "title": "KOIBIRD LONDON",
+            "description": "<h3></h3><p>62 Marylebone Ln W1U 2PB Marylebone, London WWW.KOIBIRD.COM</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "ef247424-931f-45fc-9770-35e995d69820": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/merchants-on-long.jpg",
+            "image_by_url": "",
+            "title": "MERCHANTS ON LONG",
+            "description": "<h3></h3><p>34 Long Street, Cape Town, 8001, South Africa 021 422 2828</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "d6a938cf-0fdd-46b1-ad21-ccbf483e5e41": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/temple-musee.jpg",
+            "image_by_url": "",
+            "title": "TEMPLE MUSE LAGOS",
+            "description": "<h3></h3><p>Temple Muse Lagos - 21 Amodu Tijani Victoria Island Lagos.</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "5c3a7133-5869-4981-b168-1bb0b2caa0ad": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/tomoffinlandstore.com.jpg",
+            "image_by_url": "",
+            "title": "TOM OF FINLAND STORE",
+            "description": "<h3></h3><p>Los Angeles</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        },
+        "25eaa7b9-4585-4a46-b758-c33f15f1149f": {
+          "type": "iconbox",
+          "settings": {
+            "image": "shopify://shop_images/unnamed-6-scaled.jpg",
+            "image_by_url": "",
+            "title": "VERV LONDON",
+            "description": "<h3></h3><p>367 Cambridge Heath Road, London, United Kingdom</p>",
+            "link": "",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "m-button--link",
+            "button_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--21621309309226__42f435e1-7fb5-4218-a3dc-d2347dfa393f-iconbox-1",
+        "cef79801-3d91-4772-9601-bff53640ce31",
+        "482eeae0-102e-4bfe-be2e-387ec5f2f167",
+        "98ef4785-1f26-449c-829a-7c8c6dd2b7b1",
+        "f9d1218a-5b7e-439f-a88b-596773924161",
+        "ce6db984-6baf-445c-98f1-0b3917d25571",
+        "11d9f139-f486-43f2-a25f-0f274a9fad26",
+        "87be8ff4-0af6-4baa-b1e5-27e280801951",
+        "ef247424-931f-45fc-9770-35e995d69820",
+        "d6a938cf-0fdd-46b1-ad21-ccbf483e5e41",
+        "5c3a7133-5869-4981-b168-1bb0b2caa0ad",
+        "25eaa7b9-4585-4a46-b758-c33f15f1149f"
+      ],
+      "custom_css": [
+        ".m-image{height: 400px; width: 400px;}"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "container": "container-fluid",
+        "background_color": "rgba(0,0,0,0)",
+        "item_per_row": 3,
+        "item_gap": 30,
+        "item_gap_mobile": 10,
+        "card_style": "vertical",
+        "image_max_width": "400px",
+        "content_alignment": "center",
+        "hover_effect": "scaling-up",
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "use_scroll_mobile": true,
+        "use_grid_column_mb": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "42f435e1-7fb5-4218-a3dc-d2347dfa393f"
+  ]
+}

@@ -1,0 +1,10 @@
+<link rel="canonical" href="{{ canonical_url }}">
+{{ 'grid.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'modules.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'vendor.css' | asset_url | stylesheet_tag: preload: true }}
+
+{% comment %} Minimog prefetch resources {% endcomment %}
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+{{ 'vendor.min.js' | asset_url | preload_tag: as: 'script' }}
+{% comment %} End Minimog prefetch resources {% endcomment %}

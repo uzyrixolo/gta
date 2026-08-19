@@ -1,0 +1,149 @@
+{{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+  endif
+
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+%}
+
+{% render 'page-title', title: section.settings.title, size: 'large', description: section.settings.description, show_breadcrumb: false %}
+
+<div class="m-section m-collection-list-template" data-animation_effect="{{ settings.animations }}">
+  <div class="{{ container }}">
+    <div class="m-collection-list-template__wrapper m:grid m:grid-1-cols sm:m:grid-2-cols md:m:grid-3-cols lg:m:grid-4-cols">
+      {% if section.settings.display_type == 'all' %}
+        {% for collection in collections %}
+          {% render 'collection-card', 
+            section: section, 
+            collection: collection, 
+            card_style: 'standard', 
+            text_alignment: 'center', 
+            image: collection.featured_image, 
+            show_product_count: false,
+            hover_effect: 'scaling-up', 
+            title: collection.title,
+            index: forloop.index,
+            animated: animated, 
+            animation_effect: animation_effect
+          %}
+        {% endfor %}
+      {% else %}
+          {% for block in section.blocks %}
+            {% liquid 
+              assign collection = collections[block.settings.collection]
+              assign featuredImage = collection.image
+
+              if block.settings.image != blank
+                assign featuredImage = block.settings.image
+              endif
+            %}
+            {% render 'collection-card', 
+              section: section, 
+              collection: collection, 
+              card_style: 'standard', 
+              text_alignment: 'center', 
+              image: featuredImage, 
+              show_product_count: false, 
+              hover_effect: 'scaling-up', 
+              title: collection.title,
+              index: forloop.index,
+              animated: animated, 
+              animation_effect: animation_effect
+            %}
+          {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container-fluid",
+      "options": [
+        {
+          "value": "container-fluid",
+          "label": "Default"
+        },
+        {
+          "value": "w-full",
+          "label": "Full width"
+        },
+        {
+          "value": "container",
+          "label": "Use container box"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "Select collections to show",
+      "default": "all",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "selected",
+          "label": "Selected"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "All collections"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

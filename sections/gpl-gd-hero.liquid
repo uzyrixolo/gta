@@ -1,0 +1,370 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Hero
+  Milestone 1 of the /pages/graphic-design build.
+
+  Heading typography deliberately mirrors the homepage hero (sections/slider.liquid):
+  var(--gpl-font-heading) at weight 800, line-height .98, letter-spacing -0.01em.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign section_id = section.id -%}
+{%- assign scrim = s.scrim_strength | divided_by: 100.0 -%}
+
+<section id="gpl-gd-hero-{{ section_id }}" class="gpl-gd-hero">
+  <div class="gpl-gd-hero__bg">
+    {%- if s.background_image != blank -%}
+      {{
+        s.background_image
+        | image_url: width: 2600
+        | image_tag:
+          class: 'gpl-gd-hero__bg-img gpl-gd-hero__bg-img--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '900, 1300, 1700, 2100, 2600',
+          alt: s.background_image.alt | escape
+      }}
+    {%- endif -%}
+    {%- if s.background_image_mobile != blank -%}
+      {{
+        s.background_image_mobile
+        | image_url: width: 1200
+        | image_tag:
+          class: 'gpl-gd-hero__bg-img gpl-gd-hero__bg-img--mobile',
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '500, 750, 1000, 1200',
+          alt: s.background_image_mobile.alt | escape
+      }}
+    {%- endif -%}
+  </div>
+  <div class="gpl-gd-hero__scrim" aria-hidden="true"></div>
+
+  <div class="gpl-gd-hero__inner">
+    <div class="gpl-gd-hero__content">
+      {%- if s.eyebrow != blank -%}
+        <p class="gpl-gd-hero__eyebrow">{{ s.eyebrow }}</p>
+      {%- endif -%}
+
+      <h1 class="gpl-gd-hero__heading">
+        {%- if s.heading_line1 != blank -%}
+          <span class="gpl-gd-hero__heading-line">{{ s.heading_line1 }}</span>
+        {%- endif -%}
+        {%- if s.heading_line2 != blank -%}
+          <span class="gpl-gd-hero__heading-line gpl-gd-hero__heading-line--accent">{{ s.heading_line2 }}</span>
+        {%- endif -%}
+        {%- if s.heading_line3 != blank -%}
+          <span class="gpl-gd-hero__heading-line">{{ s.heading_line3 }}</span>
+        {%- endif -%}
+      </h1>
+
+      {%- if s.subheading != blank -%}
+        <p class="gpl-gd-hero__subheading">{{ s.subheading }}</p>
+      {%- endif -%}
+
+      {%- if s.paragraph != blank -%}
+        <div class="gpl-gd-hero__paragraph">{{ s.paragraph }}</div>
+      {%- endif -%}
+
+      {%- if s.button_1_text != blank or s.button_2_text != blank -%}
+        <div class="gpl-gd-hero__buttons">
+          {%- if s.button_1_text != blank -%}
+            <a href="{{ s.button_1_link | default: '#' }}" class="gpl-gd-btn gpl-gd-btn--primary">
+              <span>{{ s.button_1_text }}</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if s.button_2_text != blank -%}
+            <a href="{{ s.button_2_link | default: '#' }}" class="gpl-gd-btn gpl-gd-btn--outline">
+              <span>{{ s.button_2_text }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <aside class="gpl-gd-hero__promise">
+        {%- if s.promise_heading != blank -%}
+          <p class="gpl-gd-hero__promise-heading">{{ s.promise_heading }}</p>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <div class="gpl-gd-hero__promise-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-gd-hero__promise-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <span class="gpl-gd-hero__promise-copy">
+              {%- if block.settings.title != blank -%}
+                <span class="gpl-gd-hero__promise-title">{{ block.settings.title }}</span>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <span class="gpl-gd-hero__promise-sub">{{ block.settings.subtitle }}</span>
+              {%- endif -%}
+            </span>
+          </div>
+        {%- endfor -%}
+      </aside>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-hero-{{ section_id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    --gpl-bg: {{ s.color_background | default: '#0A0A0A' }};
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--gpl-bg);
+    min-height: {{ s.min_height }}px;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg { position: absolute; inset: 0; z-index: 0; }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ s.image_position }};
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img--mobile { display: none; }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim }}) 32%, rgba(8,8,8,0.55) 58%, rgba(8,8,8,0.25) 100%),
+      linear-gradient(0deg, rgba(8,8,8,0.65) 0%, rgba(8,8,8,0) 45%);
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__inner {
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    padding: clamp(48px, 6vw, 96px) 0;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__content { max-width: 620px; }
+
+  /* Optional "Our Promise" side card (blocks) */
+  {%- if section.blocks.size > 0 -%}
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 3vw, 48px);
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise {
+      flex: 0 0 auto;
+      width: clamp(200px, 18vw, 260px);
+      box-sizing: border-box;
+      background: rgba(12, 12, 12, 0.82);
+      border: 1px solid rgba(215, 25, 32, 0.6);
+      border-radius: 8px;
+      padding: clamp(14px, 1.4vw, 20px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(11px, 1.1vw, 16px);
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-heading {
+      margin: 0 0 2px;
+      color: var(--gpl-accent);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: clamp(11px, 0.8vw, 13px);
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-icon {
+      flex: 0 0 auto;
+      display: flex;
+      color: var(--gpl-accent);
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-icon svg {
+      width: clamp(24px, 2vw, 32px);
+      height: clamp(24px, 2vw, 32px);
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-copy { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-title {
+      color: #FFFFFF;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: clamp(10px, 0.74vw, 12px);
+      line-height: 1.2;
+    }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-sub {
+      color: #A8A8A8;
+      font-size: clamp(9px, 0.64vw, 10.5px);
+      line-height: 1.3;
+    }
+    @media screen and (max-width: 989px) {
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__inner { flex-direction: column; align-items: stretch; }
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+      }
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-heading { flex: 1 1 100%; }
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__promise-item { flex: 1 1 40%; }
+    }
+  {%- endif -%}
+
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__eyebrow {
+    color: var(--gpl-accent);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin: 0 0 8px;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__heading {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    font-size: clamp(40px, 6.2vw, 78px);
+    color: #FFFFFF;
+    margin: 0 0 16px;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__heading-line--accent { color: var(--gpl-accent); }
+
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__subheading {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: clamp(15px, 1.5vw, 21px);
+    line-height: 1.3;
+    margin: 0 0 16px;
+    max-width: 22ch;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__paragraph {
+    color: #C9C9C9;
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.65;
+    margin: 0 0 26px;
+    max-width: 46ch;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__paragraph p { margin: 0; }
+
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 14px 26px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    font-weight: 800;
+    font-size: clamp(12px, 0.95vw, 14px);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn svg { width: 16px; height: 16px; }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--primary { background: var(--gpl-accent); color: #FFFFFF; }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--primary:hover { background: #B5141A; transform: translateY(-1px); }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--outline {
+    background: rgba(20, 20, 20, 0.72);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--outline:hover { border-color: #FFFFFF; background: rgba(255, 255, 255, 0.1); }
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__content { max-width: 100%; }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__scrim {
+      background:
+        linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,0.72) 70%, rgba(8,8,8,0.55) 100%),
+        linear-gradient(0deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0) 50%);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-gd-hero-{{ section_id }} { min-height: {{ s.min_height_mobile }}px; }
+    {%- if s.background_image_mobile != blank -%}
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img--desktop { display: none; }
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img--mobile { display: block; }
+    {%- endif -%}
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__subheading { max-width: 100%; }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__paragraph { max-width: 100%; }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-btn { flex: 1 1 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-btn { transition: none; }
+    #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--primary:hover { transform: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GD Hero",
+  "tag": "section",
+  "class": "gpl-section-gd-hero",
+  "settings": [
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "background_image_mobile", "label": "Background image (mobile)", "info": "Optional. Falls back to the desktop image." },
+    { "type": "select", "id": "image_position", "label": "Image focal point", "default": "center right", "options": [
+      { "value": "center left", "label": "Left" },
+      { "value": "center center", "label": "Centre" },
+      { "value": "center right", "label": "Right" }
+    ] },
+    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 620 },
+    { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile)", "min": 280, "max": 800, "step": 10, "unit": "px", "default": 480 },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading_line1", "label": "Heading line 1 (white)", "default": "Graphic" },
+    { "type": "text", "id": "heading_line2", "label": "Heading line 2 (red)", "default": "Design" },
+    { "type": "text", "id": "heading_line3", "label": "Heading line 3 (white)", "info": "Optional." },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Turn Your Idea Into Something People Want to Wear." },
+    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "default": "<p>From a simple idea to a complete brand identity, GTA Print Lab's graphic design team creates artwork that looks great on screen and prints beautifully on apparel, promotional products, signage, and marketing materials.</p>" },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_1_text", "label": "Button 1 text", "default": "Start Your Design" },
+    { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
+    { "type": "text", "id": "button_2_text", "label": "Button 2 text", "default": "Request a Quote" },
+    { "type": "url", "id": "button_2_link", "label": "Button 2 link" },
+
+    { "type": "header", "content": "Promise card" },
+    { "type": "text", "id": "promise_heading", "label": "Card heading", "default": "Our Promise", "info": "Shown only when promise blocks are added." },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise item",
+      "limit": 5,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Premium Quality" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Every Time" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [{ "name": "GD Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,276 @@
+{%- comment -%}
+  GTA Print Lab — Manufacturing page: Why choose us + factory numbers
+  Left  — heading, checklist ("check" blocks), factory image with a badge overlay
+  Right — "factory by the numbers" panel with up to 4 "stat" blocks
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign checks = section.blocks | where: 'type', 'check' -%}
+{%- assign stats = section.blocks | where: 'type', 'stat' -%}
+
+<section id="gpl-mfg-why-{{ section.id }}" class="gpl-mfg-why">
+  <div class="gpl-mfg-why__inner">
+    <div class="gpl-mfg-why__main">
+      {%- if s.heading != blank -%}
+        <h2 class="gpl-mfg-why__heading">{{ s.heading }}</h2>
+      {%- endif -%}
+
+      <div class="gpl-mfg-why__body">
+        {%- if checks.size > 0 -%}
+          <ul class="gpl-mfg-why__checks">
+            {%- for block in checks -%}
+              <li {{ block.shopify_attributes }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 12.5l5 5L20 6.5"/>
+                </svg>
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="gpl-mfg-why__media">
+          {%- if s.image != blank -%}
+            {{
+              s.image
+              | image_url: width: 1100
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 989px) 90vw, 34vw',
+                widths: '400, 650, 850, 1100',
+                alt: s.image.alt | escape
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'gpl-mfg-why__ph' }}
+          {%- endif -%}
+          {%- if s.badge_text != blank -%}
+            <span class="gpl-mfg-why__badge">
+              {%- if s.badge_icon != blank -%}
+                <span class="gpl-mfg-why__badge-icon">{{ s.badge_icon }}</span>
+              {%- endif -%}
+              <span>{{ s.badge_text }}</span>
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- if stats.size > 0 -%}
+      <div class="gpl-mfg-why__numbers">
+        {%- if s.numbers_heading != blank -%}
+          <p class="gpl-mfg-why__numbers-heading">{{ s.numbers_heading }}</p>
+        {%- endif -%}
+        <div class="gpl-mfg-why__stats">
+          {%- for block in stats -%}
+            <div class="gpl-mfg-why__stat" {{ block.shopify_attributes }}>
+              {%- if block.settings.value != blank -%}
+                <p class="gpl-mfg-why__stat-value">{{ block.settings.value }}</p>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <p class="gpl-mfg-why__stat-label">{{ block.settings.label }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-mfg-why-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: clamp(12px, 1.3vw, 20px);
+    align-items: stretch;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__main {
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: #101010;
+    padding: clamp(16px, 1.8vw, 26px);
+    min-width: 0;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__heading {
+    margin: 0 0 clamp(12px, 1.4vw, 20px);
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    font-size: clamp(18px, 1.8vw, 27px);
+    max-width: 24ch;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__body {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    gap: clamp(12px, 1.4vw, 22px);
+    align-items: center;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(7px, 0.7vw, 10px);
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: #E4E4E4;
+    font-size: clamp(10.5px, 0.78vw, 13.5px);
+    line-height: 1.4;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__checks svg {
+    flex: 0 0 auto;
+    width: clamp(12px, 0.9vw, 15px);
+    height: clamp(12px, 0.9vw, 15px);
+    margin-top: 2px;
+    color: var(--gpl-accent);
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__media {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #1E1E1E;
+    aspect-ratio: 16 / 10;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__media img,
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__media svg.gpl-mfg-why__ph {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__badge {
+    position: absolute;
+    left: clamp(10px, 1vw, 16px);
+    bottom: clamp(10px, 1vw, 16px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(10, 10, 10, 0.88);
+    border: 1.5px solid var(--gpl-accent);
+    border-radius: 6px;
+    padding: clamp(8px, 0.9vw, 13px) clamp(10px, 1.1vw, 16px);
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(9.5px, 0.7vw, 12px);
+    line-height: 1.25;
+    max-width: calc(100% - 2 * clamp(10px, 1vw, 16px));
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__badge-icon { flex: 0 0 auto; display: flex; color: var(--gpl-accent); }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__badge-icon svg {
+    width: clamp(20px, 1.7vw, 28px);
+    height: clamp(20px, 1.7vw, 28px);
+  }
+
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__numbers {
+    box-sizing: border-box;
+    border: 1px solid rgba(215, 25, 32, 0.6);
+    border-radius: 8px;
+    background: #100C0C;
+    padding: clamp(16px, 1.8vw, 26px);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__numbers-heading {
+    margin: 0 0 clamp(12px, 1.3vw, 18px);
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: clamp(11px, 0.85vw, 14px);
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__stats {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(14px, 1.6vw, 26px) clamp(12px, 1.4vw, 22px);
+    align-content: space-evenly;
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__stat { min-width: 0; }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__stat-value {
+    margin: 0 0 4px;
+    color: var(--gpl-accent);
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    line-height: 1;
+    font-size: clamp(24px, 2.4vw, 42px);
+  }
+  #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__stat-label {
+    margin: 0;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(9px, 0.68vw, 11.5px);
+    line-height: 1.3;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__body { grid-template-columns: minmax(0, 1fr); }
+    #gpl-mfg-why-{{ section.id }} .gpl-mfg-why__checks li { font-size: 13.5px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "MFG Why + Numbers",
+  "tag": "section",
+  "class": "gpl-section-mfg-why",
+  "settings": [
+    { "type": "header", "content": "Left — why choose us" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why Choose GTA Print Lab for Manufacturing?" },
+    { "type": "image_picker", "id": "image", "label": "Factory image" },
+    { "type": "html", "id": "badge_icon", "label": "Badge icon (SVG code)" },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Our Own Dedicated Plant Overseas" },
+
+    { "type": "header", "content": "Right — factory numbers" },
+    { "type": "text", "id": "numbers_heading", "label": "Heading", "default": "Our Factory by the Numbers" },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Checklist item",
+      "limit": 10,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Our Own Dedicated Manufacturing Plant Overseas" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "150,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Units Produced Monthly" }
+      ]
+    }
+  ],
+  "max_blocks": 14,
+  "presets": [{ "name": "MFG Why + Numbers" }]
+}
+{% endschema %}

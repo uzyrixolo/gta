@@ -1,0 +1,39 @@
+{%- liquid 
+    assign current_variant = product.selected_or_first_available_variant
+    assign product_form_id = 'product-form-' | append: section.id
+    assign product_form_class = 'product-form-' | append: section.id
+-%}
+
+<div class="m-product-quickview m-main-product--wrapper m:flex" data-view="quick-view" data-section-id="{{ section.id }}" style="--column-gap: 30px;">
+  <div class="m-product-quickview--media m:column m:w-full md:m:w-1/2">
+    {% render 'product-media', product: product, section: section, media_layout: 'layout-4', show_nav: true, show_thumbnails: false %}
+  </div>
+  <div class="m-product-quickview--info m:column m-scrollbar--vertical m:display-flex m:w-full md:m:w-1/2">
+    <div class="m-product-info--wrapper m:w-full">
+      <div class="main-product__block main-product__block-title">
+        <div class="product-block-group product-block-group--title">
+          <h1 class="m-product-title"><a href="{{ product.url }}">{{ product.title }}</a></h1>
+        </div>
+      </div>
+      <div class="main-product__block main-product__block-price">
+        {% render 'product-prices', use_variant: true, product: product, show_sale_badge: true, sale_badge_type: 'text', price_text_size: 'm:text-xl md:m:text-2xl' %}
+      </div>
+      <div class="main-product__block main-product__block-description">
+        {{ product.description | strip_html | truncatewords: 15 }}
+        <a class="m-product-quickview--viewmore m:block" href="{{ product.url }}">{{ 'products.product.view_details' | t }}</a>
+      </div>
+      {% render 'product-form',
+        section: section,
+        section_id: section.id,
+        product: product,
+        product_form_id: product_form_id,
+        product_form_class: product_form_class,
+        current_variant: current_variant,
+        show_quantity_selector: true,
+        show_sizeguide: false,
+        enable_dynamic_checkout: true,
+        template: 'quickview'
+      %}
+    </div>
+  </div>
+</div>

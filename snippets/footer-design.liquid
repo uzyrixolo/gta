@@ -1,0 +1,141 @@
+{% liquid
+  assign show_follow_on_shop = false
+  if shop.features.follow_on_shop? and section.settings.enable_follow_on_shop
+    assign show_follow_on_shop = true
+  endif
+%}
+<div class="m-footer--bottom m-footer--bottom-{{ section.settings.design }}">
+  <div class="{{ container }}">
+    <div class="m-footer--bottom-inner m:flex m:flex-col xl:m:flex-row m:justify-between m:items-center">
+      {% case section.settings.design %}
+        {% when 'footer-1' %}
+          {% if section.settings.copyright != blank %}
+            <div class="m-footer--bottom-left m:flex-1 m:text-center m:w-full xl:m:text-left">
+              <span class="m-footer__copyright">{{ section.settings.copyright }}</span>
+              {%- if show_follow_on_shop -%}
+                <div class="m-follow-on-shop">
+                  {% comment %} TODO: enable theme-check once `login_button` is accepted as valid filter {% endcomment %}
+                  {% # theme-check-disable %}
+                  {{ shop | login_button: action: 'follow' }}
+                  {% # theme-check-enable %}
+                </div>
+              {%- endif -%}
+            </div>
+          {% endif %}
+          <div class="m-footer--bottom-right m:w-full m:flex-col lg:m:flex-row m:flex m:flex-wrap m:items-center lg:m:w-auto">
+            {% if section.settings.show_currency_selector or section.settings.show_language_selector %}
+              <div class="m-footer--currency-language m:flex m:items-center">
+                {% liquid
+                  if section.settings.show_country_selector
+                    render 'country-selector', pos: 'top'
+                  endif
+                  if section.settings.show_currency_selector
+                    render 'currency-switcher', pos: 'top'
+                  endif
+                  if section.settings.show_language_selector
+                    render 'language-switcher', pos: 'top'
+                  endif
+                %}
+              </div>
+            {% endif %}
+            {% if section.settings.show_social_links %}
+              {% render 'social-media-links', extra_classes: 'm:justify-center md:m:justify-end' %}
+            {% endif %}
+            {% if section.settings.show_payment_icons %}
+              {% render 'payment-icons', section: section, classes: 'm:justify-center' %}
+            {% endif %}
+          </div>
+        {% when 'footer-2' %}
+          {% if section.settings.show_payment_icons %}
+            <div class="m-footer--bottom-left m:w-full m:flex-1 lg:m:w-auto{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              {% render 'payment-icons', section: section, classes: 'm:justify-center xl:m:justify-start' %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.copyright != blank %}
+            <div class="m-footer--bottom-center m:flex-1 m:text-center lg:m:w-auto m:w-full{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              <span class="m-footer__copyright">{{ section.settings.copyright }}</span>
+              {%- if show_follow_on_shop -%}
+                <div class="m-follow-on-shop">
+                  {% comment %} TODO: enable theme-check once `login_button` is accepted as valid filter {% endcomment %}
+                  {% # theme-check-disable %}
+                  {{ shop | login_button: action: 'follow' }}
+                  {% # theme-check-enable %}
+                </div>
+              {%- endif -%}
+            </div>
+          {% endif %}
+          {% if section.settings.show_social_links
+            or section.settings.show_currency_selector
+            or section.settings.show_language_selector
+          %}
+            <div class="m-footer--bottom-right m:flex-1 m:flex m:flex-wrap m:items-center m:justify-center lg:m:w-auto m:w-full lg:m:justify-end m:flex-col md:m:flex-row{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              {% if section.settings.show_social_links %}
+                {% render 'social-media-links', extra_classes: 'justify-center md:justify-end' %}
+              {% endif %}
+              <div class="m:flex m:items-center">
+                {% liquid
+                  if section.settings.show_country_selector
+                    render 'country-selector', pos: 'top'
+                  endif
+
+                  if section.settings.show_currency_selector
+                    render 'currency-switcher', pos: 'top'
+                  endif
+
+                  if section.settings.show_language_selector
+                    render 'language-switcher', pos: 'top'
+                  endif
+                %}
+              </div>
+            </div>
+          {% endif %}
+        {% when 'footer-3' %}
+          {% if section.settings.show_social_links
+            or section.settings.show_currency_selector
+            or section.settings.show_language_selector
+          %}
+            <div class="m-footer--bottom-left m:flex-1 m:flex m:flex-wrap m:items-center m:justify-center xl:m:justify-start lg:m:w-auto m:w-full m:flex-col md:m:flex-row{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              {% if section.settings.show_social_links %}
+                {% render 'social-media-links', extra_classes: 'md:m:justify-end' %}
+              {% endif %}
+              <div class="m:flex m:items-center">
+                {% liquid
+                  if section.settings.show_country_selector
+                    render 'country-selector', pos: 'top'
+                  endif
+
+                  if section.settings.show_currency_selector
+                    render 'currency-switcher', pos: 'top'
+                  endif
+
+                  if section.settings.show_language_selector
+                    render 'language-switcher', pos: 'top'
+                  endif
+                %}
+              </div>
+            </div>
+          {% endif %}
+          {% if section.settings.copyright != blank %}
+            <div class="m-footer--bottom-center m:flex-1 m:text-center lg:m:w-auto m:w-full{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              <span class="m-footer__copyright">{{ section.settings.copyright }}</span>
+              {%- if show_follow_on_shop -%}
+                <div class="m-follow-on-shop">
+                  {% comment %} TODO: enable theme-check once `login_button` is accepted as valid filter {% endcomment %}
+                  {% # theme-check-disable %}
+                  {{ shop | login_button: action: 'follow' }}
+                  {% # theme-check-enable %}
+                </div>
+              {%- endif -%}
+            </div>
+          {% endif %}
+          {% if section.settings.show_payment_icons %}
+            <div class="m-footer--bottom-right m:flex-1 m:flex m:justify-center xl:m:justify-end lg:m:w-auto m:w-full{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+              {% render 'payment-icons', section: section, classes: 'm:justify-center xl:m:justify-end' %}
+            </div>
+          {% endif %}
+        {% else %}
+      {% endcase %}
+    </div>
+  </div>
+</div>

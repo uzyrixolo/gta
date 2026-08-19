@@ -1,0 +1,281 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Capabilities panel (M3)
+  Left  — "We can recreate your artwork" checklist + before/after image
+  Right — "Design for print" production methods
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign checks = section.blocks | where: 'type', 'check' -%}
+{%- assign methods = section.blocks | where: 'type', 'method' -%}
+
+<section id="gpl-gd-cap-{{ section.id }}" class="gpl-gd-cap">
+  <div class="gpl-gd-cap__panel">
+    <div class="gpl-gd-cap__col gpl-gd-cap__col--recreate">
+      {%- if s.recreate_eyebrow != blank -%}
+        <p class="gpl-gd-cap__eyebrow">{{ s.recreate_eyebrow }}</p>
+      {%- endif -%}
+      {%- if s.recreate_heading != blank -%}
+        <h2 class="gpl-gd-cap__heading">{{ s.recreate_heading }}</h2>
+      {%- endif -%}
+      {%- if s.recreate_text != blank -%}
+        <p class="gpl-gd-cap__text">{{ s.recreate_text }}</p>
+      {%- endif -%}
+
+      <div class="gpl-gd-cap__recreate-body">
+        {%- if checks.size > 0 -%}
+          <ul class="gpl-gd-cap__checks">
+            {%- for block in checks -%}
+              <li class="gpl-gd-cap__check" {{ block.shopify_attributes }}>
+                <svg class="gpl-gd-cap__check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 12.5l5 5L20 6.5"/>
+                </svg>
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="gpl-gd-cap__ba">
+          {%- if s.before_after_image != blank -%}
+            {{
+              s.before_after_image
+              | image_url: width: 800
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 989px) 90vw, 22vw',
+                widths: '300, 500, 650, 800',
+                alt: s.before_after_image.alt | escape
+            }}
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'gpl-gd-cap__ph' }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="gpl-gd-cap__col gpl-gd-cap__col--print">
+      {%- if s.print_heading != blank -%}
+        <h2 class="gpl-gd-cap__heading gpl-gd-cap__heading--print">{{ s.print_heading }}</h2>
+      {%- endif -%}
+      {%- if s.print_text != blank or s.print_text_accent != blank -%}
+        <p class="gpl-gd-cap__text">
+          {%- if s.print_text != blank -%}{{ s.print_text }} {% endif -%}
+          {%- if s.print_text_accent != blank -%}
+            <span class="gpl-gd-cap__text-accent">{{ s.print_text_accent }}</span>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      {%- if methods.size > 0 -%}
+        <div class="gpl-gd-cap__methods">
+          {%- for block in methods -%}
+            <div class="gpl-gd-cap-method" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="gpl-gd-cap-method__icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="gpl-gd-cap-method__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="gpl-gd-cap-method__desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-cap-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(30px, 3.4vw, 50px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__panel {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    border: 2px solid var(--gpl-accent);
+    border-radius: 6px;
+    background: #0D0D0D;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__col {
+    box-sizing: border-box;
+    padding: clamp(16px, 1.8vw, 26px);
+    min-width: 0;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__col--print { border-left: 1px solid rgba(255, 255, 255, 0.16); }
+
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__eyebrow {
+    margin: 0 0 6px;
+    color: var(--gpl-accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(11px, 0.82vw, 13px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__heading {
+    margin: 0 0 10px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    font-size: clamp(18px, 1.75vw, 26px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__heading--print { font-size: clamp(19px, 1.9vw, 29px); }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__text {
+    margin: 0 0 clamp(12px, 1.3vw, 18px);
+    color: #A8A8A8;
+    font-size: clamp(11.5px, 0.8vw, 13.5px);
+    line-height: 1.55;
+    max-width: 62ch;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__text-accent { color: var(--gpl-accent); }
+
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__recreate-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+    gap: clamp(12px, 1.4vw, 22px);
+    align-items: center;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(6px, 0.6vw, 9px) clamp(10px, 1vw, 16px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__check {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    min-width: 0;
+    color: #E4E4E4;
+    font-size: clamp(10.5px, 0.72vw, 12.5px);
+    line-height: 1.35;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__check-icon {
+    flex: 0 0 auto;
+    width: clamp(11px, 0.8vw, 13px);
+    height: clamp(11px, 0.8vw, 13px);
+    margin-top: 2px;
+    color: var(--gpl-accent);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__ba {
+    border-radius: 4px;
+    overflow: hidden;
+    background: #1E1E1E;
+    aspect-ratio: 4 / 3;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__ba img,
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__ba svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__methods {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(8px, 0.9vw, 14px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method { text-align: center; min-width: 0; }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__icon {
+    display: flex;
+    justify-content: center;
+    color: var(--gpl-accent);
+    margin-bottom: 8px;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__icon svg {
+    width: clamp(28px, 2.4vw, 40px);
+    height: clamp(28px, 2.4vw, 40px);
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__title {
+    margin: 0 0 4px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(9.5px, 0.68vw, 11.5px);
+    line-height: 1.2;
+  }
+  #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__desc {
+    margin: 0;
+    color: #9C9C9C;
+    font-size: clamp(9px, 0.62vw, 10.5px);
+    line-height: 1.35;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__panel { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__col--print {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__check { font-size: 12.5px; }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__title { font-size: 11.5px; }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap-method__desc { font-size: 10.5px; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__recreate-body { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__methods { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+  }
+  @media screen and (max-width: 479px) {
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__checks { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-cap-{{ section.id }} .gpl-gd-cap__methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GD Capabilities",
+  "tag": "section",
+  "class": "gpl-section-gd-cap",
+  "settings": [
+    { "type": "header", "content": "Left — recreate artwork" },
+    { "type": "text", "id": "recreate_eyebrow", "label": "Eyebrow", "default": "Need Something Redrawn?" },
+    { "type": "text", "id": "recreate_heading", "label": "Heading", "default": "We Can Recreate Your Artwork." },
+    { "type": "textarea", "id": "recreate_text", "label": "Text", "default": "Have an old logo? Low-resolution image? Screenshot? Photo of a shirt? We can recreate and prepare it for professional printing." },
+    { "type": "image_picker", "id": "before_after_image", "label": "Before / after image" },
+
+    { "type": "header", "content": "Right — design for print" },
+    { "type": "text", "id": "print_heading", "label": "Heading", "default": "Design for Print" },
+    { "type": "textarea", "id": "print_text", "label": "Text", "default": "Not every design that looks good on screen will print properly." },
+    { "type": "text", "id": "print_text_accent", "label": "Text — red part", "default": "We prepare your artwork for the best results on every product." },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Checklist item",
+      "limit": 12,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Vectorization" }
+      ]
+    },
+    {
+      "type": "method",
+      "name": "Print method",
+      "limit": 6,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "DTF" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "High quality transfer prints" }
+      ]
+    }
+  ],
+  "max_blocks": 18,
+  "presets": [{ "name": "GD Capabilities" }]
+}
+{% endschema %}

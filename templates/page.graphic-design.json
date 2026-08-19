@@ -1,0 +1,613 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "gd_hero": {
+      "type": "gpl-gd-hero",
+      "settings": {
+        "image_position": "center right",
+        "scrim_strength": 90,
+        "min_height": 620,
+        "min_height_mobile": 480,
+        "eyebrow": "",
+        "heading_line1": "Graphic",
+        "heading_line2": "Design",
+        "subheading": "Turn Your Idea Into Something People Want to Wear.",
+        "paragraph": "<p>From a simple idea to a complete brand identity, GTA Print Lab's graphic design team creates artwork that looks great on screen and prints beautifully on apparel, promotional products, signage, and marketing materials.</p>",
+        "button_1_text": "Start Your Design",
+        "button_1_link": "",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_audience": {
+      "type": "gpl-gd-audience",
+      "blocks": {
+        "aud_tees": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "label": "T-Shirts & Hoodies"
+          }
+        },
+        "aud_biz": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 9h16v11H4z\"/><path d=\"M3 9l2-5h14l2 5\"/><path d=\"M9 20v-6h6v6\"/></svg>",
+            "label": "Businesses & Brands"
+          }
+        },
+        "aud_sports": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 4h10v5a5 5 0 0 1-10 0z\"/><path d=\"M7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3\"/><path d=\"M9.5 20h5M12 14v6\"/></svg>",
+            "label": "Sports Teams"
+          }
+        },
+        "aud_music": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 18V6l10-2v12\"/><circle cx=\"6.5\" cy=\"18\" r=\"2.5\"/><circle cx=\"16.5\" cy=\"16\" r=\"2.5\"/></svg>",
+            "label": "Musicians & Artists"
+          }
+        },
+        "aud_events": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/></svg>",
+            "label": "Events & Organizations"
+          }
+        },
+        "aud_promo": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"9\" width=\"18\" height=\"11\" rx=\"1\"/><path d=\"M2.5 9h19M12 9v11\"/><path d=\"M12 9S10.5 4.5 8 4.5A2 2 0 0 0 8 9M12 9s1.5-4.5 4-4.5A2 2 0 0 1 16 9\"/></svg>",
+            "label": "Promotional Products"
+          }
+        },
+        "aud_social": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"18\" cy=\"5.5\" r=\"2.5\"/><circle cx=\"6\" cy=\"12\" r=\"2.5\"/><circle cx=\"18\" cy=\"18.5\" r=\"2.5\"/><path d=\"M8.2 10.8 15.8 6.7M8.2 13.2l7.6 4.1\"/></svg>",
+            "label": "Social Media & Marketing"
+          }
+        },
+        "aud_fashion": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 8a2.2 2.2 0 1 1 2.2-2.2\"/><path d=\"M12 8v2.2L3.5 16a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 10.2\"/></svg>",
+            "label": "Fashion Brands"
+          }
+        }
+      },
+      "block_order": [
+        "aud_tees",
+        "aud_biz",
+        "aud_sports",
+        "aud_music",
+        "aud_events",
+        "aud_promo",
+        "aud_social",
+        "aud_fashion"
+      ],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "gd_services": {
+      "type": "gpl-gd-services",
+      "blocks": {
+        "svc_tshirt": {
+          "type": "service",
+          "settings": {
+            "title": "Custom T-Shirt Design",
+            "description": "Original artwork for apparel, streetwear, events, brands, fundraisers and more.",
+            "turnaround": "1-3 Business Days"
+          }
+        },
+        "svc_logo": {
+          "type": "service",
+          "settings": {
+            "title": "Logo Design & Branding",
+            "description": "Build a strong brand identity with logos, brand marks, business cards, colour palettes and more.",
+            "turnaround": "3-5 Business Days"
+          }
+        },
+        "svc_sports": {
+          "type": "service",
+          "settings": {
+            "title": "Sports Graphics",
+            "description": "Team logos, jerseys, championship graphics, player graphics and more.",
+            "turnaround": "1-3 Business Days"
+          }
+        },
+        "svc_street": {
+          "type": "service",
+          "settings": {
+            "title": "Streetwear & Fashion Design",
+            "description": "Premium streetwear graphics, typography, oversized prints and limited drops.",
+            "turnaround": "2-5 Business Days"
+          }
+        },
+        "svc_corp": {
+          "type": "service",
+          "settings": {
+            "title": "Corporate & Business Design",
+            "description": "Company apparel, marketing materials, uniforms, flyers, social media and more.",
+            "turnaround": "2-5 Business Days"
+          }
+        },
+        "svc_event": {
+          "type": "service",
+          "settings": {
+            "title": "Event & Promotional Graphics",
+            "description": "Event flyers, posters, banners, social media graphics and more.",
+            "turnaround": "1-3 Business Days"
+          }
+        }
+      },
+      "block_order": [
+        "svc_tshirt",
+        "svc_logo",
+        "svc_sports",
+        "svc_street",
+        "svc_corp",
+        "svc_event"
+      ],
+      "settings": {
+        "heading": "Our Graphic Design Services",
+        "button_text": "View All Design Examples",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_capabilities": {
+      "type": "gpl-gd-capabilities",
+      "blocks": {
+        "chk_01": {
+          "type": "check",
+          "settings": {
+            "label": "Vectorization"
+          }
+        },
+        "chk_02": {
+          "type": "check",
+          "settings": {
+            "label": "Colour Separation"
+          }
+        },
+        "chk_03": {
+          "type": "check",
+          "settings": {
+            "label": "Background Removal"
+          }
+        },
+        "chk_04": {
+          "type": "check",
+          "settings": {
+            "label": "Print File Preparation"
+          }
+        },
+        "chk_05": {
+          "type": "check",
+          "settings": {
+            "label": "Image Cleanup"
+          }
+        },
+        "chk_06": {
+          "type": "check",
+          "settings": {
+            "label": "Transparent PNG Creation"
+          }
+        },
+        "chk_07": {
+          "type": "check",
+          "settings": {
+            "label": "Logo Recreation"
+          }
+        },
+        "chk_08": {
+          "type": "check",
+          "settings": {
+            "label": "Vector Artwork"
+          }
+        },
+        "chk_09": {
+          "type": "check",
+          "settings": {
+            "label": "Resolution Enhancement"
+          }
+        },
+        "chk_10": {
+          "type": "check",
+          "settings": {
+            "label": "DTF / DTG Print Preparation"
+          }
+        },
+        "mth_dtf": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 4h8l1 4H7z\"/><path d=\"M7 8h10v12H7z\"/><path d=\"M10 13h4\"/></svg>",
+            "title": "DTF",
+            "description": "High quality transfer prints"
+          }
+        },
+        "mth_dtg": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"7\" width=\"13\" height=\"9\" rx=\"1\"/><path d=\"M16 10h3l2 3v3h-5z\"/><path d=\"M6 19h9\"/></svg>",
+            "title": "DTG",
+            "description": "Direct to garment printing"
+          }
+        },
+        "mth_emb": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v18\"/><path d=\"M8.5 6.5 12 3l3.5 3.5\"/><ellipse cx=\"12\" cy=\"15\" rx=\"4.5\" ry=\"6\"/></svg>",
+            "title": "Embroidery",
+            "description": "Embroidery ready files"
+          }
+        },
+        "mth_screen": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h16l-4 6 4 8H4l4-8z\"/></svg>",
+            "title": "Screen Printing",
+            "description": "Colour separated artwork"
+          }
+        },
+        "mth_promo": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"9\" width=\"18\" height=\"11\" rx=\"1\"/><path d=\"M2.5 9h19M12 9v11\"/><path d=\"M12 9S10.5 4.5 8 4.5A2 2 0 0 0 8 9M12 9s1.5-4.5 4-4.5A2 2 0 0 1 16 9\"/></svg>",
+            "title": "Promotional Products",
+            "description": "Mugs, bags, bottles & more"
+          }
+        }
+      },
+      "block_order": [
+        "chk_01",
+        "chk_02",
+        "chk_03",
+        "chk_04",
+        "chk_05",
+        "chk_06",
+        "chk_07",
+        "chk_08",
+        "chk_09",
+        "chk_10",
+        "mth_dtf",
+        "mth_dtg",
+        "mth_emb",
+        "mth_screen",
+        "mth_promo"
+      ],
+      "settings": {
+        "recreate_eyebrow": "Need Something Redrawn?",
+        "recreate_heading": "We Can Recreate Your Artwork.",
+        "recreate_text": "Have an old logo? Low-resolution image? Screenshot? Photo of a shirt? We can recreate and prepare it for professional printing.",
+        "print_heading": "Design for Print",
+        "print_text": "Not every design that looks good on screen will print properly.",
+        "print_text_accent": "We prepare your artwork for the best results on every product.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_process": {
+      "type": "gpl-gd-process",
+      "blocks": {
+        "prc_idea": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h11l5 5v9H4z\"/><path d=\"M8 10h6M8 14h4\"/></svg>",
+            "title": "Tell Us Your Idea",
+            "description": "Upload your artwork, sketch, photo or explain your idea. Don't have artwork? That's okay!"
+          }
+        },
+        "prc_create": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"12\" rx=\"1\"/><path d=\"M8 21h8M12 17v4\"/><path d=\"M9 11l2 2 4-4\"/></svg>",
+            "title": "We Create",
+            "description": "Our designers create a professional concept and send you a digital proof for review."
+          }
+        },
+        "prc_approve": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8 12.2l2.7 2.8L16 9.6\"/></svg>",
+            "title": "You Approve",
+            "description": "Request changes if needed. Once you're happy, approve the final artwork."
+          }
+        },
+        "prc_prep": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 9V3h12v6\"/><rect x=\"3\" y=\"9\" width=\"18\" height=\"7\" rx=\"1\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"7\"/></svg>",
+            "title": "Prepare for Print",
+            "description": "We prepare your artwork for the perfect print on your chosen product and method."
+          }
+        },
+        "prc_print": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "title": "We Print",
+            "description": "Your artwork goes into production with premium quality results."
+          }
+        }
+      },
+      "block_order": [
+        "prc_idea",
+        "prc_create",
+        "prc_approve",
+        "prc_prep",
+        "prc_print"
+      ],
+      "settings": {
+        "heading": "Our Design Process",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_turnaround": {
+      "type": "gpl-gd-turnaround",
+      "blocks": {
+        "trn_express": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "label": "Express Design",
+            "title": "Same Day",
+            "description": "For simple changes, text edits, background removal and print-ready artwork.",
+            "price": "Starting at $25"
+          }
+        },
+        "trn_standard": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/><path d=\"M2.5 5.5 5 3M21.5 5.5 19 3\"/></svg>",
+            "label": "Standard Design",
+            "title": "1-3 Business Days",
+            "description": "Perfect for custom t-shirt designs, event graphics, sports graphics and more.",
+            "price": "Starting at $50"
+          }
+        },
+        "trn_brand": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/><path d=\"M12 2v2M22 12h-2M12 22v-2M2 12h2\"/></svg>",
+            "label": "Professional Branding",
+            "title": "3-5 Business Days",
+            "description": "For logos, brand identity packages and more complex projects.",
+            "price": "Starting at $150"
+          }
+        },
+        "trn_complex": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l3 2\"/><path d=\"M9 2h6\"/><path d=\"M12 2v3\"/></svg>",
+            "label": "Complex / Custom Projects",
+            "title": "5+ Business Days",
+            "description": "Large illustrations, detailed artwork and extensive branding projects.",
+            "price": "Quote provided"
+          }
+        }
+      },
+      "block_order": [
+        "trn_express",
+        "trn_standard",
+        "trn_brand",
+        "trn_complex"
+      ],
+      "settings": {
+        "heading": "How Long Does Graphic Design Take?",
+        "footnote": "Turnaround times depend on project complexity and current production volume.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_gallery": {
+      "type": "gpl-gd-gallery",
+      "blocks": {
+        "gal_01": {
+          "type": "item",
+          "settings": {
+            "category": "Apparel",
+            "caption": ""
+          }
+        },
+        "gal_02": {
+          "type": "item",
+          "settings": {
+            "category": "Apparel",
+            "caption": ""
+          }
+        },
+        "gal_03": {
+          "type": "item",
+          "settings": {
+            "category": "Sports",
+            "caption": ""
+          }
+        },
+        "gal_04": {
+          "type": "item",
+          "settings": {
+            "category": "Streetwear",
+            "caption": ""
+          }
+        },
+        "gal_05": {
+          "type": "item",
+          "settings": {
+            "category": "Logos",
+            "caption": ""
+          }
+        },
+        "gal_06": {
+          "type": "item",
+          "settings": {
+            "category": "Events",
+            "caption": ""
+          }
+        },
+        "gal_07": {
+          "type": "item",
+          "settings": {
+            "category": "Branding",
+            "caption": ""
+          }
+        },
+        "gal_08": {
+          "type": "item",
+          "settings": {
+            "category": "Social Media",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "gal_01",
+        "gal_02",
+        "gal_03",
+        "gal_04",
+        "gal_05",
+        "gal_06",
+        "gal_07",
+        "gal_08"
+      ],
+      "settings": {
+        "heading": "Design Gallery",
+        "all_label": "All",
+        "tile_ratio": "1 / 1",
+        "button_text": "View Full Portfolio",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "gd_why": {
+      "type": "gpl-gd-why",
+      "blocks": {
+        "why_roof": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 4l9 6.5\"/><path d=\"M5.5 12v8h13v-8\"/><path d=\"M10 20v-5h4v5\"/></svg>",
+            "title": "Design + Print Under One Roof",
+            "description": "One company. One workflow. Better results."
+          }
+        },
+        "why_ready": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"/><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"/></svg>",
+            "title": "Print-Ready Artwork",
+            "description": "Designed specifically for professional printing."
+          }
+        },
+        "why_fast": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l3 2\"/><path d=\"M9 2h6M12 2v3\"/></svg>",
+            "title": "Fast Turnaround",
+            "description": "Express changes available when you need it most."
+          }
+        },
+        "why_direct": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h16v11H9l-5 4z\"/><path d=\"M8 9h8M8 12h5\"/></svg>",
+            "title": "Direct Communication",
+            "description": "Work directly with the team that prints your products."
+          }
+        },
+        "why_consist": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"/><path d=\"M9.2 9.7l2 2 3.6-3.9\"/><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"/></svg>",
+            "title": "Consistent Results",
+            "description": "Designed for quality. Printed with precision. Delivered with care."
+          }
+        }
+      },
+      "block_order": [
+        "why_roof",
+        "why_ready",
+        "why_fast",
+        "why_direct",
+        "why_consist"
+      ],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "gd_cta": {
+      "type": "gpl-gd-cta",
+      "blocks": {
+        "cta_design": {
+          "type": "button",
+          "settings": {
+            "label": "Start Your Design",
+            "link": "",
+            "style": "primary",
+            "icon": ""
+          }
+        },
+        "cta_quote": {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "link": "",
+            "style": "outline",
+            "icon": ""
+          }
+        },
+        "cta_upload": {
+          "type": "button",
+          "settings": {
+            "label": "Upload Your Artwork",
+            "link": "",
+            "style": "outline",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3\"/><path d=\"M12 3v12\"/><path d=\"M8 7l4-4 4 4\"/></svg>"
+          }
+        }
+      },
+      "block_order": [
+        "cta_design",
+        "cta_quote",
+        "cta_upload"
+      ],
+      "settings": {
+        "heading": "Ready to Create Something",
+        "heading_accent": "Amazing?",
+        "text": "Whether you're starting a clothing brand, launching a business, creating team apparel, promoting an event, or making something for yourself, GTA Print Lab is here to bring your idea to life.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    }
+  },
+  "order": [
+    "gd_hero",
+    "gd_audience",
+    "gd_services",
+    "gd_capabilities",
+    "gd_process",
+    "gd_turnaround",
+    "gd_gallery",
+    "gd_why",
+    "gd_cta"
+  ]
+}

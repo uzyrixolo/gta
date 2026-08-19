@@ -1,0 +1,140 @@
+{%- comment -%}
+  GTA Print Lab — Print On Demand page: Mission quote + stats bar
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-pod-stats-{{ section.id }}" class="gpl-pod-stats">
+  <div class="gpl-pod-stats__inner">
+    {%- if s.quote != blank -%}
+      <div class="gpl-pod-stats__quote">
+        <span class="gpl-pod-stats__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 13.5c0-4 2.4-7 6-8.5l.9 1.7c-2 1-3.3 2.5-3.6 4.3.3-.1.7-.2 1.1-.2 1.7 0 3 1.3 3 3.1S10 17 8.2 17c-2.4 0-4.2-1.5-4.2-3.5zm9.7 0c0-4 2.4-7 6-8.5l.9 1.7c-2 1-3.3 2.5-3.6 4.3.3-.1.7-.2 1.1-.2 1.7 0 3 1.3 3 3.1S19.7 17 17.9 17c-2.4 0-4.2-1.5-4.2-3.5z"/>
+          </svg>
+        </span>
+        <p class="gpl-pod-stats__quote-text">{{ s.quote }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-pod-stats__grid">
+        {%- for block in section.blocks -%}
+          <div class="gpl-pod-stats__stat" {{ block.shopify_attributes }}>
+            {%- if block.settings.value != blank -%}
+              <p class="gpl-pod-stats__value">{{ block.settings.value }}</p>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <p class="gpl-pod-stats__label">{{ block.settings.label }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-pod-stats-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    border: 1px solid rgba(215, 25, 32, 0.55);
+    border-radius: 8px;
+    background: #100C0C;
+    padding: clamp(16px, 1.8vw, 26px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: clamp(16px, 2vw, 32px);
+    align-items: center;
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__quote {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(10px, 1.1vw, 16px);
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__mark {
+    flex: 0 0 auto;
+    color: var(--gpl-accent);
+    display: flex;
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__mark svg {
+    width: clamp(30px, 2.6vw, 44px);
+    height: clamp(30px, 2.6vw, 44px);
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__quote-text {
+    margin: 0;
+    color: #E4E4E4;
+    font-size: clamp(11px, 0.85vw, 14.5px);
+    line-height: 1.55;
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__stat {
+    min-width: 0;
+    text-align: center;
+    padding: 0 clamp(8px, 1vw, 18px);
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__stat:first-child { border-left: none; }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__value {
+    margin: 0 0 4px;
+    color: var(--gpl-accent);
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    line-height: 1;
+    font-size: clamp(22px, 2.3vw, 40px);
+  }
+  #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__label {
+    margin: 0;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(9px, 0.68vw, 11.5px);
+    line-height: 1.25;
+  }
+
+  @media screen and (max-width: 989px) {
+    #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__inner { grid-template-columns: minmax(0, 1fr); }
+    #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__grid { gap: 16px 0; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__stat:nth-child(2n + 1) { border-left: none; }
+    #gpl-pod-stats-{{ section.id }} .gpl-pod-stats__label { font-size: 11px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "POD Stats",
+  "tag": "section",
+  "class": "gpl-section-pod-stats",
+  "settings": [
+    { "type": "textarea", "id": "quote", "label": "Mission quote", "default": "Our mission is simple: help you build a brand people love with premium products, fast shipping, and world-class service." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "1000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Active Brands" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "POD Stats" }]
+}
+{% endschema %}

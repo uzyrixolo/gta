@@ -1,0 +1,303 @@
+{%- comment -%}
+  GTA Print Lab — Support Cards (Need Help + Rush Order)
+  File: sections/gpl-support-cards.liquid
+
+  Self-contained rebuild of the provided "inker-support-section" HTML:
+  - No hardcoded {{ 'xxx.svg' | asset_url }} references (those files don't
+    exist in the theme yet and would 404 / break) — every icon is now an
+    editable SVG-code setting, and the avatar is a proper image_picker.
+  - No hardcoded phone number / email — both are theme customizer settings.
+  - All CSS and a tiny bit of JS (none actually needed here) are embedded
+    directly, no external stylesheet dependency.
+  - Fully responsive: two cards side-by-side on desktop, stacked full-width
+    on mobile, matching the provided reference screenshots exactly.
+{%- endcomment -%}
+
+<section class="gplsc-{{ section.id }} gplsc">
+  <div class="gplsc__inner">
+    <div class="gplsc__grid">
+
+      {%- comment -%} LEFT CARD {%- endcomment -%}
+      <div class="gplsc-card gplsc-card--left">
+        <div class="gplsc-card__header">
+          <div class="gplsc-card__avatar">
+            {%- if section.settings.avatar_image != blank -%}
+              <img
+                src="{{ section.settings.avatar_image | image_url: width: 200 }}"
+                alt="{{ section.settings.avatar_image.alt | default: section.settings.left_heading | escape }}"
+                width="{{ section.settings.avatar_image.width }}"
+                height="{{ section.settings.avatar_image.height }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="gplsc-card__avatar-placeholder" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="gplsc-card__header-text">
+            {%- if section.settings.left_heading != blank -%}
+              <h3 class="gplsc-card__title">{{ section.settings.left_heading }}</h3>
+            {%- endif -%}
+            {%- if section.settings.left_description != blank -%}
+              <div class="gplsc-card__desc">{{ section.settings.left_description }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- assign help_blocks = section.blocks | where: 'type', 'help_item' -%}
+        {%- if help_blocks.size > 0 -%}
+          {%- if section.settings.help_heading != blank -%}
+            <h4 class="gplsc-card__subheading">{{ section.settings.help_heading }}</h4>
+          {%- endif -%}
+          <div class="gplsc-help-list">
+            {%- for block in help_blocks -%}
+              <div class="gplsc-help-item" {{ block.shopify_attributes }}>
+                <span class="gplsc-help-item__icon">{{ block.settings.icon }}</span>
+                <span>{{ block.settings.label }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign button_blocks = section.blocks | where: 'type', 'action_button' -%}
+        {%- if button_blocks.size > 0 -%}
+          <div class="gplsc-actions">
+            {%- for block in button_blocks -%}
+              <a href="{{ block.settings.link | default: '#' }}" class="gplsc-btn" {{ block.shopify_attributes }}>
+                <span class="gplsc-btn__icon">{{ block.settings.icon }}</span>
+                {{ block.settings.label }}
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} RIGHT CARD {%- endcomment -%}
+      <div class="gplsc-card gplsc-card--right">
+        {%- if section.settings.right_heading != blank -%}
+          <h3 class="gplsc-card__title">{{ section.settings.right_heading }}</h3>
+        {%- endif -%}
+        {%- if section.settings.right_line1 != blank -%}
+          <h4 class="gplsc-card__line">{{ section.settings.right_line1 }}</h4>
+        {%- endif -%}
+        {%- if section.settings.right_line2 != blank -%}
+          <h4 class="gplsc-card__line">{{ section.settings.right_line2 }}</h4>
+        {%- endif -%}
+
+        {%- assign checklist_blocks = section.blocks | where: 'type', 'checklist_item' -%}
+        {%- if checklist_blocks.size > 0 -%}
+          <ul class="gplsc-checklist">
+            {%- for block in checklist_blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="gplsc-checklist__icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+                </span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.right_button_text != blank -%}
+          <a href="{{ section.settings.right_button_link | default: '#' }}" class="gplsc-learn-btn">
+            {{ section.settings.right_button_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gplsc-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;
+  }
+  .gplsc-{{ section.id }} .gplsc__inner { max-width: 1300px; margin: 0 auto; }
+  .gplsc-{{ section.id }} .gplsc__grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .gplsc-{{ section.id }} .gplsc-card {
+    background: {{ section.settings.card_bg_color }};
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .gplsc-{{ section.id }} .gplsc-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .gplsc-{{ section.id }} .gplsc-card__avatar {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(128,128,128,0.15);
+  }
+  .gplsc-{{ section.id }} .gplsc-card__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gplsc-{{ section.id }} .gplsc-card__avatar-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: rgba(128,128,128,0.6);
+  }
+  .gplsc-{{ section.id }} .gplsc-card__title {
+    font-size: 21px; font-weight: 800; margin: 0 0 8px; color: {{ section.settings.text_color }};
+    line-height: 1.25;
+  }
+  .gplsc-{{ section.id }} .gplsc-card__desc { font-size: 14.5px; line-height: 1.6; color: {{ section.settings.text_color }}; opacity: 0.75; }
+
+  .gplsc-{{ section.id }} .gplsc-card__subheading {
+    font-size: 15px; font-weight: 800; margin: 4px 0 14px; color: {{ section.settings.text_color }};
+  }
+  .gplsc-{{ section.id }} .gplsc-help-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 24px;
+    margin-bottom: 22px;
+  }
+  .gplsc-{{ section.id }} .gplsc-help-item {
+    display: flex; align-items: center; gap: 10px; font-size: 14px; color: {{ section.settings.text_color }};
+  }
+  .gplsc-{{ section.id }} .gplsc-help-item__icon { color: {{ section.settings.icon_color }}; flex-shrink: 0; display: flex; }
+  .gplsc-{{ section.id }} .gplsc-help-item__icon svg { width: 20px; height: 20px; }
+
+  .gplsc-{{ section.id }} .gplsc-actions {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .gplsc-{{ section.id }} .gplsc-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid {{ section.settings.primary_color }};
+    color: {{ section.settings.primary_color }};
+    border-radius: 6px;
+    padding: 11px 18px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .gplsc-{{ section.id }} .gplsc-btn:hover { background: {{ section.settings.primary_color }}; color: #FFFFFF; }
+  .gplsc-{{ section.id }} .gplsc-btn__icon { display: flex; }
+  .gplsc-{{ section.id }} .gplsc-btn__icon svg { width: 16px; height: 16px; }
+
+  .gplsc-{{ section.id }} .gplsc-card--right .gplsc-card__title { margin-bottom: 10px; }
+  .gplsc-{{ section.id }} .gplsc-card__line {
+    font-size: 15px; font-weight: 700; color: {{ section.settings.text_color }}; margin: 0 0 10px; line-height: 1.4;
+  }
+  .gplsc-{{ section.id }} .gplsc-checklist {
+    list-style: none; margin: 16px 0 22px; padding: 0; display: flex; flex-direction: column; gap: 12px;
+  }
+  .gplsc-{{ section.id }} .gplsc-checklist li {
+    display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: {{ section.settings.text_color }}; line-height: 1.5;
+  }
+  .gplsc-{{ section.id }} .gplsc-checklist__icon { color: {{ section.settings.icon_color }}; flex-shrink: 0; margin-top: 1px; }
+
+  .gplsc-{{ section.id }} .gplsc-learn-btn {
+    display: inline-block;
+    border: 1.5px solid {{ section.settings.primary_color }};
+    color: {{ section.settings.primary_color }};
+    border-radius: 6px;
+    padding: 11px 22px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .gplsc-{{ section.id }} .gplsc-learn-btn:hover { background: {{ section.settings.primary_color }}; color: #FFFFFF; }
+
+  @media screen and (max-width: 900px) {
+    .gplsc-{{ section.id }} .gplsc__grid { grid-template-columns: 1fr; }
+  }
+  @media screen and (max-width: 549px) {
+    .gplsc-{{ section.id }} { padding: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px 16px {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px; }
+    .gplsc-{{ section.id }} .gplsc__grid { gap: 16px; }
+    .gplsc-{{ section.id }} .gplsc-card { padding: 22px; }
+    .gplsc-{{ section.id }} .gplsc-card__header { flex-direction: column; align-items: center; text-align: center; }
+    .gplsc-{{ section.id }} .gplsc-card__subheading { text-align: center; }
+    .gplsc-{{ section.id }} .gplsc-help-list { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .gplsc-{{ section.id }} .gplsc-actions { flex-direction: column; }
+    .gplsc-{{ section.id }} .gplsc-btn { justify-content: center; }
+    .gplsc-{{ section.id }} .gplsc-card--right { text-align: left; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Support Cards",
+  "tag": "section",
+  "class": "gpl-section-support-cards",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#F5F5F5" },
+    { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border colour", "default": "#E5E5E5" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#111111" },
+    { "type": "color", "id": "primary_color", "label": "Buttons colour", "default": "#2F5FA8" },
+    { "type": "color", "id": "icon_color", "label": "Icon accent colour", "default": "#E2492F" },
+    { "type": "header", "content": "Left card" },
+    { "type": "image_picker", "id": "avatar_image", "label": "Avatar image (circular, 200x200px)" },
+    { "type": "text", "id": "left_heading", "label": "Heading", "default": "Need Help With Your Order?" },
+    { "type": "richtext", "id": "left_description", "label": "Description", "default": "<p>Need help with your order? Get personalized support from our expert team as your partner from design to delivery.</p>" },
+    { "type": "text", "id": "help_heading", "label": "Help list heading", "default": "How We Can Help" },
+    { "type": "header", "content": "Right card" },
+    { "type": "text", "id": "right_heading", "label": "Heading", "default": "Rush Order Service – Jump the Queue" },
+    { "type": "text", "id": "right_line1", "label": "Line 1", "default": "Need your order faster than standard production times?" },
+    { "type": "text", "id": "right_line2", "label": "Line 2", "default": "With our Rush Order Service, you can move your job to the front of the line." },
+    { "type": "text", "id": "right_button_text", "label": "Button text", "default": "Get A Quote" },
+    { "type": "url", "id": "right_button_link", "label": "Button link" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 120, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 120, "step": 4, "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "help_item",
+      "name": "Help item",
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Product Selection" }
+      ]
+    },
+    {
+      "type": "action_button",
+      "name": "Action button",
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "800-293-4232" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "checklist_item",
+      "name": "Checklist item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Priority handling & production" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "GPL Support Cards",
+      "blocks": [
+        { "type": "help_item", "settings": { "label": "Product Selection" } },
+        { "type": "help_item", "settings": { "label": "Design Assistance" } },
+        { "type": "help_item", "settings": { "label": "Group Orders" } },
+        { "type": "help_item", "settings": { "label": "Order Support" } },
+        { "type": "action_button", "settings": { "label": "800-293-4232" } },
+        { "type": "action_button", "settings": { "label": "Chat Now" } },
+        { "type": "action_button", "settings": { "label": "Email Us" } },
+        { "type": "checklist_item", "settings": { "text": "Priority handling & production" } },
+        { "type": "checklist_item", "settings": { "text": "Fast turnaround for urgent deadlines" } },
+        { "type": "checklist_item", "settings": { "text": "Perfect for last-minute events, launches, or gifts" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,100 @@
+{%- comment -%}
+  GTA Print Lab — Final Call To Action
+  File: sections/gpl-final-cta.liquid
+{%- endcomment -%}
+
+<section class="gpl-cta-{{ section.id }} gpl-cta">
+  {%- if section.settings.bg_image != blank -%}
+    <div class="gpl-cta__bg">
+      <img
+        src="{{ section.settings.bg_image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.bg_image | image_url: width: 1000 }} 1000w, {{ section.settings.bg_image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt=""
+        width="{{ section.settings.bg_image.width }}"
+        height="{{ section.settings.bg_image.height }}"
+        loading="lazy"
+      >
+      <div class="gpl-cta__overlay"></div>
+    </div>
+  {%- endif -%}
+  <div class="gpl-cta__inner">
+    <h2 class="gpl-cta__heading">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}
+      <p class="gpl-cta__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+    <div class="gpl-cta__buttons">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'button' -%}
+          <a href="{{ block.settings.link | default: '#' }}" class="gpl-btn gpl-btn--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+            {{ block.settings.label }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gpl-cta-{{ section.id }} { position: relative; background: #111111; padding: 90px 24px; text-align: center; overflow: hidden; }
+  .gpl-cta-{{ section.id }} .gpl-cta__bg { position: absolute; inset: 0; z-index: 0; }
+  .gpl-cta-{{ section.id }} .gpl-cta__bg img { width: 100%; height: 100%; object-fit: cover; }
+  .gpl-cta-{{ section.id }} .gpl-cta__overlay { position: absolute; inset: 0; background: rgba(17,17,17,0.85); }
+  .gpl-cta-{{ section.id }} .gpl-cta__inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .gpl-cta-{{ section.id }} .gpl-cta__heading { color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 3.6vw, 42px); margin: 0 0 16px; letter-spacing: -0.01em; }
+  .gpl-cta-{{ section.id }} .gpl-cta__text { color: #B9B9B9; font-size: 15px; line-height: 1.6; margin: 0 0 32px; }
+  .gpl-cta-{{ section.id }} .gpl-cta__buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .gpl-cta-{{ section.id }} .gpl-btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 15px 28px; border-radius: 999px;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.02em; text-transform: uppercase; text-decoration: none;
+    transition: background-color .2s ease, border-color .2s ease, transform .15s ease; border: 2px solid transparent;
+  }
+  .gpl-cta-{{ section.id }} .gpl-btn--primary { background: #D71920; color: #FFFFFF; }
+  .gpl-cta-{{ section.id }} .gpl-btn--primary:hover { background: #B4141A; transform: translateY(-1px); }
+  .gpl-cta-{{ section.id }} .gpl-btn--outline { background: transparent; color: #FFFFFF; border-color: rgba(255,255,255,0.5); }
+  .gpl-cta-{{ section.id }} .gpl-btn--outline:hover { border-color: #FFFFFF; background: rgba(255,255,255,0.08); }
+
+  @media screen and (max-width: 549px) {
+    .gpl-cta-{{ section.id }} { padding: 56px 18px; }
+    .gpl-cta-{{ section.id }} .gpl-cta__buttons { flex-direction: column; align-items: stretch; }
+    .gpl-cta-{{ section.id }} .gpl-btn { justify-content: center; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Final CTA",
+  "tag": "section",
+  "class": "gpl-section-cta",
+  "settings": [
+    { "type": "image_picker", "id": "bg_image", "label": "Background image (optional)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ready to Start Your Next Project?" },
+    { "type": "textarea", "id": "text", "label": "Supporting text" }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Request Quote" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "select", "id": "style", "label": "Style", "options": [
+          { "value": "primary", "label": "Solid red" },
+          { "value": "outline", "label": "Outline" }
+        ], "default": "primary" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "GPL Final CTA",
+      "blocks": [
+        { "type": "button", "settings": { "label": "Request Quote", "style": "primary" } },
+        { "type": "button", "settings": { "label": "Call Now", "style": "outline" } },
+        { "type": "button", "settings": { "label": "Email Us", "style": "outline" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

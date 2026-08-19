@@ -1,0 +1,703 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "pod_hero": {
+      "type": "gpl-gd-hero",
+      "settings": {
+        "image_position": "center right",
+        "scrim_strength": 90,
+        "min_height": 620,
+        "min_height_mobile": 480,
+        "eyebrow": "",
+        "heading_line1": "Print On Demand",
+        "heading_line2": "Done Different.",
+        "subheading": "Your Brand. Our Quality. Delivered Fast.",
+        "paragraph": "<p>We print, pack and ship premium products with your custom designs. No inventory. No risk. Just effortless growth and happy customers.</p>",
+        "button_1_text": "Start Your POD Store",
+        "button_1_link": "",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A",
+        "background_image": "shopify://shop_images/gpl-hero-pod.jpg"
+      }
+    },
+    "pod_features": {
+      "type": "gpl-gd-audience",
+      "blocks": {
+        "feat_min": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l8 4v10l-8 4-8-4V7z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "label": "No Minimum Orders"
+          }
+        },
+        "feat_qual": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"/><path d=\"M9.2 9.7l2 2 3.6-3.9\"/><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"/></svg>",
+            "label": "Premium Quality Printing"
+          }
+        },
+        "feat_fast": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "label": "Super Fast Turnaround"
+          }
+        },
+        "feat_global": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18\"/><path d=\"M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z\"/></svg>",
+            "label": "Global Shipping Worldwide"
+          }
+        },
+        "feat_supp": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "label": "Dedicated Customer Support"
+          }
+        },
+        "feat_bout": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 9h16v11H4z\"/><path d=\"M3 9l2-5h14l2 5\"/><path d=\"M9 20v-6h6v6\"/></svg>",
+            "label": "Boutique Service, Big Results"
+          }
+        }
+      },
+      "block_order": [
+        "feat_min",
+        "feat_qual",
+        "feat_fast",
+        "feat_global",
+        "feat_supp",
+        "feat_bout"
+      ],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "pod_services": {
+      "type": "gpl-pod-services",
+      "blocks": {
+        "svc_apparel": {
+          "type": "service",
+          "settings": {
+            "title": "Apparel POD",
+            "intro": "T-Shirts, Hoodies, Sweatshirts, Tank Tops, Long Sleeves & More.",
+            "features": "DTG, DTF, All Over Prints\nPremium Blank Options\nMen, Women, Youth\nPlus Sizes Available",
+            "image": "shopify://shop_images/gpl-pod-svc-apparel.jpg"
+          }
+        },
+        "svc_headwear": {
+          "type": "service",
+          "settings": {
+            "title": "Headwear POD",
+            "intro": "Hats, Beanies, Snapbacks & Visors.",
+            "features": "Embroidered & Printed\nMultiple Styles\nPremium Quality\nCustom Branding",
+            "image": "shopify://shop_images/gpl-pod-svc-headwear.jpg"
+          }
+        },
+        "svc_access": {
+          "type": "service",
+          "settings": {
+            "title": "Accessories POD",
+            "intro": "Phone Cases, Mugs, Tote Bags, Bottles, Posters & More.",
+            "features": "Hundreds of Products\nHigh Quality Printing\nPerfect for Any Niche\nGreat Profit Margins",
+            "image": "shopify://shop_images/gpl-pod-svc-access.jpg"
+          }
+        },
+        "svc_allover": {
+          "type": "service",
+          "settings": {
+            "title": "All Over Print POD",
+            "intro": "Sublimation All Over Prints for Apparel & Accessories.",
+            "features": "Vibrant, Long Lasting Prints\nUnlimited Design Areas\nStand Out From The Crowd\nPerfect for Bold Brands",
+            "image": "shopify://shop_images/gpl-pod-svc-allover.jpg"
+          }
+        },
+        "svc_private": {
+          "type": "service",
+          "settings": {
+            "title": "Private Label POD",
+            "intro": "Custom Neck Labels, Tags, Packaging & Inserts.",
+            "features": "Your Brand, Our Fulfillment\nBranded Packaging\nThank You Cards\nBuild Brand Loyalty",
+            "image": "shopify://shop_images/gpl-pod-svc-private.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "svc_apparel",
+        "svc_headwear",
+        "svc_access",
+        "svc_allover",
+        "svc_private"
+      ],
+      "settings": {
+        "heading": "Our Print On Demand Services",
+        "button_text": "View All POD Products",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "pod_how": {
+      "type": "gpl-pod-how",
+      "blocks": {
+        "step_connect": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h11l5 5v9H4z\"/><path d=\"M8 10h6M8 14h4\"/></svg>",
+            "title": "Connect",
+            "description": "Connect your store (Shopify, Etsy, TikTok Shop & more)."
+          }
+        },
+        "step_add": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l8 4v10l-8 4-8-4V7z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "title": "Add Products",
+            "description": "Add our premium POD products to your store in minutes."
+          }
+        },
+        "step_orders": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"20\" r=\"1.6\"/><circle cx=\"17\" cy=\"20\" r=\"1.6\"/><path d=\"M3 4h2.5l2.2 11h10.8l2-8H6\"/></svg>",
+            "title": "Customer Orders",
+            "description": "Your customer places an order on your store."
+          }
+        },
+        "step_produce": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "title": "We Produce",
+            "description": "We print, pack and quality check every order."
+          }
+        },
+        "step_ship": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"/><path d=\"M14 10h3.5l2.5 3v3h-6z\"/><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17\" cy=\"18\" r=\"1.8\"/><path d=\"M4 10H1M4 13H2\"/></svg>",
+            "title": "We Ship",
+            "description": "We ship directly to your customer worldwide."
+          }
+        },
+        "ben_sell": {
+          "type": "benefit",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5 3.5 11.5v-8h8z\"/><circle cx=\"8\" cy=\"8\" r=\"1.6\"/></svg>",
+            "label": "You Sell"
+          }
+        },
+        "ben_fulfil": {
+          "type": "benefit",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l8 4v10l-8 4-8-4V7z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "label": "We Fulfill"
+          }
+        },
+        "ben_grow": {
+          "type": "benefit",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
+            "label": "Your Brand Grows"
+          }
+        },
+        "ben_scale": {
+          "type": "benefit",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "label": "Your Profits Scale"
+          }
+        },
+        "pt_inv": {
+          "type": "point",
+          "settings": {
+            "label": "No inventory"
+          }
+        },
+        "pt_cost": {
+          "type": "point",
+          "settings": {
+            "label": "No upfront costs"
+          }
+        },
+        "pt_pack": {
+          "type": "point",
+          "settings": {
+            "label": "No packing or shipping"
+          }
+        },
+        "pt_focus": {
+          "type": "point",
+          "settings": {
+            "label": "Focus on marketing & sales"
+          }
+        },
+        "pt_rest": {
+          "type": "point",
+          "settings": {
+            "label": "We handle the rest"
+          }
+        }
+      },
+      "block_order": [
+        "step_connect",
+        "step_add",
+        "step_orders",
+        "step_produce",
+        "step_ship",
+        "ben_sell",
+        "ben_fulfil",
+        "ben_grow",
+        "ben_scale",
+        "pt_inv",
+        "pt_cost",
+        "pt_pack",
+        "pt_focus",
+        "pt_rest"
+      ],
+      "settings": {
+        "steps_heading": "How Print On Demand Works",
+        "brands_heading": "Built for Creators, Entrepreneurs and Brands.",
+        "brands_text": "Whether you're just starting or scaling to 7-figures, our POD service is built to grow with you.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A",
+        "brands_image": "shopify://shop_images/gpl-pod-creator.jpg"
+      }
+    },
+    "pod_diff": {
+      "type": "gpl-pod-diff",
+      "blocks": {
+        "diff_boutique": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"/><path d=\"M9.2 9.7l2 2 3.6-3.9\"/><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"/></svg>",
+            "title": "Boutique Service",
+            "description": "We treat every brand like our own. Real people. Real support. Real results."
+          }
+        },
+        "diff_fast": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "title": "Super Fast Turnaround",
+            "description": "Some of the fastest production times in the industry. Orders ship as fast as 24–48 hours."
+          }
+        },
+        "diff_quality": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"/><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"/></svg>",
+            "title": "Premium Quality",
+            "description": "We use the best materials and printing technology to deliver exceptional quality."
+          }
+        },
+        "diff_min": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l8 4v10l-8 4-8-4V7z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "title": "No Minimums",
+            "description": "Order 1 or 1000. You have complete flexibility to grow at your own pace."
+          }
+        },
+        "diff_global": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18\"/><path d=\"M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z\"/></svg>",
+            "title": "Global Shipping",
+            "description": "We ship worldwide with reliable partners so your customers get orders on time."
+          }
+        },
+        "diff_support": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "title": "Dedicated Support",
+            "description": "We're here for you every step of the way via chat, email and phone."
+          }
+        }
+      },
+      "block_order": [
+        "diff_boutique",
+        "diff_fast",
+        "diff_quality",
+        "diff_min",
+        "diff_global",
+        "diff_support"
+      ],
+      "settings": {
+        "heading": "Why GTA Print Lab POD Is Different",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "pod_products": {
+      "type": "gpl-pod-products",
+      "blocks": {
+        "prod_01": {
+          "type": "tile",
+          "settings": {
+            "label": "T-Shirts",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-tshirt.jpg"
+          }
+        },
+        "prod_02": {
+          "type": "tile",
+          "settings": {
+            "label": "Hoodies & Sweatshirts",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-hoodie.jpg"
+          }
+        },
+        "prod_03": {
+          "type": "tile",
+          "settings": {
+            "label": "Hats & Beanies",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-hat.jpg"
+          }
+        },
+        "prod_04": {
+          "type": "tile",
+          "settings": {
+            "label": "Phone Cases",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-case.jpg"
+          }
+        },
+        "prod_05": {
+          "type": "tile",
+          "settings": {
+            "label": "Mugs",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-mug.jpg"
+          }
+        },
+        "prod_06": {
+          "type": "tile",
+          "settings": {
+            "label": "Tote Bags",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-tote.jpg"
+          }
+        },
+        "prod_07": {
+          "type": "tile",
+          "settings": {
+            "label": "Water Bottles",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-bottle.jpg"
+          }
+        },
+        "prod_08": {
+          "type": "tile",
+          "settings": {
+            "label": "Posters & Wall Art",
+            "link": "",
+            "image": "shopify://shop_images/gpl-pod-tile-poster.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "prod_01",
+        "prod_02",
+        "prod_03",
+        "prod_04",
+        "prod_05",
+        "prod_06",
+        "prod_07",
+        "prod_08"
+      ],
+      "settings": {
+        "heading": "Products Your Customers Will Love",
+        "button_text": "Explore All Products",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "pod_tools": {
+      "type": "gpl-pod-tools",
+      "blocks": {
+        "plat_01": {
+          "type": "platform",
+          "settings": {
+            "name": "Shopify"
+          }
+        },
+        "plat_02": {
+          "type": "platform",
+          "settings": {
+            "name": "Etsy"
+          }
+        },
+        "plat_03": {
+          "type": "platform",
+          "settings": {
+            "name": "TikTok Shop"
+          }
+        },
+        "plat_04": {
+          "type": "platform",
+          "settings": {
+            "name": "WooCommerce"
+          }
+        },
+        "plat_05": {
+          "type": "platform",
+          "settings": {
+            "name": "Squarespace"
+          }
+        },
+        "plat_06": {
+          "type": "platform",
+          "settings": {
+            "name": "Wix"
+          }
+        },
+        "plat_07": {
+          "type": "platform",
+          "settings": {
+            "name": "Spocket"
+          }
+        },
+        "tf_01": {
+          "type": "feature",
+          "settings": {
+            "label": "Automated order sync"
+          }
+        },
+        "tf_02": {
+          "type": "feature",
+          "settings": {
+            "label": "Real-time tracking updates"
+          }
+        },
+        "tf_03": {
+          "type": "feature",
+          "settings": {
+            "label": "Easy product import"
+          }
+        },
+        "tf_04": {
+          "type": "feature",
+          "settings": {
+            "label": "Automatic inventory updates"
+          }
+        },
+        "tf_05": {
+          "type": "feature",
+          "settings": {
+            "label": "Seamless fulfillment"
+          }
+        },
+        "ex_design": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h11l5 5v9H4z\"/><path d=\"M8 10h6M8 14h4\"/></svg>",
+            "label": "Design Services"
+          }
+        },
+        "ex_brand": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5 3.5 11.5v-8h8z\"/><circle cx=\"8\" cy=\"8\" r=\"1.6\"/></svg>",
+            "label": "Branding & Packaging"
+          }
+        },
+        "ex_setup": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 9h16v11H4z\"/><path d=\"M3 9l2-5h14l2 5\"/><path d=\"M9 20v-6h6v6\"/></svg>",
+            "label": "Store Setup & Optimization"
+          }
+        },
+        "ex_photo": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"6\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"12\" cy=\"13\" r=\"3.6\"/><path d=\"M8.5 6l1.5-2.5h4L15.5 6\"/></svg>",
+            "label": "Product Photography"
+          }
+        },
+        "ex_mktg": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
+            "label": "Marketing Materials"
+          }
+        },
+        "ex_growth": {
+          "type": "extra",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/><path d=\"M17 6l4-4M21 6V2h-4\"/></svg>",
+            "label": "Growth Strategy"
+          }
+        }
+      },
+      "block_order": [
+        "plat_01",
+        "plat_02",
+        "plat_03",
+        "plat_04",
+        "plat_05",
+        "plat_06",
+        "plat_07",
+        "tf_01",
+        "tf_02",
+        "tf_03",
+        "tf_04",
+        "tf_05",
+        "ex_design",
+        "ex_brand",
+        "ex_setup",
+        "ex_photo",
+        "ex_mktg",
+        "ex_growth"
+      ],
+      "settings": {
+        "tools_heading": "Powerful Tools & Integrations",
+        "tools_text": "We integrate with the leading platforms to make selling easy.",
+        "extra_heading": "More Than Just Printing",
+        "extra_text": "We help you build a real brand.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A",
+        "tools_image": "shopify://shop_images/gpl-pod-tools.jpg",
+        "extra_image": "shopify://shop_images/gpl-pod-extra.jpg"
+      }
+    },
+    "pod_stats": {
+      "type": "gpl-pod-stats",
+      "blocks": {
+        "stat_brands": {
+          "type": "stat",
+          "settings": {
+            "value": "1000+",
+            "label": "Active Brands"
+          }
+        },
+        "stat_orders": {
+          "type": "stat",
+          "settings": {
+            "value": "150,000+",
+            "label": "Orders Fulfilled"
+          }
+        },
+        "stat_prod": {
+          "type": "stat",
+          "settings": {
+            "value": "48HR",
+            "label": "Fast Production"
+          }
+        },
+        "stat_sat": {
+          "type": "stat",
+          "settings": {
+            "value": "99.5%",
+            "label": "Satisfied Customers"
+          }
+        }
+      },
+      "block_order": [
+        "stat_brands",
+        "stat_orders",
+        "stat_prod",
+        "stat_sat"
+      ],
+      "settings": {
+        "quote": "Our mission is simple: help you build a brand people love with premium products, fast shipping, and world-class service.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "pod_cta": {
+      "type": "gpl-pod-cta",
+      "blocks": {
+        "btn_start": {
+          "type": "button",
+          "settings": {
+            "label": "Start Your POD Store",
+            "link": "",
+            "style": "primary"
+          }
+        },
+        "btn_quote": {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "link": "",
+            "style": "outline"
+          }
+        },
+        "as_risk": {
+          "type": "assure",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"/><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"/></svg>",
+            "label": "Risk Free"
+          }
+        },
+        "as_easy": {
+          "type": "assure",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15c-2-4-1-8.5 3.5-11 .8 1 2 3 2 5.5C17.5 13 15 15 12 15z\"/><path d=\"M12 15l-3-3c-1.5.5-3.5 2-4 5.5 3.5-.5 5-2.5 5.5-4z\" transform=\"translate(1,1)\"/><path d=\"M9 12c-2 .5-3.5 2.5-4 5.5C8 17 10 15.5 10.5 13.5\"/><path d=\"M12 15c.5 2-1 4.5-3.5 5.5.5-2 .5-3.5 1.5-4.5\"/><circle cx=\"14.5\" cy=\"7.5\" r=\"1.3\"/></svg>",
+            "label": "Easy to Start"
+          }
+        },
+        "as_pot": {
+          "type": "assure",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
+            "label": "Big Potential"
+          }
+        },
+        "as_rest": {
+          "type": "assure",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l8 4v10l-8 4-8-4V7z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "label": "We Handle the Rest"
+          }
+        }
+      },
+      "block_order": [
+        "btn_start",
+        "btn_quote",
+        "as_risk",
+        "as_easy",
+        "as_pot",
+        "as_rest"
+      ],
+      "settings": {
+        "heading": "Ready to Launch Your POD Store?",
+        "text": "Start your print on demand business today and let us handle the printing, packing and shipping while you focus on growing your brand.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    }
+  },
+  "order": [
+    "pod_hero",
+    "pod_features",
+    "pod_services",
+    "pod_how",
+    "pod_diff",
+    "pod_products",
+    "pod_tools",
+    "pod_stats",
+    "pod_cta"
+  ]
+}

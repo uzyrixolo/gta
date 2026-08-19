@@ -1,0 +1,159 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Why-us bar (M5)
+  Five differentiators plus an optional product shot on the right.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-gd-why-{{ section.id }}" class="gpl-gd-why">
+  <div class="gpl-gd-why__inner">
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-gd-why__points">
+        {%- for block in section.blocks -%}
+          <div class="gpl-gd-why-point" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-gd-why-point__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <div class="gpl-gd-why-point__copy">
+              {%- if block.settings.title != blank -%}
+                <p class="gpl-gd-why-point__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="gpl-gd-why-point__desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.image != blank -%}
+      <div class="gpl-gd-why__media">
+        {{
+          s.image
+          | image_url: width: 900
+          | image_tag:
+            loading: 'lazy',
+            sizes: '(max-width: 989px) 90vw, 22vw',
+            widths: '350, 550, 750, 900',
+            alt: s.image.alt | escape
+        }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-why-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0E0E0E' }};
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.24fr);
+    gap: clamp(14px, 1.6vw, 26px);
+    align-items: stretch;
+  }
+  {%- if s.image == blank -%}
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__inner { grid-template-columns: minmax(0, 1fr); }
+  {%- endif -%}
+
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why__points {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: clamp(16px, 1.8vw, 26px) 0;
+  }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(8px, 0.9vw, 13px);
+    min-width: 0;
+    padding: 0 clamp(10px, 1.2vw, 20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point:nth-child(5n + 1) { border-left: none; padding-left: 0; }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__icon { flex: 0 0 auto; display: flex; color: var(--gpl-accent); }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__icon svg {
+    width: clamp(22px, 1.8vw, 30px);
+    height: clamp(22px, 1.8vw, 30px);
+  }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__copy { min-width: 0; }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__title {
+    margin: 0 0 5px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(10.5px, 0.76vw, 13px);
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__desc {
+    margin: 0;
+    color: #9C9C9C;
+    font-size: clamp(10px, 0.68vw, 11.5px);
+    line-height: 1.45;
+  }
+
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why__media { position: relative; min-height: 100%; overflow: hidden; }
+  #gpl-gd-why-{{ section.id }} .gpl-gd-why__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__points { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 0; }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point:nth-child(5n + 1) { border-left: 1px solid rgba(255, 255, 255, 0.14); padding-left: clamp(10px, 1.2vw, 20px); }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point:nth-child(3n + 1) { border-left: none; padding-left: 0; }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__title { font-size: 13px; }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point__desc { font-size: 11.5px; }
+  }
+  @media screen and (max-width: 989px) {
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__inner { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__media { min-height: 220px; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point:nth-child(3n + 1) { border-left: 1px solid rgba(255, 255, 255, 0.14); padding-left: clamp(10px, 1.2vw, 20px); }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point:nth-child(2n + 1) { border-left: none; padding-left: 0; }
+  }
+  @media screen and (max-width: 419px) {
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why__points { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-why-{{ section.id }} .gpl-gd-why-point { border-left: none !important; padding-left: 0 !important; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GD Why us",
+  "tag": "section",
+  "class": "gpl-section-gd-why",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Side image", "info": "Optional. Removing it lets the points span the full width." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0E0E0E" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 5,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Design + Print Under One Roof" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "One company. One workflow. Better results." }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [{ "name": "GD Why us" }]
+}
+{% endschema %}

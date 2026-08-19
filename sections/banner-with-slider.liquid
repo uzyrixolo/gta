@@ -1,0 +1,226 @@
+{%- comment -%}
+  Collage — self-contained, images-only rebuild for Minimog theme
+  File: sections/gpl-collage.liquid
+
+  Simplified to Image blocks only (product/collection/video removed on request).
+
+  - No external stylesheet assets — all CSS is embedded directly via {% style %}.
+  - No snippet render calls.
+  - No custom elements requiring theme JS.
+  - No "t:" translation keys.
+  - No dependency on Dawn-only global settings.
+  - Large block spans the full combined height of the stacked small blocks
+    beside it, using CSS Grid row-spanning.
+{%- endcomment -%}
+
+{%- assign block_count = section.blocks.size -%}
+{%- assign large_position = 'first' -%}
+{%- if section.settings.desktop_layout == 'right' -%}{%- assign large_position = 'last' -%}{%- endif -%}
+{%- assign small_count = block_count | minus: 1 -%}
+{%- if small_count < 1 -%}{%- assign small_count = 1 -%}{%- endif -%}
+
+<section
+  class="gplc-{{ section.id }} gplc"
+  style="--gplc-bg: {{ section.settings.bg_color }}; --gplc-text: {{ section.settings.text_color }};"
+>
+  <div class="gplc__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="gplc__head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="gplc__heading gplc__heading--{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="gplc__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="gplc__grid gplc__grid--{{ section.settings.desktop_layout }} gplc__grid--mobile-{{ section.settings.mobile_layout }}" style="--gplc-rows: {{ small_count }};">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'image' -%}
+          {%- assign is_large = false -%}
+          {%- if large_position == 'first' and forloop.first -%}{%- assign is_large = true -%}{%- endif -%}
+          {%- if large_position == 'last' and forloop.last -%}{%- assign is_large = true -%}{%- endif -%}
+
+          <div class="gplc-item{% if is_large %} gplc-item--large{% endif %}" {{ block.shopify_attributes }}>
+            <div class="gplc-media">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 1200 }}"
+                  srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 900 }} 900w, {{ block.settings.image | image_url: width: 1200 }} 1200w"
+                  sizes="(min-width: 990px) 50vw, 100vw"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="gplc-media__placeholder" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gplc-{{ section.id }} {
+    background: var(--gplc-bg);
+    color: var(--gplc-text);
+    padding: 48px 24px;
+  }
+  .gplc-{{ section.id }} .gplc__inner { max-width: 1400px; margin: 0 auto; }
+  .gplc-{{ section.id }} .gplc__head { text-align: center; margin-bottom: 32px; }
+  .gplc-{{ section.id }} .gplc__heading { font-weight: 800; margin: 0 0 8px; }
+  .gplc-{{ section.id }} .gplc__heading--h2 { font-size: 22px; }
+  .gplc-{{ section.id }} .gplc__heading--h1 { font-size: 28px; }
+  .gplc-{{ section.id }} .gplc__heading--h0 { font-size: 34px; }
+  .gplc-{{ section.id }} .gplc__heading--hxl { font-size: 40px; }
+  .gplc-{{ section.id }} .gplc__heading--hxxl { font-size: 46px; }
+  .gplc-{{ section.id }} .gplc__subheading { font-size: 15px; opacity: 0.75; margin: 0; }
+
+  .gplc-{{ section.id }} .gplc__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: repeat(var(--gplc-rows, 1), auto);
+    gap: 16px;
+    align-items: stretch;
+  }
+  .gplc-{{ section.id }} .gplc__grid--right { grid-template-columns: 1fr 2fr; }
+  .gplc-{{ section.id }} .gplc-item { min-width: 0; }
+  .gplc-{{ section.id }} .gplc-item--large {
+    grid-column: 1;
+    grid-row: 1 / span var(--gplc-rows, 1);
+  }
+  .gplc-{{ section.id }} .gplc__grid--right .gplc-item--large { grid-column: 2; }
+
+  .gplc-{{ section.id }} .gplc-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(128,128,128,0.12);
+  }
+  .gplc-{{ section.id }} .gplc-item--large .gplc-media {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+  .gplc-{{ section.id }} .gplc-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gplc-{{ section.id }} .gplc-media__placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: rgba(128,128,128,0.6);
+  }
+
+  @media screen and (max-width: 749px) {
+    .gplc-{{ section.id }} { padding: 36px 16px; }
+
+    .gplc-{{ section.id }} .gplc__grid--mobile-column {
+      display: flex;
+      flex-direction: column;
+    }
+    .gplc-{{ section.id }} .gplc__grid--mobile-column .gplc-item,
+    .gplc-{{ section.id }} .gplc__grid--mobile-column .gplc-item--large {
+      grid-column: auto;
+      grid-row: auto;
+      width: 100%;
+    }
+    .gplc-{{ section.id }} .gplc__grid--mobile-column .gplc-media,
+    .gplc-{{ section.id }} .gplc__grid--mobile-column .gplc-item--large .gplc-media {
+      aspect-ratio: 4 / 5;
+      height: auto;
+    }
+
+    .gplc-{{ section.id }} .gplc__grid--mobile-collage {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      gap: 12px;
+    }
+    .gplc-{{ section.id }} .gplc__grid--mobile-collage .gplc-item {
+      grid-row: auto;
+    }
+    .gplc-{{ section.id }} .gplc__grid--mobile-collage .gplc-item--large {
+      grid-column: span 2;
+    }
+    .gplc-{{ section.id }} .gplc__grid--mobile-collage .gplc-media,
+    .gplc-{{ section.id }} .gplc__grid--mobile-collage .gplc-item--large .gplc-media {
+      aspect-ratio: 4 / 5;
+      height: auto;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Collage",
+  "tag": "section",
+  "class": "section-gpl-collage",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "default": "Multimedia collage", "label": "Heading" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" },
+        { "value": "hxl", "label": "Extra large" },
+        { "value": "hxxl", "label": "Extra extra large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "options": [
+        { "value": "left", "label": "Large image left" },
+        { "value": "right", "label": "Large image right" }
+      ],
+      "default": "left",
+      "label": "Desktop layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "options": [
+        { "value": "collage", "label": "Collage" },
+        { "value": "column", "label": "Column" }
+      ],
+      "default": "column",
+      "label": "Mobile layout"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Collage",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

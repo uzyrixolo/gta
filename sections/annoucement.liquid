@@ -1,0 +1,136 @@
+{%- comment -%}
+  GTA Print Lab — Top Information Bar
+  File: sections/gpl-top-bar.liquid
+{%- endcomment -%}
+
+<div class="gpl-topbar-{{ section.id }} gpl-topbar" role="region" aria-label="Store highlights">
+  <div class="gpl-topbar__inner">
+    <ul class="gpl-topbar__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'item' -%}
+          <li class="gpl-topbar__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-topbar__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <span>{{ block.settings.text }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% style %}
+  .gpl-topbar-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    font-family: {{ section.settings.font_stack | default: 'inherit' }};
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__inner::-webkit-scrollbar { display: none; }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__list {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    white-space: nowrap;
+  }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__item:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    margin-left: 28px;
+  }
+  .gpl-topbar-{{ section.id }} .gpl-topbar__icon svg { width: 14px; height: 14px; display: block; }
+
+  @media screen and (max-width: 749px) {
+    .gpl-topbar-{{ section.id }} .gpl-topbar__list { gap: 18px; }
+    .gpl-topbar-{{ section.id }} .gpl-topbar__item { font-size: 10.5px; }
+    .gpl-topbar-{{ section.id }} .gpl-topbar__item:not(:last-child)::after { margin-left: 18px; }
+    {%- if section.settings.hide_on_mobile -%}
+    .gpl-topbar-{{ section.id }} { display: none; }
+    {%- endif -%}
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Top Info Bar",
+  "tag": "section",
+  "class": "gpl-section-topbar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background colour",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#F2F2F2"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide this bar on mobile",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Info item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Toronto Based"
+        },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon (SVG code, optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "GPL Top Info Bar",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Toronto Based" } },
+        { "type": "item", "settings": { "text": "Fast Production" } },
+        { "type": "item", "settings": { "text": "Premium Quality" } },
+        { "type": "item", "settings": { "text": "GTA Delivery" } },
+        { "type": "item", "settings": { "text": "Shipping Across Canada" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

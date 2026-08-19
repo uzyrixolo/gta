@@ -1,0 +1,35 @@
+{% comment %}
+  Accepts:
+  - section_settings: {Obj} Section settings (required)
+
+  Usage:
+  {% render 'index-section-header', section_settings: section.settings %}
+{% endcomment %}
+
+{% liquid
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+    if section_settings.animations and section_settings.animations != 'inherit'
+      assign animation_effect = section_settings.animations
+    endif
+  endif
+
+  assign heading_size = section_settings.heading_size | default: 'h3'
+  assign header_alignment = section_settings.header_alignment | default: 'left'
+%}
+
+{% if section_settings.heading != blank or section_settings.subheading != blank or section_settings.description != blank %}
+  <div class="m-section__header m:text-{{ header_alignment }}">
+    {% if section_settings.subheading != blank %}
+      <p class="m-section__subheading{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section_settings.subheading }}</p>
+    {% endif %}
+    {% if section_settings.heading != blank %}
+      <h2 class="m-section__heading {{ heading_size }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section_settings.heading }}</h2>
+    {% endif %}
+    {% if section_settings.description != blank %}
+      <div class="m-section__description{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section_settings.description }}</div>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,150 @@
+{%- comment -%}
+  GTA Print Lab — Our Printing Services
+  File: sections/gpl-services.liquid
+{%- endcomment -%}
+
+<section class="gpl-services-{{ section.id }} gpl-services">
+  <div class="gpl-services__inner">
+    <div class="gpl-section-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="gpl-section-head__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="gpl-section-head__heading">{{ section.settings.heading }}</h2>
+    </div>
+
+    <div class="gpl-services__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'service' -%}
+          <a href="{{ block.settings.link | default: '#' }}" class="gpl-service-card" {{ block.shopify_attributes }}>
+            <div class="gpl-service-card__image">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 700 }}"
+                  srcset="{{ block.settings.image | image_url: width: 400 }} 400w, {{ block.settings.image | image_url: width: 700 }} 700w"
+                  sizes="(min-width: 990px) 25vw, (min-width: 750px) 50vw, 90vw"
+                  alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="gpl-service-card__placeholder" aria-hidden="true">{{ block.settings.icon }}</div>
+              {%- endif -%}
+            </div>
+            <div class="gpl-service-card__badge">{{ block.settings.icon }}</div>
+            <h3 class="gpl-service-card__title">{{ block.settings.title }}</h3>
+            <p class="gpl-service-card__desc">{{ block.settings.description }}</p>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gpl-services-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding: {{ section.settings.padding_top }}px 24px {{ section.settings.padding_bottom }}px;
+  }
+  .gpl-services-{{ section.id }} .gpl-services__inner { max-width: 1400px; margin: 0 auto; }
+  .gpl-services-{{ section.id }} .gpl-section-head { text-align: center; margin-bottom: 44px; }
+  .gpl-services-{{ section.id }} .gpl-section-head__eyebrow {
+    color: #D71920; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px; margin: 0 0 8px;
+  }
+  .gpl-services-{{ section.id }} .gpl-section-head__heading {
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 3.4vw, 40px); margin: 0; letter-spacing: -0.01em;
+  }
+  .gpl-services-{{ section.id }} .gpl-services__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background: #1B1B1B;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card:hover { transform: translateY(-4px); border-color: #D71920; }
+  .gpl-services-{{ section.id }} .gpl-service-card__image {
+    aspect-ratio: 4 / 3;
+    background: #262626;
+    overflow: hidden;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gpl-services-{{ section.id }} .gpl-service-card__placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #555555;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card__placeholder svg { width: 42px; height: 42px; }
+  .gpl-services-{{ section.id }} .gpl-service-card__badge {
+    width: 48px; height: 48px;
+    background: #D71920;
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: -24px auto 0;
+    position: relative;
+    border: 4px solid #1B1B1B;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card__badge svg { width: 20px; height: 20px; }
+  .gpl-services-{{ section.id }} .gpl-service-card__title {
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: 0.02em;
+    text-align: center; margin: 14px 20px 8px;
+  }
+  .gpl-services-{{ section.id }} .gpl-service-card__desc {
+    color: #A9A9A9; font-size: 13.5px; line-height: 1.55; text-align: center; margin: 0 20px 26px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .gpl-services-{{ section.id }} .gpl-services__grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  }
+  @media screen and (max-width: 549px) {
+    .gpl-services-{{ section.id }} { padding: 48px 16px; }
+    .gpl-services-{{ section.id }} .gpl-services__grid { grid-template-columns: 1fr; }
+    .gpl-services-{{ section.id }} .gpl-section-head { margin-bottom: 28px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Services",
+  "tag": "section",
+  "class": "gpl-section-services",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What We Do" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Printing Services" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "DTG Printing" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Direct-to-garment printing for vibrant full-colour prints with a soft finish." },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "GPL Services",
+      "blocks": [
+        { "type": "service", "settings": { "title": "DTG Printing", "description": "Direct-to-garment printing for vibrant full-colour prints with a soft finish." } },
+        { "type": "service", "settings": { "title": "DTF Printing", "description": "Ideal for cotton, polyester and blended fabrics." } },
+        { "type": "service", "settings": { "title": "Embroidery", "description": "Premium stitched logos for hats, polos, jackets and uniforms." } },
+        { "type": "service", "settings": { "title": "Promotional Products", "description": "Mugs, bottles, tote bags, pens and branded merchandise." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

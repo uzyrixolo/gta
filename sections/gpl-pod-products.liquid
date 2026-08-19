@@ -1,0 +1,189 @@
+{%- comment -%}
+  GTA Print Lab — Print On Demand page: Product tiles
+  Image tiles with a label bar underneath, like the mockup's product strip.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-pod-prod-{{ section.id }}" class="gpl-pod-prod">
+  <div class="gpl-pod-prod__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="gpl-pod-prod__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-pod-prod__grid">
+        {%- for block in section.blocks -%}
+          {%- assign tile_link = block.settings.link -%}
+          {%- if tile_link != blank -%}
+            <a href="{{ tile_link }}" class="gpl-pod-prod__tile" {{ block.shopify_attributes }}>
+          {%- else -%}
+            <div class="gpl-pod-prod__tile" {{ block.shopify_attributes }}>
+          {%- endif -%}
+            <span class="gpl-pod-prod__frame">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(max-width: 749px) 45vw, 12vw',
+                    widths: '200, 350, 500, 600',
+                    alt: block.settings.label | default: block.settings.image.alt | escape
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'gpl-pod-prod__ph' }}
+              {%- endif -%}
+            </span>
+            {%- if block.settings.label != blank -%}
+              <span class="gpl-pod-prod__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          {%- if tile_link != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank -%}
+      <div class="gpl-pod-prod__cta">
+        <a href="{{ s.button_link | default: '#' }}" class="gpl-pod-prod__btn">
+          <span>{{ s.button_text }}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-pod-prod-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__heading {
+    margin: 0 0 clamp(16px, 1.8vw, 26px);
+    text-align: center;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    font-size: clamp(20px, 2.4vw, 34px);
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: clamp(6px, 0.7vw, 11px);
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__tile {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #141414;
+    text-decoration: none;
+  }
+  #gpl-pod-prod-{{ section.id }} a.gpl-pod-prod__tile:hover { border-color: var(--gpl-accent); }
+  #gpl-pod-prod-{{ section.id }} a.gpl-pod-prod__tile:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__frame {
+    display: block;
+    aspect-ratio: 3 / 4;
+    background: #1E1E1E;
+    overflow: hidden;
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__frame img,
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__frame svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__label {
+    display: block;
+    padding: clamp(7px, 0.7vw, 10px) 6px;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(8.5px, 0.62vw, 10.5px);
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__cta { margin-top: clamp(14px, 1.6vw, 22px); text-align: center; }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 28px;
+    border: 2px solid var(--gpl-accent);
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(11px, 0.9vw, 13.5px);
+    transition: background-color 0.2s ease;
+  }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn:hover { background: var(--gpl-accent); }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+  #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn svg { width: 15px; height: 15px; }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__label { font-size: 10.5px; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn { width: 100%; max-width: 420px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #gpl-pod-prod-{{ section.id }} .gpl-pod-prod__btn { transition: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "POD Products",
+  "tag": "section",
+  "class": "gpl-section-pod-prod",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why Products Your Customers Will Love" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Explore All Products" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Product tile",
+      "limit": 8,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Optional — makes the tile clickable." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "POD Products" }]
+}
+{% endschema %}

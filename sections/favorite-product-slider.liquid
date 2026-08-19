@@ -1,0 +1,230 @@
+{%- comment -%}
+  Favorite Collections Slider — self-contained rebuild
+  File: sections/favorite-product-slider.liquid
+
+  Fixes applied:
+  1. Removed all "t:" translation key references (these were causing "missing
+     translation" errors) — replaced with plain hardcoded English text and
+     schema defaults, so this section never depends on the theme's locale
+     JSON files.
+  2. Removed the {% render 'card-collection', ... %} call that referenced a
+     snippet which doesn't exist in this theme (causing the
+     "Could not find asset snippets/card-collection.liquid" error) — the
+     collection card markup is now built directly inside this file.
+  3. Removed dependency on external stylesheet assets
+     (component-card.css / component-slider.css / section-collection-list.css)
+     that may not exist under this section's context — all required CSS is
+     now embedded directly via {% style %}, scoped to this section only.
+  4. Replaced the theme's "color_scheme" setting (which depends on a
+     settings_schema color-scheme config that may not be present) with plain
+     color pickers, so this section works in any theme without extra setup.
+  5. Replaced the custom <slider-component> web component (which requires
+     theme JS that may not be loaded here) with a plain CSS scroll-snap
+     slider — no JavaScript required, works everywhere.
+{%- endcomment -%}
+
+<div class="fps-{{ section.id }} fps" style="--fps-bg: {{ section.settings.bg_color }}; --fps-text: {{ section.settings.text_color }};">
+  <div class="fps__inner">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="fps__head">
+        {%- if section.settings.title != blank -%}
+          <h2 class="fps__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="fps__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign block_count = section.blocks.size -%}
+    {%- assign columns_mobile_int = section.settings.columns_mobile | plus: 0 -%}
+    {%- assign show_mobile_slider = false -%}
+    {%- if section.settings.swipe_on_mobile and block_count > columns_mobile_int -%}
+      {%- assign show_mobile_slider = true -%}
+    {%- endif -%}
+
+    <div class="fps__track{% if show_mobile_slider %} fps__track--slider{% endif %}" style="--fps-cols-desktop: {{ section.settings.columns_desktop }}; --fps-cols-mobile: {{ section.settings.columns_mobile }};">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'featured_collection' -%}
+          {%- assign col = block.settings.collection -%}
+          <a
+            href="{% if col != blank %}{{ col.url }}{% else %}{{ routes.collections_url }}{% endif %}"
+            class="fps-card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="fps-card__media fps-card__media--{{ section.settings.image_ratio }}">
+              {%- if col != blank and col.featured_image != blank -%}
+                <img
+                  src="{{ col.featured_image | image_url: width: 700 }}"
+                  srcset="{{ col.featured_image | image_url: width: 400 }} 400w, {{ col.featured_image | image_url: width: 700 }} 700w, {{ col.featured_image | image_url: width: 1000 }} 1000w"
+                  sizes="(min-width: 990px) 25vw, 80vw"
+                  alt="{{ col.featured_image.alt | default: col.title | escape }}"
+                  width="{{ col.featured_image.width }}"
+                  height="{{ col.featured_image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="fps-card__placeholder" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="fps-card__body">
+              <h3 class="fps-card__title">{{ col.title | default: 'Collection' }}</h3>
+              {%- if col != blank -%}
+                <span class="fps-card__count">{{ col.products_count | default: 0 }} products</span>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div class="fps__view-all">
+        <a href="{{ routes.collections_url }}" class="fps__view-all-link">View all collections</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% style %}
+  .fps-{{ section.id }} {
+    background: var(--fps-bg);
+    color: var(--fps-text);
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .fps-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .fps-{{ section.id }} .fps__inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .fps-{{ section.id }} .fps__head { text-align: center; margin-bottom: 32px; }
+  .fps-{{ section.id }} .fps__title { font-weight: 800; font-size: clamp(22px, 3vw, 34px); margin: 0 0 8px; }
+  .fps-{{ section.id }} .fps__subtitle { font-size: 15px; opacity: 0.8; margin: 0; }
+
+  .fps-{{ section.id }} .fps__track {
+    display: grid;
+    grid-template-columns: repeat(var(--fps-cols-desktop, 3), minmax(0, 1fr));
+    gap: 20px;
+  }
+  .fps-{{ section.id }} .fps-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    min-width: 0;
+  }
+  .fps-{{ section.id }} .fps-card__media {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(128,128,128,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fps-{{ section.id }} .fps-card__media--square { aspect-ratio: 1 / 1; }
+  .fps-{{ section.id }} .fps-card__media--portrait { aspect-ratio: 4 / 5; }
+  .fps-{{ section.id }} .fps-card__media--adapt { aspect-ratio: auto; }
+  .fps-{{ section.id }} .fps-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .fps-{{ section.id }} .fps-card__placeholder { color: rgba(128,128,128,0.6); }
+  .fps-{{ section.id }} .fps-card__body { padding-top: 12px; text-align: center; }
+  .fps-{{ section.id }} .fps-card__title { font-weight: 700; font-size: 15px; margin: 0 0 4px; }
+  .fps-{{ section.id }} .fps-card__count { font-size: 12px; opacity: 0.65; }
+
+  .fps-{{ section.id }} .fps__view-all { text-align: center; margin-top: 32px; }
+  .fps-{{ section.id }} .fps__view-all-link {
+    display: inline-block; padding: 12px 26px; border: 1px solid currentColor; border-radius: 999px;
+    color: inherit; text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+  }
+
+  @media screen and (max-width: 989px) {
+    .fps-{{ section.id }} .fps__track { grid-template-columns: repeat(var(--fps-cols-mobile, 2), minmax(0, 1fr)); }
+    .fps-{{ section.id }} .fps__track--slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 16px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .fps-{{ section.id }} .fps__track--slider::-webkit-scrollbar { display: none; height: 0; }
+    .fps-{{ section.id }} .fps__track--slider .fps-card {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+  }
+  @media screen and (max-width: 549px) {
+    .fps-{{ section.id }} .fps__inner { padding: 0 16px; }
+    .fps-{{ section.id }} .fps__track--slider .fps-card { flex-basis: 84%; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Favorite Collections",
+  "tag": "section",
+  "class": "section-favorite-product-slider",
+  "max_blocks": 15,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Collection" },
+    { "type": "text", "id": "subtitle", "label": "Subheading" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "square"
+    },
+    { "type": "range", "id": "columns_desktop", "label": "Columns on desktop", "min": 1, "max": 6, "step": 1, "default": 3 },
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#111111" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'View all' button", "default": false },
+    { "type": "header", "content": "Mobile layout" },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    },
+    { "type": "checkbox", "id": "swipe_on_mobile", "label": "Enable swipe/scroll on mobile", "default": true },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Favorite Collections",
+      "blocks": [
+        { "type": "featured_collection" },
+        { "type": "featured_collection" },
+        { "type": "featured_collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

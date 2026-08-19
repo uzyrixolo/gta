@@ -1,0 +1,189 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Closing CTA (M5)
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-gd-cta-{{ section.id }}" class="gpl-gd-cta">
+  {%- if s.background_image != blank -%}
+    <div class="gpl-gd-cta__bg">
+      {{
+        s.background_image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'lazy',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000',
+          alt: s.background_image.alt | escape
+      }}
+    </div>
+    <div class="gpl-gd-cta__scrim" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="gpl-gd-cta__inner">
+    <div class="gpl-gd-cta__copy">
+      <h2 class="gpl-gd-cta__heading">
+        {%- if s.heading != blank -%}
+          <span class="gpl-gd-cta__heading-light">{{ s.heading }}</span>
+        {%- endif -%}
+        {%- if s.heading_accent != blank -%}
+          <span class="gpl-gd-cta__heading-accent">{{ s.heading_accent }}</span>
+        {%- endif -%}
+      </h2>
+      {%- if s.text != blank -%}
+        <p class="gpl-gd-cta__text">{{ s.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-gd-cta__buttons">
+        {%- for block in section.blocks -%}
+          <a
+            href="{{ block.settings.link | default: '#' }}"
+            class="gpl-gd-cta__btn gpl-gd-cta__btn--{{ block.settings.style }}"
+            {{ block.shopify_attributes }}
+          >
+            <span>{{ block.settings.label }}</span>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-gd-cta__btn-icon">{{ block.settings.icon }}</span>
+            {%- else -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-cta-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    position: relative;
+    overflow: hidden;
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: clamp(30px, 3.6vw, 54px) 0;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__bg { position: absolute; inset: 0; z-index: 0; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.9) 45%, rgba(8,8,8,0.55) 100%);
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__inner {
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.34fr);
+    gap: clamp(18px, 2.2vw, 36px);
+    align-items: center;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__heading {
+    margin: 0 0 10px;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    font-size: clamp(20px, 2.3vw, 34px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.26em;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__heading-light { color: #FFFFFF; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__heading-accent { color: var(--gpl-accent); }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__text {
+    margin: 0;
+    color: #B4B4B4;
+    font-size: clamp(11.5px, 0.82vw, 14px);
+    line-height: 1.55;
+    max-width: 68ch;
+  }
+
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 22px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(11px, 0.85vw, 13.5px);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn svg { width: 16px; height: 16px; flex: 0 0 auto; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn-icon { display: flex; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn-icon svg { width: 16px; height: 16px; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn--primary { background: var(--gpl-accent); color: #FFFFFF; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn--primary:hover { background: #B5141A; }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn--outline {
+    background: rgba(18, 18, 18, 0.8);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn--outline:hover { border-color: #FFFFFF; background: rgba(255, 255, 255, 0.1); }
+  #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__inner { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__buttons { max-width: 460px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #gpl-gd-cta-{{ section.id }} .gpl-gd-cta__btn { transition: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GD Closing CTA",
+  "tag": "section",
+  "class": "gpl-section-gd-cta",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading — white part", "default": "Ready to Create Something" },
+    { "type": "text", "id": "heading_accent", "label": "Heading — red part", "default": "Amazing?" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Whether you're starting a clothing brand, launching a business, creating team apparel, promoting an event, or making something for yourself, GTA Print Lab is here to bring your idea to life." },
+    { "type": "image_picker", "id": "background_image", "label": "Background image", "info": "Optional." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Start Your Design" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "select", "id": "style", "label": "Style", "default": "primary", "options": [
+          { "value": "primary", "label": "Red" },
+          { "value": "outline", "label": "Outlined" }
+        ] },
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)", "info": "Leave blank for an arrow." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "GD Closing CTA" }]
+}
+{% endschema %}

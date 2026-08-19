@@ -1,0 +1,42 @@
+{%- if predictive_search.performed -%}
+  <div
+    data-search-items-wrapper
+    class="m-search-result m:flex m:flex-wrap"
+  >
+    {%- for product in predictive_search.resources.products -%}
+      <div class="m-search-item m:w-1/2 sm:m:w-4/12 lg:m:w-3/12 xl:m:w-2/12">
+        <a href="{{ product.url }}" class="m:flex m:flex-col">
+          {%- liquid
+            assign aspect_ratio = product.featured_media.preview_image.aspect_ratio
+            if settings.pcard_image_ratio != 'original'
+              assign aspect_ratio = settings.pcard_image_ratio
+            endif
+          -%}
+          <div class="m-search-item--image" style="--aspect-ratio: {{ aspect_ratio }};">
+            {% if product.featured_media %}
+              {% render 'responsive-image', image: product.featured_media %}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'm-placeholder-svg' }}
+            {% endif %}
+            {% unless product.available %}
+              <span class="m:flex m-product-tag m-product-tag--soldout">
+                {{ 'products.product.sold_out' | t }}
+              </span>
+            {% endunless %}
+          </div>
+          <div class="m-search-item--content">
+            <p class="m-search-item--title m:font-medium">{{ product.title }}</p>
+            <div class="m-search-item--price">
+              {% render 'product-prices', product: product, use_variant: true, show_badges: false %}
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="m-search-result--more m:flex m:justify-center">
+    <button form="m-form-search" class="m-button m-button--primary m-search-button" data-more-result-text="{{ 'general.search.more_results' | t }}">
+      {{ 'general.search.more_results' | t }}
+    </button>
+  </div>
+{%- endif -%}

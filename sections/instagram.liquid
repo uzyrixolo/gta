@@ -1,0 +1,325 @@
+{{ 'instagram.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign bg_color = section.settings.background_color
+  assign has_bg = false
+
+  unless bg_color == "rgba(0,0,0,0)" or bg_color == blank
+    assign has_bg = true
+  endunless
+
+  assign columns = section.settings.grid_columns
+  assign images_count = section.settings.images_count
+
+  if section.settings.layout == 'metro'
+    if columns >= 8
+      assign columns = 8
+    else
+      assign columns = 6
+    endif
+  endif
+
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+  endif
+
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+%}
+
+{%- style -%}
+  .m-instagram-section--{{ section.id }} {
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --column-gap: {{ section.settings.gap }}px; 
+    --column-gap-mobile: {{ section.settings.mobile_gap }}px;
+
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+<section
+  id="m-instagram-section-{{ section.id }}"
+  class="m-section m-instagram-section m-instagram-section--layout-{{ section.settings.layout }} {{ section.settings.custom_class }} m-instagram-section--{{ section.id }}"
+  data-section-type="instagram"
+  data-section-id="{{ section.id }}"
+  data-layout="{{ section.settings.layout }}"
+  {% if has_bg %}
+    data-bg="{{ bg_color | color_to_hsl }}"
+  {% endif %}
+>
+  <div class="{{ container }}{% if has_bg == false %} m-section-my{% else %} m-section-py{% endif %}">
+  {% if section.settings.subheading != blank or section.settings.heading != blank or section.settings.description != blank or section.settings.profile != blank and section.settings.button_label != blank %}
+    <div class="m-section__header m:text-{{ section.settings.header_alignment }}{% if section.settings.layout == 'metro' %} lg:m:hidden{% endif %}">
+      {% if section.settings.subheading != blank %}
+        <h5 class="m-section__subheading{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.subheading }}</h5>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="m-section__heading {{ section.settings.heading_size | default: 'h3' }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="m-section__description{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.description }}</div>
+      {% endif %}
+      {% if section.settings.profile != blank and section.settings.button_label != blank %}
+        <div class="m-section__button{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+          <a href="{{ section.settings.profile }}" target="_blank" class="m-button m-button--secondary m:uppercase">{{ section.settings.button_label }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+    <m-instagram class="m-instagram" data-access-token="{{ settings.instagram_token }}" data-images-count="{{ section.settings.images_count }}">
+      <div class="m-mixed-layout m-mixed-layout--mobile-scroll">
+        <div class="m-instagram__wrapper m-mixed-layout__inner m:grid md:m:grid-{{ columns | minus: 2 }}-cols xl:m:grid-{{ columns }}-cols">
+          {% if section.settings.layout == 'metro' %}
+            {% liquid
+              assign row_end = 3
+              if images_count > 12 and columns == 8
+                assign row_end = 4
+              endif
+
+              if images_count > 8 and columns == 6
+                assign row_end = 4
+              endif
+            %}    
+
+            <div class="m-section__header m:text-center m:hidden lg:m:flex m:row-end-{{ row_end }} m:col-{{ columns | divided_by: 2 }}-{{ columns | divided_by: 2 | plus: 2 }}">
+              {% if section.settings.subheading != blank %}
+                <h5 class="m-section__subheading{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.subheading }}</h5>
+              {% endif %}
+              {% if section.settings.heading != blank %}
+                <h2 class="m-section__heading {{ section.settings.heading_size | default: 'h3' }}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.heading }}</h2>
+              {% endif %}
+              {% if section.settings.description != blank %}
+                <div class="m-section__description{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ section.settings.description }}</div>
+              {% endif %}
+              {% if section.settings.profile != blank and section.settings.button_label != blank %}
+                <div class="m-section__button{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+                  <a href="{{ section.settings.profile }}" target="_blank" class="m-button m-button--secondary m:uppercase">{{ section.settings.button_label }}</a>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </m-instagram>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Go to: \"Theme settings > Integration\" to update Instagram token"
+    },
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "On the Gram"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "default": "h3",
+      "options": [
+        {
+          "label": "Medium",
+          "value": "h3"
+        },
+        {
+          "label": "Large",
+          "value": "h2"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container-fluid",
+      "options": [
+        {
+          "value": "container-fluid",
+          "label": "Default"
+        },
+        {
+          "value": "w-full",
+          "label": "Full width"
+        },
+        {
+          "value": "container",
+          "label": "Use container box"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "metro",
+          "label": "Metro"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "id": "images_count",
+      "label": "Images to show",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Grid settings"
+    },
+    {
+      "type": "range",
+      "id": "grid_columns",
+      "label": "Images per row",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Image gap",
+      "min": 0,
+      "max": 50,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Image gap on mobile",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Follow button"
+    },
+    {
+      "type": "text",
+      "id": "profile",
+      "label": "Profile URL",
+      "default": "https://www.instagram.com/minimog.trendy/"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "default": 50,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "default": 50,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Custom Attributes"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom classes"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}

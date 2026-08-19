@@ -1,0 +1,163 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "favicon": "shopify://shop_images/1.jpg",
+    "show_scroll_top_button": false,
+    "container_width": 1200,
+    "container_fluid_width": 1620,
+    "container_fluid_offset": 65,
+    "animations": "fade-in-up",
+    "spacing_sections": 100,
+    "color_primary": "#000000",
+    "color_main_bg": "#111111",
+    "color_field_bg": "#ffffff",
+    "color_body_text": "#000000",
+    "color_heading_text": "#000000",
+    "color_sub_text": "#000000",
+    "color_text_link_hover": "#000000",
+    "color_btn_bg": "#000000",
+    "color_btn_text": "#ffffff",
+    "color_btn_bg_hover": "#000000",
+    "color_btn_text_hover": "#ffffff",
+    "prod_sale_price_color": "#000000",
+    "prod_regular_price_color": "#403f3f",
+    "prod_type_color": "#403f3f",
+    "prod_desc_color": "#000000",
+    "color_annoucement_bg": "#000000",
+    "color_annoucement_text": "#ffffff",
+    "color_topbar_bg": "#ffffff",
+    "color_topbar_text": "#000000",
+    "color_header_bg": "#ffffff",
+    "color_header_link": "#000000",
+    "color_header_transparent": "#ffffff",
+    "color_cart_wishlist_count": "#ffffff",
+    "bg_cart_wishlist_count": "#da3f3f",
+    "color_menu_bar_bg": "#ffffff",
+    "color_menu_bar_text": "#000000",
+    "color_footer_bg": "#000000",
+    "color_footer_text": "#ffffff",
+    "color_footer_subtext": "#ffffff",
+    "color_footer_link": "#ffffff",
+    "color_footer_link_hover": "#ffffff",
+    "color_footer_bg_mb": "#000000",
+    "color_footer_bottom_bg": "#000000",
+    "color_footer_bottom_text": "#ffffff",
+    "color_footer_bottom_bg_mb": "#000000",
+    "color_border": "#eeeeee",
+    "img_overlay_opacity": 20,
+    "tooltip_background_color": "#000000",
+    "type_base_font": "roboto_condensed_n4",
+    "use_custom_font_body": false,
+    "custom_body_font": "https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125@400\nhttps://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125@500\nhttps://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125@600",
+    "custom_body_weight": "400",
+    "type_header_font": "montserrat_n6",
+    "use_custom_font_heading": false,
+    "custom_heading_font": "https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125@400\nhttps://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125@500\nhttps://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125@600",
+    "custom_heading_weight": "400",
+    "h1_font_size": 36,
+    "h2_font_size": 30,
+    "type_header_base_size": 26,
+    "btn_uppercase_text": true,
+    "btn_border_radius": 5,
+    "btn_weight": "500",
+    "pcard_layout": "1",
+    "pcard_alignment": "center",
+    "pcard_image_ratio": "1/1",
+    "show_swatch_option": false,
+    "pcard_option_name": "Coloraa",
+    "pcard_option_design": "button",
+    "show_wishlist_button": false,
+    "show_compare_button": false,
+    "on_sale_badge": "show_percentage",
+    "show_review_badge": true,
+    "show_badge_sale": true,
+    "show_vendor": false,
+    "pcard_show_lowest_prices": true,
+    "variant_option_design1": "button",
+    "variant_option_design2": "button",
+    "variant_option_display_name2": "",
+    "variant_option_design3": "button",
+    "variant_option_design4": "button",
+    "variant_option_design5": "button",
+    "product_colors": "red: #FF6961,\nyellow: #FDDA76,\nblack: #000000,\nblack band: #000000,\nblue: #8DB4D2,\ngreen: #C1E1C1,\npurple: #B19CD9,\nsilver: #EEEEEF,\nwhite: #FFFFFF,\nbrown: #836953,\nlight brown: #B5651D,\ndark turquoise: #23cddc,\norange: #FFB347,\ntan: #E9D1BF,\nviolet: #B490B0,\npink: #FFD1DC,\ngrey: #E0E0E0,\nsky: #96BDC6,\npale leaf: #CCD4BF,\nlight blue: #b1c5d4,\ndark grey: #aca69f,\nbeige: #EBE6DB,\nbeige band: #EED9C4,\ndark blue: #063e66,\ncream: #F1F2E2,\nlight pink: #FBCFCD,\nmint: #bedce3,\ndark gray: #3A3B3C,\nrosy brown: #c4a287,\nlight grey:#D3D3D3,\ncopper: #B87333,\nrose gold: #ECC5C0,\nnight blue: #151B54,\ncoral: #FF7F50,\nlight purple: #C6AEC7,\nivy green: #5b7763,\nsand: #f2d2a9,\npale grey: #878785,\nlead: #6c6b6c",
+    "filter_color1": "Gingham",
+    "filter_color2": "flannel",
+    "filter_color3": "floral",
+    "article_show_date": false,
+    "article_show_excerpt": true,
+    "article_show_button": true,
+    "share_facebook": true,
+    "share_pinterest": true,
+    "contact_phone_number": "",
+    "contact_email": "",
+    "social_twitter_link": "",
+    "social_twitter_label": "",
+    "social_facebook_link": "#",
+    "social_facebook_label": "",
+    "social_pinterest_link": "",
+    "social_pinterest_label": "",
+    "social_instagram_link": "#",
+    "social_instagram_label": "",
+    "social_tiktok_link": "#",
+    "social_whatsapp_label": "",
+    "social_spotify_link": "",
+    "social_spotify_label": "",
+    "discount_code_enable": false,
+    "cart_estimate_shipping": false,
+    "show_delivery_days": false,
+    "wishlist_page": "wishlist",
+    "product_compare_page": "product-compare",
+    "show_cookie_consent": true,
+    "cookie_design_mode": false,
+    "cookie_consent_placement": "bottom-left",
+    "cookie_consent_theme": "white",
+    "gm_api": "",
+    "instagram_token": "",
+    "custom_css": "",
+    "review_app": "judge",
+    "currency_code_enabled": false,
+    "checkout_logo_image": "shopify://shop_images/1_9_567110c7-dbb9-497f-985b-7ce4b996aab7.png",
+    "checkout_logo_position": "center",
+    "checkout_accent_color": "#000000",
+    "checkout_button_color": "#000000",
+    "enable_page_transition": true,
+    "show_variant_swatch_image": true,
+    "use_theme_currencies": true,
+    "theme_currencies": "USD | EUR | GBP | VND",
+    "bg_cart_count": "#da3f3f",
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "sections": {
+        "featured-collection": {
+          "type": "featured-collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "featured-product": {
+          "type": "featured-product",
+          "settings": {}
+        }
+      },
+      "content_for_index": [
+        "featured-collection",
+        "featured-product"
+      ]
+    }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".m-product-quickview-button {background-color: #000; color: #fff;}"
+    ]
+  }
+}

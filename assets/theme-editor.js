@@ -1,0 +1,1 @@
+document.addEventListener("shopify:section:load",(function(n){}));

@@ -1,0 +1,262 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    },
+    "4f542066-e95c-4f59-b1bf-2998cdfee386": {
+      "type": "collection-list",
+      "blocks": {
+        "template--21621299380522__4f542066-e95c-4f59-b1bf-2998cdfee386-collection_block-1": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "spring-summer-23",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "1aaf2e4e-5343-427c-9a3f-6598cf708b75": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "fall-winter-22",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "97e9a384-577c-45d7-8298-b4de311b8025": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "spring-summer-22",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "b189e2b1-c65a-405c-a797-c70ddc79ca66": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "spring-summer-21",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "af699a2b-883d-4e3c-a673-783eb5fe1e78": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "autumn-winter-20",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "edff6619-23f6-40fc-9b27-cab2ab4c871f": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "autumn-winter-21",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "ec275d9b-790e-40d8-997c-851ceb80e5db": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "spring-summer-20",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "05c790a7-0900-4d6a-ad40-bf6185a1badc": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "autumn-winter-19",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "01db1c90-c07d-45fb-b1ff-4af7a22d0c7d": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "spring-summer-19",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "78d34a80-5cbe-43db-bb36-5dfe51a8d2b1": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "autumn-winter-18",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "75e56540-4169-4f46-a69f-f1dc513c8a2b": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "aw16-17-s-e-n-s-e-s-campaign",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "f3804009-ef2b-45c7-b6ef-aa5187664802": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "aw16-17-s-e-n-s-e-s-lookbook",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "bff4ba13-6c9f-4650-8785-6206d05a9067": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "d-y-t-m-ss18",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "945c088e-631f-4509-929c-190fcc7e9649": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "davido-x-orange-culture",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "8b049d13-e951-4401-b9f5-2c5657f7f3e1": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "dovetail",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "e133b5bf-f3e5-4d74-8203-4b22d639349e": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "h-e-r-ss15",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "38738afe-ec26-4f64-b799-f0eceaafc6ed": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "i-am-a-tree-collection",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "c5a5a72e-8fde-48e6-ae34-76b2c7471542": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "intrepid-resort-14",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "5a24a8b6-1b50-4818-a97d-fb0d81a07768": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "orange-by-orange-culture",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "68f71322-c8e5-4fb0-9100-c816270a3082": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "pretty-aw17",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "da5c1f2c-697b-4eb7-8b8b-704ab4cd0512": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "school-of-rejects-ss17",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        },
+        "ac1512e8-f8eb-4d8a-ab63-eef2ccec1126": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "the-feeling-collection",
+            "title": "{{ block.settings.collection.title }}",
+            "item_image": "{{ block.settings.collection.image }}"
+          }
+        }
+      },
+      "block_order": [
+        "template--21621299380522__4f542066-e95c-4f59-b1bf-2998cdfee386-collection_block-1",
+        "1aaf2e4e-5343-427c-9a3f-6598cf708b75",
+        "97e9a384-577c-45d7-8298-b4de311b8025",
+        "b189e2b1-c65a-405c-a797-c70ddc79ca66",
+        "af699a2b-883d-4e3c-a673-783eb5fe1e78",
+        "edff6619-23f6-40fc-9b27-cab2ab4c871f",
+        "ec275d9b-790e-40d8-997c-851ceb80e5db",
+        "05c790a7-0900-4d6a-ad40-bf6185a1badc",
+        "01db1c90-c07d-45fb-b1ff-4af7a22d0c7d",
+        "78d34a80-5cbe-43db-bb36-5dfe51a8d2b1",
+        "75e56540-4169-4f46-a69f-f1dc513c8a2b",
+        "f3804009-ef2b-45c7-b6ef-aa5187664802",
+        "bff4ba13-6c9f-4650-8785-6206d05a9067",
+        "945c088e-631f-4509-929c-190fcc7e9649",
+        "8b049d13-e951-4401-b9f5-2c5657f7f3e1",
+        "e133b5bf-f3e5-4d74-8203-4b22d639349e",
+        "38738afe-ec26-4f64-b799-f0eceaafc6ed",
+        "c5a5a72e-8fde-48e6-ae34-76b2c7471542",
+        "5a24a8b6-1b50-4818-a97d-fb0d81a07768",
+        "68f71322-c8e5-4fb0-9100-c816270a3082",
+        "da5c1f2c-697b-4eb7-8b8b-704ab4cd0512",
+        "ac1512e8-f8eb-4d8a-ab63-eef2ccec1126"
+      ],
+      "custom_css": [
+        ".m-image{height: 400px; max-width: 400px;}"
+      ],
+      "settings": {
+        "heading": "Shop by collections",
+        "heading_size": "h3",
+        "subheading": "",
+        "description": "",
+        "header_alignment": "center",
+        "container": "container-fluid",
+        "background_color": "",
+        "layout": "grid",
+        "expanded": true,
+        "card_style": "standard",
+        "text_alignment": "left",
+        "hover_effect": "scaling-down",
+        "show_product_count": true,
+        "count_inline_title": true,
+        "image_rounded": false,
+        "items_per_row": 4,
+        "item_gap": 30,
+        "enable_slider": false,
+        "show_pagination": false,
+        "show_navigation": false,
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "mobile_disable_slider": false,
+        "use_scroll_mobile": true,
+        "mobile_gap": 10,
+        "hidden_slide_control_mobile": false,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": "",
+        "animations": "inherit"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4f542066-e95c-4f59-b1bf-2998cdfee386"
+  ]
+}

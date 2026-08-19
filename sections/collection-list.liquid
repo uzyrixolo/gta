@@ -1,0 +1,306 @@
+{%- comment -%}
+  GTA Print Lab — Delivery Speed / Turnaround Time Section (Rebuild v3 — pixel match to reference)
+  File: sections/gpl-turnaround.liquid
+{%- endcomment -%}
+
+<style>
+  .gpl-turnaround { width: 100%; box-sizing: border-box; font-family: var(--gpl-t-font, 'Helvetica Neue', Helvetica, Arial, sans-serif); background-color: var(--gpl-t-bg, #0C0C0C); padding-top: var(--gpl-t-section-pad-top, 56px); padding-bottom: var(--gpl-t-section-pad-bottom, 56px); }
+  .gpl-turnaround, .gpl-turnaround * { box-sizing: border-box; font-family: var(--gpl-t-font, 'Helvetica Neue', Helvetica, Arial, sans-serif) !important; text-shadow: none !important; filter: none !important; background-image: none !important; -webkit-background-clip: initial !important; background-clip: initial !important; -webkit-text-fill-color: currentColor !important; text-decoration: none !important; white-space: normal !important; }
+
+  .gpl-turnaround__inner { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+  .gpl-turnaround__heading { font-weight: 800 !important; font-size: 24px !important; letter-spacing: 0.6px !important; text-transform: uppercase !important; text-align: center !important; color: var(--gpl-t-heading-color, #FFFFFF) !important; margin: 0 0 30px 0; line-height: 1.2 !important; }
+
+  .gpl-turnaround__track { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gpl-t-card-gap, 16px); align-items: stretch; position: relative; }
+
+  .gpl-turnaround__arrow { display: none; position: absolute; top: 40px; width: 26px; height: 26px; transform: translate(-50%, 0); z-index: 2; color: var(--gpl-t-arrow-color, #D71920); }
+  .gpl-turnaround__arrow svg { width: 100%; height: 100%; }
+
+  .gpl-turnaround__card { border-radius: var(--gpl-t-card-radius, 4px); padding: 22px 22px 24px; display: flex; flex-direction: column; min-height: 100%; }
+
+  .gpl-turnaround__card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .gpl-turnaround__icon { flex-shrink: 0; width: 42px; height: 42px; border: 1.5px solid currentColor; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 10px; }
+  .gpl-turnaround__icon svg { width: 100%; height: 100%; display: block; }
+
+  .gpl-turnaround__title { font-weight: 800 !important; font-size: 18px !important; line-height: 1.15 !important; text-transform: uppercase !important; letter-spacing: 0.2px !important; margin: 0; color: var(--gpl-card-text, #FFFFFF) !important; }
+
+  .gpl-turnaround__description { font-weight: 500 !important; font-size: 13.5px !important; line-height: 1.5 !important; text-transform: none !important; margin: 0 0 14px 0; color: var(--gpl-card-text, #FFFFFF) !important; opacity: 0.92 !important; }
+
+  .gpl-turnaround__tag { display: inline-block; align-self: flex-start; padding: 6px 12px; border-radius: 999px; font-weight: 700 !important; font-size: 10px !important; letter-spacing: 0.4px !important; text-transform: uppercase !important; margin-bottom: 16px; background-color: var(--gpl-tag-bg, rgba(0,0,0,0.28)); color: var(--gpl-tag-text, #FFFFFF) !important; }
+
+  .gpl-turnaround__pill { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border-radius: 999px; background-color: var(--gpl-pill-bg, #FFFFFF); color: var(--gpl-pill-text, #111111) !important; font-weight: 800 !important; font-size: 12.5px !important; letter-spacing: 0.3px !important; text-transform: uppercase !important; border: 1.5px solid var(--gpl-pill-border, transparent); }
+  .gpl-turnaround__pill-icon { width: 16px; height: 16px; color: var(--gpl-pill-icon, #111111); flex-shrink: 0; }
+  .gpl-turnaround__pill-icon svg { width: 100%; height: 100%; }
+
+  @media screen and (min-width: 990px) {
+    .gpl-turnaround__arrow--visible { display: flex; align-items: center; justify-content: center; }
+  }
+
+  @media screen and (max-width: 989px) {
+    .gpl-turnaround__heading { font-size: 22px !important; }
+  }
+
+  @media screen and (max-width: 749px) {
+    .gpl-turnaround { padding-left: 0; padding-right: 0; }
+    .gpl-turnaround__inner { padding: 0; }
+    .gpl-turnaround__heading { font-size: 20px !important; padding: 0 20px; margin-bottom: 22px; }
+    .gpl-turnaround__track { display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 14px; padding: 0 20px 8px 20px; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; }
+    .gpl-turnaround__track::-webkit-scrollbar { display: none; }
+    .gpl-turnaround__track:active { cursor: grabbing; }
+    .gpl-turnaround__card { flex: 0 0 82%; max-width: 82%; scroll-snap-align: start; padding: 22px 20px; }
+    .gpl-turnaround__title { font-size: 17px !important; }
+    .gpl-turnaround__description { font-size: 13px !important; }
+  }
+
+  @media screen and (max-width: 380px) {
+    .gpl-turnaround__card { flex: 0 0 88%; max-width: 88%; }
+  }
+
+  /* Bottom info bar */
+  .gpl-turnaround__bottombar { list-style: none; display: flex; margin: 36px 0 0; padding: 22px 0 0; border-top: 1px solid rgba(255,255,255,0.14); }
+  .gpl-turnaround__bottombar-item { display: flex; align-items: flex-start; gap: 10px; flex: 1; padding: 0 24px; border-left: 1px solid rgba(255,255,255,0.14); }
+  .gpl-turnaround__bottombar-item:first-child { border-left: none; padding-left: 0; }
+  .gpl-turnaround__bottombar-icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--gpl-t-arrow-color, #D71920); }
+  .gpl-turnaround__bottombar-icon svg { width: 100%; height: 100%; }
+  .gpl-turnaround__bottombar-text { display: flex; flex-direction: column; gap: 3px; }
+  .gpl-turnaround__bottombar-title { color: var(--gpl-t-arrow-color, #D71920); font-size: 12px !important; font-weight: 800 !important; text-transform: uppercase !important; letter-spacing: 0.03em !important; }
+  .gpl-turnaround__bottombar-desc { color: #C9C9C9 !important; font-size: 12px !important; font-weight: 400 !important; }
+
+  @media screen and (max-width: 989px) {
+    .gpl-turnaround__bottombar { flex-wrap: wrap; gap: 18px; padding: 0 20px; margin-top: 30px; padding-top: 22px; }
+    .gpl-turnaround__bottombar-item { flex: 1 1 45%; border-left: none; padding: 0; }
+  }
+  @media screen and (max-width: 749px) {
+    .gpl-turnaround__bottombar { flex-direction: column; gap: 16px; }
+    .gpl-turnaround__bottombar-item { border-left: none !important; padding: 0 !important; }
+  }
+</style>
+
+{%- liquid
+  assign section_id = section.id
+  assign s = section.settings
+  assign cards = section.blocks | where: 'type', 'turnaround_card'
+  assign bottom_items = section.blocks | where: 'type', 'bottom_item'
+  assign last_index = cards.size | minus: 1
+-%}
+
+<section
+  id="gpl-turnaround-{{ section_id }}"
+  class="gpl-turnaround"
+  style="
+    --gpl-t-bg: {{ s.section_bg_color }};
+    --gpl-t-heading-color: {{ s.heading_color }};
+    --gpl-t-arrow-color: {{ s.arrow_color }};
+    --gpl-t-card-radius: {{ s.card_radius }}px;
+    --gpl-t-card-gap: {{ s.card_gap }}px;
+    --gpl-t-section-pad-top: {{ s.padding_top }}px;
+    --gpl-t-section-pad-bottom: {{ s.padding_bottom }}px;
+  "
+>
+  <div class="gpl-turnaround__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="gpl-turnaround__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    <div class="gpl-turnaround__track" data-gpl-turnaround-track>
+      {%- for block in cards -%}
+        {%- liquid
+          assign bs = block.settings
+          assign idx0 = forloop.index0
+        -%}
+        <div
+          class="gpl-turnaround__card"
+          style="background-color: {{ bs.background_color }}; color: {{ bs.text_color }}; --gpl-card-text: {{ bs.text_color }}; --gpl-tag-bg: {{ bs.tag_bg_color }}; --gpl-tag-text: {{ bs.tag_text_color }}; --gpl-pill-bg: {{ bs.pill_bg_color }}; --gpl-pill-text: {{ bs.pill_text_color }}; --gpl-pill-icon: {{ bs.pill_icon_color }}; --gpl-pill-border: {{ bs.pill_border_color | default: 'transparent' }};"
+          {{ block.shopify_attributes }}
+        >
+          <div class="gpl-turnaround__card-top">
+            <span class="gpl-turnaround__icon" style="color: {{ bs.icon_color }};">
+              {%- if bs.custom_icon_svg != blank -%}
+                {{ bs.custom_icon_svg }}
+              {%- elsif bs.icon_preset == 'stopwatch' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 9v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 2.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19 5l1.5-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              {%- elsif bs.icon_preset == 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 16V6.5a1 1 0 0 1 1-1h9v10.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M13 10h4l3.5 3.5V16H13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg>
+              {%- elsif bs.icon_preset == 'calendar' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M4 9.5H20" stroke="currentColor" stroke-width="1.5"/><path d="M8 3.5V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M16 3.5V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              {%- elsif bs.icon_preset != 'none' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M12 9v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endif -%}
+            </span>
+            <h3 class="gpl-turnaround__title">{{ bs.title | default: 'Delivery Option' }}</h3>
+          </div>
+
+          <p class="gpl-turnaround__description">{{ bs.description | default: 'Fast, reliable delivery you can count on.' }}</p>
+          {%- if bs.tag_text != blank -%}<span class="gpl-turnaround__tag">{{ bs.tag_text }}</span>{%- endif -%}
+
+          <div class="gpl-turnaround__pill">
+            <span class="gpl-turnaround__pill-icon">
+              {%- if bs.pill_icon_svg != blank -%}
+                {{ bs.pill_icon_svg }}
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 15V6.5a1 1 0 0 1 1-1h9v9.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9.5h3.5L19 13v2h-7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="6" cy="16.5" r="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="16.5" r="1.5" stroke="currentColor" stroke-width="1.6"/></svg>
+              {%- endif -%}
+            </span>
+            {{ bs.pill_text | default: 'Get Started' }}
+          </div>
+        </div>
+
+        {%- if idx0 < last_index -%}
+          <span class="gpl-turnaround__arrow gpl-turnaround__arrow--visible" style="left: calc({{ idx0 | plus: 1 }} * (100% / 3) - ({{ s.card_gap }}px / 2));">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h13M13 6l7 6-7 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if bottom_items.size > 0 -%}
+      <ul class="gpl-turnaround__bottombar">
+        {%- for block in bottom_items -%}
+          <li class="gpl-turnaround__bottombar-item" {{ block.shopify_attributes }}>
+            <span class="gpl-turnaround__bottombar-icon">
+              {%- if block.settings.icon != blank -%}
+                {{ block.settings.icon }}
+              {%- elsif block.settings.icon_preset == 'pin' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.6"/></svg>
+              {%- elsif block.settings.icon_preset == 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 15V6.5a1 1 0 0 1 1-1h9v9.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 9.5h3.5L19 13v2h-7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="6" cy="16.5" r="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="16.5" r="1.5" stroke="currentColor" stroke-width="1.6"/></svg>
+              {%- elsif block.settings.icon_preset == 'box' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5v-9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3.5 7.5 12 12l8.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12v9" stroke="currentColor" stroke-width="1.6"/></svg>
+              {%- elsif block.settings.icon_preset != 'none' -%}
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.3" stroke="currentColor" stroke-width="1.6"/></svg>
+              {%- endif -%}
+            </span>
+            <span class="gpl-turnaround__bottombar-text">
+              <span class="gpl-turnaround__bottombar-title">{{ block.settings.title | default: 'Fast & Reliable' }}</span>
+              <span class="gpl-turnaround__bottombar-desc">{{ block.settings.description | default: 'Quality service you can trust.' }}</span>
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var section = document.getElementById('gpl-turnaround-{{ section_id }}');
+    if (!section) return;
+    var track = section.querySelector('[data-gpl-turnaround-track]');
+    if (!track) return;
+    var isDown = false, startX = 0, scrollLeftStart = 0;
+    track.addEventListener('pointerdown', function (e) { isDown = true; track.setPointerCapture(e.pointerId); startX = e.clientX; scrollLeftStart = track.scrollLeft; });
+    track.addEventListener('pointermove', function (e) { if (!isDown) return; track.scrollLeft = scrollLeftStart - (e.clientX - startX); });
+    track.addEventListener('pointerup', function () { isDown = false; });
+    track.addEventListener('pointercancel', function () { isDown = false; });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "GPL Delivery Speed",
+  "tag": "section",
+  "class": "gpl-section-turnaround",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose Your Delivery Speed" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "section_bg_color", "label": "Section background color", "default": "#0C0C0C" },
+    { "type": "color", "id": "arrow_color", "label": "Accent color (arrows / bottom bar icons)", "default": "#D71920" },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 },
+    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "turnaround_card",
+      "name": "Delivery Card",
+      "settings": [
+        {
+          "type": "select", "id": "icon_preset", "label": "Icon",
+          "options": [
+            { "value": "stopwatch", "label": "Stopwatch" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "stopwatch"
+        },
+        { "type": "textarea", "id": "custom_icon_svg", "label": "Custom icon SVG (optional)", "info": "Overrides the preset icon above." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Same-Day Delivery" },
+        { "type": "text", "id": "description", "label": "Short description", "default": "Order today, get it today." },
+        { "type": "text", "id": "tag_text", "label": "Pill tag text", "default": "PERFECT FOR LAST MINUTE NEEDS" },
+        { "type": "text", "id": "pill_text", "label": "Bottom pill text", "default": "DELIVERED TODAY" },
+        { "type": "textarea", "id": "pill_icon_svg", "label": "Bottom pill icon SVG (optional)" },
+        { "type": "color", "id": "background_color", "label": "Card background color", "default": "#C21A1E" },
+        { "type": "color", "id": "text_color", "label": "Card text color", "default": "#FFFFFF" },
+        { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#FFFFFF" },
+        { "type": "color", "id": "tag_bg_color", "label": "Tag background color", "default": "rgba(0,0,0,0.28)" },
+        { "type": "color", "id": "tag_text_color", "label": "Tag text color", "default": "#FFFFFF" },
+        { "type": "color", "id": "pill_bg_color", "label": "Bottom pill background", "default": "#FFFFFF" },
+        { "type": "color", "id": "pill_text_color", "label": "Bottom pill text color", "default": "#C21A1E" },
+        { "type": "color", "id": "pill_icon_color", "label": "Bottom pill icon color", "default": "#C21A1E" },
+        { "type": "color", "id": "pill_border_color", "label": "Bottom pill border color", "default": "#C21A1E" }
+      ]
+    },
+    {
+      "type": "bottom_item",
+      "name": "Bottom bar item",
+      "settings": [
+        {
+          "type": "select", "id": "icon_preset", "label": "Icon",
+          "options": [
+            { "value": "pin", "label": "Location pin" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "box", "label": "Box" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "pin"
+        },
+        { "type": "html", "id": "icon", "label": "Custom icon SVG (optional)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Proudly Toronto Based" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Local production. Local delivery." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GPL Delivery Speed",
+      "blocks": [
+        {
+          "type": "turnaround_card",
+          "settings": {
+            "icon_preset": "stopwatch", "title": "Same-Day Delivery", "description": "Order today, get it today.",
+            "tag_text": "PERFECT FOR LAST MINUTE NEEDS", "pill_text": "DELIVERED TODAY",
+            "background_color": "#C21A1E", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(0,0,0,0.28)", "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#FFFFFF", "pill_text_color": "#C21A1E", "pill_icon_color": "#C21A1E", "pill_border_color": "#C21A1E"
+          }
+        },
+        {
+          "type": "turnaround_card",
+          "settings": {
+            "icon_preset": "truck", "title": "Next-Day Delivery", "description": "Order today, get it tomorrow.",
+            "tag_text": "FAST. RELIABLE. ON TIME.", "pill_text": "DELIVERED TOMORROW",
+            "background_color": "#1A1A1A", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(255,255,255,0.1)", "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#FFFFFF", "pill_text_color": "#111111", "pill_icon_color": "#111111", "pill_border_color": "#FFFFFF"
+          }
+        },
+        {
+          "type": "turnaround_card",
+          "settings": {
+            "icon_preset": "calendar", "title": "Standard Delivery", "description": "3–5 Business Days.",
+            "tag_text": "GREAT FOR PLANNED ORDERS", "pill_text": "DELIVERED IN 3–5 DAYS",
+            "background_color": "#2A2A2A", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(0,0,0,0.28)", "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#E8E8E8", "pill_text_color": "#111111", "pill_icon_color": "#111111", "pill_border_color": "#E8E8E8"
+          }
+        },
+        { "type": "bottom_item", "settings": { "icon_preset": "pin", "title": "Proudly Toronto Based", "description": "Local production. Local delivery." } },
+        { "type": "bottom_item", "settings": { "icon_preset": "truck", "title": "GTA Delivery", "description": "Fast, reliable delivery across the GTA." } },
+        { "type": "bottom_item", "settings": { "icon_preset": "box", "title": "Shipping Across Canada", "description": "Delivering quality from coast to coast." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

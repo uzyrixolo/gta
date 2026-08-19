@@ -1,0 +1,247 @@
+{%- comment -%}
+  GTA Print Lab — Header / Navigation Bar
+  File: sections/gpl-header.liquid
+{%- endcomment -%}
+
+<header class="gpl-header-{{ section.id }} gpl-header" data-gpl-header>
+  <div class="gpl-header__inner">
+    <a href="{{ routes.root_url }}" class="gpl-header__logo">
+      {%- if section.settings.logo != blank -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 240 }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo.width }}"
+          height="{{ section.settings.logo.height }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="gpl-header__logo-text">
+          {{ section.settings.logo_text_1 }}<span class="gpl-header__logo-accent">{{ section.settings.logo_text_2 }}</span>
+        </span>
+      {%- endif -%}
+    </a>
+
+    <nav class="gpl-header__nav" aria-label="Main navigation">
+      <ul class="gpl-header__menu">
+        {%- for link in section.settings.menu.links -%}
+          <li class="gpl-header__menu-item">
+            <a href="{{ link.url }}" class="gpl-header__menu-link" {% if link.active %}aria-current="page"{% endif %}>
+              {{ link.title }}
+              {%- if link.links != blank -%}
+                <svg class="gpl-header__chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              {%- endif -%}
+            </a>
+            {%- if link.links != blank -%}
+              <ul class="gpl-header__submenu">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="gpl-header__actions">
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="gpl-header__cta">
+          {{ section.settings.button_text }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      {%- endif -%}
+
+      <button type="button" class="gpl-header__burger" data-gpl-burger aria-label="Open menu" aria-expanded="false" aria-controls="gpl-mobile-menu-{{ section.id }}">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="gpl-header__mobile-menu" id="gpl-mobile-menu-{{ section.id }}" data-gpl-mobile-menu>
+    <ul class="gpl-header__mobile-list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- if link.links != blank -%}
+            <ul class="gpl-header__mobile-sublist">
+              {%- for child in link.links -%}
+                <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.button_text != blank -%}
+      <a href="{{ section.settings.button_link | default: '#' }}" class="gpl-header__mobile-cta">{{ section.settings.button_text }}</a>
+    {%- endif -%}
+  </div>
+  <div class="gpl-header__mobile-backdrop" data-gpl-backdrop></div>
+</header>
+
+{% style %}
+  .gpl-header-{{ section.id }} {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: {{ section.settings.bg_color }};
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: box-shadow .2s ease, background-color .2s ease;
+  }
+  .gpl-header-{{ section.id }}.gpl-is-scrolled {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  }
+  .gpl-header-{{ section.id }} .gpl-header__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+  .gpl-header-{{ section.id }} .gpl-header__logo img { max-height: 38px; width: auto; display: block; }
+  .gpl-header-{{ section.id }} .gpl-header__logo-text {
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: 20px; letter-spacing: 0.01em; line-height: 1;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__logo-accent { color: #D71920; }
+
+  .gpl-header-{{ section.id }} .gpl-header__menu {
+    list-style: none; display: flex; align-items: center; gap: 30px; margin: 0; padding: 0;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__menu-item { position: relative; }
+  .gpl-header-{{ section.id }} .gpl-header__menu-link {
+    display: flex; align-items: center; gap: 4px; color: #F2F2F2; text-decoration: none;
+    font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em;
+    padding: 8px 0; transition: color .15s ease;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__menu-link:hover,
+  .gpl-header-{{ section.id }} .gpl-header__menu-link[aria-current="page"] { color: #D71920; }
+  .gpl-header-{{ section.id }} .gpl-header__submenu {
+    list-style: none; margin: 0; padding: 10px; position: absolute; top: 100%; left: 0;
+    background: #1B1B1B; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+    min-width: 200px; opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__menu-item:hover .gpl-header__submenu {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  .gpl-header-{{ section.id }} .gpl-header__submenu a {
+    display: block; padding: 8px 10px; color: #CCCCCC; text-decoration: none; font-size: 13px; border-radius: 5px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__submenu a:hover { background: rgba(215,25,32,0.12); color: #FFFFFF; }
+
+  .gpl-header-{{ section.id }} .gpl-header__actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+  .gpl-header-{{ section.id }} .gpl-header__cta {
+    display: inline-flex; align-items: center; gap: 8px; background: #D71920; color: #FFFFFF;
+    padding: 11px 22px; border-radius: 999px; font-weight: 700; font-size: 13px; text-transform: uppercase;
+    letter-spacing: 0.02em; text-decoration: none; transition: background-color .2s ease, transform .15s ease;
+    white-space: nowrap;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__cta:hover { background: #B4141A; transform: translateY(-1px); }
+
+  .gpl-header-{{ section.id }} .gpl-header__burger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 40px; height: 40px; background: transparent; border: none; cursor: pointer; padding: 0;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__burger span {
+    display: block; width: 22px; height: 2px; background: #FFFFFF; margin: 0 auto; transition: transform .2s ease, opacity .2s ease;
+  }
+  .gpl-header-{{ section.id }}.gpl-menu-open .gpl-header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .gpl-header-{{ section.id }}.gpl-menu-open .gpl-header__burger span:nth-child(2) { opacity: 0; }
+  .gpl-header-{{ section.id }}.gpl-menu-open .gpl-header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .gpl-header-{{ section.id }} .gpl-header__mobile-menu {
+    position: fixed; top: 0; right: 0; height: 100vh; width: min(320px, 84vw);
+    background: #111111; z-index: 1001; padding: 90px 24px 32px;
+    transform: translateX(100%); transition: transform .25s ease; overflow-y: auto;
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+  .gpl-header-{{ section.id }}.gpl-menu-open .gpl-header__mobile-menu { transform: translateX(0); }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-list { list-style: none; margin: 0; padding: 0; }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-list > li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-list > li > a {
+    display: block; padding: 16px 2px; color: #FFFFFF; text-decoration: none; font-weight: 700;
+    text-transform: uppercase; font-size: 14px; letter-spacing: 0.02em;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-sublist { list-style: none; margin: 0 0 12px; padding: 0 0 0 12px; }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-sublist a { display: block; padding: 8px 0; color: #A9A9A9; text-decoration: none; font-size: 13px; }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-cta {
+    display: block; text-align: center; margin-top: 24px; background: #D71920; color: #FFFFFF;
+    padding: 14px; border-radius: 999px; font-weight: 700; text-transform: uppercase; font-size: 13px; text-decoration: none;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000;
+    opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease;
+  }
+  .gpl-header-{{ section.id }}.gpl-menu-open .gpl-header__mobile-backdrop { opacity: 1; visibility: visible; }
+
+  @media screen and (max-width: 989px) {
+    .gpl-header-{{ section.id }} .gpl-header__nav { display: none; }
+    .gpl-header-{{ section.id }} .gpl-header__burger { display: flex; }
+    .gpl-header-{{ section.id }} .gpl-header__cta { padding: 9px 16px; font-size: 12px; }
+  }
+  @media screen and (max-width: 549px) {
+    .gpl-header-{{ section.id }} .gpl-header__inner { padding: 12px 16px; }
+    .gpl-header-{{ section.id }} .gpl-header__cta span { display: none; }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    /* This script tag sits after </header>, so currentScript.closest() would find
+       nothing — look the header up by its section-scoped class instead. */
+    var header = document.querySelector('.gpl-header-{{ section.id }}');
+    if (!header) return;
+    var burger = header.querySelector('[data-gpl-burger]');
+    var backdrop = header.querySelector('[data-gpl-backdrop]');
+    var menu = header.querySelector('[data-gpl-mobile-menu]');
+
+    function setOpen(isOpen) {
+      header.classList.toggle('gpl-menu-open', isOpen);
+      if (burger) burger.setAttribute('aria-expanded', String(isOpen));
+      document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+    }
+    function closeMenu() { setOpen(false); }
+    function toggleMenu() { setOpen(!header.classList.contains('gpl-menu-open')); }
+
+    if (burger) burger.addEventListener('click', toggleMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+    if (menu) {
+      menu.addEventListener('click', function (e) {
+        if (e.target.closest('a')) closeMenu();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    var lastScroll = 0;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY || document.documentElement.scrollTop;
+      header.classList.toggle('gpl-is-scrolled', y > 8);
+      lastScroll = y;
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "GPL Header",
+  "tag": "header",
+  "class": "gpl-section-header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image (optional, falls back to text logo)" },
+    { "type": "text", "id": "logo_text_1", "label": "Logo text part 1", "default": "GTA " },
+    { "type": "text", "id": "logo_text_2", "label": "Logo text part 2 (accent colour)", "default": "PRINT LAB" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Get A Quote" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" }
+  ],
+  "presets": [
+    { "name": "GPL Header" }
+  ]
+}
+{% endschema %}

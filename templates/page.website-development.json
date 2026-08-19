@@ -1,0 +1,596 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "web_hero": {
+      "type": "gpl-gd-hero",
+      "settings": {
+        "image_position": "center right",
+        "scrim_strength": 90,
+        "min_height": 620,
+        "min_height_mobile": 480,
+        "eyebrow": "",
+        "heading_line1": "Website",
+        "heading_line2": "Development",
+        "subheading": "Powerful Websites. Seamless Shopping. Built to Sell. Built to Scale.",
+        "paragraph": "<p>We build high-converting, fast, and mobile-first websites designed for eCommerce, Print on Demand, and custom brands. From design to launch and beyond, we handle everything so you can focus on growing your business.</p>",
+        "button_1_text": "Start Your Project",
+        "button_1_link": "",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A",
+        "background_image": "shopify://shop_images/gpl-hero-website.jpg"
+      }
+    },
+    "web_features": {
+      "type": "gpl-gd-audience",
+      "blocks": {
+        "f_ecom": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"20\" r=\"1.6\"/><circle cx=\"17\" cy=\"20\" r=\"1.6\"/><path d=\"M3 4h2.5l2.2 11h10.8l2-8H6\"/></svg>",
+            "label": "eCommerce Experts"
+          }
+        },
+        "f_pod": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "label": "Print On Demand Integration"
+          }
+        },
+        "f_mobile": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"2.5\" width=\"10\" height=\"19\" rx=\"2\"/><path d=\"M10.5 5h3M11 18.5h2\"/></svg>",
+            "label": "Mobile First Design"
+          }
+        },
+        "f_speed": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "label": "Fast Loading Speed"
+          }
+        },
+        "f_secure": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"/><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"/></svg>",
+            "label": "Secure & Reliable Platforms"
+          }
+        },
+        "f_seo": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M16.5 16.5 21 21\"/><path d=\"M8 12.5l2 2 4-4.5\"/></svg>",
+            "label": "SEO Optimized"
+          }
+        },
+        "f_supp": {
+          "type": "audience",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "label": "Support & Maintenance"
+          }
+        }
+      },
+      "block_order": [
+        "f_ecom",
+        "f_pod",
+        "f_mobile",
+        "f_speed",
+        "f_secure",
+        "f_seo",
+        "f_supp"
+      ],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "web_services": {
+      "type": "gpl-pod-services",
+      "blocks": {
+        "s_ecom": {
+          "type": "service",
+          "settings": {
+            "title": "eCommerce Website Design",
+            "intro": "Professional online stores built to convert visitors into customers. Beautiful, fast, and effective.",
+            "features": "Shopify Experts\nConversion Focused\nCustom Store Design\nMobile Optimized",
+            "image": "shopify://shop_images/gpl-web-svc-ecom.jpg"
+          }
+        },
+        "s_pod": {
+          "type": "service",
+          "settings": {
+            "title": "Print On Demand Websites",
+            "intro": "We build POD websites that connect with your production and fulfillment workflow seamlessly.",
+            "features": "Product Customization\nInventory Sync\nAutomated Fulfillment\nScalable Solutions",
+            "image": "shopify://shop_images/gpl-web-svc-pod.jpg"
+          }
+        },
+        "s_custom": {
+          "type": "service",
+          "settings": {
+            "title": "Custom Website Design",
+            "intro": "Fully custom websites designed to match your brand and vision.",
+            "features": "Unique Design\nUser Experience (UX)\nBrand Focused\nUnlimited Possibilities",
+            "image": "shopify://shop_images/gpl-web-svc-custom.jpg"
+          }
+        },
+        "s_landing": {
+          "type": "service",
+          "settings": {
+            "title": "Landing Pages That Convert",
+            "intro": "High-converting landing pages for products, campaigns, and promotions.",
+            "features": "Sales Focused\nFast & Lightweight\nLead Generation\nA/B Testing Ready",
+            "image": "shopify://shop_images/gpl-web-svc-landing.jpg"
+          }
+        },
+        "s_apps": {
+          "type": "service",
+          "settings": {
+            "title": "App & Integration Setup",
+            "intro": "We integrate the best tools to automate and grow your business.",
+            "features": "Shopify & Shopify Apps\nPayment Gateways\nPrintful, Printify, TeeInBlue\nShipping & Tracking",
+            "image": "shopify://shop_images/gpl-web-svc-apps.jpg"
+          }
+        },
+        "s_perf": {
+          "type": "service",
+          "settings": {
+            "title": "Speed, SEO & Performance",
+            "intro": "We optimize your website for speed, search engines, and overall performance.",
+            "features": "Technical SEO\nMobile Performance\nSpeed Optimization\nBetter Rankings",
+            "image": "shopify://shop_images/gpl-web-svc-perf.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "s_ecom",
+        "s_pod",
+        "s_custom",
+        "s_landing",
+        "s_apps",
+        "s_perf"
+      ],
+      "settings": {
+        "heading": "Our Website Development Services",
+        "columns_desktop": "3",
+        "button_text": "View All Services",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "web_duo": {
+      "type": "gpl-brand-duo",
+      "blocks": {
+        "dc_01": {
+          "type": "check",
+          "settings": {
+            "label": "Modern & Professional Designs"
+          }
+        },
+        "dc_02": {
+          "type": "check",
+          "settings": {
+            "label": "Mobile-First & Fully Responsive"
+          }
+        },
+        "dc_03": {
+          "type": "check",
+          "settings": {
+            "label": "High-Converting Product Pages"
+          }
+        },
+        "dc_04": {
+          "type": "check",
+          "settings": {
+            "label": "Secure Checkout & Payments"
+          }
+        },
+        "dc_05": {
+          "type": "check",
+          "settings": {
+            "label": "Easy Product Management"
+          }
+        },
+        "dc_06": {
+          "type": "check",
+          "settings": {
+            "label": "SEO Optimized Structure"
+          }
+        },
+        "dc_07": {
+          "type": "check",
+          "settings": {
+            "label": "Fast Loading Speed"
+          }
+        },
+        "dc_08": {
+          "type": "check",
+          "settings": {
+            "label": "Ongoing Support & Maintenance"
+          }
+        },
+        "ds_order": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"20\" r=\"1.6\"/><circle cx=\"17\" cy=\"20\" r=\"1.6\"/><path d=\"M3 4h2.5l2.2 11h10.8l2-8H6\"/></svg>",
+            "label": "Customer Places Order"
+          }
+        },
+        "ds_fulfill": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "label": "We Fulfill & Print"
+          }
+        },
+        "ds_ship": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"/><path d=\"M14 10h3.5l2.5 3v3h-6z\"/><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17\" cy=\"18\" r=\"1.8\"/><path d=\"M4 10H1M4 13H2\"/></svg>",
+            "label": "We Pack & Ship"
+          }
+        },
+        "ds_receive": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8.5 14a4.2 4.2 0 0 0 7 0\"/><circle cx=\"9.2\" cy=\"9.8\" r=\"1\"/><circle cx=\"14.8\" cy=\"9.8\" r=\"1\"/></svg>",
+            "label": "Customer Receives Order"
+          }
+        },
+        "dm_01": {
+          "type": "mini",
+          "settings": {
+            "label": "No Inventory"
+          }
+        },
+        "dm_02": {
+          "type": "mini",
+          "settings": {
+            "label": "No Upfront Costs"
+          }
+        },
+        "dm_03": {
+          "type": "mini",
+          "settings": {
+            "label": "Automated Fulfillment"
+          }
+        },
+        "dm_04": {
+          "type": "mini",
+          "settings": {
+            "label": "Focus on Marketing & Sales"
+          }
+        }
+      },
+      "block_order": [
+        "dc_01",
+        "dc_02",
+        "dc_03",
+        "dc_04",
+        "dc_05",
+        "dc_06",
+        "dc_07",
+        "dc_08",
+        "ds_order",
+        "ds_fulfill",
+        "ds_ship",
+        "ds_receive",
+        "dm_01",
+        "dm_02",
+        "dm_03",
+        "dm_04"
+      ],
+      "settings": {
+        "left_eyebrow": "",
+        "left_heading": "We Build Websites That Grow Your Business",
+        "left_text": "",
+        "right_eyebrow": "",
+        "right_heading": "Built for Print On Demand Success",
+        "right_text": "We create websites that connect with your print providers and automate the entire process from order to delivery.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A",
+        "left_image": "shopify://shop_images/gpl-web-duo.jpg"
+      }
+    },
+    "web_process": {
+      "type": "gpl-gd-process",
+      "blocks": {
+        "p_discover": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M16.5 16.5 21 21\"/><path d=\"M8 12.5l2 2 4-4.5\"/></svg>",
+            "title": "Discover",
+            "description": "We learn about your business, goals, and target audience."
+          }
+        },
+        "p_plan": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.4\"/></svg>",
+            "title": "Plan & Strategy",
+            "description": "We plan your website structure, features, and user experience."
+          }
+        },
+        "p_design": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l6 6-8.5 8.5L3 20l2.5-6.5z\"/><circle cx=\"10.5\" cy=\"13.5\" r=\"1.3\"/></svg>",
+            "title": "Design",
+            "description": "We create a modern, branded design tailored to your business."
+          }
+        },
+        "p_dev": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 7l-5 5 5 5M16 7l5 5-5 5\"/><path d=\"M13.5 4.5l-3 15\"/></svg>",
+            "title": "Development",
+            "description": "We build your website with clean, fast, and secure code."
+          }
+        },
+        "p_launch": {
+          "type": "step",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15c-1.8-3.6-1-8 3.5-11 1 1 2.2 3.2 2 5.6-.2 2.8-2.5 5-5.5 5.4z\"/><path d=\"M12 15l-3-3c-1.7.6-3.4 2.3-4 5.6 3.3-.6 5-2.3 5.6-4z\"/><path d=\"M12 15c.6 1.7-.4 4.2-3 5.6.2-2 .6-3.4 1.4-4.4\"/><circle cx=\"14.7\" cy=\"7.3\" r=\"1.3\"/></svg>",
+            "title": "Launch & Support",
+            "description": "We launch your website and provide ongoing support."
+          }
+        }
+      },
+      "block_order": [
+        "p_discover",
+        "p_plan",
+        "p_design",
+        "p_dev",
+        "p_launch"
+      ],
+      "settings": {
+        "heading": "Our Website Development Process",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "web_packages": {
+      "type": "gpl-brand-packages",
+      "blocks": {
+        "pkg_starter": {
+          "type": "package",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"20\" r=\"1.6\"/><circle cx=\"17\" cy=\"20\" r=\"1.6\"/><path d=\"M3 4h2.5l2.2 11h10.8l2-8H6\"/></svg>",
+            "name": "Starter Store",
+            "tagline": "Perfect for new businesses",
+            "price": "$899",
+            "price_note": "One-Time",
+            "features": "Up to 10 Products\nMobile Responsive\nBasic SEO\nPayment Integration",
+            "button_text": "Get Started",
+            "button_link": ""
+          }
+        },
+        "pkg_growth": {
+          "type": "package",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
+            "name": "Growth Store",
+            "tagline": "For growing eCommerce brands",
+            "price": "$1,499",
+            "price_note": "One-Time",
+            "features": "Up to 50 Products\nCustom Design\nSEO Optimized\nApp Integrations",
+            "button_text": "Get Started",
+            "button_link": ""
+          }
+        },
+        "pkg_pod": {
+          "type": "package",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "name": "POD Store",
+            "tagline": "Print on Demand Specialists",
+            "price": "$1,699",
+            "price_note": "One-Time",
+            "features": "POD Integration\nProduct Customization\nAutomated Fulfillment\nShipping Setup",
+            "button_text": "Get Started",
+            "button_link": ""
+          }
+        },
+        "pkg_advanced": {
+          "type": "package",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 3h10l4 6-9 12L3 9z\"/><path d=\"M3 9h18M9.5 9 12 21l2.5-12M7 3l2.5 6M17 3l-2.5 6\"/></svg>",
+            "name": "Advanced Store",
+            "tagline": "Advanced features & scalability",
+            "price": "$2,499+",
+            "price_note": "Custom",
+            "features": "Unlimited Products\nAdvanced Features\nCustom Integrations\nPriority Support",
+            "button_text": "Get Started",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "pkg_starter",
+        "pkg_growth",
+        "pkg_pod",
+        "pkg_advanced"
+      ],
+      "settings": {
+        "heading": "Website Solutions for Every Business",
+        "footnote": "All packages include training, support, and a website you own 100%.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "web_projects": {
+      "type": "gpl-gd-gallery",
+      "blocks": {
+        "proj_01": {
+          "type": "item",
+          "settings": {
+            "category": "Ecommerce",
+            "caption": "",
+            "image": "shopify://shop_images/gpl-web-proj-1.jpg"
+          }
+        },
+        "proj_02": {
+          "type": "item",
+          "settings": {
+            "category": "Print On Demand",
+            "caption": "",
+            "image": "shopify://shop_images/gpl-web-proj-2.jpg"
+          }
+        },
+        "proj_03": {
+          "type": "item",
+          "settings": {
+            "category": "Apparel",
+            "caption": "",
+            "image": "shopify://shop_images/gpl-web-proj-3.jpg"
+          }
+        },
+        "proj_04": {
+          "type": "item",
+          "settings": {
+            "category": "Brands",
+            "caption": "",
+            "image": "shopify://shop_images/gpl-web-proj-4.jpg"
+          }
+        },
+        "proj_05": {
+          "type": "item",
+          "settings": {
+            "category": "Businesses",
+            "caption": "",
+            "image": "shopify://shop_images/gpl-web-proj-5.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "proj_01",
+        "proj_02",
+        "proj_03",
+        "proj_04",
+        "proj_05"
+      ],
+      "settings": {
+        "heading": "Our Recent Website Projects",
+        "all_label": "All",
+        "tile_ratio": "4 / 3",
+        "button_text": "View Full Portfolio",
+        "button_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "web_why": {
+      "type": "gpl-pod-diff",
+      "blocks": {
+        "w_allinone": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 9h16v11H4z\"/><path d=\"M3 9l2-5h14l2 5\"/><path d=\"M9 20v-6h6v6\"/></svg>",
+            "title": "All-In-One Solution",
+            "description": "Design, Development, and Printing under one roof."
+          }
+        },
+        "w_team": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"8.5\" cy=\"8\" r=\"3\"/><circle cx=\"16\" cy=\"9.5\" r=\"2.4\"/><path d=\"M3.5 19c.5-3.2 2.5-5 5-5s4.5 1.8 5 5z\"/><path d=\"M14.5 14.6c2.6-.5 4.6 1 5.2 4.4h-5\"/></svg>",
+            "title": "Expert Team",
+            "description": "Experienced designers, developers, and eCommerce experts."
+          }
+        },
+        "w_fast": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "title": "Fast Turnaround",
+            "description": "Quick delivery without compromising quality."
+          }
+        },
+        "w_support": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "title": "Ongoing Support",
+            "description": "We're here to support you every step of the way."
+          }
+        },
+        "w_results": {
+          "type": "item",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
+            "title": "Results Driven",
+            "description": "Websites built to convert and help you grow."
+          }
+        }
+      },
+      "block_order": [
+        "w_allinone",
+        "w_team",
+        "w_fast",
+        "w_support",
+        "w_results"
+      ],
+      "settings": {
+        "heading": "Why Choose GTA Print Lab?",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "web_cta": {
+      "type": "gpl-pod-cta",
+      "blocks": {
+        "btn_start": {
+          "type": "button",
+          "settings": {
+            "label": "Start Your Project",
+            "link": "",
+            "style": "primary"
+          }
+        },
+        "btn_quote": {
+          "type": "button",
+          "settings": {
+            "label": "Request a Quote",
+            "link": "",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "btn_start",
+        "btn_quote"
+      ],
+      "settings": {
+        "heading": "Ready to Build Your Website?",
+        "text": "Let's build a high-converting website that showcases your brand, sells your products, and grows your business.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    }
+  },
+  "order": [
+    "web_hero",
+    "web_features",
+    "web_services",
+    "web_duo",
+    "web_process",
+    "web_packages",
+    "web_projects",
+    "web_why",
+    "web_cta"
+  ]
+}

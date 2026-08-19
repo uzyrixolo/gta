@@ -1,0 +1,164 @@
+{%- comment -%}
+  GTA Print Lab — What We Print
+  File: sections/gpl-what-we-print.liquid
+  Note: uses CSS scroll-snap for mobile carousel behaviour, no JS required.
+{%- endcomment -%}
+
+<section class="gpl-print-{{ section.id }} gpl-print">
+  <div class="gpl-print__inner">
+    <div class="gpl-section-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="gpl-section-head__eyebrow gpl-section-head__eyebrow--light">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+    </div>
+    {%- assign product_count = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product' -%}{%- assign product_count = product_count | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+    {%- assign total_tiles = product_count -%}
+    {%- if section.settings.show_more_tile -%}{%- assign total_tiles = total_tiles | plus: 1 -%}{%- endif -%}
+    {%- if total_tiles < 1 -%}{%- assign total_tiles = 1 -%}{%- endif -%}
+
+    <div class="gpl-print__track" style="--gpl-tile-count: {{ total_tiles }};">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'product' -%}
+          <div class="gpl-print-tile" {{ block.shopify_attributes }}>
+            <div class="gpl-print-tile__image">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 500 }}"
+                  srcset="{{ block.settings.image | image_url: width: 320 }} 320w, {{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 700 }} 700w"
+                  sizes="(min-width: 990px) 14vw, 40vw"
+                  alt="{{ block.settings.image.alt | default: block.settings.label | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="gpl-print-tile__placeholder">{{ block.settings.label }}</div>
+              {%- endif -%}
+            </div>
+            <span class="gpl-print-tile__label">{{ block.settings.label }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if section.settings.show_more_tile -%}
+        <a href="{{ section.settings.more_link | default: '#' }}" class="gpl-print-tile gpl-print-tile--more">
+          <span class="gpl-print-tile__more-label">{{ section.settings.more_text }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gpl-print-{{ section.id }} { background: #111111; padding: 64px 0; }
+  .gpl-print-{{ section.id }} .gpl-print__inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+  .gpl-print-{{ section.id }} .gpl-section-head { text-align: center; margin-bottom: 28px; }
+  .gpl-print-{{ section.id }} .gpl-section-head__eyebrow--light {
+    color: #D71920; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 15px; margin: 0;
+  }
+  .gpl-print-{{ section.id }} .gpl-print__track {
+    display: grid;
+    grid-template-columns: repeat(var(--gpl-tile-count, 8), minmax(0, 1fr));
+    gap: 2px;
+    background: #2A2A2A;
+    border: 1px solid #2A2A2A;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile {
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    text-decoration: none;
+    min-width: 0;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile__placeholder { color: #999999; font-size: 11px; }
+  .gpl-print-{{ section.id }} .gpl-print-tile__label {
+    display: block; width: 100%; padding: 10px 4px; font-size: 11px; font-weight: 800; letter-spacing: 0.03em;
+    text-transform: uppercase; color: #111111; background: #FFFFFF; border-top: 1px solid #E5E5E5;
+    box-sizing: border-box;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile--more {
+    background: #D71920; color: #FFFFFF; align-items: center; justify-content: center; aspect-ratio: 1 / 1.15;
+  }
+  .gpl-print-{{ section.id }} .gpl-print-tile__more-label { font-weight: 800; font-size: 15px; text-transform: uppercase; }
+
+  @media screen and (max-width: 989px) {
+    .gpl-print-{{ section.id }} .gpl-print__track { grid-template-columns: repeat(min(var(--gpl-tile-count, 8), 4), minmax(0, 1fr)); }
+  }
+
+  @media screen and (max-width: 549px) {
+    .gpl-print-{{ section.id }} { padding: 44px 0; }
+    .gpl-print-{{ section.id }} .gpl-print__inner { padding: 0; }
+    .gpl-print-{{ section.id }} .gpl-section-head { padding: 0 16px; }
+    .gpl-print-{{ section.id }} .gpl-print__track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .gpl-print-{{ section.id }} .gpl-print-tile {
+      flex: 0 0 42%;
+      scroll-snap-align: start;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL What We Print",
+  "tag": "section",
+  "class": "gpl-section-print",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What We Print" },
+    { "type": "checkbox", "id": "show_more_tile", "label": "Show 'And More' tile", "default": true },
+    { "type": "text", "id": "more_text", "label": "'And More' tile text", "default": "And More!" },
+    { "type": "url", "id": "more_link", "label": "'And More' tile link" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "GPL What We Print",
+      "blocks": [
+        { "type": "product", "settings": { "label": "T-Shirts" } },
+        { "type": "product", "settings": { "label": "Hoodies" } },
+        { "type": "product", "settings": { "label": "Golf Shirts" } },
+        { "type": "product", "settings": { "label": "Hats & Toques" } },
+        { "type": "product", "settings": { "label": "Jackets" } },
+        { "type": "product", "settings": { "label": "Team Uniforms" } },
+        { "type": "product", "settings": { "label": "Safety Apparel" } },
+        { "type": "product", "settings": { "label": "Promo Products" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

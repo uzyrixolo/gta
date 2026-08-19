@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "gpl-customizer",
+      "blocks": {
+        "method_dtf": {
+          "type": "method",
+          "settings": {
+            "name": "DTF",
+            "description": "Best for bold, colourful logos or graphics on any fabric."
+          }
+        },
+        "method_dtg": {
+          "type": "method",
+          "settings": {
+            "name": "DTG",
+            "description": "Best for detailed, photo-quality prints on cotton garments."
+          }
+        },
+        "method_emb": {
+          "type": "method",
+          "settings": {
+            "name": "Embroidery",
+            "description": "Best for a premium, textured look on hats, polos and jackets."
+          }
+        }
+      },
+      "block_order": [
+        "method_dtf",
+        "method_dtg",
+        "method_emb"
+      ],
+      "settings": {
+        "upload_public_key": "6e122e88e1f265b83a7f",
+        "color_accent": "#D71920",
+        "upload_cdn_base": "2nfggcljwz.ucarecd.net"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

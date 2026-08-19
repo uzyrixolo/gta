@@ -1,0 +1,319 @@
+{%- comment -%}
+  GTA Print Lab — Print On Demand page: Tools & integrations + More than printing
+  Left panel  — platform logo chips ("platform" blocks), checklist ("feature" blocks), optional laptop image
+  Right panel — heading, text, icon list ("extra" blocks), optional collage image
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign platforms = section.blocks | where: 'type', 'platform' -%}
+{%- assign features = section.blocks | where: 'type', 'feature' -%}
+{%- assign extras = section.blocks | where: 'type', 'extra' -%}
+
+<section id="gpl-pod-tools-{{ section.id }}" class="gpl-pod-tools">
+  <div class="gpl-pod-tools__inner">
+    <div class="gpl-pod-tools__panel">
+      {%- if s.tools_heading != blank -%}
+        <h2 class="gpl-pod-tools__heading">{{ s.tools_heading }}</h2>
+      {%- endif -%}
+      {%- if s.tools_text != blank -%}
+        <p class="gpl-pod-tools__text">{{ s.tools_text }}</p>
+      {%- endif -%}
+
+      <div class="gpl-pod-tools__body">
+        <div class="gpl-pod-tools__left">
+          {%- if platforms.size > 0 -%}
+            <div class="gpl-pod-tools__platforms">
+              {%- for block in platforms -%}
+                <span class="gpl-pod-tools__chip" {{ block.shopify_attributes }}>
+                  {%- if block.settings.logo != blank -%}
+                    {{
+                      block.settings.logo
+                      | image_url: width: 200
+                      | image_tag: loading: 'lazy', alt: block.settings.name | escape
+                    }}
+                  {%- else -%}
+                    {{ block.settings.name }}
+                  {%- endif -%}
+                </span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if features.size > 0 -%}
+            <ul class="gpl-pod-tools__list">
+              {%- for block in features -%}
+                <li {{ block.shopify_attributes }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 12.5l5 5L20 6.5"/>
+                  </svg>
+                  <span>{{ block.settings.label }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        {%- if s.tools_image != blank -%}
+          <div class="gpl-pod-tools__media">
+            {{
+              s.tools_image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 989px) 90vw, 28vw',
+                widths: '350, 550, 750, 900',
+                alt: s.tools_image.alt | escape
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="gpl-pod-tools__panel">
+      {%- if s.extra_heading != blank -%}
+        <h2 class="gpl-pod-tools__heading">{{ s.extra_heading }}</h2>
+      {%- endif -%}
+      {%- if s.extra_text != blank -%}
+        <p class="gpl-pod-tools__text">{{ s.extra_text }}</p>
+      {%- endif -%}
+
+      <div class="gpl-pod-tools__body">
+        {%- if extras.size > 0 -%}
+          <ul class="gpl-pod-tools__extras">
+            {%- for block in extras -%}
+              <li {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <span class="gpl-pod-tools__extra-icon">{{ block.settings.icon }}</span>
+                {%- endif -%}
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if s.extra_image != blank -%}
+          <div class="gpl-pod-tools__media">
+            {{
+              s.extra_image
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 989px) 90vw, 24vw',
+                widths: '350, 550, 750, 900',
+                alt: s.extra_image.alt | escape
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-pod-tools-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(12px, 1.3vw, 20px);
+    align-items: stretch;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel {
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: #101010;
+    padding: clamp(16px, 1.8vw, 26px);
+    min-width: 0;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__heading {
+    margin: 0 0 8px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    font-size: clamp(17px, 1.6vw, 24px);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__text {
+    margin: 0 0 clamp(12px, 1.3vw, 18px);
+    color: #A8A8A8;
+    font-size: clamp(10.5px, 0.76vw, 13px);
+    line-height: 1.5;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: clamp(12px, 1.3vw, 20px);
+    align-items: center;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel:first-child .gpl-pod-tools__body {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  }
+  {%- if s.tools_image == blank -%}
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel:first-child .gpl-pod-tools__body { grid-template-columns: minmax(0, 1fr); }
+  {%- endif -%}
+  {%- if s.extra_image == blank -%}
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel:last-child .gpl-pod-tools__body { grid-template-columns: minmax(0, 1fr); }
+  {%- endif -%}
+
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: clamp(12px, 1.3vw, 18px);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background: #1A1A1A;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: clamp(10px, 0.72vw, 12px);
+    letter-spacing: 0.02em;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__chip img {
+    display: block;
+    height: 18px;
+    width: auto;
+    max-width: 110px;
+    object-fit: contain;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 0.6vw, 9px);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: #E4E4E4;
+    font-size: clamp(10.5px, 0.76vw, 13px);
+    line-height: 1.4;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__list svg {
+    flex: 0 0 auto;
+    width: clamp(12px, 0.9vw, 15px);
+    height: clamp(12px, 0.9vw, 15px);
+    margin-top: 2px;
+    color: var(--gpl-accent);
+  }
+
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__extras {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 0.8vw, 12px);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__extras li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #E4E4E4;
+    font-weight: 600;
+    font-size: clamp(10.5px, 0.78vw, 13.5px);
+    line-height: 1.35;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__extra-icon {
+    flex: 0 0 auto;
+    display: flex;
+    color: var(--gpl-accent);
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__extra-icon svg {
+    width: clamp(17px, 1.3vw, 22px);
+    height: clamp(17px, 1.3vw, 22px);
+  }
+
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__media {
+    border-radius: 5px;
+    overflow: hidden;
+    align-self: stretch;
+    min-height: 190px;
+    position: relative;
+  }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__body { grid-template-columns: minmax(0, 1fr) !important; }
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__list li,
+    #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__extras li { font-size: 13px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "POD Tools + Extras",
+  "tag": "section",
+  "class": "gpl-section-pod-tools",
+  "settings": [
+    { "type": "header", "content": "Left panel — integrations" },
+    { "type": "text", "id": "tools_heading", "label": "Heading", "default": "Powerful Tools & Integrations" },
+    { "type": "textarea", "id": "tools_text", "label": "Text", "default": "We integrate with the leading platforms to make selling easy." },
+    { "type": "image_picker", "id": "tools_image", "label": "Image", "info": "Optional — e.g. laptop screenshot." },
+
+    { "type": "header", "content": "Right panel — more than printing" },
+    { "type": "text", "id": "extra_heading", "label": "Heading", "default": "More Than Just Printing" },
+    { "type": "textarea", "id": "extra_text", "label": "Text", "default": "We help you build a real brand." },
+    { "type": "image_picker", "id": "extra_image", "label": "Image", "info": "Optional — e.g. brand collage." },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "platform",
+      "name": "Platform chip",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Shopify" },
+        { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Optional — shows the name as text if blank." }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Left checklist item",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Automated order sync" }
+      ]
+    },
+    {
+      "type": "extra",
+      "name": "Right service item",
+      "limit": 7,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Design Services" }
+      ]
+    }
+  ],
+  "max_blocks": 21,
+  "presets": [{ "name": "POD Tools + Extras" }]
+}
+{% endschema %}

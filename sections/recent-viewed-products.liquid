@@ -1,0 +1,154 @@
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'recently-viewed-products.js' | asset_url }}" defer="defer"></script>
+{% liquid
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+%}
+<m-recently-viewed
+  class="m-section m-recently-viewed m-swiper-overflow m:hidden"
+  data-section-type="recently-viewed"
+  data-section-id="{{ section.id }}"
+  data-products-to-show="{{ section.settings.limit }}"
+  data-products-per-row="{{ section.settings.columns }}"
+  data-enable-slider="{{ section.settings.enable_slider }}"
+  {% if template == 'product' %}
+    data-product-handle="{{ product.handle }}"
+  {% endif %}
+  style="--column-gap: {{ section.settings.column_gap }}px; --column-gap-mobile: 16px; --row-gap: {{ section.settings.column_gap | plus: 10 }}px; --row-gap-mobile: 30px; --items: {{ section.settings.columns }}"
+>
+  <div class="{{ container }} m-section-my">
+    {% assign default_heading = 'products.product.recently_viewed_products' | t %}
+    <div class="m-section__header m:text-{{ section.settings.text_align | default: 'left' }}">
+      <h2 class="m-section__heading {{ section.settings.heading_size }}">{{ section.settings.heading | default: default_heading }}</h2>
+    </div>
+    <div class="m-recently-viewed__wrapper m-mixed-layout">
+      {%- capture grid_class -%}
+        md:m:grid-{{ section.settings.columns | minus: 1 }}-cols xl:m:grid-{{ section.settings.columns }}-cols
+      {%- endcapture -%}
+      <div class="m-product-list{% if section.settings.enable_slider %} swiper-container{% endif %}" data-grid-container>
+        <div class="m:grid {{ grid_class | strip_newlines }} m-mixed-layout__inner{% if section.settings.enable_slider %} swiper-wrapper{% endif %}" data-product-list></div>
+      </div>
+      {% if section.settings.enable_slider %}
+        {% render 'slider-controls',
+          absolute: true,
+          show_nav: true,
+          container: section.settings.container,
+          pagination_class: 'm:flex sm:m:hidden',
+          extra_classes: 'm:hidden'
+        %}
+      {% endif %}
+    </div>
+  </div>
+</m-recently-viewed>
+</script>
+{% schema %}
+{
+  "name": "Recently viewed products",
+  "disabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "limit": 1,
+  "settings": [
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container-fluid",
+          "label": "Default"
+        },
+        {
+          "value": "w-full",
+          "label": "Full width"
+        },
+        {
+          "value": "container",
+          "label": "Use container box"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recently Viewed Products"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "Medium"
+        },
+        {
+          "value": "h2",
+          "label": "Large"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Products to show",
+      "default": 8,
+      "min": 3,
+      "max": 20
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Products per row",
+      "default": 4,
+      "min": 3,
+      "max": 8
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "default": 30,
+      "min": 0,
+      "max": 50,
+      "step": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable slider",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently viewed products",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

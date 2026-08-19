@@ -1,0 +1,312 @@
+{{ 'collection-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'collection-header.js' | asset_url }}" defer="defer"></script>
+{% liquid
+  assign header_height = section.settings.header_height
+  assign text_alignment = section.settings.text_alignment
+  assign bg_image = section.settings.bg_image
+  assign layout = section.settings.layout
+  assign enable_parallax = section.settings.enable_parallax
+  assign show_breadcrumb = true
+  if layout == 'without_breadcrumb'
+    assign show_breadcrumb = false
+  endif
+
+  for block in section.blocks
+    assign selected_collection = collections[block.settings.collection]
+    if selected_collection.handle == collection.handle
+      assign bg_image = block.settings.image
+    endif
+  endfor
+
+  assign collection_desc = collection.description
+  if collection.handle == 'all'
+    assign collection_desc = section.settings.collection_all_desc
+  endif
+
+  assign custom_class = ''
+  if header_height == 'adapt'
+    if bg_image.aspect_ratio == blank
+      assign min_aspect_ratio = 7
+      assign custom_class = ' m-collection-page-header--no-image'
+    else
+      assign min_aspect_ratio = bg_image.aspect_ratio
+    endif
+      assign wrapper_height = 100 | divided_by: min_aspect_ratio
+  endif
+
+  assign animation_effect = settings.animations
+  assign animated = false
+  if animation_effect != 'none'
+    assign animated = true
+  endif
+
+  assign container = section.settings.container
+  if container == 'w-full'
+    assign container = 'container-full'
+  endif
+
+  assign main_classes = 'm-collection-page-header m-collection-page-header--' | append: header_height | append: custom_class
+  assign main_classes = main_classes | append: ' m-collection-page-header--v-' | append: section.settings.vertical_alignment | replace: 'start', 'top' | replace: 'end', 'bottom'
+  assign main_classes = main_classes | append: ' m-collection-page-header--' | append: section.id
+  if animated and section.settings.enable_bg_zoom_effect
+    assign main_classes = main_classes | append: ' m-scroll-trigger animate--zoom-fade'
+  endif
+%}
+
+{%- style -%}
+  .m-collection-page-header--{{ section.id }} {
+    --align-items: {{ section.settings.vertical_alignment }};
+    --bg-color: {{ section.settings.bg_color | default: 'transparent' }};
+    {% if bg_image != blank %}--bg-image: url({{ bg_image | image_url }});{% endif %}
+    {% if header_height == 'adapt' %}min-height: {{- wrapper_height -}}vw;{% endif %}
+  }
+{%- endstyle -%}
+
+<div class="{{ main_classes }}" data-section-type="collection-header" data-section-id="{{ section.id }}">
+  <m-collection-header data-enable-parallax="{{ enable_parallax }}">
+    {% if enable_parallax %}
+      <div class="m-collection-page-header__bg"></div>
+    {% else %}
+      {%- liquid
+        assign image_height = bg_image.width | divided_by: bg_image.aspect_ratio | round
+        assign lazy_load = 'eager'
+        unless forloop.first
+          assign lazy_load = 'lazy'
+        endunless
+      -%}
+      {% if bg_image != blank %}
+        <div class="m-collection-page-header__background m-image"{% if header_height == 'adapt' %} style="--aspect-ratio: {{ min_aspect_ratio }};"{% endif %}>
+          {{ bg_image | image_url: width: 1500 | image_tag:
+            loading: lazy_load,
+            width: bg_image.width,
+            height: image_height,
+            sizes: '100vw',
+            widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+            alt: bg_image.alt | escape
+          }}
+        </div>
+      {% endif %}
+    {% endif %}
+    <div class="{{ container }}">
+      <div class="m-collection-page-header__inner m:text-{{ section.settings.text_color }} m:text-{{ text_alignment }}">
+        <h1 class="m-collection-page-header__title{% if section.settings.upper_title %} m:uppercase{% else %} m:capitalize{% endif %}{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">{{ collection.title }}</h1>
+        {% if show_breadcrumb and layout == 'inside' %}
+          {% assign justify = text_alignment | replace: 'right', 'end' | replace: 'left', 'start' %}
+          {% render 'breadcrumb', container: '', justify: justify, animated: animated, animation_effect: animation_effect %}
+        {% endif %}
+        {% if section.settings.show_desc and collection_desc != blank %}
+          <div class="m-collection-page-header__description{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+            {{ collection_desc }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </m-collection-header>
+</div>
+
+{% if show_breadcrumb and layout == 'outside' %}
+<div class="m-collection-page__breadcrumb">
+  {% render 'breadcrumb', container: container, animated: animated, animation_effect: animation_effect %}
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page header"
+    },
+    {
+      "type": "select",
+      "id": "container",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container-fluid",
+          "label": "Default"
+        },
+        {
+          "value": "w-full",
+          "label": "Full width"
+        },
+        {
+          "value": "container",
+          "label": "Use container box"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Breadcrumb layout",
+      "default": "outside",
+      "options": [
+        {
+          "value": "outside",
+          "label": "Breadcrumb outside"
+        },
+        {
+          "value": "inside",
+          "label": "Breadcrumb inside"
+        },
+        {
+          "value": "without_breadcrumb",
+          "label": "Without breadcrumb"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "header_height",
+      "label": "Height",
+      "default": "medium",
+      "options": [
+        {
+          "label": {
+            "en": "Adapt to image"
+          },
+          "value": "adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Content alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Middle"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "options": [
+        {
+          "label": "Dark",
+          "value": "dark"
+        },
+        {
+          "label": "Light",
+          "value": "white"
+        }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f1ed"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable parallax effect",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "upper_title",
+      "label": "Uppercase title",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_desc",
+      "label": "Show description",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "collection_all_desc",
+      "label": "Description for all products"
+    },
+    {
+      "type": "header",
+      "content": "Animations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_bg_zoom_effect",
+      "label": "Enable background zoom effect",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Custom banner",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Choose a collection to show this banner."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

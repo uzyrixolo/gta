@@ -1,0 +1,70 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "annoucement": {
+      "type": "annoucement",
+      "blocks": {
+        "item_UerWCA": {
+          "type": "item",
+          "settings": {
+            "text": "Toronto Based",
+            "icon": "<svg width=\"8\" height=\"8\" viewbox=\"0 0 24 24\" fill=\"#D71920\"><circle cx=\"12\" cy=\"12\" r=\"12\"></circle></svg>"
+          }
+        },
+        "item_fiXLP4": {
+          "type": "item",
+          "settings": {
+            "text": "fast production",
+            "icon": "<svg width=\"8\" height=\"8\" viewbox=\"0 0 24 24\" fill=\"#D71920\"><circle cx=\"12\" cy=\"12\" r=\"12\"></circle></svg>"
+          }
+        },
+        "item_M4htqJ": {
+          "type": "item",
+          "settings": {
+            "text": "premuim quality",
+            "icon": "<svg width=\"8\" height=\"8\" viewbox=\"0 0 24 24\" fill=\"#D71920\"><circle cx=\"12\" cy=\"12\" r=\"12\"></circle></svg>"
+          }
+        }
+      },
+      "block_order": [
+        "item_UerWCA",
+        "item_fiXLP4",
+        "item_M4htqJ"
+      ],
+      "custom_css": [
+        "@media (max-width: 767px) {.social-media-links {display: none !important; }}"
+      ],
+      "settings": {
+        "bg_color": "#111111",
+        "text_color": "#f2f2f2",
+        "hide_on_mobile": false
+      }
+    },
+    "header": {
+      "type": "header",
+      "custom_css": [],
+      "settings": {
+        "logo_text_1": "GTA",
+        "logo_text_2": "PRINT LAB",
+        "menu": "main-menu",
+        "button_text": "Get A Quote",
+        "button_link": "",
+        "bg_color": "#111111"
+      }
+    }
+  },
+  "order": [
+    "annoucement",
+    "header"
+  ]
+}

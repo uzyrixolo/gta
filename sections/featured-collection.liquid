@@ -1,0 +1,724 @@
+{%- comment -%}
+  GTA Print Lab — Why Choose GTA Print Lab (revamped)
+  Section type: featured-collection  (legacy filename, kept so existing templates keep working)
+
+  Structure
+    1. Hero band  — eyebrow + two-tone heading + tagline over a background image
+    2. Card grid  — up to 6 "reason" blocks (image, badge icon, two-tone title, copy, footer strip)
+    3. Promise bar — headline + up to 3 "trust" blocks
+    4. CTA button
+
+  Images are optional everywhere — blank pickers fall back to placeholders.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section class="gpl-why-{{ section.id }} gpl-why">
+  <div class="gpl-why__hero">
+    {%- if s.hero_image != blank -%}
+      <div class="gpl-why__hero-bg">
+        {{
+          s.hero_image
+          | image_url: width: 2400
+          | image_tag:
+            loading: 'lazy',
+            sizes: '100vw',
+            widths: '750, 1100, 1500, 1900, 2400',
+            alt: s.hero_image.alt | escape
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="gpl-why__hero-inner">
+      {%- if s.eyebrow != blank -%}
+        <p class="gpl-why__eyebrow">{{ s.eyebrow }}</p>
+      {%- endif -%}
+
+      <h2 class="gpl-why__heading">
+        {%- if s.heading_light != blank -%}
+          <span class="gpl-why__heading-light">{{ s.heading_light }}</span>
+        {%- endif -%}
+        {%- if s.heading_accent != blank -%}
+          <span class="gpl-why__heading-accent">{{ s.heading_accent }}</span>
+        {%- endif -%}
+      </h2>
+
+      {%- if s.tagline != blank or s.tagline_accent != blank -%}
+        <p class="gpl-why__tagline">
+          {%- if s.tagline != blank -%}{{ s.tagline }} {% endif -%}
+          {%- if s.tagline_accent != blank -%}
+            <span>{{ s.tagline_accent }}</span>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- assign reason_blocks = section.blocks | where: 'type', 'reason' -%}
+  {%- if reason_blocks.size > 0 -%}
+    <div class="gpl-why__grid">
+      {%- for block in reason_blocks -%}
+        <article class="gpl-why-card" {{ block.shopify_attributes }}>
+          <div class="gpl-why-card__media">
+            <div class="gpl-why-card__frame">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(max-width: 749px) 90vw, (max-width: 1199px) 32vw, 16vw',
+                    widths: '300, 450, 600, 800',
+                    alt: block.settings.image.alt | escape
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'gpl-why-card__ph' }}
+              {%- endif -%}
+            </div>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-why-card__badge">{{ block.settings.icon }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="gpl-why-card__body">
+            <h3 class="gpl-why-card__title{% if block.settings.title_inline %} is-inline{% endif %}">
+              {%- if block.settings.title_accent != blank -%}
+                <span class="gpl-why-card__title-accent">{{ block.settings.title_accent }}</span>
+              {%- endif -%}
+              {%- if block.settings.title_dark != blank -%}
+                <span class="gpl-why-card__title-dark">{{ block.settings.title_dark }}</span>
+              {%- endif -%}
+            </h3>
+            <span class="gpl-why-card__rule" aria-hidden="true"></span>
+            {%- if block.settings.description != blank -%}
+              <p class="gpl-why-card__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+
+          {%- if block.settings.foot_line_1 != blank or block.settings.foot_line_2 != blank -%}
+            <div class="gpl-why-card__foot">
+              {%- if block.settings.foot_icon != blank -%}
+                <span class="gpl-why-card__foot-icon">{{ block.settings.foot_icon }}</span>
+              {%- endif -%}
+              <span class="gpl-why-card__foot-text">
+                {%- if block.settings.foot_line_1 != blank -%}
+                  <span>{{ block.settings.foot_line_1 }}</span>
+                {%- endif -%}
+                {%- if block.settings.foot_line_2 != blank -%}
+                  <span>{{ block.settings.foot_line_2 }}</span>
+                {%- endif -%}
+              </span>
+            </div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
+  {%- if s.show_promise -%}
+    <div class="gpl-why__promise">
+      <div class="gpl-why__promise-lead">
+        {%- if s.promise_icon != blank -%}
+          <span class="gpl-why__promise-icon">{{ s.promise_icon }}</span>
+        {%- endif -%}
+        <span class="gpl-why__promise-copy">
+          {%- if s.promise_line_1 != blank -%}
+            <span class="gpl-why__promise-1">{{ s.promise_line_1 }}</span>
+          {%- endif -%}
+          {%- if s.promise_line_2 != blank -%}
+            <span class="gpl-why__promise-2">{{ s.promise_line_2 }}</span>
+          {%- endif -%}
+        </span>
+      </div>
+
+      {%- if trust_blocks.size > 0 -%}
+        <div class="gpl-why__trust">
+          {%- for block in trust_blocks -%}
+            <div class="gpl-why-trust" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="gpl-why-trust__icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              <div class="gpl-why-trust__copy">
+                {%- if block.settings.title != blank -%}
+                  <p class="gpl-why-trust__title">{{ block.settings.title }}</p>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="gpl-why-trust__desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if s.button_text != blank -%}
+    <div class="gpl-why__cta">
+      <a href="{{ s.button_link | default: '#' }}" class="gpl-why__btn">
+        {%- if s.button_icon != blank -%}
+          <span class="gpl-why__btn-icon">{{ s.button_icon }}</span>
+        {%- endif -%}
+        <span>{{ s.button_text }}</span>
+        <svg
+          class="gpl-why__btn-arrow"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  {%- endif -%}
+</section>
+
+{% style %}
+  .gpl-why-{{ section.id }} {
+    --gpl-red: {{ s.color_accent | default: '#D71920' }};
+    --gpl-ink: #111111;
+    --gpl-gutter: clamp(14px, 1.6vw, 24px);
+    --gpl-shell: min(1520px, calc(100% - var(--gpl-gutter) * 2));
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3vw, 44px);
+  }
+
+  /* ---------- 1. Hero band ---------- */
+  .gpl-why-{{ section.id }} .gpl-why__hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(34px, 4.5vw, 62px) 20px clamp(24px, 3vw, 40px);
+    text-align: center;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.94) 62%, #0A0A0A 100%);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__eyebrow {
+    color: var(--gpl-red);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(12px, 1.6vw, 20px);
+    line-height: 1;
+    margin: 0 0 clamp(2px, 0.4vw, 6px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__heading {
+    margin: 0;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    font-size: clamp(26px, 4.8vw, 64px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.28em;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__heading-light { color: #FFFFFF; }
+  .gpl-why-{{ section.id }} .gpl-why__heading-accent { color: var(--gpl-red); }
+  .gpl-why-{{ section.id }} .gpl-why__tagline {
+    position: relative;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(10px, 1.05vw, 14px);
+    line-height: 1.35;
+    margin: clamp(12px, 1.4vw, 20px) auto 0;
+    padding-top: clamp(10px, 1.2vw, 16px);
+    max-width: 40ch;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__tagline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(180px, 34vw, 460px);
+    height: 2px;
+    background: var(--gpl-red);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__tagline span { color: var(--gpl-red); }
+
+  /* ---------- 2. Card grid ---------- */
+  .gpl-why-{{ section.id }} .gpl-why__grid {
+    box-sizing: border-box;
+    width: var(--gpl-shell);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(10px, 1vw, 16px);
+    align-items: stretch;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border-radius: 14px;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__media {
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__frame {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+    background: #1a1a1a;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__frame img,
+  .gpl-why-{{ section.id }} .gpl-why-card__frame svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__ph {
+    background: #2a2a2a;
+    fill: rgba(255, 255, 255, 0.28);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__badge {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 50%);
+    z-index: 2;
+    width: clamp(48px, 4.2vw, 62px);
+    height: clamp(48px, 4.2vw, 62px);
+    border-radius: 50%;
+    background: var(--gpl-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__badge svg {
+    width: 52%;
+    height: 52%;
+    color: #FFFFFF;
+    stroke: currentColor;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__body {
+    flex: 1 1 auto;
+    padding: calc(clamp(48px, 4.2vw, 62px) / 2 + 12px) clamp(10px, 1vw, 16px) clamp(14px, 1.4vw, 20px);
+    text-align: center;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__body:last-child { border-radius: 0 0 14px 14px; }
+  .gpl-why-{{ section.id }} .gpl-why-card__title {
+    margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    font-size: clamp(13px, 1.05vw, 17px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__title span { display: block; }
+  .gpl-why-{{ section.id }} .gpl-why-card__title.is-inline span { display: inline; }
+  .gpl-why-{{ section.id }} .gpl-why-card__title-accent { color: var(--gpl-red); }
+  .gpl-why-{{ section.id }} .gpl-why-card__title-dark { color: var(--gpl-ink); }
+  .gpl-why-{{ section.id }} .gpl-why-card__rule {
+    display: block;
+    width: 34px;
+    height: 3px;
+    margin: clamp(8px, 0.9vw, 12px) auto;
+    background: var(--gpl-red);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__desc {
+    margin: 0;
+    color: #4A4A4A;
+    font-size: clamp(11px, 0.75vw, 12.5px);
+    line-height: 1.5;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__foot {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: clamp(9px, 0.9vw, 13px) clamp(10px, 1vw, 15px);
+    background: #F0F0F0;
+    border-top: 1px solid #E2E2E2;
+    border-radius: 0 0 14px 14px;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__foot-icon {
+    flex: 0 0 auto;
+    display: flex;
+    color: var(--gpl-red);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__foot-icon svg {
+    width: clamp(20px, 1.6vw, 26px);
+    height: clamp(20px, 1.6vw, 26px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__foot-text {
+    min-width: 0;
+    color: #1A1A1A;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(9px, 0.6vw, 10.5px);
+    line-height: 1.32;
+    letter-spacing: 0.005em;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-card__foot-text span { display: block; }
+
+  /* ---------- 3. Promise bar ---------- */
+  .gpl-why-{{ section.id }} .gpl-why__promise {
+    box-sizing: border-box;
+    width: var(--gpl-shell);
+    margin: clamp(14px, 1.4vw, 22px) auto 0;
+    padding: clamp(14px, 1.5vw, 22px) clamp(16px, 1.8vw, 26px);
+    border: 2px solid var(--gpl-red);
+    border-radius: 12px;
+    background: #0F0F0F;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 2fr);
+    gap: clamp(16px, 2vw, 30px);
+    align-items: center;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__promise-lead {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 20px);
+    position: relative;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__promise-icon {
+    flex: 0 0 auto;
+    display: flex;
+    color: var(--gpl-red);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__promise-icon svg {
+    width: clamp(38px, 3.4vw, 56px);
+    height: clamp(38px, 3.4vw, 56px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__promise-copy {
+    min-width: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.12;
+    font-size: clamp(14px, 1.3vw, 21px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__promise-copy span { display: block; }
+  .gpl-why-{{ section.id }} .gpl-why__promise-1 { color: #FFFFFF; }
+  .gpl-why-{{ section.id }} .gpl-why__promise-2 { color: var(--gpl-red); }
+  .gpl-why-{{ section.id }} .gpl-why__trust {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 1.4vw, 22px);
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    padding-left: clamp(16px, 2vw, 30px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-trust {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-trust__icon {
+    flex: 0 0 auto;
+    display: flex;
+    color: var(--gpl-red);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-trust__icon svg {
+    width: clamp(26px, 2.2vw, 36px);
+    height: clamp(26px, 2.2vw, 36px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why-trust__copy { min-width: 0; }
+  .gpl-why-{{ section.id }} .gpl-why-trust__title {
+    margin: 0 0 3px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(10.5px, 0.75vw, 12.5px);
+    line-height: 1.2;
+  }
+  .gpl-why-{{ section.id }} .gpl-why-trust__desc {
+    margin: 0;
+    color: #B4B4B4;
+    font-size: clamp(10px, 0.65vw, 11.5px);
+    line-height: 1.4;
+  }
+
+  /* ---------- 4. CTA ---------- */
+  .gpl-why-{{ section.id }} .gpl-why__cta {
+    margin-top: clamp(16px, 1.8vw, 26px);
+    padding: 0 20px;
+    text-align: center;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 1vw, 16px);
+    background: var(--gpl-red);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: clamp(13px, 1.2vw, 18px);
+    line-height: 1;
+    padding: clamp(14px, 1.4vw, 20px) clamp(26px, 3vw, 52px);
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__btn:hover { background: #B5141A; }
+  .gpl-why-{{ section.id }} .gpl-why__btn:focus-visible {
+    outline: 3px solid #FFFFFF;
+    outline-offset: 3px;
+  }
+  .gpl-why-{{ section.id }} .gpl-why__btn-icon { display: flex; }
+  .gpl-why-{{ section.id }} .gpl-why__btn-icon svg {
+    width: clamp(24px, 2.2vw, 38px);
+    height: clamp(24px, 2.2vw, 38px);
+  }
+  .gpl-why-{{ section.id }} .gpl-why__btn-arrow {
+    width: clamp(18px, 1.5vw, 24px);
+    height: clamp(18px, 1.5vw, 24px);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media screen and (max-width: 1199px) {
+    .gpl-why-{{ section.id }} .gpl-why__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .gpl-why-{{ section.id }} .gpl-why-card__title { font-size: 16px; }
+    .gpl-why-{{ section.id }} .gpl-why-card__desc { font-size: 12px; }
+    .gpl-why-{{ section.id }} .gpl-why-card__foot-text { font-size: 10px; }
+  }
+
+  @media screen and (max-width: 989px) {
+    .gpl-why-{{ section.id }} .gpl-why__promise {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .gpl-why-{{ section.id }} .gpl-why__promise-lead { justify-content: center; text-align: center; }
+    .gpl-why-{{ section.id }} .gpl-why__trust {
+      border-left: none;
+      padding-left: 0;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .gpl-why-{{ section.id }} .gpl-why__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .gpl-why-{{ section.id }} .gpl-why__trust {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+    .gpl-why-{{ section.id }} .gpl-why-card__badge { width: 46px; height: 46px; }
+    .gpl-why-{{ section.id }} .gpl-why-card__body { padding-top: 35px; }
+    .gpl-why-{{ section.id }} .gpl-why__btn { width: 100%; max-width: 420px; }
+  }
+
+  @media screen and (max-width: 479px) {
+    .gpl-why-{{ section.id }} .gpl-why__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+    }
+    .gpl-why-{{ section.id }} .gpl-why-card__frame { aspect-ratio: 16 / 9; }
+    .gpl-why-{{ section.id }} .gpl-why-card__title { font-size: 17px; }
+    .gpl-why-{{ section.id }} .gpl-why__promise-copy { font-size: 17px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gpl-why-{{ section.id }} .gpl-why__btn { transition: none; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Why Choose Us",
+  "tag": "section",
+  "class": "gpl-section-why",
+  "settings": [
+    { "type": "header", "content": "Hero band" },
+    { "type": "image_picker", "id": "hero_image", "label": "Background image", "info": "Optional. Sits behind the heading at 50% opacity — a dark skyline / shop-floor shot works best." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Choose" },
+    { "type": "text", "id": "heading_light", "label": "Heading — white part", "default": "GTA PRINT" },
+    { "type": "text", "id": "heading_accent", "label": "Heading — red part", "default": "LAB?" },
+    { "type": "text", "id": "tagline", "label": "Tagline — white part", "default": "We don't just print. We deliver" },
+    { "type": "text", "id": "tagline_accent", "label": "Tagline — red part", "default": "Excellence." },
+
+    { "type": "header", "content": "Promise bar" },
+    { "type": "checkbox", "id": "show_promise", "label": "Show promise bar", "default": true },
+    { "type": "html", "id": "promise_icon", "label": "Promise icon (SVG code)", "default": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"/></svg>" },
+    { "type": "text", "id": "promise_line_1", "label": "Promise line 1 (white)", "default": "Fast. Reliable. Premium." },
+    { "type": "text", "id": "promise_line_2", "label": "Promise line 2 (red)", "default": "That's the GTA Print Lab promise." },
+
+    { "type": "header", "content": "Call to action" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Get Started Today" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "html", "id": "button_icon", "label": "Button icon (SVG code)", "default": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"/></svg>" },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Section background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Reason card",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Card image", "info": "Optional — a placeholder shows until an image is set." },
+        { "type": "html", "id": "icon", "label": "Badge icon (SVG code)", "info": "White icon on the red circle." },
+        { "type": "text", "id": "title_accent", "label": "Title — red part", "default": "Toronto" },
+        { "type": "text", "id": "title_dark", "label": "Title — dark part", "default": "Based" },
+        { "type": "checkbox", "id": "title_inline", "label": "Keep title on one line", "default": false, "info": "On: the two parts run together with no space (e.g. TORONTO + -BASED). Off: the dark part drops to a second line." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Proudly based in Toronto. Local production, local jobs, and local service you can count on." },
+        { "type": "header", "content": "Footer strip" },
+        { "type": "html", "id": "foot_icon", "label": "Footer icon (SVG code)" },
+        { "type": "text", "id": "foot_line_1", "label": "Footer line 1", "default": "Local pride." },
+        { "type": "text", "id": "foot_line_2", "label": "Footer line 2", "default": "Local service." }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust item",
+      "limit": 3,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Quality Guaranteed" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Every order is inspected for quality before it leaves our facility." }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "GPL Why Choose Us",
+      "blocks": [
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v4M12 6l-2 5h4z\"/><path d=\"M10 11h4l1.5 10h-7z\"/><path d=\"M3 21h18\"/><path d=\"M4 21v-7h3v7M17 21v-9h3v9\"/></svg>",
+            "title_accent": "Toronto",
+            "title_dark": "-Based",
+            "title_inline": true,
+            "description": "Proudly based in Toronto. Local production, local jobs, and local service you can count on.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z\"/><circle cx=\"12\" cy=\"10\" r=\"2.6\"/></svg>",
+            "foot_line_1": "Local pride.",
+            "foot_line_2": "Local service."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2\"/><path d=\"M9 2h6\"/><path d=\"M12 2v3\"/></svg>",
+            "title_accent": "Fastest",
+            "title_dark": "Turnaround",
+            "description": "Same-day and next-day printing options to meet your tightest deadlines. When you need it, we make it happen.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2 4 14h6l-1 8 9-12h-6z\"/></svg>",
+            "foot_line_1": "Same day.",
+            "foot_line_2": "Next day."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 8l4 3 5-7 5 7 4-3-2 11H5z\"/><path d=\"M5 21h14\"/></svg>",
+            "title_accent": "Premium",
+            "title_dark": "Quality",
+            "description": "Top-of-the-line equipment, premium materials and expert craftsmanship ensure every item looks amazing and lasts long.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"10\" r=\"7\"/><path d=\"M9 10l2 2 4-4\"/><path d=\"M8 16l-1 6 5-2.5L17 22l-1-6\"/></svg>",
+            "foot_line_1": "Quality you can see.",
+            "foot_line_2": "Quality you can feel."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 4 5.5v4h3V21h10V9.5h3v-4z\"/></svg>",
+            "title_accent": "No",
+            "title_dark": "Minimums",
+            "description": "Order just one piece or thousands. We make custom easy for everyone.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 4 5.5v4h3V21h10V9.5h3v-4z\"/></svg>",
+            "foot_line_1": "1 piece or",
+            "foot_line_2": "10,000 pieces."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5 3.5 11.5v-8h8z\"/><circle cx=\"8\" cy=\"8\" r=\"1.6\"/></svg>",
+            "title_accent": "Volume",
+            "title_dark": "Discounts",
+            "description": "The more you order, the more you save. Great pricing for teams, businesses and events.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 15l6-6\"/><circle cx=\"9.2\" cy=\"9.2\" r=\"1.2\"/><circle cx=\"14.8\" cy=\"14.8\" r=\"1.2\"/></svg>",
+            "foot_line_1": "More quantity.",
+            "foot_line_2": "More savings."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"/><path d=\"M14 10h3.5l2.5 3v3h-6z\"/><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17\" cy=\"18\" r=\"1.8\"/><path d=\"M4 10H1M4 13H2\"/></svg>",
+            "title_accent": "Delivery",
+            "title_dark": "",
+            "description": "Fast local delivery across the GTA and reliable shipping across Canada. We deliver on time, every time.",
+            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18\"/><path d=\"M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z\"/></svg>",
+            "foot_line_1": "GTA delivery.",
+            "foot_line_2": "Canada wide shipping."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8.5 14a4.2 4.2 0 0 0 7 0\"/><circle cx=\"9.2\" cy=\"9.8\" r=\"1\"/><circle cx=\"14.8\" cy=\"9.8\" r=\"1\"/></svg>",
+            "title": "Thousands of happy customers",
+            "description": "Trusted by businesses, teams & organizations across Toronto."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>",
+            "title": "Quality guaranteed",
+            "description": "Every order is inspected for quality before it leaves our facility."
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "title": "Support you can count on",
+            "description": "Our team is here to help you every step of the way."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

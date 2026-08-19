@@ -1,0 +1,186 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "social_pxN7WD": {
+          "type": "social",
+          "settings": {
+            "platform": "LinkedIn",
+            "icon": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5V9h3zM6.5 7.7A1.7 1.7 0 1 1 8.2 6a1.7 1.7 0 0 1-1.7 1.7zM19 19h-3v-4.8c0-1.1 0-2.6-1.6-2.6s-1.9 1.3-1.9 2.5V19h-3V9h2.9v1.3h.04a3.2 3.2 0 0 1 2.9-1.6c3 0 3.6 2 3.6 4.6z\"></path></svg>",
+            "url": ""
+          }
+        },
+        "social_kDQkVz": {
+          "type": "social",
+          "settings": {
+            "platform": "Instagram",
+            "icon": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"2\" y=\"2\" width=\"20\" height=\"20\" rx=\"5\"></rect><circle cx=\"12\" cy=\"12\" r=\"4\"></circle><circle cx=\"17.5\" cy=\"6.5\" r=\"1\" fill=\"currentColor\" stroke=\"none\"></circle></svg>",
+            "url": ""
+          }
+        },
+        "social_REb6VG": {
+          "type": "social",
+          "settings": {
+            "platform": "Tiktok",
+            "icon": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M16.5 2h-3.2v13.6a2.9 2.9 0 1 1-2.1-2.8V9.5a6.1 6.1 0 1 0 5.3 6V9.2a7.7 7.7 0 0 0 4.5 1.4V7.4a4.3 4.3 0 0 1-4.5-4.1V2z\"></path></svg>",
+            "url": ""
+          }
+        },
+        "social_pnwziJ": {
+          "type": "social",
+          "settings": {
+            "platform": "facebook",
+            "icon": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M22 12a10 10 0 1 0-11.5 9.9v-7H7.9V12h2.6V9.8c0-2.6 1.5-4 3.9-4 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z\"></path></svg>",
+            "url": ""
+          }
+        },
+        "link_xHCgMn": {
+          "type": "link",
+          "settings": {
+            "label": "Home",
+            "url": ""
+          }
+        },
+        "link_AkcWE3": {
+          "type": "link",
+          "settings": {
+            "label": "Services",
+            "url": ""
+          }
+        },
+        "link_BBfmXm": {
+          "type": "link",
+          "settings": {
+            "label": "Products",
+            "url": ""
+          }
+        },
+        "link_BMx6rW": {
+          "type": "link",
+          "settings": {
+            "label": "How it Works",
+            "url": ""
+          }
+        },
+        "link_bW4jQi": {
+          "type": "link",
+          "settings": {
+            "label": "About us",
+            "url": ""
+          }
+        },
+        "link_YGCkXx": {
+          "type": "link",
+          "settings": {
+            "label": "Contact Us",
+            "url": ""
+          }
+        },
+        "link_qdWxnd": {
+          "type": "link",
+          "settings": {
+            "label": "Get a Quote",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "social_pxN7WD",
+        "social_kDQkVz",
+        "social_REb6VG",
+        "social_pnwziJ",
+        "link_xHCgMn",
+        "link_AkcWE3",
+        "link_BBfmXm",
+        "link_BMx6rW",
+        "link_bW4jQi",
+        "link_YGCkXx",
+        "link_qdWxnd"
+      ],
+      "custom_css": [
+        ".gpl-footer__logo {max-height: 120px; width: 120px;}"
+      ],
+      "settings": {
+        "bg_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_34_28_PM.png",
+        "logo": "shopify://shop_images/Untitled_design__2_-removebg-preview.png",
+        "tagline": "Toronto's fastest custom apparel and print shop. Premium quality, fast production and reliable delivery you can count on.",
+        "phone": "647-123-4567",
+        "email": "info@gtaprintlab.com",
+        "address": "123 Print Lab Way, Toronto, ON M1H 2X6",
+        "hours": "Mon – Fri: 9AM – 6PM, Sat: 10AM – 3PM",
+        "service_areas": "Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham, Pickering, Ajax, Whitby & More",
+        "map_embed_url": "https://www.google.com/maps?q=123+Print+Lab+Way%2C+Toronto%2C+ON+M1H+2X6&output=embed",
+        "privacy_link": "#",
+        "terms_link": "#"
+      }
+    },
+    "mobile-sticky-bar": {
+      "type": "mobile-sticky-bar",
+      "disabled": true,
+      "settings": {
+        "show_mobile_sticky": false,
+        "show_home_icon": true,
+        "show_collection_icon": true,
+        "show_cart_icon": true,
+        "show_search_icon": true,
+        "show_account_icon": false,
+        "show_wishlist_icon": false
+      }
+    },
+    "age-verifier-popup": {
+      "type": "age-verifier-popup",
+      "blocks": {
+        "block-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Confirm your age"
+          }
+        },
+        "block-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Are you 18 years old or older?</p>"
+          }
+        },
+        "block-3": {
+          "type": "buttons",
+          "settings": {
+            "decline_button": "No, I'm not",
+            "approve_button": "Yes, I am"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "design_mode": false,
+        "enable": false,
+        "bg_blur": true,
+        "decline_heading": "Come back when you're older",
+        "decline_content": "<p>Sorry, the content of this store can't be seen by a younger audience. Come back when you're older.</p>",
+        "return_button": "Oops, I entered incorrectly"
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "mobile-sticky-bar",
+    "age-verifier-popup"
+  ]
+}

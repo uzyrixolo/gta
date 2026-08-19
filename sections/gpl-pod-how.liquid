@@ -1,0 +1,321 @@
+{%- comment -%}
+  GTA Print Lab — Print On Demand page: How it works + Built for creators
+  Left panel  — 5 numbered "step" blocks on an arrow rail, plus a "benefit" mini-icon row
+  Right panel — heading, text, checkmark list ("point" blocks) and an optional photo
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign steps = section.blocks | where: 'type', 'step' -%}
+{%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+{%- assign points = section.blocks | where: 'type', 'point' -%}
+
+<section id="gpl-pod-how-{{ section.id }}" class="gpl-pod-how">
+  <div class="gpl-pod-how__inner">
+    <div class="gpl-pod-how__panel gpl-pod-how__panel--steps">
+      {%- if s.steps_heading != blank -%}
+        <h2 class="gpl-pod-how__heading">{{ s.steps_heading }}</h2>
+      {%- endif -%}
+
+      {%- if steps.size > 0 -%}
+        <div class="gpl-pod-how__steps">
+          {%- for block in steps -%}
+            <div class="gpl-pod-how-step" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="gpl-pod-how-step__icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="gpl-pod-how-step__title">{{ forloop.index }}. {{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="gpl-pod-how-step__desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+              {%- unless forloop.last -%}
+                <span class="gpl-pod-how-step__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                </span>
+              {%- endunless -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if benefits.size > 0 -%}
+        <div class="gpl-pod-how__benefits">
+          {%- for block in benefits -%}
+            <div class="gpl-pod-how-benefit" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="gpl-pod-how-benefit__icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span class="gpl-pod-how-benefit__label">{{ block.settings.label }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="gpl-pod-how__panel gpl-pod-how__panel--brands">
+      <div class="gpl-pod-how__brands-copy">
+        {%- if s.brands_heading != blank -%}
+          <h2 class="gpl-pod-how__heading">{{ s.brands_heading }}</h2>
+        {%- endif -%}
+        {%- if s.brands_text != blank -%}
+          <p class="gpl-pod-how__text">{{ s.brands_text }}</p>
+        {%- endif -%}
+        {%- if points.size > 0 -%}
+          <ul class="gpl-pod-how__points">
+            {%- for block in points -%}
+              <li {{ block.shopify_attributes }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>
+                </svg>
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+      {%- if s.brands_image != blank -%}
+        <div class="gpl-pod-how__brands-media">
+          {{
+            s.brands_image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(max-width: 989px) 90vw, 24vw',
+              widths: '350, 550, 750, 900',
+              alt: s.brands_image.alt | escape
+          }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-pod-how-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr);
+    gap: clamp(12px, 1.3vw, 20px);
+    align-items: stretch;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel {
+    box-sizing: border-box;
+    border: 2px solid var(--gpl-accent);
+    border-radius: 8px;
+    background: #0D0D0D;
+    padding: clamp(16px, 1.8vw, 26px);
+    min-width: 0;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__heading {
+    margin: 0 0 clamp(14px, 1.5vw, 22px);
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+    font-size: clamp(17px, 1.6vw, 24px);
+  }
+
+  /* Steps rail */
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(8px, 1vw, 16px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step { position: relative; text-align: center; min-width: 0; }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__icon {
+    display: flex;
+    justify-content: center;
+    color: var(--gpl-accent);
+    margin-bottom: 9px;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__icon svg {
+    width: clamp(30px, 2.6vw, 44px);
+    height: clamp(30px, 2.6vw, 44px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__title {
+    margin: 0 0 5px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(9.5px, 0.7vw, 12px);
+    line-height: 1.2;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__desc {
+    margin: 0;
+    color: #9C9C9C;
+    font-size: clamp(9px, 0.62vw, 10.5px);
+    line-height: 1.4;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__arrow {
+    position: absolute;
+    top: clamp(15px, 1.3vw, 22px);
+    right: calc(-1 * clamp(4px, 0.5vw, 8px) - 7px);
+    transform: translateY(-50%);
+    color: var(--gpl-accent);
+    display: flex;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__arrow svg { width: 14px; height: 14px; }
+
+  /* Benefits row */
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__benefits {
+    margin-top: clamp(14px, 1.5vw, 22px);
+    padding-top: clamp(12px, 1.3vw, 18px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(8px, 0.9vw, 14px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit__icon { flex: 0 0 auto; display: flex; color: var(--gpl-accent); }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit__icon svg {
+    width: clamp(18px, 1.5vw, 25px);
+    height: clamp(18px, 1.5vw, 25px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit__label {
+    min-width: 0;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(8.5px, 0.62vw, 10.5px);
+    line-height: 1.25;
+  }
+
+  /* Brands panel */
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--brands {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+    gap: clamp(10px, 1.1vw, 16px);
+    align-items: center;
+  }
+  {%- if s.brands_image == blank -%}
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--brands { grid-template-columns: minmax(0, 1fr); }
+  {%- endif -%}
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__text {
+    margin: 0 0 clamp(10px, 1.1vw, 16px);
+    color: #A8A8A8;
+    font-size: clamp(10.5px, 0.76vw, 13px);
+    line-height: 1.5;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 0.6vw, 9px);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: #E4E4E4;
+    font-size: clamp(10.5px, 0.76vw, 13px);
+    line-height: 1.4;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__points svg {
+    flex: 0 0 auto;
+    width: clamp(13px, 0.95vw, 16px);
+    height: clamp(13px, 0.95vw, 16px);
+    margin-top: 1px;
+    color: var(--gpl-accent);
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__brands-media {
+    border-radius: 5px;
+    overflow: hidden;
+    align-self: stretch;
+    min-height: 200px;
+    position: relative;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__brands-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__arrow { display: none; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__title { font-size: 12px; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how-step__desc { font-size: 10.5px; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit { justify-content: flex-start; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how-benefit__label { font-size: 10.5px; }
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--brands { grid-template-columns: minmax(0, 1fr); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "POD How + Brands",
+  "tag": "section",
+  "class": "gpl-section-pod-how",
+  "settings": [
+    { "type": "header", "content": "Left panel — steps" },
+    { "type": "text", "id": "steps_heading", "label": "Heading", "default": "How Print On Demand Works" },
+
+    { "type": "header", "content": "Right panel — built for brands" },
+    { "type": "text", "id": "brands_heading", "label": "Heading", "default": "Built for Creators, Entrepreneurs and Brands." },
+    { "type": "textarea", "id": "brands_text", "label": "Text", "default": "Whether you're just starting or scaling to 7-figures, our POD service is built to grow with you." },
+    { "type": "image_picker", "id": "brands_image", "label": "Photo", "info": "Optional." },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        { "type": "paragraph", "content": "Steps are numbered automatically in the order they appear." },
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Connect" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Connect your store (Shopify, Etsy, TikTok Shop & more)." }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Bottom-row benefit",
+      "limit": 4,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "You Sell" }
+      ]
+    },
+    {
+      "type": "point",
+      "name": "Right panel point",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "No inventory" }
+      ]
+    }
+  ],
+  "max_blocks": 15,
+  "presets": [{ "name": "POD How + Brands" }]
+}
+{% endschema %}

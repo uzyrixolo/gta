@@ -1,0 +1,87 @@
+{%- comment -%}
+  GTA Print Lab — Who We Serve
+  File: sections/gpl-who-we-serve.liquid
+{%- endcomment -%}
+
+<section class="gpl-serve-{{ section.id }} gpl-serve">
+  <div class="gpl-serve__inner">
+    <div class="gpl-section-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="gpl-section-head__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="gpl-section-head__heading">{{ section.settings.heading }}</h2>
+    </div>
+    <ul class="gpl-serve__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tag' -%}
+          <li class="gpl-serve-tag" {{ block.shopify_attributes }}>{{ block.settings.label }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% style %}
+  .gpl-serve-{{ section.id }} { background: #111111; padding: 72px 24px; }
+  .gpl-serve-{{ section.id }} .gpl-serve__inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .gpl-serve-{{ section.id }} .gpl-section-head { margin-bottom: 32px; }
+  .gpl-serve-{{ section.id }} .gpl-section-head__eyebrow { color: #D71920; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px; margin: 0 0 6px; }
+  .gpl-serve-{{ section.id }} .gpl-section-head__heading { color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: clamp(24px, 3.2vw, 36px); margin: 0; }
+  .gpl-serve-{{ section.id }} .gpl-serve__list {
+    list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  }
+  .gpl-serve-{{ section.id }} .gpl-serve-tag {
+    border: 1px solid rgba(255,255,255,0.25); color: #F2F2F2; font-size: 13px; font-weight: 600;
+    padding: 9px 18px; border-radius: 999px; transition: border-color .2s ease, background-color .2s ease;
+  }
+  .gpl-serve-{{ section.id }} .gpl-serve-tag:hover { border-color: #D71920; background: rgba(215,25,32,0.1); }
+
+  @media screen and (max-width: 549px) {
+    .gpl-serve-{{ section.id }} { padding: 48px 16px; }
+    .gpl-serve-{{ section.id }} .gpl-serve__list { gap: 8px; }
+    .gpl-serve-{{ section.id }} .gpl-serve-tag { font-size: 12px; padding: 8px 14px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Who We Serve",
+  "tag": "section",
+  "class": "gpl-section-serve",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Industries" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Who We Serve" }
+  ],
+  "blocks": [
+    {
+      "type": "tag",
+      "name": "Tag",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Businesses" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "GPL Who We Serve",
+      "blocks": [
+        { "type": "tag", "settings": { "label": "Businesses" } },
+        { "type": "tag", "settings": { "label": "Schools" } },
+        { "type": "tag", "settings": { "label": "Sports Teams" } },
+        { "type": "tag", "settings": { "label": "Construction Companies" } },
+        { "type": "tag", "settings": { "label": "Restaurants" } },
+        { "type": "tag", "settings": { "label": "Fashion Brands" } },
+        { "type": "tag", "settings": { "label": "Churches" } },
+        { "type": "tag", "settings": { "label": "Corporate Offices" } },
+        { "type": "tag", "settings": { "label": "Gyms" } },
+        { "type": "tag", "settings": { "label": "Healthcare" } },
+        { "type": "tag", "settings": { "label": "Municipal Organizations" } },
+        { "type": "tag", "settings": { "label": "Real Estate" } },
+        { "type": "tag", "settings": { "label": "Events" } },
+        { "type": "tag", "settings": { "label": "Fundraisers" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

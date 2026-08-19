@@ -1,0 +1,208 @@
+{%- comment -%}
+  GTA Print Lab — Footer
+  File: sections/gpl-footer.liquid
+  Note: per project instructions, the "Trusted By" testimonial section (shown separately
+  in the reference image) was NOT built as its own section. Its background photo
+  (Toronto skyline) is reused here as the footer's background image instead, with
+  standard footer content in front of it.
+{%- endcomment -%}
+
+<footer class="gpl-footer-{{ section.id }} gpl-footer">
+  {%- if section.settings.bg_image != blank -%}
+    <div class="gpl-footer__bg">
+      <img
+        src="{{ section.settings.bg_image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.bg_image | image_url: width: 900 }} 900w, {{ section.settings.bg_image | image_url: width: 1600 }} 1600w, {{ section.settings.bg_image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt=""
+        width="{{ section.settings.bg_image.width }}"
+        height="{{ section.settings.bg_image.height }}"
+        loading="lazy"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="gpl-footer__inner">
+    <div class="gpl-footer__top">
+      <div class="gpl-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          <img class="gpl-footer__logo" src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
+        {%- else -%}
+          <p class="gpl-footer__logo-text">{{ shop.name | default: 'GTA Print Lab' }}</p>
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}
+          <p class="gpl-footer__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="gpl-footer__social">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'social' -%}
+                <a href="{{ block.settings.url | default: '#' }}" class="gpl-footer__social-icon" aria-label="{{ block.settings.platform }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.icon }}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="gpl-footer__col">
+        <h3 class="gpl-footer__heading">Contact Us</h3>
+        <ul class="gpl-footer__list">
+          {%- if section.settings.phone != blank -%}
+            <li><a href="tel:{{ section.settings.phone | remove: ' ' | remove: '-' }}">{{ section.settings.phone }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.email != blank -%}
+            <li><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></li>
+          {%- endif -%}
+          {%- if section.settings.address != blank -%}
+            <li>{{ section.settings.address }}</li>
+          {%- endif -%}
+          {%- if section.settings.hours != blank -%}
+            <li>{{ section.settings.hours }}</li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <div class="gpl-footer__col">
+        <h3 class="gpl-footer__heading">Quick Links</h3>
+        <ul class="gpl-footer__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' -%}
+              <li><a href="{{ block.settings.url | default: '#' }}">{{ block.settings.label }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="gpl-footer__col">
+        <h3 class="gpl-footer__heading">Delivery Areas</h3>
+        <p class="gpl-footer__areas">{{ section.settings.service_areas }}</p>
+      </div>
+
+      {%- if section.settings.map_embed_url != blank -%}
+        <div class="gpl-footer__col gpl-footer__col--map">
+          <div class="gpl-footer__map">
+            <iframe
+              src="{{ section.settings.map_embed_url }}"
+              width="100%"
+              height="160"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="{{ shop.name }} service area map"
+            ></iframe>
+          </div>
+          <p class="gpl-footer__map-caption">Proudly Serving The GTA</p>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="gpl-footer__bottom">
+      <p class="gpl-footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | default: 'GTA Print Lab' }}. All Rights Reserved.</p>
+      <ul class="gpl-footer__legal">
+        {%- for link in linklists.footer.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- else -%}
+          <li><a href="{{ section.settings.privacy_link | default: '#' }}">Privacy Policy</a></li>
+          <li><a href="{{ section.settings.terms_link | default: '#' }}">Terms &amp; Conditions</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+{% style %}
+  .gpl-footer-{{ section.id }} { position: relative; background: #0B0B0B; overflow: hidden; }
+  .gpl-footer-{{ section.id }} .gpl-footer__bg { position: absolute; inset: 0; z-index: 0; }
+  .gpl-footer-{{ section.id }} .gpl-footer__bg img { width: 100%; height: 100%; object-fit: cover; }
+  .gpl-footer-{{ section.id }} .gpl-footer__inner { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 72px 24px 28px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__top {
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 32px; padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .gpl-footer-{{ section.id }} .gpl-footer__logo { max-height: 40px; width: auto; margin-bottom: 12px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__logo-text { color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: 20px; margin: 0 0 12px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__tagline { color: #999999; font-size: 13px; line-height: 1.6; margin: 0 0 18px; max-width: 260px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__social { display: flex; gap: 10px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__social-icon {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center; color: #FFFFFF; transition: background-color .2s ease, border-color .2s ease;
+  }
+  .gpl-footer-{{ section.id }} .gpl-footer__social-icon svg { width: 15px; height: 15px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__social-icon:hover { background: #D71920; border-color: #D71920; }
+  .gpl-footer-{{ section.id }} .gpl-footer__heading { color: #D71920; font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 0.05em; margin: 0 0 16px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__list a { color: #C7C7C7; text-decoration: none; font-size: 13.5px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__list a:hover { color: #FFFFFF; }
+  .gpl-footer-{{ section.id }} .gpl-footer__list li { color: #C7C7C7; font-size: 13.5px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__areas { color: #C7C7C7; font-size: 13.5px; line-height: 1.8; margin: 0; }
+  .gpl-footer-{{ section.id }} .gpl-footer__map { border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+  .gpl-footer-{{ section.id }} .gpl-footer__map-caption { color: #D71920; font-weight: 700; font-size: 12.5px; text-transform: uppercase; margin: 0; text-align: right; }
+  .gpl-footer-{{ section.id }} .gpl-footer__bottom {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 22px;
+  }
+  .gpl-footer-{{ section.id }} .gpl-footer__copyright { color: #8A8A8A; font-size: 12px; margin: 0; }
+  .gpl-footer-{{ section.id }} .gpl-footer__legal { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; }
+  .gpl-footer-{{ section.id }} .gpl-footer__legal a { color: #8A8A8A; font-size: 12px; text-decoration: none; }
+  .gpl-footer-{{ section.id }} .gpl-footer__legal a:hover { color: #FFFFFF; }
+
+  @media screen and (max-width: 989px) {
+    .gpl-footer-{{ section.id }} .gpl-footer__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 24px; }
+    .gpl-footer-{{ section.id }} .gpl-footer__col--map { grid-column: span 2; }
+  }
+  @media screen and (max-width: 549px) {
+    .gpl-footer-{{ section.id }} .gpl-footer__inner { padding: 48px 18px 20px; }
+    .gpl-footer-{{ section.id }} .gpl-footer__top { grid-template-columns: 1fr; gap: 28px; }
+    .gpl-footer-{{ section.id }} .gpl-footer__col--map { grid-column: auto; }
+    .gpl-footer-{{ section.id }} .gpl-footer__bottom { flex-direction: column; align-items: flex-start; }
+    .gpl-footer-{{ section.id }} .gpl-footer__map-caption { text-align: left; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Footer",
+  "tag": "footer",
+  "class": "gpl-section-footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image",
+      "info": "Reuse the Toronto skyline photo from the 'Trusted By' reference image here, per project spec."
+    },
+    { "type": "image_picker", "id": "logo", "label": "Footer logo (optional, falls back to shop name)" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Toronto's fastest custom apparel and print shop. Premium quality, fast production and reliable delivery you can count on." },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "647-123-4567" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@gtaprintlab.com" },
+    { "type": "text", "id": "address", "label": "Address", "default": "123 Print Lab Way, Toronto, ON M1H 2X6" },
+    { "type": "text", "id": "hours", "label": "Business hours", "default": "Mon – Fri: 9AM – 6PM, Sat: 10AM – 3PM" },
+    { "type": "textarea", "id": "service_areas", "label": "Service areas", "default": "Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham, Pickering, Ajax, Whitby & More" },
+    { "type": "url", "id": "map_embed_url", "label": "Google Map embed URL" },
+    { "type": "url", "id": "privacy_link", "label": "Privacy policy link (used if no footer menu is set)" },
+    { "type": "url", "id": "terms_link", "label": "Terms & conditions link (used if no footer menu is set)" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Quick link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Home" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social icon",
+      "settings": [
+        { "type": "text", "id": "platform", "label": "Platform name", "default": "Instagram" },
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 12
+}
+{% endschema %}

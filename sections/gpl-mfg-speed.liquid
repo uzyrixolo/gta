@@ -1,0 +1,195 @@
+{%- comment -%}
+  GTA Print Lab — Manufacturing page: Speed banner
+  Left copy · centre icon items ("item" blocks) · right red statement panel.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-mfg-speed-{{ section.id }}" class="gpl-mfg-speed">
+  <div class="gpl-mfg-speed__inner">
+    <div class="gpl-mfg-speed__lead">
+      {%- if s.heading != blank -%}
+        <p class="gpl-mfg-speed__heading">{{ s.heading }}</p>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <p class="gpl-mfg-speed__text">{{ s.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-mfg-speed__items">
+        {%- for block in section.blocks -%}
+          <div class="gpl-mfg-speed__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-mfg-speed__item-icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="gpl-mfg-speed__item-label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.statement != blank or s.statement_accent != blank -%}
+      <div class="gpl-mfg-speed__statement">
+        {%- if s.statement_icon != blank -%}
+          <span class="gpl-mfg-speed__statement-icon">{{ s.statement_icon }}</span>
+        {%- endif -%}
+        <p class="gpl-mfg-speed__statement-copy">
+          {%- if s.statement_accent != blank -%}
+            <span class="gpl-mfg-speed__statement-big">{{ s.statement_accent }}</span>
+          {%- endif -%}
+          {%- if s.statement != blank -%}
+            <span>{{ s.statement }}</span>
+          {%- endif -%}
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-mfg-speed-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: 0 0 clamp(28px, 3.2vw, 46px);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    border: 1px solid rgba(215, 25, 32, 0.6);
+    border-radius: 8px;
+    background: linear-gradient(90deg, #120D0D 0%, #150C0C 70%, #2A0D0F 100%);
+    padding: clamp(14px, 1.6vw, 24px) clamp(14px, 1.6vw, 24px);
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr) minmax(0, 0.75fr);
+    gap: clamp(14px, 1.8vw, 30px);
+    align-items: center;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__heading {
+    margin: 0 0 7px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.08;
+    font-size: clamp(15px, 1.35vw, 21px);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__text {
+    margin: 0;
+    color: #A8A8A8;
+    font-size: clamp(9.5px, 0.7vw, 12px);
+    line-height: 1.45;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__items {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr));
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item {
+    min-width: 0;
+    text-align: center;
+    padding: 0 clamp(8px, 1vw, 16px);
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item:first-child { border-left: none; }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item-icon {
+    display: flex;
+    justify-content: center;
+    color: var(--gpl-accent);
+    margin-bottom: 7px;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item-icon svg {
+    width: clamp(26px, 2.3vw, 38px);
+    height: clamp(26px, 2.3vw, 38px);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item-label {
+    display: block;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(8.5px, 0.64vw, 11px);
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement {
+    display: flex;
+    align-items: center;
+    gap: clamp(9px, 1vw, 15px);
+    justify-content: flex-end;
+    text-align: left;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement-icon { flex: 0 0 auto; display: flex; color: var(--gpl-accent); }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement-icon svg {
+    width: clamp(34px, 3vw, 52px);
+    height: clamp(34px, 3vw, 52px);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement-copy {
+    margin: 0;
+    min-width: 0;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.12;
+    font-size: clamp(10px, 0.78vw, 13px);
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement-big {
+    display: block;
+    font-family: var(--gpl-font-heading, inherit);
+    font-size: clamp(16px, 1.5vw, 24px);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement-copy span:not(.gpl-mfg-speed__statement-big) { color: #E8C9CA; }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__inner { grid-template-columns: minmax(0, 1fr); }
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__statement { justify-content: flex-start; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__items { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item {
+      border-left: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      padding: 0;
+    }
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item-icon { margin-bottom: 0; }
+    #gpl-mfg-speed-{{ section.id }} .gpl-mfg-speed__item-label { font-size: 11px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "MFG Speed banner",
+  "tag": "section",
+  "class": "gpl-section-mfg-speed",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Speed. Quality. Every Time." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "We combine advanced technology, skilled craftsmanship and strict quality control to deliver premium products in record time." },
+    { "type": "header", "content": "Right statement" },
+    { "type": "html", "id": "statement_icon", "label": "Icon (SVG code)" },
+    { "type": "text", "id": "statement_accent", "label": "Big line", "default": "Fastest" },
+    { "type": "text", "id": "statement", "label": "Small line", "default": "Production times in the industry" },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "limit": 4,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Record-Breaking Production Times" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "MFG Speed banner" }]
+}
+{% endschema %}

@@ -1,0 +1,96 @@
+{%- comment -%}
+  GTA Print Lab — Graphic Design page: Audience strip (M2)
+  Thin bar of "who we design for" icons, sits directly under the hero.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-gd-aud-{{ section.id }}" class="gpl-gd-aud">
+  <div class="gpl-gd-aud__inner">
+    {%- for block in section.blocks -%}
+      <div class="gpl-gd-aud__item" {{ block.shopify_attributes }}>
+        {%- if block.settings.icon != blank -%}
+          <span class="gpl-gd-aud__icon">{{ block.settings.icon }}</span>
+        {%- endif -%}
+        {%- if block.settings.label != blank -%}
+          <span class="gpl-gd-aud__label">{{ block.settings.label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gd-aud-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0E0E0E' }};
+    border-top: 2px solid var(--gpl-accent);
+    border-bottom: 2px solid var(--gpl-accent);
+    padding: clamp(12px, 1.3vw, 18px) 0;
+  }
+  #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: clamp(8px, 1vw, 16px);
+  }
+  #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__item {
+    display: flex;
+    align-items: center;
+    gap: clamp(7px, 0.7vw, 11px);
+    min-width: 0;
+  }
+  #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__icon {
+    flex: 0 0 auto;
+    display: flex;
+    color: var(--gpl-accent);
+  }
+  #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__icon svg {
+    width: clamp(22px, 1.9vw, 30px);
+    height: clamp(22px, 1.9vw, 30px);
+  }
+  #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__label {
+    min-width: 0;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(9px, 0.68vw, 11px);
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__inner { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 12px; }
+    #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__label { font-size: 11px; }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-gd-aud-{{ section.id }} .gpl-gd-aud__inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GD Audience strip",
+  "tag": "section",
+  "class": "gpl-section-gd-aud",
+  "settings": [
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0E0E0E" }
+  ],
+  "blocks": [
+    {
+      "type": "audience",
+      "name": "Audience",
+      "limit": 8,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts & Hoodies" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "GD Audience strip" }]
+}
+{% endschema %}
