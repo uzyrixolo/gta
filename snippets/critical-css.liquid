@@ -48,11 +48,19 @@ html.prevent-scroll body {
   --color-sub-text: rgba(17, 17, 17, 0.65);
 }
 
-/* Collection and cart pages: white background, same treatment as the cart drawer
-   and the product customizer, instead of the site's dark theme (settings.color_main_bg
-   is #111111 globally — these two templates opt out of it specifically). */
+/* Collection, cart, and the generic content pages (About/FAQ/Contact/Quote):
+   white background, same treatment as the cart drawer and the product
+   customizer, instead of the site's dark theme (settings.color_main_bg is
+   #111111 globally — these opt out of it specifically). The content pages use
+   page-faqs.liquid / contact-form.liquid etc., unstyled base-theme sections
+   with no colour settings of their own, so without this they render
+   near-black-on-black. */
 body.template-collection,
-body.template-cart {
+body.template-cart,
+body.faq,
+body.about,
+body.contact,
+body.quote {
   background-color: #FFFFFF;
   --color-main-background: #FFFFFF;
   --color-body-text: #111111;
