@@ -19,7 +19,13 @@ body {
 }
 
 body, html {
-  overflow-x: hidden;
+  /* overflow-x: clip (not hidden) — hidden forces overflow-y to auto per the CSS
+     spec's legacy visible->auto coupling rule, which silently makes body its own
+     scroll container and breaks position:sticky everywhere on the site (the sticky
+     element sticks relative to body, which never itself scrolls, since the page
+     actually scrolls via html). clip is exempt from that coupling and gives the
+     same no-horizontal-scrollbar result. */
+  overflow-x: clip;
 }
 
 html.prevent-scroll,
