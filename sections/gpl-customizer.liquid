@@ -148,26 +148,8 @@
         </template>
       </div>
 
-      {%- comment -%} Step 2 — print areas + printing technique. Technique sits inside this
-           step, right under the heading, with no numbered heading of its own — matching
-           the reference site's layout. {%- endcomment -%}
+      {%- comment -%} Step 2 — print areas {%- endcomment -%}
       <h2 class="gpl-cz__step">Step 2. Select Print Areas<span x-text="': ' + activePrintArea"></span></h2>
-      {%- if s.learn_more_link != blank -%}
-        <p class="gpl-cz__learn">Not sure which printing technique to choose? <a href="{{ s.learn_more_link }}">Learn more</a></p>
-      {%- endif -%}
-      {%- if section.blocks.size > 0 -%}
-        <div class="gpl-cz__methods">
-          <template x-for="m in methods" :key="m.name">
-            <button type="button" class="gpl-cz__method" :class="{'is-active': method === m.name}" @click="method = m.name">
-              <template x-if="m.image"><img class="gpl-cz__method-img" :src="m.image" alt="" loading="lazy"></template>
-              <div class="gpl-cz__method-copy">
-                <strong x-text="m.name"></strong>
-                <span x-text="m.description"></span>
-              </div>
-            </button>
-          </template>
-        </div>
-      {%- endif -%}
       <div class="gpl-cz__areas">
         <template x-for="area in areas" :key="area.name">
           <button type="button" class="gpl-cz__area"
@@ -273,6 +255,25 @@
           </div>
         </div>
       </template>
+
+      {%- comment -%} Step 4 — printing type {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <h2 class="gpl-cz__step">Step 4. Printing Type<span x-text="': ' + method"></span></h2>
+        {%- if s.learn_more_link != blank -%}
+          <p class="gpl-cz__learn">Not sure which printing technique to choose? <a href="{{ s.learn_more_link }}">Learn more</a></p>
+        {%- endif -%}
+        <div class="gpl-cz__methods">
+          <template x-for="m in methods" :key="m.name">
+            <button type="button" class="gpl-cz__method" :class="{'is-active': method === m.name}" @click="method = m.name">
+              <template x-if="m.image"><img class="gpl-cz__method-img" :src="m.image" alt="" loading="lazy"></template>
+              <div class="gpl-cz__method-copy">
+                <strong x-text="m.name"></strong>
+                <span x-text="m.description"></span>
+              </div>
+            </button>
+          </template>
+        </div>
+      {%- endif -%}
 
       {%- comment -%} Summary + submit {%- endcomment -%}
       <div class="gpl-cz__summary">
