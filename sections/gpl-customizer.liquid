@@ -256,23 +256,33 @@
         </div>
       </template>
 
-      {%- comment -%} Step 4 — printing type {%- endcomment -%}
+      {%- comment -%} Step 4 — printing type, chosen separately for each colour added
+           in Step 3 (different colours can use different techniques). {%- endcomment -%}
       {%- if section.blocks.size > 0 -%}
-        <h2 class="gpl-cz__step">Step 4. Printing Type<span x-text="': ' + method"></span></h2>
+        <h2 class="gpl-cz__step">Step 4. Printing Type</h2>
         {%- if s.learn_more_link != blank -%}
           <p class="gpl-cz__learn">Not sure which printing technique to choose? <a href="{{ s.learn_more_link }}">Learn more</a></p>
         {%- endif -%}
-        <div class="gpl-cz__methods">
-          <template x-for="m in methods" :key="m.name">
-            <button type="button" class="gpl-cz__method" :class="{'is-active': method === m.name}" @click="method = m.name">
-              <template x-if="m.image"><img class="gpl-cz__method-img" :src="m.image" alt="" loading="lazy"></template>
-              <div class="gpl-cz__method-copy">
-                <strong x-text="m.name"></strong>
-                <span x-text="m.description"></span>
-              </div>
-            </button>
-          </template>
-        </div>
+        <template x-for="colorName in openColors" :key="colorName">
+          <div class="gpl-cz__methodgroup">
+            <div class="gpl-cz__methodgroup-head">
+              <span class="gpl-cz__grid-thumb" :style="swatchStyle(colorName)"></span>
+              <strong x-text="colorName"></strong>
+              <span class="gpl-cz__methodgroup-current" x-text="methodFor(colorName)"></span>
+            </div>
+            <div class="gpl-cz__methods">
+              <template x-for="m in methods" :key="m.name">
+                <button type="button" class="gpl-cz__method" :class="{'is-active': methodFor(colorName) === m.name}" @click="setMethod(colorName, m.name)">
+                  <template x-if="m.image"><img class="gpl-cz__method-img" :src="m.image" alt="" loading="lazy"></template>
+                  <div class="gpl-cz__method-copy">
+                    <strong x-text="m.name"></strong>
+                    <span x-text="m.description"></span>
+                  </div>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
       {%- endif -%}
 
       {%- comment -%} Summary + submit {%- endcomment -%}
@@ -466,6 +476,10 @@
   #gpl-cz-{{ section.id }} .gpl-cz__spin { animation: gpl-cz-spin 0.8s linear infinite; color: var(--cz-red); }
   @keyframes gpl-cz-spin { to { transform: rotate(360deg); } }
 
+  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup { margin-top: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup:first-of-type { margin-top: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup-current { margin-left: auto; color: var(--cz-red); font-weight: 800; font-size: 11.5px; text-transform: uppercase; }
   #gpl-cz-{{ section.id }} .gpl-cz__methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
   #gpl-cz-{{ section.id }} .gpl-cz__method {
     cursor: pointer; text-align: left; padding: 12px 14px; border-radius: 6px;

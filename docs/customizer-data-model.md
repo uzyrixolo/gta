@@ -80,6 +80,13 @@ proper per-area mockups over time.
 Every line in a multi-color/multi-size order carries the full set, so staff can
 open any line item in Shopify admin and see method + artwork + placement.
 
+`Print Method` is chosen **per colour** (Step 4 in the UI), not once for the whole
+order — each colour added in Step 3 gets its own DTF/DTG/Embroidery pick, and only
+that colour's cart lines carry it. `Print Areas`, the `Artwork —` / `Preview —`
+URLs, and `_Placement` are shared across every colour in the order, since the
+uploaded artwork and its placement don't change per garment colour — only the
+production technique can.
+
 ## 6. Uploads
 
 Artwork files upload to **Uploadcare** (same service Printeez uses).

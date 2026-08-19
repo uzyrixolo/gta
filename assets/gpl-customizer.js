@@ -23,7 +23,7 @@ window.gplQuickOrder = function (config) {
     activeColor: config.colors.length ? config.colors[0].name : '',
     previewColorName: null,
     activePrintArea: config.areas.length ? config.areas[0].name : 'Front',
-    method: config.methods.length ? config.methods[0].name : '',
+    methodByColor: {},                // "Color" -> method name; each colour picks its own technique
     designerNotes: '',
     submitting: false,
     errorMsg: '',
@@ -352,6 +352,14 @@ window.gplQuickOrder = function (config) {
       return 'background-color:#C4C4C4';
     },
     swatch(color) { return this.colors.find(c => c.name === color); },
+    // ---- printing technique (per colour) ----
+    methodFor(colorName) {
+      return this.methodByColor[colorName] || (this.methods[0] && this.methods[0].name) || '';
+    },
+    setMethod(colorName, name) {
+      this.methodByColor[colorName] = name;
+      this.persist();
+    },
     toggleColor(name) {
       if (this.openColors.includes(name)) { this.activeColor = name; this.syncVariantUrl(); return; }
       this.openColors.push(name);
@@ -484,10 +492,10 @@ window.gplQuickOrder = function (config) {
       if (this.totalUnits() === 0) return 'Please enter quantities for at least one colour and size';
       return '';
     },
-    lineProperties() {
+    lineProperties(colorName) {
       const used = this.areas.map(a => a.name).filter(a => this.artwork[a] && this.artwork[a].url);
       const props = {
-        'Print Method': this.method,
+        'Print Method': this.methodFor(colorName),
         'Print Areas': used.join(', '),
       };
       if (this.designerNotes && this.designerNotes.trim()) props['Designer Notes'] = this.designerNotes.trim().slice(0, 500);
@@ -542,12 +550,15 @@ window.gplQuickOrder = function (config) {
       if (!this.canSubmit()) return;
       this.submitting = true;
       this.errorMsg = '';
-      const props = this.lineProperties();
+      // Artwork/placement/notes are shared across every colour in the order — only
+      // the printing technique varies per colour — so previews are generated once
+      // and merged into each colour's own line properties below.
+      const previewProps = {};
       try {
         const used = this.areas.map(x => x.name).filter(x => this.artwork[x] && this.artwork[x].url);
         for (const area of used) {
           const url = await this.generatePreview(area);
-          if (url) props['Preview — ' + area] = url;
+          if (url) previewProps['Preview — ' + area] = url;
         }
       } catch (e) { /* previews are best-effort */ }
       const items = [];
@@ -555,6 +566,7 @@ window.gplQuickOrder = function (config) {
         const [color, size] = k.split('|');
         const v = this.resolvedVariant(color, size);
         if (!v) { this.errorMsg = 'Missing variant for ' + color + ' / ' + size; this.submitting = false; return; }
+        const props = Object.assign(this.lineProperties(color), previewProps);
         items.push({ id: v.id, quantity: this.qty[k], properties: props });
       }
       try {
@@ -591,7 +603,7 @@ window.gplQuickOrder = function (config) {
           if (this.artwork[a] && this.artwork[a].url) art[a] = { url: this.artwork[a].url, filename: this.artwork[a].filename };
         }
         localStorage.setItem(this.persistKey(), JSON.stringify({
-          qty: this.qty, artwork: art, method: this.method, openColors: this.openColors, placement: this.placement, notes: this.designerNotes,
+          qty: this.qty, artwork: art, methodByColor: this.methodByColor, openColors: this.openColors, placement: this.placement, notes: this.designerNotes,
         }));
       } catch (e) { /* private mode */ }
     },
@@ -603,7 +615,7 @@ window.gplQuickOrder = function (config) {
         this.qty = s.qty || {};
         this.artwork = s.artwork || {};
         this.placement = s.placement || {};
-        if (s.method) this.method = s.method;
+        if (s.methodByColor) this.methodByColor = s.methodByColor;
         if (s.notes) this.designerNotes = s.notes;
         if (s.openColors && s.openColors.length) { this.openColors = s.openColors; this.activeColor = s.openColors[0]; }
       } catch (e) { /* ignore */ }
