@@ -34,6 +34,20 @@ html.prevent-scroll body {
   overflow: hidden;
 }
 
+/* Cart drawer: force a white panel regardless of the site's dark theme, and sit
+   above the sticky header (z-index 999) and its mobile menu (z-index 1000/1001) —
+   the drawer's own z-index of 100 previously let the header render on top of it. */
+.m-cart-drawer {
+  /* !important: assets/cart.css sets the same z-index:100 with equal selector
+     specificity and loads after this critical CSS, so it would otherwise win
+     the cascade purely on load order. */
+  z-index: 1002 !important;
+  --color-main-background: #FFFFFF;
+  --color-body-text: #111111;
+  --color-heading-text: #111111;
+  --color-sub-text: rgba(17, 17, 17, 0.65);
+}
+
 h1,
 h2,
 h3,
