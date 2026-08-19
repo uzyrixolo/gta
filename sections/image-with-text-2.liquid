@@ -4,7 +4,7 @@
   Note: uses CSS scroll-snap for mobile carousel behaviour, no JS required.
 {%- endcomment -%}
 
-<section class="gpl-print-{{ section.id }} gpl-print">
+<section id="services" class="gpl-print-{{ section.id }} gpl-print">
   <div class="gpl-print__inner">
     <div class="gpl-section-head">
       {%- if section.settings.eyebrow != blank -%}
@@ -52,7 +52,7 @@
 </section>
 
 {% style %}
-  .gpl-print-{{ section.id }} { background: #111111; padding: 64px 0; }
+  .gpl-print-{{ section.id }} { background: #111111; padding: 64px 0; scroll-margin-top: 90px; }
   .gpl-print-{{ section.id }} .gpl-print__inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
   .gpl-print-{{ section.id }} .gpl-section-head { text-align: center; margin-bottom: 28px; }
   .gpl-print-{{ section.id }} .gpl-section-head__eyebrow--light {
