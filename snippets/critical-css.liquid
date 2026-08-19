@@ -48,6 +48,18 @@ html.prevent-scroll body {
   --color-sub-text: rgba(17, 17, 17, 0.65);
 }
 
+/* Collection and cart pages: white background, same treatment as the cart drawer
+   and the product customizer, instead of the site's dark theme (settings.color_main_bg
+   is #111111 globally — these two templates opt out of it specifically). */
+body.template-collection,
+body.template-cart {
+  background-color: #FFFFFF;
+  --color-main-background: #FFFFFF;
+  --color-body-text: #111111;
+  --color-heading-text: #111111;
+  --color-sub-text: rgba(17, 17, 17, 0.65);
+}
+
 h1,
 h2,
 h3,
