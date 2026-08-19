@@ -163,8 +163,9 @@ window.gplQuickOrder = function (config) {
     },
 
     // Match product image filenames to colors: "1200W-625-Royal-12-...FlatFront3.jpg",
-    // "sport_grey_fornt.jpg" etc. Alt "Front"/"Back" picks the area; explicit
-    // "mockup:Color:Area" alts (this.mockups) always win.
+    // "sport_grey_fornt.jpg", "T-Shirt_Maroon_LS.jpg" etc. Alt "Front"/"Back"/
+    // "Left Side"/"Right Side" picks the area; explicit "mockup:Color:Area" alts
+    // (this.mockups) always win.
     buildMockupMap(images) {
       const alias = {
         'gold': ['oldgold'], 'safety orange': ['sorange'], 'forest green': ['forestgrn'],
@@ -172,21 +173,23 @@ window.gplQuickOrder = function (config) {
         'irish green': ['irishgreen'], 'light blue': ['lightblue', 'sky'],
         'sport grey': ['sportgrey', 'sport_grey'], 'dark heather': ['darkheather', 'dark_heather'],
         'cardinal red': ['cardinalrd'], 'texas orange': ['txorange', 'texasorange'],
-        'yellow haze': ['yellowhaze'], 'dark chocolate': ['darkchocolate', 'dkchocolate'],
-        'military green': ['militarygrn', 'militarygreen'], 'heliconia': ['heliconia'],
+        'yellow haze': ['yellowhaze'], 'dark chocolate': ['darkchocolate', 'dkchocolate', 'dkchoc'],
+        'military green': ['militarygrn', 'militarygreen', 'milgreen'], 'heliconia': ['heliconia'],
       };
+      const viewByAlt = { front: 'Front', back: 'Back', 'left side': 'Left Side', 'right side': 'Right Side' };
       const norm = s => (s || '').toLowerCase().replace(/[^a-z]/g, '');
       for (const img of images) {
         // Shopify's Liquid `image.alt` silently falls back to the product title when
         // no alt text is set on the image — it's never actually blank. Only accept
-        // images explicitly tagged exactly "Front"/"Back" as clean per-colour photos,
-        // so an untagged lifestyle shot (alt == product title) can never win a
-        // colour|view slot over the real photo (e.g. "YOUR DESIGN HERE" baked into a
-        // hero shot's pixels beating out the genuine blank "black_front" photo).
-        const altRaw = (img.alt || '').trim();
-        if (!/^(front|back)$/i.test(altRaw)) continue;
+        // images explicitly tagged exactly one of the four view names as clean
+        // per-colour photos, so an untagged lifestyle shot (alt == product title)
+        // can never win a colour|view slot over the real photo (e.g. "YOUR DESIGN
+        // HERE" baked into a hero shot's pixels beating out the genuine blank
+        // "black_front" photo).
+        const altRaw = (img.alt || '').trim().toLowerCase();
+        const view = viewByAlt[altRaw];
+        if (!view) continue;
         const fname = norm((img.src.split('/').pop() || '').split('?')[0]);
-        const view = /^back$/i.test(altRaw) ? 'Back' : 'Front';
         for (const c of this.colors) {
           const keys = [norm(c.name)].concat((alias[c.name.toLowerCase()] || []).map(norm));
           if (keys.some(k => k && fname.includes(k))) {
