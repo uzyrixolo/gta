@@ -9,13 +9,157 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "page-about-us",
-      "disabled": true,
-      "settings": {}
+    "ab_hero": {
+      "type": "gpl-gd-hero",
+      "blocks": {
+        "prm_speed": {
+          "type": "promise",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
+            "title": "Same-Day Production",
+            "subtitle": "Fast Turnaround"
+          }
+        },
+        "prm_min": {
+          "type": "promise",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
+            "title": "No Minimum Orders",
+            "subtitle": "1 Piece or 10,000"
+          }
+        },
+        "prm_quality": {
+          "type": "promise",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z\"/><path d=\"m9 12 2 2 4-4\"/></svg>",
+            "title": "Premium Quality",
+            "subtitle": "Every Order, Inspected"
+          }
+        },
+        "prm_delivery": {
+          "type": "promise",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"6\" width=\"15\" height=\"12\" rx=\"1\"/><path d=\"M16 10h4l3 3v5h-7z\"/><circle cx=\"6\" cy=\"19\" r=\"2\"/><circle cx=\"18\" cy=\"19\" r=\"2\"/></svg>",
+            "title": "GTA Delivery",
+            "subtitle": "Fast & Reliable"
+          }
+        }
+      },
+      "block_order": ["prm_speed", "prm_min", "prm_quality", "prm_delivery"],
+      "settings": {
+        "eyebrow": "About GTA Print Lab",
+        "heading_line1": "About",
+        "heading_line2": "Us",
+        "subheading": "Toronto's Fastest Custom Apparel & Print Shop",
+        "paragraph": "<p>GTA Print Lab started with a simple idea: custom apparel shouldn't mean long waits, confusing minimums, or mystery pricing. We're a Toronto-based print shop built for businesses, sports teams, schools and brands who need quality merch fast — with same-day and next-day turnaround, no minimum order sizes, and pricing that scales with you.</p><p>From a single custom hoodie to a 500-piece team order, every job runs through our own shop using DTG, DTF and embroidery equipment we operate ourselves — so what you approve is exactly what you get, on time.</p>",
+        "button_1_text": "Start Your Order",
+        "button_1_link": "/collections/all",
+        "button_2_text": "Get a Quote",
+        "button_2_link": "",
+        "promise_heading": "Our Promise",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "ab_why": {
+      "type": "gpl-gd-why",
+      "blocks": {
+        "why_roof": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 11 12 4l9 7\"/><path d=\"M5 10v10h14V10\"/></svg>",
+            "title": "Everything Under One Roof",
+            "description": "Design, printing and production all happen in-house — no outsourcing, no middlemen, no surprises."
+          }
+        },
+        "why_fast": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
+            "title": "Toronto-Based, Toronto-Fast",
+            "description": "Local production means local turnaround — same-day and next-day options most print shops can't match."
+          }
+        },
+        "why_min": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/></svg>",
+            "title": "No Minimums, No Barriers",
+            "description": "Order one piece or ten thousand. Every customer gets the same quality and attention."
+          }
+        },
+        "why_price": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6\"/></svg>",
+            "title": "Transparent, Fair Pricing",
+            "description": "Volume discounts that actually add up, with no hidden setup fees sprung on you later."
+          }
+        },
+        "why_quality": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 12 2 2 4-4\"/><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>",
+            "title": "Quality You Can Count On",
+            "description": "Every order is inspected before it leaves our facility, backed by real support if something's not right."
+          }
+        }
+      },
+      "block_order": ["why_roof", "why_fast", "why_min", "why_price", "why_quality"],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "ab_audience": {
+      "type": "gpl-gd-audience",
+      "blocks": {
+        "aud_biz": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 8V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3\"/></svg>", "label": "Small Businesses" } },
+        "aud_sports": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v18M3 12h18\"/></svg>", "label": "Sports Teams" } },
+        "aud_school": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 9 12 5l10 4-10 4Z\"/><path d=\"M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5\"/></svg>", "label": "Schools & Organizations" } },
+        "aud_brand": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8L10.7 2.7a2 2 0 0 1 1.4-.6H19a2 2 0 0 1 2 2v6.9a2 2 0 0 1-.5 1.4Z\"/><circle cx=\"15.5\" cy=\"7.5\" r=\"1.5\"/></svg>", "label": "Fashion Brands" } },
+        "aud_corp": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M9 8h6M9 12h6M9 16h4\"/></svg>", "label": "Corporate Events" } },
+        "aud_fund": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z\"/></svg>", "label": "Fundraisers" } },
+        "aud_music": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 18V5l12-2v13\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/></svg>", "label": "Concerts & Tours" } },
+        "aud_startup": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.5 16.5c-1.5 1.5-2 5-2 5s3.5-.5 5-2c.8-.8 1-2 .2-2.8-.8-.8-2-.6-2.8.2Z\"/><path d=\"M14 10 2 22M18.4 5.6a4 4 0 0 1 0 5.7l-9.9 9.9-5.7-5.7 9.9-9.9a4 4 0 0 1 5.7 0Z\"/></svg>", "label": "Startups" } }
+      },
+      "block_order": ["aud_biz", "aud_sports", "aud_school", "aud_brand", "aud_corp", "aud_fund", "aud_music", "aud_startup"],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "ab_cta": {
+      "type": "gpl-gd-cta",
+      "blocks": {
+        "cta_order": {
+          "type": "button",
+          "settings": {
+            "label": "Start Your Order",
+            "link": "/collections/all",
+            "style": "primary",
+            "icon": ""
+          }
+        },
+        "cta_contact": {
+          "type": "button",
+          "settings": {
+            "label": "Contact Us",
+            "link": "/pages/contact",
+            "style": "outline",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": ["cta_order", "cta_contact"],
+      "settings": {
+        "heading": "Ready to Work",
+        "heading_accent": "Together?",
+        "text": "Whether it's one hoodie or a thousand, our team is ready to bring your idea to life — fast, local, and done right.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["ab_hero", "ab_why", "ab_audience", "ab_cta"]
 }

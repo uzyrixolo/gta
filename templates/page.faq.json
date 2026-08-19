@@ -12,70 +12,98 @@
     "main": {
       "type": "page-faqs",
       "blocks": {
-        "custom-content": {
-          "type": "content",
-          "disabled": true,
-          "settings": {
-            "content": "<div class=\"mb-10\"><img src=\"https://cdn.shopify.com/s/files/1/0561/2742/2636/files/faqs.jpg?v=1620784288\"></div>\n<h3 class=\"font-medium text-xl mb-4\">Awkwardness gives me great comfort. I’ve never been cool, but I’ve felt cool. I’ve been in the cool place, but I wasn’t really cool – I was trying to pass for hip or cool.</h3>\n<p>A girl should be two things: classy and fabulous. I am convinced that there can be luxury in simplicity. I wanted to dress the woman who lives and works, not the woman in a painting. It’s hard to balance everything. It’s always challenging. My relationships with producers or photographers – these are relationships that took years. I can’t get sucked into that celebrity thing, because I think it’s just crass. My aim is to make the poor look rich.</p>"
-          }
-        },
-        "accordion-1": {
+        "faq_turnaround": {
           "type": "accordion",
           "settings": {
-            "title": "What payment methods do you accept?",
-            "content": "<p>We accept various payment methods such as credit/debit cards, PayPal, Apple Pay, Google Pay, and more. Please refer to our payment page for a complete list of payment options.</p>",
+            "title": "How fast can you turn around my order?",
+            "content": "<p>Most orders ship same-day or next-day, depending on order size and printing method. Larger bulk orders typically take 3–5 business days. Need it faster? Ask about our Rush Order Service to jump the queue.</p>",
             "open": true
           }
         },
-        "accordion-2": {
+        "faq_minimums": {
           "type": "accordion",
           "settings": {
-            "title": "How long will it take for my order to be shipped?",
-            "content": "<p>We typically process and ship orders within 15-20 working days. Shipping times vary depending on your location and the shipping method you choose at checkout.</p>",
+            "title": "Is there a minimum order quantity?",
+            "content": "<p>No minimums, ever. Order a single custom hoodie or a run of 10,000 team jerseys — you'll get the same quality and pricing structure either way, with volume discounts kicking in as your order grows.</p>",
             "open": false
           }
         },
-        "accordion-3": {
+        "faq_methods": {
           "type": "accordion",
           "settings": {
-            "title": "Can I track my order?",
-            "content": "<p>Yes, you can track your order by logging into your account or by using the tracking information provided in your shipping confirmation email.</p>",
+            "title": "What printing methods do you offer?",
+            "content": "<p>We print using DTG (Direct-to-Garment) for vibrant full-colour designs, DTF (Direct-to-Film) for durability across almost any fabric, and embroidery for a premium stitched finish on hats, polos and jackets. Not sure which is right for your project? We'll recommend the best option when you upload your artwork.</p>",
             "open": false
           }
         },
-        "accordion-4": {
+        "faq_filetypes": {
           "type": "accordion",
           "settings": {
-            "title": "How do I cancel or modify my order?",
-            "content": "<p>To cancel or modify your order, please contact us as soon as possible. We will do our best to accommodate your request if your order has not already been shipped.</p>",
+            "title": "What file types do you accept for artwork?",
+            "content": "<p>We accept PNG, JPG, SVG, PDF, HEIC and TIFF files. For the sharpest print quality, high-resolution PNG or vector (SVG/PDF) files work best. If your file isn't print-ready, our team will reach out to help clean it up.</p>",
             "open": false
           }
         },
-        "accordion-5": {
+        "faq_mockup": {
           "type": "accordion",
           "settings": {
-            "title": "Do you offer international shipping?",
-            "content": "<p>Yes, we offer international shipping to many countries. Please refer to our shipping page for a complete list of eligible countries and shipping rates.</p>",
+            "title": "Can I see a mockup before you print?",
+            "content": "<p>Yes. Every order includes a digital mockup for your approval before production starts — usually within an hour of your upload. Nothing goes to print until you say go.</p>",
             "open": false
           }
         },
-        "8a8e69ce-8d4e-41af-92ad-faa3473f833f": {
+        "faq_bulk": {
           "type": "accordion",
           "settings": {
-            "title": "How do I contact customer support?",
-            "content": "<p>You can contact customer support  by filling out our online <a href=\"/pages/contact\" title=\"Contact\">contact form</a>. We will respond to your inquiry within 24-48 hours.</p>",
+            "title": "Do you offer bulk or volume discounts?",
+            "content": "<p>Yes — the more you order, the more you save. Discounts scale automatically as your quantity goes up, whether you're ordering for a team, event, fundraiser or business.</p>",
+            "open": false
+          }
+        },
+        "faq_delivery": {
+          "type": "accordion",
+          "settings": {
+            "title": "What areas do you deliver to?",
+            "content": "<p>We offer fast local delivery across Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham, Pickering, Ajax, Whitby and the rest of the GTA — plus reliable shipping across Canada.</p>",
+            "open": false
+          }
+        },
+        "faq_pickup": {
+          "type": "accordion",
+          "settings": {
+            "title": "Can I pick up my order in person?",
+            "content": "<p>Yes — in-store pickup is available in addition to local delivery and Canada-wide shipping.</p>",
+            "open": false
+          }
+        },
+        "faq_quality": {
+          "type": "accordion",
+          "settings": {
+            "title": "What if something's wrong with my order?",
+            "content": "<p>Every order is inspected for quality before it leaves our facility. If something isn't right, <a href=\"/pages/contact\" title=\"Contact\">contact us</a> and we'll make it right — that's our guarantee.</p>",
+            "open": false
+          }
+        },
+        "faq_getstarted": {
+          "type": "accordion",
+          "settings": {
+            "title": "How do I get started?",
+            "content": "<p>Upload your design, choose your product, sizes and quantities, and pick a printing technique — our online customizer walks you through it in a couple of minutes. Prefer to talk it through first? <a href=\"/pages/contact\" title=\"Contact\">Reach out</a> and our team will help you get a quote.</p>",
             "open": false
           }
         }
       },
       "block_order": [
-        "custom-content",
-        "accordion-1",
-        "accordion-2",
-        "accordion-3",
-        "accordion-4",
-        "accordion-5",
-        "8a8e69ce-8d4e-41af-92ad-faa3473f833f"
+        "faq_turnaround",
+        "faq_minimums",
+        "faq_methods",
+        "faq_filetypes",
+        "faq_mockup",
+        "faq_bulk",
+        "faq_delivery",
+        "faq_pickup",
+        "faq_quality",
+        "faq_getstarted"
       ],
       "settings": {
         "container": "container",
