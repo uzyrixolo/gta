@@ -24,7 +24,7 @@
         "button_1_text": "Start Your Project",
         "button_1_link": "",
         "button_2_text": "Request a Quote",
-        "button_2_link": "",
+        "button_2_link": "/pages/quote",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A",
         "background_image": "shopify://shop_images/gpl-hero-website.jpg"
@@ -565,7 +565,7 @@
           "type": "button",
           "settings": {
             "label": "Request a Quote",
-            "link": "",
+            "link": "/pages/quote",
             "style": "outline"
           }
         }

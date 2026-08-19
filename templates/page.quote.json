@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "quote_form": {
+      "type": "gpl-quote-form",
+      "blocks": {
+        "pt_noobligation": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 12 2 2 4-4\"/><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>",
+            "text": "No obligation — quotes are always free"
+          }
+        },
+        "pt_response": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
+            "text": "We reply within one business day"
+          }
+        },
+        "pt_minimums": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/></svg>",
+            "text": "No minimum order size"
+          }
+        }
+      },
+      "block_order": ["pt_noobligation", "pt_response", "pt_minimums"],
+      "settings": {
+        "eyebrow": "Get a Quote",
+        "heading": "Let's Price Out Your Order",
+        "description": "<p>Tell us what you're looking for and we'll get back to you with pricing — usually within one business day.</p>",
+        "phone": "647-123-4567",
+        "email": "info@gtaprintlab.com",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    }
+  },
+  "order": ["quote_form"]
+}

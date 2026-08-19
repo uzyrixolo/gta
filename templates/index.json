@@ -60,9 +60,9 @@
         "subheading_highlight": "YOUR WAY.",
         "paragraph": "<p>We help businesses, sports teams, schools, organizations and fashion brands bring their ideas to life with premium custom apparel, embroidery and promotional products.</p>",
         "button1_text": "Get A Quote",
-        "button1_link": "",
+        "button1_link": "/pages/quote",
         "button2_text": "Start Your Order",
-        "button2_link": "",
+        "button2_link": "/collections/all",
         "badge_enabled": true,
         "badge_icon": "",
         "badge_line1": "",
@@ -995,8 +995,8 @@
           "type": "action_button",
           "settings": {
             "icon": "",
-            "label": "800-293-4232",
-            "link": ""
+            "label": "647-123-4567",
+            "link": "tel:6471234567"
           }
         },
         "action_button_Q63TTx": {
@@ -1012,7 +1012,7 @@
           "settings": {
             "icon": "",
             "label": "Email Us",
-            "link": ""
+            "link": "mailto:info@gtaprintlab.com"
           }
         },
         "checklist_item_MHdrfe": {
@@ -1062,7 +1062,7 @@
         "right_line1": "Need your order faster than standard production times?",
         "right_line2": "With our Rush Order Service, you can move your job to the front of the line.",
         "right_button_text": "Get A Quote",
-        "right_button_link": "",
+        "right_button_link": "/pages/quote",
         "padding_top": 56,
         "padding_bottom": 56
       }

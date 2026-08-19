@@ -58,7 +58,7 @@
         "logo_text_2": "PRINT LAB",
         "menu": "main-menu",
         "button_text": "Get A Quote",
-        "button_link": "",
+        "button_link": "/pages/quote",
         "bg_color": "#111111"
       }
     }

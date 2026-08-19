@@ -1,0 +1,200 @@
+{%- comment -%}
+  GTA Print Lab — Get a Quote form
+  Uses Shopify's native contact form object so submissions arrive at the
+  store's notification email with zero custom backend — every input below
+  is inside {% form 'contact' %}, so any contact[Field Name] input gets
+  included in that email automatically, not just name/email/phone/body.
+{%- endcomment -%}
+{%- assign s = section.settings -%}
+
+<section class="gpl-quote-{{ section.id }} gpl-quote">
+  <div class="gpl-quote__inner">
+    <div class="gpl-quote__intro">
+      {%- if s.eyebrow != blank -%}<p class="gpl-quote__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+      <h1 class="gpl-quote__heading">{{ s.heading }}</h1>
+      {%- if s.description != blank -%}<div class="gpl-quote__description">{{ s.description }}</div>{%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="gpl-quote__points">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'point' -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="gpl-quote__point-icon">{{ block.settings.icon }}</span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.phone != blank or s.email != blank -%}
+        <div class="gpl-quote__direct">
+          <p>Prefer to talk it through?</p>
+          {%- if s.phone != blank -%}<a href="tel:{{ s.phone | remove: ' ' | remove: '-' }}">{{ s.phone }}</a>{%- endif -%}
+          {%- if s.email != blank -%}<a href="mailto:{{ s.email }}">{{ s.email }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="gpl-quote__card">
+      {%- form 'contact' -%}
+        <input type="hidden" name="contact[Form]" value="Quote request — {{ page.title }}">
+        {%- capture success_message -%}Thanks — we've got your request and will follow up within one business day.{%- endcapture -%}
+        {% render 'form__success', form: form, success_message: success_message %}
+        {% render 'form__error', form: form %}
+
+        {%- unless form.posted_successfully? -%}
+        <div class="gpl-quote__grid">
+          <label class="gpl-quote__field">
+            <span>Name<em>*</em></span>
+            <input type="text" name="contact[name]" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </label>
+          <label class="gpl-quote__field">
+            <span>Email<em>*</em></span>
+            <input type="email" name="contact[email]" required autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+          </label>
+          <label class="gpl-quote__field">
+            <span>Phone</span>
+            <input type="tel" name="contact[phone]" autocorrect="off" autocapitalize="off" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+          </label>
+          <label class="gpl-quote__field">
+            <span>Company / Organization</span>
+            <input type="text" name="contact[Company]">
+          </label>
+          <label class="gpl-quote__field">
+            <span>What are you looking to order?</span>
+            <select name="contact[Product Type]">
+              <option value="">Select one</option>
+              <option>T-Shirts</option>
+              <option>Hoodies</option>
+              <option>Golf Shirts</option>
+              <option>Hats & Toques</option>
+              <option>Jackets</option>
+              <option>Team Uniforms</option>
+              <option>Promo Products</option>
+              <option>Graphic Design</option>
+              <option>Branding</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <label class="gpl-quote__field">
+            <span>Estimated quantity</span>
+            <input type="text" name="contact[Estimated Quantity]" placeholder="e.g. 50 pieces">
+          </label>
+          <label class="gpl-quote__field">
+            <span>Printing technique</span>
+            <select name="contact[Printing Technique]">
+              <option value="">Not sure — recommend one</option>
+              <option>DTG</option>
+              <option>DTF</option>
+              <option>Embroidery</option>
+            </select>
+          </label>
+          <label class="gpl-quote__field">
+            <span>Needed by</span>
+            <input type="text" name="contact[Needed By]" placeholder="e.g. Aug 30, or “ASAP”">
+          </label>
+        </div>
+        <label class="gpl-quote__field gpl-quote__field--full">
+          <span>Tell us about your project<em>*</em></span>
+          <textarea name="contact[body]" rows="5" required placeholder="Design ideas, colours, deadlines — anything that helps us quote accurately.">{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+        </label>
+        <p class="gpl-quote__note">Have artwork ready? Skip the wait and start directly in our <a href="/collections/all">product customizer</a> — you can upload files there. This form is for custom quotes and anything not covered by our standard products.</p>
+        <button type="submit" class="gpl-quote__submit">Request My Quote</button>
+        {%- endunless -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .gpl-quote-{{ section.id }} { background: {{ s.color_background | default: '#0A0A0A' }}; padding: clamp(48px, 6vw, 96px) 0; }
+  .gpl-quote-{{ section.id }} .gpl-quote__inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 64px); align-items: start;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__eyebrow {
+    color: {{ s.color_accent | default: '#D71920' }}; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; font-size: 12.5px; margin: 0 0 10px;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__heading {
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; line-height: 1.05;
+    font-size: clamp(30px, 4vw, 46px); margin: 0 0 16px;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__description { color: #C7C7C7; font-size: 15px; line-height: 1.7; margin: 0 0 28px; max-width: 46ch; }
+  .gpl-quote-{{ section.id }} .gpl-quote__points { list-style: none; margin: 0 0 28px; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__points li { display: flex; align-items: center; gap: 12px; color: #EDEDED; font-size: 14.5px; font-weight: 600; }
+  .gpl-quote-{{ section.id }} .gpl-quote__point-icon {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: rgba(215,25,32,0.12);
+    color: {{ s.color_accent | default: '#D71920' }}; display: flex; align-items: center; justify-content: center;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__point-icon svg { width: 17px; height: 17px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__direct { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 20px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__direct p { color: #8A8A8A; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 8px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__direct a { display: block; color: #FFFFFF; font-weight: 700; font-size: 15px; text-decoration: none; margin-bottom: 4px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__direct a:hover { color: {{ s.color_accent | default: '#D71920' }}; }
+
+  .gpl-quote-{{ section.id }} .gpl-quote__card { background: #FFFFFF; border-radius: 14px; padding: clamp(24px, 3vw, 36px); }
+  .gpl-quote-{{ section.id }} .gpl-quote__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__field { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; color: #333; font-weight: 700; }
+  .gpl-quote-{{ section.id }} .gpl-quote__field--full { margin-bottom: 16px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__field em { color: {{ s.color_accent | default: '#D71920' }}; font-style: normal; }
+  .gpl-quote-{{ section.id }} .gpl-quote__field input,
+  .gpl-quote-{{ section.id }} .gpl-quote__field select,
+  .gpl-quote-{{ section.id }} .gpl-quote__field textarea {
+    font: inherit; font-weight: 400; font-size: 14px; color: #111; padding: 11px 12px;
+    border: 1px solid #D5D5D5; border-radius: 6px; background: #FAFAFA; resize: vertical;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__field input:focus,
+  .gpl-quote-{{ section.id }} .gpl-quote__field select:focus,
+  .gpl-quote-{{ section.id }} .gpl-quote__field textarea:focus { outline: none; border-color: {{ s.color_accent | default: '#D71920' }}; background: #FFFFFF; }
+  .gpl-quote-{{ section.id }} .gpl-quote__note { font-size: 12.5px; color: #777; line-height: 1.6; margin: 0 0 20px; }
+  .gpl-quote-{{ section.id }} .gpl-quote__note a { color: {{ s.color_accent | default: '#D71920' }}; font-weight: 700; }
+  .gpl-quote-{{ section.id }} .gpl-quote__submit {
+    width: 100%; cursor: pointer; padding: 15px; border: none; border-radius: 6px;
+    background: {{ s.color_accent | default: '#D71920' }}; color: #FFFFFF; font: inherit; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em; font-size: 13.5px; transition: background-color .2s ease;
+  }
+  .gpl-quote-{{ section.id }} .gpl-quote__submit:hover { background: #B4141A; }
+  .gpl-quote-{{ section.id }} .notification { border-radius: 8px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px; font-size: 13.5px; }
+  .gpl-quote-{{ section.id }} .notification svg { width: 20px; height: 20px; flex: 0 0 auto; }
+  .gpl-quote-{{ section.id }} .notification.success { background: #E9F7EF; color: #1E7E34; }
+  .gpl-quote-{{ section.id }} .notification.warning { background: #FDECEC; color: #B4141A; }
+
+  @media screen and (max-width: 900px) {
+    .gpl-quote-{{ section.id }} .gpl-quote__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 549px) {
+    .gpl-quote-{{ section.id }} .gpl-quote__grid { grid-template-columns: 1fr; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Quote form",
+  "tag": "section",
+  "class": "gpl-section-quote-form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get a Quote" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Let's Price Out Your Order" },
+    { "type": "richtext", "id": "description", "label": "Description", "default": "<p>Tell us what you're looking for and we'll get back to you with pricing — usually within one business day.</p>" },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "647-123-4567" },
+    { "type": "text", "id": "email", "label": "Email", "default": "info@gtaprintlab.com" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Reassurance point",
+      "limit": 5,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "text", "label": "Text", "default": "No obligation, ever" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [{ "name": "GPL Quote form" }]
+}
+{% endschema %}

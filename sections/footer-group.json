@@ -92,7 +92,7 @@
           "type": "link",
           "settings": {
             "label": "Get a Quote",
-            "url": ""
+            "url": "/pages/quote"
           }
         }
       },

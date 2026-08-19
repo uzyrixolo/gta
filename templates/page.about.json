@@ -55,7 +55,7 @@
         "button_1_text": "Start Your Order",
         "button_1_link": "/collections/all",
         "button_2_text": "Get a Quote",
-        "button_2_link": "",
+        "button_2_link": "/pages/quote",
         "promise_heading": "Our Promise",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
