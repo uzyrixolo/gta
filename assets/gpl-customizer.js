@@ -455,6 +455,10 @@ window.gplQuickOrder = function (config) {
       if (!this.uploadKey) return (this.errorMsg = 'Uploads are not configured yet — please contact us to place this order.');
 
       this.artwork[area] = { url: '', filename: file.name, localUrl: URL.createObjectURL(file), uploading: true };
+      // Show the local preview on the canvas immediately — the real Uploadcare
+      // upload below can take several seconds, and without this the design only
+      // appears once that finishes, which reads as "upload doesn't work".
+      this.$dispatch('gpl:artwork-changed', { area });
       try {
         const uploadFile = await this.downscaleForUpload(file);
         const fd = new FormData();
