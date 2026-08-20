@@ -323,7 +323,7 @@
           
           {%- for tooltip in tooltip_items -%}
             {%- assign settings_key = 'show_' | append: tooltip | append: '_button' | replace: 'add-to-cart', 'cart' -%}
-            {%- if [settings_key] -%}
+            {%- if self[settings_key] -%}
               {% render 'tooltip', type: tooltip, section: section, product: product, class_name: 'm-tooltip--left' %}
             {%- endif -%}
           {%- endfor -%}
@@ -410,7 +410,7 @@
             
             {%- for tooltip in tooltip_items -%}
               {%- assign settings_key = 'show_' | append: tooltip | append: '_button' | replace: 'add-to-cart', 'cart' -%}
-              {%- if [settings_key] -%}
+              {%- if self[settings_key] -%}
                 {% render 'tooltip', type: tooltip, section: section, product: product, class_name: 'm-tooltip--top' %}
               {%- endif -%}
             {%- endfor -%}
@@ -420,4 +420,16 @@
     </div>
   <input hidden name="id" required value="{{ variant_id }}" data-selected-variant="{{ selected_variant_id }}">
 </div> <!-- .m-product-card -->
-{%- if column_wrapper -%}</div><!-- .m:column -->{%- endif -%}
+{%- if column_wrapper -%}</div><!-- .m:column -->{%- endif -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- if [settings_key] -%}"
+  to: "{%- if self[settings_key] -%}"
+  position: 15872..15901
+- from: "{%- if [settings_key] -%}"
+  to: "{%- if self[settings_key] -%}"
+  position: 19992..20021
+{%- endcomment -%}
