@@ -208,6 +208,10 @@
 
   .gpl-header-{{ section.id }} .gpl-header__megapanel {
     list-style: none; margin: 0; padding: 20px; position: absolute; top: 100%; left: 50%;
+    /* width: max-content — without it, an absolutely-positioned box with only
+       `left` set shrink-wraps against its containing block (this narrow <li>),
+       not its own content, collapsing the 6-tile grid down to a sliver. */
+    width: max-content; max-width: calc(100vw - 32px);
     transform: translate(-50%, 6px); background: #1B1B1B; border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px; opacity: 0; visibility: hidden; transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
     box-shadow: 0 20px 44px rgba(0,0,0,0.45); z-index: 5;
