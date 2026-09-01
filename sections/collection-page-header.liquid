@@ -64,30 +64,53 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 18px;
+    margin-top: 24px;
   }
   .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 9px 20px;
-    border-radius: 999px;
-    border: 1px solid rgba(17, 17, 17, 0.15);
+    gap: 10px;
+    width: 108px;
+    text-decoration: none;
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #F1F1F1;
+    border: 1px solid rgba(17, 17, 17, 0.1);
+    transition: transform .18s ease, border-color .18s ease;
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-image img,
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    fill: rgba(17, 17, 17, 0.2);
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab:hover .m-collection-page-header__category-tab-image {
+    transform: scale(1.05);
+    border-color: #D71920;
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-label {
     color: #111111;
     font-weight: 700;
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    text-decoration: none;
-    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+    transition: color .15s ease;
   }
-  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab:hover {
-    background: #D71920;
-    border-color: #D71920;
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab:hover .m-collection-page-header__category-tab-label {
+    color: #D71920;
+  }
+  .m-collection-page-header--{{ section.id }} .m\:text-white .m-collection-page-header__category-tab-label {
     color: #FFFFFF;
   }
-  .m-collection-page-header--{{ section.id }} .m\:text-white .m-collection-page-header__category-tab {
-    color: #FFFFFF;
+  .m-collection-page-header--{{ section.id }} .m\:text-white .m-collection-page-header__category-tab-image {
     border-color: rgba(255, 255, 255, 0.35);
   }
 {%- endstyle -%}
@@ -135,7 +158,17 @@
               {% if block.type == 'category_tab' %}
                 {% assign tab_collection = collections[block.settings.collection] %}
                 {% if tab_collection != blank %}
-                  <a href="{{ tab_collection.url }}" class="m-collection-page-header__category-tab">{{ block.settings.label | default: tab_collection.title }}</a>
+                  {% assign tab_image = block.settings.image | default: tab_collection.image %}
+                  <a href="{{ tab_collection.url }}" class="m-collection-page-header__category-tab" {{ block.shopify_attributes }}>
+                    <span class="m-collection-page-header__category-tab-image">
+                      {%- if tab_image != blank -%}
+                        {{ tab_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tab_collection.title | escape }}
+                      {%- else -%}
+                        {{ 'collection-1' | placeholder_svg_tag: 'm-collection-page-header__category-tab-placeholder' }}
+                      {%- endif -%}
+                    </span>
+                    <span class="m-collection-page-header__category-tab-label">{{ block.settings.label | default: tab_collection.title }}</span>
+                  </a>
                 {% endif %}
               {% endif %}
             {% endfor %}
@@ -365,6 +398,7 @@
       "name": "Category tab",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
         { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." }
       ]
     }
