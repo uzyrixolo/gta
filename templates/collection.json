@@ -11,6 +11,25 @@
   "sections": {
     "collection-header": {
       "type": "collection-page-header",
+      "blocks": {
+        "cat_men": {
+          "type": "category_tab",
+          "settings": { "collection": "men" }
+        },
+        "cat_women": {
+          "type": "category_tab",
+          "settings": { "collection": "women" }
+        },
+        "cat_kids": {
+          "type": "category_tab",
+          "settings": { "collection": "kids" }
+        },
+        "cat_unisex": {
+          "type": "category_tab",
+          "settings": { "collection": "unisex" }
+        }
+      },
+      "block_order": ["cat_men", "cat_women", "cat_kids", "cat_unisex"],
       "settings": {
         "container": "container",
         "layout": "inside",
@@ -21,6 +40,7 @@
         "bg_color": "#ffffff",
         "enable_parallax": false,
         "upper_title": false,
+        "show_category_tabs": true,
         "show_desc": false,
         "collection_all_desc": "",
         "enable_bg_zoom_effect": true

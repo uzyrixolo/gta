@@ -60,6 +60,36 @@
     {% if bg_image != blank %}--bg-image: url({{ bg_image | image_url }});{% endif %}
     {% if header_height == 'adapt' %}min-height: {{- wrapper_height -}}vw;{% endif %}
   }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(17, 17, 17, 0.15);
+    color: #111111;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab:hover {
+    background: #D71920;
+    border-color: #D71920;
+    color: #FFFFFF;
+  }
+  .m-collection-page-header--{{ section.id }} .m\:text-white .m-collection-page-header__category-tab {
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
 {%- endstyle -%}
 
 <div class="{{ main_classes }}" data-section-type="collection-header" data-section-id="{{ section.id }}">
@@ -97,6 +127,18 @@
         {% if section.settings.show_desc and collection_desc != blank %}
           <div class="m-collection-page-header__description{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
             {{ collection_desc }}
+          </div>
+        {% endif %}
+        {% if collection.handle == 'all' and section.settings.show_category_tabs %}
+          <div class="m-collection-page-header__categories{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
+            {% for block in section.blocks %}
+              {% if block.type == 'category_tab' %}
+                {% assign tab_collection = collections[block.settings.collection] %}
+                {% if tab_collection != blank %}
+                  <a href="{{ tab_collection.url }}" class="m-collection-page-header__category-tab">{{ block.settings.label | default: tab_collection.title }}</a>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
           </div>
         {% endif %}
       </div>
@@ -265,6 +307,17 @@
     },
     {
       "type": "header",
+      "content": "Category tabs"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category_tabs",
+      "label": "Show category tabs",
+      "info": "Only shown on the all-products (Products) page.",
+      "default": true
+    },
+    {
+      "type": "header",
       "content": "Description"
     },
     {
@@ -305,6 +358,14 @@
           "id": "image",
           "label": "Image"
         }
+      ]
+    },
+    {
+      "type": "category_tab",
+      "name": "Category tab",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." }
       ]
     }
   ]
