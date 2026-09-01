@@ -53,6 +53,33 @@
     "header": {
       "type": "header",
       "custom_css": [],
+      "blocks": {
+        "cat_budget": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "budget" }
+        },
+        "cat_midrange": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "mid-range" }
+        },
+        "cat_premium": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "premium" }
+        },
+        "cat_luxury": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "luxury" }
+        },
+        "cat_kids": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "kids" }
+        },
+        "cat_women": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "women" }
+        }
+      },
+      "block_order": ["cat_budget", "cat_midrange", "cat_premium", "cat_luxury", "cat_kids", "cat_women"],
       "settings": {
         "logo_text_1": "GTA",
         "logo_text_2": "PRINT LAB",
