@@ -1,6 +1,15 @@
 /* GTA Print Lab — quick-order customizer (Alpine component)
    Data contract: see docs/customizer-data-model.md */
-window.gplQuickOrder = function (config) {
+window.gplQuickOrder = function (sectionId) {
+  // Config is a huge per-product JSON blob (all variants/images/colours). It used to be
+  // inlined directly as the x-data attribute value, which silently truncated on any
+  // product whose title/description/alt text contained an apostrophe — the HTML parser
+  // reads a bare `'` inside a single-quoted attribute as the attribute's closing quote,
+  // cutting the payload mid-string ("Men's", "Women's", ...) and leaving Alpine with an
+  // unparseable expression (every reactive property undefined, nothing rendered). A
+  // <script type="application/json"> element has no such quoting conflict.
+  const dataEl = document.getElementById('gpl-cz-data-' + sectionId);
+  const config = dataEl ? JSON.parse(dataEl.textContent) : {};
   const fx = { canvas: null, obj: null, ro: null };   // fabric state kept OUT of Alpine's reactive proxy
   return {
     // ---- config ----

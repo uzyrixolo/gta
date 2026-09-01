@@ -47,49 +47,62 @@
   {%- endif -%}
 {%- endfor -%}
 
+{%- capture gpl_cz_json -%}
+{
+  "productId": {{ product.id }},
+  "variants": {{ variants_json | strip }},
+  "sizes": {{ product.options_with_values[1].values | json }},
+  {%- comment -%}
+    Liquid exposes at most 250 variants. Only advertise colours we actually have
+    variant data for, so a swatch can never lead to a dead size grid.
+    storefrontToken (optional) lets the JS hydrate the full catalogue.
+  {%- endcomment -%}
+  "colors": [
+    {%- assign seen = '' -%}
+    {%- assign emitted = 0 -%}
+    {%- for v in product.variants -%}
+      {%- assign key = '|' | append: v.option1 | append: '|' -%}
+      {%- unless seen contains key -%}
+        {%- assign seen = seen | append: key -%}
+        {%- if emitted > 0 %},{% endif %}{"name": {{ v.option1 | json }}, "hex": "", "image": null}
+        {%- assign emitted = emitted | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  ],
+  "allColorNames": {{ product.options_with_values[0].values | json }},
+  {%- comment -%} full catalogue for products above Liquid's 250-variant cap {%- endcomment -%}
+  "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
+  "storefrontToken": {{ s.storefront_token | default: '' | json }},
+  "productHandle": {{ product.handle | json }},
+  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "mockups": {{ mockups_json | strip }},
+  "images": [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
+  "fallbackImage": {{ default_mockup | image_url: width: 1100 | json }},
+  "uploadKey": {{ s.upload_public_key | json }},
+  "cdnBase": {{ s.upload_cdn_base | default: 'ucarecdn.com' | json }},
+  "shipMinDays": {{ s.ship_min_days | default: 8 }},
+  "shipMaxDays": {{ s.ship_max_days | default: 14 }},
+  "methods": [
+    {%- for block in section.blocks -%}
+      {"name": {{ block.settings.name | json }}, "description": {{ block.settings.description | json }}, "image": {% if block.settings.image %}{{ block.settings.image | image_url: width: 300 | json }}{% else %}null{% endif %}}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+{%- endcapture -%}
+{%- comment -%}
+  This payload can be tens of KB for a full colour/size matrix. It used to be inlined
+  directly as the x-data attribute value; a single-quoted HTML attribute breaks on the
+  first literal apostrophe inside it (e.g. any "Men's"/"Women's" in a title, description,
+  or image alt text), which the parser reads as the attribute's closing quote — silently
+  truncating the JSON mid-string and leaving Alpine unable to parse x-data at all. A
+  <script type="application/json"> element has no quoting conflict with its own content.
+{%- endcomment -%}
+<script type="application/json" id="gpl-cz-data-{{ section.id }}">{{ gpl_cz_json | strip }}</script>
+
 <section
   id="gpl-cz-{{ section.id }}"
   class="gpl-cz"
-  x-data='gplQuickOrder({
-    productId: {{ product.id }},
-    variants: {{ variants_json | strip }},
-    sizes: {{ product.options_with_values[1].values | json }},
-    {%- comment -%}
-      Liquid exposes at most 250 variants. Only advertise colours we actually have
-      variant data for, so a swatch can never lead to a dead size grid.
-      storefrontToken (optional) lets the JS hydrate the full catalogue.
-    {%- endcomment -%}
-    colors: [
-      {%- assign seen = '' -%}
-      {%- assign emitted = 0 -%}
-      {%- for v in product.variants -%}
-        {%- assign key = '|' | append: v.option1 | append: '|' -%}
-        {%- unless seen contains key -%}
-          {%- assign seen = seen | append: key -%}
-          {%- if emitted > 0 %},{% endif %}{"name": {{ v.option1 | json }}, "hex": "", "image": null}
-          {%- assign emitted = emitted | plus: 1 -%}
-        {%- endunless -%}
-      {%- endfor -%}
-    ],
-    allColorNames: {{ product.options_with_values[0].values | json }},
-    {%- comment -%} full catalogue for products above Liquid's 250-variant cap {%- endcomment -%}
-    variantMap: {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
-    storefrontToken: {{ s.storefront_token | default: '' | json }},
-    productHandle: {{ product.handle | json }},
-    areas: {% if areas_meta %}{{ areas_meta.areas | json }}{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
-    mockups: {{ mockups_json | strip }},
-    images: [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
-    fallbackImage: {{ default_mockup | image_url: width: 1100 | json }},
-    uploadKey: {{ s.upload_public_key | json }},
-    cdnBase: {{ s.upload_cdn_base | default: 'ucarecdn.com' | json }},
-    shipMinDays: {{ s.ship_min_days | default: 8 }},
-    shipMaxDays: {{ s.ship_max_days | default: 14 }},
-    methods: [
-      {%- for block in section.blocks -%}
-        {"name": {{ block.settings.name | json }}, "description": {{ block.settings.description | json }}, "image": {% if block.settings.image %}{{ block.settings.image | image_url: width: 300 | json }}{% else %}null{% endif %}}{% unless forloop.last %},{% endunless %}
-      {%- endfor -%}
-    ]
-  })'
+  x-data="gplQuickOrder({{ section.id | json }})"
 >
   <div class="gpl-cz__inner">
     {%- comment -%} ============ MEDIA / PREVIEW ============ {%- endcomment -%}
