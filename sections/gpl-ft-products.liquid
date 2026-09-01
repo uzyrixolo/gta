@@ -20,7 +20,7 @@
     {%- if section.blocks.size > 0 -%}
       <div class="gpl-ft-products__grid">
         {%- for block in section.blocks -%}
-          {%- assign p = block.settings.product -%}
+          {%- assign p = all_products[block.settings.product_handle] -%}
           <article class="gpl-ft-product-card" {{ block.shopify_attributes }}>
             <span class="gpl-ft-product-card__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
             {%- if block.settings.fast_track -%}
@@ -297,7 +297,7 @@
       "name": "Product",
       "limit": 8,
       "settings": [
-        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "product_handle", "label": "Product handle" },
         { "type": "text", "id": "subtitle", "label": "Style subtitle", "default": "Classic Trucker Cap" },
         { "type": "text", "id": "decoration_tags", "label": "Decoration tags", "info": "Comma-separated, e.g. Embroidery, Patches, Print", "default": "Embroidery, Patches, Print" },
         { "type": "checkbox", "id": "fast_track", "label": "Show Fast Track badge", "default": true }
