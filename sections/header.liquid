@@ -24,14 +24,44 @@
     <nav class="gpl-header__nav" aria-label="Main navigation">
       <ul class="gpl-header__menu">
         {%- for link in section.settings.menu.links -%}
-          <li class="gpl-header__menu-item">
+          {%- liquid
+            assign category_tiles = ''
+            assign tile_count = 0
+            for block in section.blocks
+              if block.type == 'category_tile' and block.settings.menu_item == link.title
+                assign tile_count = tile_count | plus: 1
+              endif
+            endfor
+          -%}
+          <li class="gpl-header__menu-item{% if tile_count > 0 %} gpl-header__menu-item--mega{% endif %}">
             <a href="{{ link.url }}" class="gpl-header__menu-link" {% if link.active %}aria-current="page"{% endif %}>
               {{ link.title }}
-              {%- if link.links != blank -%}
+              {%- if link.links != blank or tile_count > 0 -%}
                 <svg class="gpl-header__chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
               {%- endif -%}
             </a>
-            {%- if link.links != blank -%}
+            {%- if tile_count > 0 -%}
+              <div class="gpl-header__megapanel">
+                <div class="gpl-header__megapanel-grid">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
+                      {%- assign tile_collection = block.settings.collection -%}
+                      {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
+                      <a href="{{ tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                        <span class="gpl-header__tile-image">
+                          {%- if tile_image != blank -%}
+                            {{ tile_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tile_collection.title | escape }}
+                          {%- else -%}
+                            {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
+                          {%- endif -%}
+                        </span>
+                        <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- elsif link.links != blank -%}
               <ul class="gpl-header__submenu">
                 {%- for child in link.links -%}
                   <li><a href="{{ child.url }}">{{ child.title }}</a></li>
@@ -77,9 +107,36 @@
         <li><a href="{{ routes.account_url }}">{{ 'layout.customer.account' | t }}</a></li>
       {%- endif -%}
       {%- for link in section.settings.menu.links -%}
+        {%- liquid
+          assign tile_count = 0
+          for block in section.blocks
+            if block.type == 'category_tile' and block.settings.menu_item == link.title
+              assign tile_count = tile_count | plus: 1
+            endif
+          endfor
+        -%}
         <li>
           <a href="{{ link.url }}">{{ link.title }}</a>
-          {%- if link.links != blank -%}
+          {%- if tile_count > 0 -%}
+            <div class="gpl-header__mobile-tiles">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
+                  {%- assign tile_collection = block.settings.collection -%}
+                  {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
+                  <a href="{{ tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                    <span class="gpl-header__tile-image">
+                      {%- if tile_image != blank -%}
+                        {{ tile_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 150, 200', alt: block.settings.label | default: tile_collection.title | escape }}
+                      {%- else -%}
+                        {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
+                      {%- endif -%}
+                    </span>
+                    <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- elsif link.links != blank -%}
             <ul class="gpl-header__mobile-sublist">
               {%- for child in link.links -%}
                 <li><a href="{{ child.url }}">{{ child.title }}</a></li>
@@ -148,6 +205,42 @@
     display: block; padding: 8px 10px; color: #CCCCCC; text-decoration: none; font-size: 13px; border-radius: 5px;
   }
   .gpl-header-{{ section.id }} .gpl-header__submenu a:hover { background: rgba(215,25,32,0.12); color: #FFFFFF; }
+
+  .gpl-header-{{ section.id }} .gpl-header__megapanel {
+    list-style: none; margin: 0; padding: 20px; position: absolute; top: 100%; left: 50%;
+    transform: translate(-50%, 6px); background: #1B1B1B; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; opacity: 0; visibility: hidden; transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+    box-shadow: 0 20px 44px rgba(0,0,0,0.45); z-index: 5;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__menu-item--mega:hover .gpl-header__megapanel {
+    opacity: 1; visibility: visible; transform: translate(-50%, 0);
+  }
+  .gpl-header-{{ section.id }} .gpl-header__megapanel-grid {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 108px)); gap: 14px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__tile {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none;
+    width: 108px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__tile-image {
+    display: block; width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden;
+    background: #262626; transition: transform .18s ease;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__tile-image img,
+  .gpl-header-{{ section.id }} .gpl-header__tile-placeholder {
+    width: 100%; height: 100%; object-fit: cover; fill: rgba(255,255,255,0.2);
+  }
+  .gpl-header-{{ section.id }} .gpl-header__tile:hover .gpl-header__tile-image { transform: scale(1.05); }
+  .gpl-header-{{ section.id }} .gpl-header__tile-label {
+    color: #F2F2F2; font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.02em; text-align: center;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__tile:hover .gpl-header__tile-label { color: #D71920; }
+
+  .gpl-header-{{ section.id }} .gpl-header__mobile-tiles {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0 0 14px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-tiles .gpl-header__tile-label { font-size: 11px; }
 
   .gpl-header-{{ section.id }} .gpl-header__actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
   .gpl-header-{{ section.id }} .gpl-header__icon-btn {
@@ -275,6 +368,18 @@
     { "type": "text", "id": "button_text", "label": "Button text", "default": "Get A Quote" },
     { "type": "url", "id": "button_link", "label": "Button link" },
     { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" }
+  ],
+  "blocks": [
+    {
+      "type": "category_tile",
+      "name": "Category tile",
+      "settings": [
+        { "type": "text", "id": "menu_item", "label": "Menu item title", "info": "Must exactly match a top-level menu title (e.g. PRODUCTS) to attach this tile's dropdown to it.", "default": "PRODUCTS" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
+        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." }
+      ]
+    }
   ],
   "presets": [
     { "name": "GPL Header" }
