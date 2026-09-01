@@ -99,3 +99,11 @@
   text-transform: uppercase;
   color: rgba(var(--color-foreground), 0.7);
 }
+
+/* .m-price > * (above) sets display:inline-block on every direct child, which
+   loads after base.css's generic .m\:hidden{display:none} and wins on a
+   specificity tie — so the empty unit-price wrapper showed a bare "/" on every
+   product with no unit pricing. Force it hidden here instead. */
+.m-price__unit-wrapper.m\:hidden {
+  display: none !important;
+}
