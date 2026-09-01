@@ -1,0 +1,332 @@
+{
+  "sections": {
+    "ft_hero": {
+      "type": "gpl-ft-hero",
+      "blocks": {
+        "tier_today": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 2 3 14h7l-1 8 11-14h-7z\"/></svg>",
+            "title": "Print Today",
+            "subtitle": "Order by cutoff. We print today."
+          }
+        },
+        "tier_tomorrow": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15l-3-3 1-6 4-2 4 2-1 8z\"/><path d=\"M9 12 5 15l1 4 4-1\"/><path d=\"M15 12l4 3-1 4-4-1\"/></svg>",
+            "title": "Print Tomorrow",
+            "subtitle": "Order today. We print tomorrow."
+          }
+        },
+        "tier_standard": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 8 12 4l8.5 4-8.5 4-8.5-4z\"/><path d=\"M3.5 8v8l8.5 4 8.5-4V8\"/><path d=\"M12 12v8\"/></svg>",
+            "title": "Standard",
+            "subtitle": "3-5 business days. Great for planning ahead."
+          }
+        }
+      },
+      "block_order": ["tier_today", "tier_tomorrow", "tier_standard"],
+      "settings": {
+        "image_position": "center right",
+        "scrim_strength": 90,
+        "min_height": 640,
+        "min_height_mobile": 720,
+        "badge_text": "FAST TRACK",
+        "eyebrow": "GTA FAST TRACK™ HEADWEAR",
+        "heading_line1": "Your Brand.",
+        "heading_line2": "Your Deadline.",
+        "heading_line3_prefix": "Our",
+        "heading_line3_accent": "Fast Track.",
+        "subheading": "In-stock. Verified. Ready to decorate.",
+        "paragraph": "<p>Premium headwear with seriously fast turnarounds. Skip the wait and get branded hats moving — for launches, events, teams and last-minute promotions.</p>",
+        "button_1_text": "Shop Fast Track Headwear",
+        "button_1_link": "#ft-products",
+        "button_2_text": "Get a Quote",
+        "button_2_link": "/pages/quote",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "ft_trust": {
+      "type": "gpl-ft-trust",
+      "blocks": {
+        "tr_min": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"8\" width=\"16\" height=\"12\" rx=\"1\"/><path d=\"M8 8V6a4 4 0 0 1 8 0v2\"/></svg>",
+            "title": "No Minimums",
+            "description": "Order 1 or 1000+"
+          }
+        },
+        "tr_vol": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-7M21 20v-3\"/></svg>",
+            "title": "Volume Discounts",
+            "description": "The more you order, the more you save"
+          }
+        },
+        "tr_local": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg>",
+            "title": "Toronto-Based",
+            "description": "Local. Reliable. Fast."
+          }
+        },
+        "tr_art": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8 12.2l2.7 2.8L16 9.6\"/></svg>",
+            "title": "Free Artwork Check",
+            "description": "Professional proofs"
+          }
+        },
+        "tr_ship": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"12\" height=\"10\" rx=\"1\"/><path d=\"M14.5 10h4l3 3.2V17h-7z\"/><circle cx=\"7\" cy=\"18.5\" r=\"1.6\"/><circle cx=\"17.5\" cy=\"18.5\" r=\"1.6\"/></svg>",
+            "title": "Delivery Across Canada",
+            "description": "Fast & reliable"
+          }
+        }
+      },
+      "block_order": ["tr_min", "tr_vol", "tr_local", "tr_art", "tr_ship"],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF"
+      }
+    },
+    "ft_products": {
+      "type": "gpl-ft-products",
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298163114237",
+            "subtitle": "Classic Trucker Cap",
+            "decoration_tags": "Embroidery, Patches, Print",
+            "fast_track": true
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298163343613",
+            "subtitle": "5-Panel Trucker Cap",
+            "decoration_tags": "Embroidery, Patches, Print",
+            "fast_track": false
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298163474685",
+            "subtitle": "Low-Pro Trucker Cap",
+            "decoration_tags": "Embroidery, Patches, Print",
+            "fast_track": false
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298163605757",
+            "subtitle": "7-Panel Trucker Cap",
+            "decoration_tags": "Embroidery, Patches, Print",
+            "fast_track": true
+          }
+        },
+        "p5": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298163704061",
+            "subtitle": "Laser Perf R-Flex Cap",
+            "decoration_tags": "Embroidery, Patches",
+            "fast_track": false
+          }
+        },
+        "p6": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298151448829",
+            "subtitle": "Classic Fitted Cap",
+            "decoration_tags": "Embroidery, Print",
+            "fast_track": true
+          }
+        },
+        "p7": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298150924541",
+            "subtitle": "Mesh-Back Cap",
+            "decoration_tags": "Embroidery, Patches, Print",
+            "fast_track": false
+          }
+        },
+        "p8": {
+          "type": "product",
+          "settings": {
+            "product": "gid://shopify/Product/15298150891773",
+            "subtitle": "Premium Snapback Cap",
+            "decoration_tags": "Embroidery, Patches",
+            "fast_track": false
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+      "settings": {
+        "heading": "Top Fast Track Headwear Styles",
+        "subheading": "The most popular hats for your brand, team, event or merchandise.",
+        "button_text": "View All Headwear",
+        "button_link": "/collections/headwear",
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF"
+      }
+    },
+    "ft_decorate": {
+      "type": "gpl-ft-decorate",
+      "blocks": {
+        "dec_emb": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3v18\"/><path d=\"M8.5 6.5 12 3l3.5 3.5\"/><ellipse cx=\"12\" cy=\"15\" rx=\"4.5\" ry=\"6\"/></svg>",
+            "title": "Embroidery",
+            "description": "Classic & Durable"
+          }
+        },
+        "dec_patch": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M8.5 12.5l2.3 2.3L16 9.5\"/></svg>",
+            "title": "Patches",
+            "description": "Bold & Premium"
+          }
+        },
+        "dec_print": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "title": "Printed",
+            "description": "Vibrant & Lasting"
+          }
+        },
+        "dec_prem": {
+          "type": "method",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3h12l3 6-9 12L3 9z\"/><path d=\"M3 9h18M9 3l-2 6 5 12 5-12-2-6\"/></svg>",
+            "title": "Premium",
+            "description": "3D Puff, Leather, Woven & More"
+          }
+        }
+      },
+      "block_order": ["dec_emb", "dec_patch", "dec_print", "dec_prem"],
+      "settings": {
+        "heading": "Decorate Your Way",
+        "subheading": "Multiple decoration methods to bring your brand to life.",
+        "color_accent": "#D71920",
+        "color_background": "#F7F7F7"
+      }
+    },
+    "ft_turnaround": {
+      "type": "gpl-ft-turnaround",
+      "blocks": {
+        "chk_stock": { "type": "check", "settings": { "label": "Verified In-Stock Availability" } },
+        "chk_speed": { "type": "check", "settings": { "label": "Built for Accelerated Production" } },
+        "chk_dec": { "type": "check", "settings": { "label": "Professional Decoration" } },
+        "chk_local": { "type": "check", "settings": { "label": "Toronto-Based Production" } },
+        "chk_badge": { "type": "check", "settings": { "label": "No Guesswork — Look for the Badge" } },
+        "card_today": {
+          "type": "tier",
+          "settings": {
+            "style": "primary",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 2 3 14h7l-1 8 11-14h-7z\"/></svg>",
+            "title": "Print Today",
+            "subtitle": "Order by Daily Cutoff",
+            "items": "Order by Daily Cutoff\nIn-House Decoration\nWe Print Today\nReady Same Day",
+            "footnote": "Perfect for Urgent Orders"
+          }
+        },
+        "card_tomorrow": {
+          "type": "tier",
+          "settings": {
+            "style": "dark",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15l-3-3 1-6 4-2 4 2-1 8z\"/><path d=\"M9 12 5 15l1 4 4-1\"/><path d=\"M15 12l4 3-1 4-4-1\"/></svg>",
+            "title": "Print Tomorrow",
+            "subtitle": "Fast Production",
+            "items": "Order Today\nIn-House Decoration\nWe Print Tomorrow\nReady Next Day",
+            "footnote": "Perfect for Tight Deadlines"
+          }
+        },
+        "card_standard": {
+          "type": "tier",
+          "settings": {
+            "style": "light",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 8 12 4l8.5 4-8.5 4-8.5-4z\"/><path d=\"M3.5 8v8l8.5 4 8.5-4V8\"/><path d=\"M12 12v8\"/></svg>",
+            "title": "Standard",
+            "subtitle": "3-5 Business Days",
+            "items": "Best Value\nGreat for Larger Orders\n3-5 Business Days",
+            "footnote": "Perfect for Planned Orders"
+          }
+        }
+      },
+      "block_order": ["chk_stock", "chk_speed", "chk_dec", "chk_local", "chk_badge", "card_today", "card_tomorrow", "card_standard"],
+      "settings": {
+        "pitch_eyebrow": "GTA Fast Track™",
+        "pitch_heading": "Speed That Sets You Apart.",
+        "pitch_text": "<p>Not every hat qualifies. FAST TRACK™ styles are in-stock and verified for our accelerated production workflow. See the badge. Choose the speed. Get moving.</p>",
+        "badge_text": "Fast Track",
+        "badge_subtext": "In-Stock Verified",
+        "tiers_heading": "Choose Your Turnaround",
+        "tiers_sub": "Pick the speed that fits your deadline.",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "ft_trustfooter": {
+      "type": "gpl-ft-trustfooter",
+      "blocks": {
+        "tf_people": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5\"/><circle cx=\"17.5\" cy=\"9\" r=\"2.4\"/><path d=\"M15.8 13.6c2.4.3 4.2 2.2 4.2 5.4\"/></svg>",
+            "title": "Real People",
+            "description": "Expert Support"
+          }
+        },
+        "tf_mockup": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg>",
+            "title": "Free Mockups",
+            "description": "With Every Order"
+          }
+        },
+        "tf_secure": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"5\" y=\"10.5\" width=\"14\" height=\"9.5\" rx=\"1.5\"/><path d=\"M8 10.5V7a4 4 0 0 1 8 0v3.5\"/></svg>",
+            "title": "Secure Payments",
+            "description": "Safe & Encrypted"
+          }
+        },
+        "tf_guarantee": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"/><path d=\"M9.2 9.7l2 2 3.6-3.9\"/><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"/></svg>",
+            "title": "Satisfaction Guaranteed",
+            "description": "We Stand Behind Our Work"
+          }
+        }
+      },
+      "block_order": ["tf_people", "tf_mockup", "tf_secure", "tf_guarantee"],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    }
+  },
+  "order": ["ft_hero", "ft_trust", "ft_products", "ft_decorate", "ft_turnaround", "ft_trustfooter"]
+}

@@ -1,0 +1,336 @@
+{%- comment -%}
+  GTA Print Lab — Fast Track Headwear page: Pitch panel + turnaround comparison
+  Left: FAST TRACK positioning copy + checklist + badge graphic.
+  Right: three turnaround-tier cards (Print Today / Print Tomorrow / Standard).
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-ft-turn-{{ section.id }}" class="gpl-ft-turn">
+  <div class="gpl-ft-turn__inner">
+    <div class="gpl-ft-turn__pitch">
+      {%- if s.pitch_eyebrow != blank -%}
+        <p class="gpl-ft-turn__pitch-eyebrow">{{ s.pitch_eyebrow }}</p>
+      {%- endif -%}
+      {%- if s.pitch_heading != blank -%}
+        <h2 class="gpl-ft-turn__pitch-heading">{{ s.pitch_heading }}</h2>
+      {%- endif -%}
+      {%- if s.pitch_text != blank -%}
+        <div class="gpl-ft-turn__pitch-text">{{ s.pitch_text }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="gpl-ft-turn__checklist">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'check' -%}
+              <li {{ block.shopify_attributes }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+                <span>{{ block.settings.label }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.badge_text != blank -%}
+        <div class="gpl-ft-turn__badge">
+          <span class="gpl-ft-turn__badge-bolt">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-14h-7z"/></svg>
+          </span>
+          <span class="gpl-ft-turn__badge-text">{{ s.badge_text }}</span>
+          {%- if s.badge_subtext != blank -%}
+            <span class="gpl-ft-turn__badge-subtext">{{ s.badge_subtext }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="gpl-ft-turn__tiers">
+      {%- if s.tiers_heading != blank -%}
+        <h2 class="gpl-ft-turn__tiers-heading">{{ s.tiers_heading }}</h2>
+      {%- endif -%}
+      {%- if s.tiers_sub != blank -%}
+        <p class="gpl-ft-turn__tiers-sub">{{ s.tiers_sub }}</p>
+      {%- endif -%}
+
+      <div class="gpl-ft-turn__cards">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tier' -%}
+            <div class="gpl-ft-turn-card gpl-ft-turn-card--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <span class="gpl-ft-turn-card__icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <p class="gpl-ft-turn-card__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="gpl-ft-turn-card__subtitle">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+              {%- if block.settings.items != blank -%}
+                <ul class="gpl-ft-turn-card__items">
+                  {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+                  {%- for item in items -%}
+                    {%- assign item = item | strip -%}
+                    {%- if item != blank -%}
+                      <li>{{ item }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if block.settings.footnote != blank -%}
+                <p class="gpl-ft-turn-card__footnote">{{ block.settings.footnote }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-ft-turn-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0A0A0A' }};
+    padding: clamp(34px, 4vw, 58px) 0;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+    gap: clamp(20px, 2.4vw, 36px);
+    align-items: start;
+  }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__pitch {
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: clamp(20px, 2.2vw, 32px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__pitch-eyebrow {
+    margin: 0 0 6px;
+    color: var(--gpl-accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 11.5px;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__pitch-heading {
+    margin: 0 0 12px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-size: clamp(19px, 2vw, 27px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__pitch-text {
+    margin: 0 0 18px;
+    color: #A8A8A8;
+    font-size: clamp(12.5px, 0.86vw, 14px);
+    line-height: 1.6;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__pitch-text p { margin: 0; }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__checklist {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: #FFFFFF;
+    font-size: clamp(12px, 0.84vw, 13.5px);
+    line-height: 1.35;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__checklist svg {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    color: var(--gpl-accent);
+    margin-top: 1px;
+  }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    background: var(--gpl-accent);
+    color: #FFFFFF;
+    border-radius: 6px;
+    padding: clamp(14px, 1.6vw, 22px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__badge-bolt svg { width: 22px; height: 22px; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__badge-text {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(13px, 1vw, 16px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__badge-subtext {
+    font-size: clamp(10px, 0.7vw, 11.5px);
+    opacity: 0.9;
+  }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__tiers-heading {
+    margin: 0 0 4px;
+    color: #FFFFFF;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.1;
+    font-size: clamp(19px, 2vw, 27px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__tiers-sub {
+    margin: 0 0 clamp(16px, 1.8vw, 24px);
+    color: #9C9C9C;
+    font-size: clamp(12px, 0.84vw, 13.5px);
+  }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(10px, 1.1vw, 16px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card {
+    border-radius: 8px;
+    padding: clamp(16px, 1.6vw, 22px);
+    display: flex;
+    flex-direction: column;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary { background: var(--gpl-accent); }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark { background: #1C1C1C; border: 1px solid rgba(255,255,255,0.12); }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light { background: #F1F1F1; }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__icon { display: flex; margin: 0 0 10px; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__icon svg { width: 26px; height: 26px; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary .gpl-ft-turn-card__icon,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark .gpl-ft-turn-card__icon { color: #FFFFFF; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light .gpl-ft-turn-card__icon { color: #111111; }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__title {
+    margin: 0 0 3px;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.15;
+    font-size: clamp(14px, 1.05vw, 17px);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__subtitle {
+    margin: 0 0 12px;
+    font-size: clamp(11px, 0.76vw, 12.5px);
+    opacity: 0.85;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary .gpl-ft-turn-card__title,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary .gpl-ft-turn-card__subtitle,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark .gpl-ft-turn-card__title,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark .gpl-ft-turn-card__subtitle { color: #FFFFFF; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light .gpl-ft-turn-card__title,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light .gpl-ft-turn-card__subtitle { color: #111111; }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__items {
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: clamp(11px, 0.78vw, 12.5px);
+    line-height: 1.4;
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary .gpl-ft-turn-card__items,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark .gpl-ft-turn-card__items { color: rgba(255,255,255,0.9); }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light .gpl-ft-turn-card__items { color: rgba(17,17,17,0.75); }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__items li { padding-left: 14px; position: relative; }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__items li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card__footnote {
+    margin: auto 0 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: clamp(9.5px, 0.66vw, 10.5px);
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--light .gpl-ft-turn-card__footnote { border-top-color: rgba(0,0,0,0.15); color: rgba(17,17,17,0.6); }
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--primary .gpl-ft-turn-card__footnote,
+  #gpl-ft-turn-{{ section.id }} .gpl-ft-turn-card--dark .gpl-ft-turn-card__footnote { color: rgba(255,255,255,0.75); }
+
+  @media screen and (max-width: 989px) {
+    #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-ft-turn-{{ section.id }} .gpl-ft-turn__cards { grid-template-columns: minmax(0, 1fr); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "FT Turnaround",
+  "tag": "section",
+  "class": "gpl-section-ft-turn",
+  "settings": [
+    { "type": "header", "content": "Pitch panel" },
+    { "type": "text", "id": "pitch_eyebrow", "label": "Eyebrow", "default": "GTA Fast Track™" },
+    { "type": "text", "id": "pitch_heading", "label": "Heading", "default": "Speed That Sets You Apart." },
+    { "type": "richtext", "id": "pitch_text", "label": "Text", "default": "<p>Not every hat qualifies. FAST TRACK™ styles are in-stock and verified for our accelerated production workflow. See the badge. Choose the speed. Get moving.</p>" },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Fast Track" },
+    { "type": "text", "id": "badge_subtext", "label": "Badge subtext", "default": "In-Stock Verified" },
+
+    { "type": "header", "content": "Turnaround cards" },
+    { "type": "text", "id": "tiers_heading", "label": "Heading", "default": "Choose Your Turnaround" },
+    { "type": "text", "id": "tiers_sub", "label": "Subheading", "default": "Pick the speed that fits your deadline." },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Checklist item",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Verified In-Stock Availability" }
+      ]
+    },
+    {
+      "type": "tier",
+      "name": "Turnaround card",
+      "limit": 3,
+      "settings": [
+        { "type": "select", "id": "style", "label": "Card style", "default": "primary", "options": [
+          { "value": "primary", "label": "Red (accent)" },
+          { "value": "dark", "label": "Dark" },
+          { "value": "light", "label": "Light" }
+        ] },
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Print Today" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Order by Daily Cutoff" },
+        { "type": "textarea", "id": "items", "label": "Items", "info": "One per line.", "default": "Order by Daily Cutoff\nIn-House Decoration\nWe Print Today\nReady Same Day" },
+        { "type": "text", "id": "footnote", "label": "Footnote", "default": "Perfect for Urgent Orders" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FT Turnaround" }]
+}
+{% endschema %}

@@ -1,0 +1,124 @@
+{%- comment -%}
+  GTA Print Lab — Fast Track Headwear page: Decoration methods row
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-ft-dec-{{ section.id }}" class="gpl-ft-dec">
+  <div class="gpl-ft-dec__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="gpl-ft-dec__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}
+      <p class="gpl-ft-dec__sub">{{ s.subheading }}</p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-ft-dec__grid">
+        {%- for block in section.blocks -%}
+          <div class="gpl-ft-dec-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-ft-dec-item__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <p class="gpl-ft-dec-item__title">{{ block.settings.title }}</p>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="gpl-ft-dec-item__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-ft-dec-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#F7F7F7' }};
+    padding: clamp(28px, 3.2vw, 46px) 0;
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    text-align: center;
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec__heading {
+    margin: 0 0 6px;
+    color: #111111;
+    font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    font-size: clamp(19px, 2vw, 28px);
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec__sub {
+    margin: 0 0 clamp(18px, 2vw, 28px);
+    color: rgba(17, 17, 17, 0.6);
+    font-size: clamp(12px, 0.85vw, 14px);
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(14px, 1.6vw, 24px);
+  }
+  #gpl-ft-dec-item { min-width: 0; }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec-item__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(215, 25, 32, 0.08);
+    color: var(--gpl-accent);
+    margin: 0 0 10px;
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec-item__icon svg { width: 22px; height: 22px; }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec-item__title {
+    margin: 0 0 3px;
+    color: #111111;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(12px, 0.85vw, 13.5px);
+  }
+  #gpl-ft-dec-{{ section.id }} .gpl-ft-dec-item__desc {
+    margin: 0;
+    color: rgba(17, 17, 17, 0.55);
+    font-size: clamp(10.5px, 0.72vw, 12px);
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-ft-dec-{{ section.id }} .gpl-ft-dec__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "FT Decorate",
+  "tag": "section",
+  "class": "gpl-section-ft-dec",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Decorate Your Way" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Multiple decoration methods to bring your brand to life." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#F7F7F7" }
+  ],
+  "blocks": [
+    {
+      "type": "method",
+      "name": "Method",
+      "limit": 4,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Embroidery" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Classic & Durable" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "FT Decorate" }]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+{%- comment -%}
+  GTA Print Lab — Fast Track Headwear page: Closing trust row (4 items)
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-ft-tf-{{ section.id }}" class="gpl-ft-tf">
+  <div class="gpl-ft-tf__inner">
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-ft-tf__points">
+        {%- for block in section.blocks -%}
+          <div class="gpl-ft-tf-point" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-ft-tf-point__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <div class="gpl-ft-tf-point__copy">
+              {%- if block.settings.title != blank -%}
+                <p class="gpl-ft-tf-point__title">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="gpl-ft-tf-point__desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-ft-tf-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0E0E0E' }};
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+  }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf__points {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: clamp(20px, 2.2vw, 32px) 0;
+  }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point {
+    display: flex;
+    align-items: center;
+    gap: clamp(9px, 1vw, 14px);
+    min-width: 0;
+    padding: 0 clamp(10px, 1.2vw, 20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point:nth-child(4n + 1) { border-left: none; padding-left: 0; }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point__icon { flex: 0 0 auto; display: flex; color: var(--gpl-accent); }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point__icon svg { width: clamp(24px, 2vw, 32px); height: clamp(24px, 2vw, 32px); }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point__copy { min-width: 0; }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point__title {
+    margin: 0 0 3px;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(11px, 0.8vw, 13px);
+    line-height: 1.2;
+  }
+  #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point__desc {
+    margin: 0;
+    color: #9C9C9C;
+    font-size: clamp(10px, 0.68vw, 11.5px);
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-ft-tf-{{ section.id }} .gpl-ft-tf__points { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 0; }
+    #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point:nth-child(4n + 1) { border-left: 1px solid rgba(255, 255, 255, 0.14); padding-left: clamp(10px, 1.2vw, 20px); }
+    #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point:nth-child(2n + 1) { border-left: none; padding-left: 0; }
+  }
+  @media screen and (max-width: 419px) {
+    #gpl-ft-tf-{{ section.id }} .gpl-ft-tf__points { grid-template-columns: minmax(0, 1fr); }
+    #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point { border-left: none !important; padding-left: 0 !important; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "FT Closing trust",
+  "tag": "section",
+  "class": "gpl-section-ft-tf",
+  "settings": [
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0E0E0E" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 4,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Real People" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Expert Support" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "FT Closing trust" }]
+}
+{% endschema %}
