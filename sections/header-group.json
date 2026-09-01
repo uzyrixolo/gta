@@ -77,9 +77,13 @@
         "cat_women": {
           "type": "category_tile",
           "settings": { "menu_item": "PRODUCTS", "collection": "women" }
+        },
+        "cat_headwear": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "collection": "headwear", "link": "/pages/fast-track-headwear", "label": "Headwear" }
         }
       },
-      "block_order": ["cat_budget", "cat_midrange", "cat_premium", "cat_luxury", "cat_kids", "cat_women"],
+      "block_order": ["cat_budget", "cat_midrange", "cat_premium", "cat_luxury", "cat_kids", "cat_women", "cat_headwear"],
       "settings": {
         "logo_text_1": "GTA",
         "logo_text_2": "PRINT LAB",
