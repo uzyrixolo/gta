@@ -47,7 +47,7 @@
                     {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
                       {%- assign tile_collection = block.settings.collection -%}
                       {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
-                      <a href="{{ tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                      <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
                         <span class="gpl-header__tile-image">
                           {%- if tile_image != blank -%}
                             {{ tile_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tile_collection.title | escape }}
@@ -123,7 +123,7 @@
                 {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
                   {%- assign tile_collection = block.settings.collection -%}
                   {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
-                  <a href="{{ tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                  <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
                     <span class="gpl-header__tile-image">
                       {%- if tile_image != blank -%}
                         {{ tile_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 150, 200', alt: block.settings.label | default: tile_collection.title | escape }}
@@ -381,7 +381,8 @@
         { "type": "text", "id": "menu_item", "label": "Menu item title", "info": "Must exactly match a top-level menu title (e.g. PRODUCTS) to attach this tile's dropdown to it.", "default": "PRODUCTS" },
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
-        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." }
+        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." },
+        { "type": "url", "id": "link", "label": "Link override", "info": "Optional — falls back to the collection's own page." }
       ]
     }
   ],
