@@ -22,7 +22,7 @@
     <div class="gpl-print__track" style="--gpl-tile-count: {{ total_tiles }};">
       {%- for block in section.blocks -%}
         {%- if block.type == 'product' -%}
-          <div class="gpl-print-tile" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="gpl-print-tile" {{ block.shopify_attributes }}>
             <div class="gpl-print-tile__image">
               {%- if block.settings.image != blank -%}
                 <img
@@ -39,7 +39,7 @@
               {%- endif -%}
             </div>
             <span class="gpl-print-tile__label">{{ block.settings.label }}</span>
-          </div>
+          </a>
         {%- endif -%}
       {%- endfor -%}
       {%- if section.settings.show_more_tile -%}
@@ -140,7 +140,8 @@
       "name": "Product tile",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts" }
+        { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Optional — falls back to the Products page." }
       ]
     }
   ],
