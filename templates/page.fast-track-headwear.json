@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "ft_hero": {
@@ -28,7 +37,11 @@
           }
         }
       },
-      "block_order": ["tier_today", "tier_tomorrow", "tier_standard"],
+      "block_order": [
+        "tier_today",
+        "tier_tomorrow",
+        "tier_standard"
+      ],
       "settings": {
         "image_position": "center right",
         "scrim_strength": 90,
@@ -94,7 +107,13 @@
           }
         }
       },
-      "block_order": ["tr_min", "tr_vol", "tr_local", "tr_art", "tr_ship"],
+      "block_order": [
+        "tr_min",
+        "tr_vol",
+        "tr_local",
+        "tr_art",
+        "tr_ship"
+      ],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#FFFFFF"
@@ -106,7 +125,7 @@
         "p1": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298163114237",
+            "product": "gid://shopify/product/15298163114237",
             "subtitle": "Classic Trucker Cap",
             "decoration_tags": "Embroidery, Patches, Print",
             "fast_track": true
@@ -115,7 +134,7 @@
         "p2": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298163343613",
+            "product": "gid://shopify/product/15298163343613",
             "subtitle": "5-Panel Trucker Cap",
             "decoration_tags": "Embroidery, Patches, Print",
             "fast_track": false
@@ -124,7 +143,7 @@
         "p3": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298163474685",
+            "product": "gid://shopify/product/15298163474685",
             "subtitle": "Low-Pro Trucker Cap",
             "decoration_tags": "Embroidery, Patches, Print",
             "fast_track": false
@@ -133,7 +152,7 @@
         "p4": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298163605757",
+            "product": "gid://shopify/product/15298163605757",
             "subtitle": "7-Panel Trucker Cap",
             "decoration_tags": "Embroidery, Patches, Print",
             "fast_track": true
@@ -142,7 +161,7 @@
         "p5": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298163704061",
+            "product": "gid://shopify/product/15298163704061",
             "subtitle": "Laser Perf R-Flex Cap",
             "decoration_tags": "Embroidery, Patches",
             "fast_track": false
@@ -151,7 +170,7 @@
         "p6": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298151448829",
+            "product": "gid://shopify/product/15298151448829",
             "subtitle": "Classic Fitted Cap",
             "decoration_tags": "Embroidery, Print",
             "fast_track": true
@@ -160,7 +179,7 @@
         "p7": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298150924541",
+            "product": "gid://shopify/product/15298150924541",
             "subtitle": "Mesh-Back Cap",
             "decoration_tags": "Embroidery, Patches, Print",
             "fast_track": false
@@ -169,14 +188,23 @@
         "p8": {
           "type": "product",
           "settings": {
-            "product": "gid://shopify/Product/15298150891773",
+            "product": "gid://shopify/product/15298150891773",
             "subtitle": "Premium Snapback Cap",
             "decoration_tags": "Embroidery, Patches",
             "fast_track": false
           }
         }
       },
-      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8"
+      ],
       "settings": {
         "heading": "Top Fast Track Headwear Styles",
         "subheading": "The most popular hats for your brand, team, event or merchandise.",
@@ -222,7 +250,12 @@
           }
         }
       },
-      "block_order": ["dec_emb", "dec_patch", "dec_print", "dec_prem"],
+      "block_order": [
+        "dec_emb",
+        "dec_patch",
+        "dec_print",
+        "dec_prem"
+      ],
       "settings": {
         "heading": "Decorate Your Way",
         "subheading": "Multiple decoration methods to bring your brand to life.",
@@ -233,11 +266,36 @@
     "ft_turnaround": {
       "type": "gpl-ft-turnaround",
       "blocks": {
-        "chk_stock": { "type": "check", "settings": { "label": "Verified In-Stock Availability" } },
-        "chk_speed": { "type": "check", "settings": { "label": "Built for Accelerated Production" } },
-        "chk_dec": { "type": "check", "settings": { "label": "Professional Decoration" } },
-        "chk_local": { "type": "check", "settings": { "label": "Toronto-Based Production" } },
-        "chk_badge": { "type": "check", "settings": { "label": "No Guesswork — Look for the Badge" } },
+        "chk_stock": {
+          "type": "check",
+          "settings": {
+            "label": "Verified In-Stock Availability"
+          }
+        },
+        "chk_speed": {
+          "type": "check",
+          "settings": {
+            "label": "Built for Accelerated Production"
+          }
+        },
+        "chk_dec": {
+          "type": "check",
+          "settings": {
+            "label": "Professional Decoration"
+          }
+        },
+        "chk_local": {
+          "type": "check",
+          "settings": {
+            "label": "Toronto-Based Production"
+          }
+        },
+        "chk_badge": {
+          "type": "check",
+          "settings": {
+            "label": "No Guesswork — Look for the Badge"
+          }
+        },
         "card_today": {
           "type": "tier",
           "settings": {
@@ -272,7 +330,16 @@
           }
         }
       },
-      "block_order": ["chk_stock", "chk_speed", "chk_dec", "chk_local", "chk_badge", "card_today", "card_tomorrow", "card_standard"],
+      "block_order": [
+        "chk_stock",
+        "chk_speed",
+        "chk_dec",
+        "chk_local",
+        "chk_badge",
+        "card_today",
+        "card_tomorrow",
+        "card_standard"
+      ],
       "settings": {
         "pitch_eyebrow": "GTA Fast Track™",
         "pitch_heading": "Speed That Sets You Apart.",
@@ -321,12 +388,24 @@
           }
         }
       },
-      "block_order": ["tf_people", "tf_mockup", "tf_secure", "tf_guarantee"],
+      "block_order": [
+        "tf_people",
+        "tf_mockup",
+        "tf_secure",
+        "tf_guarantee"
+      ],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#0E0E0E"
       }
     }
   },
-  "order": ["ft_hero", "ft_trust", "ft_products", "ft_decorate", "ft_turnaround", "ft_trustfooter"]
+  "order": [
+    "ft_hero",
+    "ft_trust",
+    "ft_products",
+    "ft_decorate",
+    "ft_turnaround",
+    "ft_trustfooter"
+  ]
 }
