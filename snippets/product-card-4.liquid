@@ -267,6 +267,19 @@
                 {% endif %}
               {% endfor %}
             {% endif %}
+            {%- assign has_bw_color = false -%}
+            {%- for option in product.options_with_values -%}
+              {%- if option.name == 'Color' -%}
+                {%- for value in option.values -%}
+                  {%- if value == 'Black' or value == 'White' -%}
+                    {%- assign has_bw_color = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if has_bw_color -%}
+              <span class="m-product-card__tag-name m-product-tag m-product-tag--samedaydelivery">Same Day Delivery</span>
+            {%- endif -%}
             <span class="m-product-card__tag-name m-product-tag m-product-tag--preorder" data-foxkit-preorder-badge="{{ product.id }}"></span>
             {% if show_on_sale_badge %}
               {%- liquid 
