@@ -152,7 +152,7 @@
             {{ collection_desc }}
           </div>
         {% endif %}
-        {% if collection.handle == 'all' and section.settings.show_category_tabs %}
+        {% if section.settings.show_category_tabs %}
           <div class="m-collection-page-header__categories{% if animated %} m-scroll-trigger animate--{{ animation_effect }}{% endif %}">
             {% for block in section.blocks %}
               {% if block.type == 'category_tab' %}
@@ -346,7 +346,7 @@
       "type": "checkbox",
       "id": "show_category_tabs",
       "label": "Show category tabs",
-      "info": "Only shown on the all-products (Products) page.",
+      "info": "Shown on every collection page that uses this header.",
       "default": true
     },
     {
