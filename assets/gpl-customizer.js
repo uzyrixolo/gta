@@ -300,6 +300,16 @@ window.gplQuickOrder = function (sectionId) {
       return this.variants.find(v => v.color === color && v.size === size && v.tier === tier);
     },
     resolvedVariant(color, size) {
+      // Print-area-tiered pricing needs a third "# of Print Areas" variant option,
+      // which only the original flagship product actually has — every other product
+      // in this catalog has just Color/Size, so v.tier is null on every variant and
+      // a tier-name lookup ("1 Print Area", ...) can never match anything. Without
+      // this fallback every size shows "out of stock" and nothing can be added to
+      // cart on any product outside the flagship one.
+      const hasTiers = this.variants.some(v => v.tier != null);
+      if (!hasTiers) {
+        return this.variants.find(v => v.color === color && v.size === size);
+      }
       const tier = this.tierName(Math.max(1, this.areasUsedFor(color)));
       return this.findVariant(color, size, tier) || this.findVariant(color, size, '1 Print Area');
     },
