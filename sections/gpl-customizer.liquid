@@ -34,6 +34,20 @@
 {%- assign areas_meta = product.metafields.custom.print_areas.value -%}
 
 {%- comment -%}
+  Sleeveless garments (tank tops) can't take a sleeve print — the generic 4-zone
+  fallback below (Front/Back/Left Side/Right Side) assumes sleeves exist, which is
+  wrong for anything sleeveless. No per-product print_areas metafield exists yet for
+  any product on this theme, so every customizer product hits this same fallback;
+  this is the one case where offering a zone is a physical impossibility rather than
+  a business choice, so it's safe to special-case here rather than requiring a
+  metafield for every single product.
+{%- endcomment -%}
+{%- assign is_sleeveless = false -%}
+{%- if product.title contains 'Tank' or product.title contains 'Racerback' or product.title contains 'Sleeveless' -%}
+  {%- assign is_sleeveless = true -%}
+{%- endif -%}
+
+{%- comment -%}
   First-paint fallback for the mockup image, before Alpine boots and currentMockup()
   takes over. Prefer a Front-tagged product photo (a clean per-colour shot) over
   product.featured_image, which on this catalogue is often an untagged lifestyle
@@ -74,7 +88,7 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
   "mockups": {{ mockups_json | strip }},
   "images": [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
   "fallbackImage": {{ default_mockup | image_url: width: 1100 | json }},
