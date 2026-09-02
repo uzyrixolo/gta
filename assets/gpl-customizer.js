@@ -354,23 +354,112 @@ window.gplQuickOrder = function (sectionId) {
     },
 
     // ---- colors ----
+    // Every colour-name token seen across the S&S-sourced catalogue (Gildan, Comfort
+    // Colors, Richardson/Yupoong, Sport-Tek/Team365, Under Armour, Columbia, Harriton,
+    // camo/Realtree patterns, ...). Two/three-tone names ("Black/ White", "Navy/ Red/
+    // Black") are looked up token-by-token by hexTokensFor() below, not as one string.
     colorHex: {
-      'black': '#1A1A1A', 'white': '#FFFFFF', 'ash': '#E5E4DF', 'charcoal': '#4A4A4A',
-      'sport grey': '#9EA0A3', 'navy': '#1D2545', 'natural': '#EFE8D8', 'dark heather': '#5B5A5F',
-      'red': '#C8102E', 'royal': '#1F4E9C', 'maroon': '#5B2B38', 'purple': '#3E2B56',
-      'forest green': '#1E3B2C', 'irish green': '#00A65E', 'military green': '#5A5B45',
-      'light pink': '#F4C3CE', 'light blue': '#A3C6E8', 'sand': '#D6CCB2', 'daisy': '#F7C63F',
-      'gold': '#F2A93B', 'orange': '#F26322', 'cardinal red': '#8A1538', 'heliconia': '#E24585',
-      'sapphire': '#0077B5', 'carolina blue': '#7BA4DB', 'dark chocolate': '#3B2B24',
-      'garnet': '#6E2639', 'kelly green': '#00805E', 'texas orange': '#B4552D', 'cherry red': '#AC2B37',
-      'safety orange': '#FF6D00', 'graphite heather': '#707372', 'violet': '#8D6CAB',
-      'yellow haze': '#F5E1A4', 'azalea': '#F65275', 'midnight': '#1F2A44',
+      'acid black': '#1C1C1C', 'aluminum': '#A9ACB6', 'amber gold': '#C68E17', 'antique cherry red': '#8E2A34',
+      'antique gold': '#B8892F', 'antique heliconia': '#C6407A', 'antique irish green': '#1F7A50',
+      'antique jade dome': '#2C8E7C', 'antique orange': '#C4622C', 'antique sapphire': '#1D5C86',
+      'apricot': '#FBCEB1', 'aqua': '#00C4CC', 'aquatic': '#2E9CB8', 'army olive green': '#565A3B',
+      'ash': '#E5E4DF', 'ash grey': '#B2AFA9', 'asphalt': '#4A4D4F', 'athletic heather': '#B5B2AC',
+      'azalea': '#F65275', 'baby blue': '#89CFF0', 'ballerina': '#F4C2C2', 'banana': '#F6E27A', 'bay': '#8C7B6B',
+      'berry': '#7A3450', 'birch': '#DCCFB0', 'black': '#1A1A1A', 'black denim': '#22262C',
+      'black heather': '#3A3A3A', 'blackberry': '#4A2E42', 'blaze orange': '#FF6600', 'blossom': '#E8B7C4',
+      'blue': '#2255A4', 'blue dusk': '#4B5D77', 'blue jean': '#6C89A3', 'blue lagoon': '#2E86AB',
+      'blue spruce': '#4A6670', 'blush': '#E8C2C0', 'body blush': '#E8B9A8', 'bone': '#E4DAC4',
+      'bottle': '#2E4A3E', 'brick': '#9E4B3F', 'brown': '#5B4636', 'brown duck': '#8A6B45',
+      'brown savana': '#6B5842', 'burgundy': '#5C1A2B', 'butter': '#F5E6A0', 'camel': '#C19A6B', 'camo': '#5C5E42',
+      'camo green': '#556B4F', 'canada flag': '#D80621', 'caramel': '#AF6E4D', 'cardinal': '#A6192E',
+      'cardinal red': '#8A1538', 'carmel': '#AF6E4D', 'carolina blue': '#7BA4DB', 'castlerock': '#8C8479',
+      'chalky mint': '#A7D8C4', 'chambray': '#8CA4B8', 'charcoal': '#4A4A4A', 'charcoal heather': '#545454',
+      'cherry red': '#AC2B37', 'chill': '#B9D6E0', 'china blue': '#4A79A5', 'city grey': '#8E8E8E',
+      'city grey heather': '#9B9B9B', 'clay': '#9C6B4E', 'clear mint': '#8FD8C0', 'clear sky': '#7FB8DE',
+      'cobalt': '#0047AB', 'coffee': '#4B3621', 'collegiate navy': '#13294B', 'columbia blue': '#8FC1E3',
+      'concrete': '#8C8C87', 'cool blue': '#5B9BD5', 'cool grey': '#A6A6A0', 'coral silk': '#F08A6C',
+      'cornsilk': '#F5E7B8', 'court green': '#3E8E5A', 'coyote brown': '#7A5C3E', 'cranberry': '#8E2A44',
+      'cream': '#FFFDD0', 'crimson': '#A6192E', 'crunchberry': '#8B7D6B', 'cs grey light heather': '#C4C4C0',
+      'daisy': '#F7C63F', 'dark charcoal': '#333333', 'dark chocolate': '#3B2B24', 'dark green': '#1B3B2A',
+      'dark green heather': '#2C4A3A', 'dark grey': '#58595B', 'dark grey heather': '#5C5C5C',
+      'dark heather': '#5B5A5F', 'dark heather grey': '#54514F', 'dark navy': '#1A2138',
+      'dark nocturnal': '#26282B', 'dark stone': '#6E6659', 'denim': '#6E7F91', 'denim blue': '#5C7185',
+      'desert beige': '#D8C7A8', 'desert pink': '#E8A3AE', 'dusk': '#5A5B72', 'dusty green': '#7C8B6F',
+      'dusty rose': '#C9878F', 'electric green': '#00E64D', 'emerald': '#0E7C5A', 'emerald green': '#0E7C5A',
+      'espresso': '#3B2A20', 'evergreen': '#1F4739', 'flo blue': '#3A7CA5', 'forest': '#1E3B2C',
+      'forest green': '#1E3B2C', 'fossil': '#8E8877', 'fresh olive': '#6F7A45', 'garnet': '#6E2639',
+      'gold': '#F2A93B', 'gold glint': '#D4AF37', 'granite': '#5A4E42', 'granite heather': '#655A4E',
+      'grape': '#5E3A6E', 'graphite': '#4B4B4B', 'graphite black': '#292929', 'graphite heather': '#707372',
+      'gravel': '#8C8880', 'gray': '#8C8C8C', 'green': '#2E7D32', 'green camo': '#556B4F', 'grey': '#8C8C8C',
+      'grey three': '#7C7C7C', 'grill': '#787878', 'heather': '#B0B0B0', 'heather berry': '#8A4A62',
+      'heather brown': '#6C5647', 'heather cardinal': '#8D3A46', 'heather cardinal red': '#8D3A46',
+      'heather charcoal': '#565656', 'heather dark green': '#2E4A38', 'heather dark grey': '#5A5A5A',
+      'heather dark maroon': '#5C333F', 'heather dark navy': '#232B48', 'heather dark royal': '#2C4F8C',
+      'heather deep royal': '#26468C', 'heather galapagos blue': '#2E6E8C', 'heather grey': '#B3B3B3',
+      'heather heliconia': '#D9598A', 'heather indigo': '#3E4E82', 'heather irish green': '#3E8E63',
+      'heather kelly': '#3E8E63', 'heather maroon': '#6E3C48', 'heather military green': '#63644E',
+      'heather navy': '#2B3552', 'heather orange': '#E07A3C', 'heather purple': '#5B4A78',
+      'heather radiant orchid': '#B067A4', 'heather red': '#B7454A', 'heather royal': '#3E64B0',
+      'heather sapphire': '#3C7CA6', 'heather scarlet red': '#B04A50', 'heavy metal': '#4C4C4C',
+      'heliconia': '#E24585', 'hemp': '#8C8060', 'hickory heather': '#6E5B4B', 'hot pink': '#FF69B4',
+      'hydrangea': '#8CA9C9', 'ice blue': '#CFE8F3', 'ice grey': '#D6D6D2', 'icy rock': '#B7C4C6',
+      'indigo': '#3F5FAE', 'indigo blue': '#38508C', 'indigo denim': '#33465F', 'iris': '#5B4E8C',
+      'irish green': '#00A65E', 'island reef': '#3FA79A', 'ivory': '#FFFFF0', 'jade dome': '#2FA894',
+      'kelly': '#00805E', 'kelly green': '#00805E', 'khaki': '#C3B091', 'khaki brown': '#8A7256',
+      'kiwi': '#8CC63F', 'lagoon': '#2E8B9E', 'late night blue': '#22304A', 'latte': '#C8AD8D',
+      'lavender': '#C9A6DC', 'lieutenant': '#4B4E52', 'light blue': '#A3C6E8', 'light green': '#A8D5A0',
+      'light grey': '#D3D3D3', 'light heather': '#C9C9C9', 'light heather grey': '#C7C7C7',
+      'light olive': '#8B8A5A', 'light pink': '#F4C3CE', 'light steel': '#AEB9C4', 'lilac': '#C8A4D4',
+      'lime': '#B7D433', 'loden': '#4B5544', 'maroon': '#5B2B38', 'mauve': '#B784A7', 'mauvelous': '#EF98AA',
+      'melange charcoal': '#565656', 'melange silver': '#C9C9C9', 'metro blue': '#325A80', 'midnight': '#1F2A44',
+      'midnight navy': '#141B33', 'military green': '#5A5B45', 'mint green': '#98D9BB', 'mod grey': '#B7B7B7',
+      'moss': '#6B705C', 'moss green': '#6B7A4C', 'mossy oak breakup': '#5B5136', 'mossy oak country': '#585034',
+      'mossy oak new breakup - mo15': '#585034', 'multicam alpine': '#7B93A0', 'multicam arid': '#B5A17E',
+      'multicam black': '#26241F', 'multicam green': '#59573E', 'multicam tropic': '#4A5D3B', 'mustard': '#C6A038',
+      'natural': '#EFE8D8', 'natural heather': '#D9D2C2', 'navy': '#1D2545', 'navy heather': '#2B3552',
+      'neon blue': '#2D8CFF', 'neon cantaloupe': '#FFAD60', 'neon fuchsia': '#FF2AA1', 'neon green': '#39FF14',
+      'neon lemon': '#F1FF6B', 'neon orange': '#FF6A00', 'neon pink': '#FF3FA4', 'neon purple': '#B24BF3',
+      'neon violet': '#B24BF3', 'neon yellow': '#F5FF3D', 'oak': '#8B6E4E', 'oatmeal': '#DCD0B8',
+      'off black': '#2B2B2B', 'off white': '#F5F1E8', 'old gold': '#CBA135', 'olive': '#5E5A3F',
+      'ombre blue': '#3E6FA1', 'orange': '#F26322', 'orchid': '#B569A6', 'paragon': '#6B7D8C', 'peachy': '#F5C6A5',
+      'pepper': '#5C5347', 'periwinkle': '#8E99D6', 'pink': '#F3ABC1', 'pistachio': '#9DC183',
+      'pitch black': '#0D0D0D', 'pitch grey': '#3D3D3D', 'poseidon black': '#1B1E22', 'powder blue': '#B0DCEE',
+      'power red': '#C81E3A', 'purple': '#3E2B56', 'purple rush': '#5A2D82', 'raspberry': '#B22F63',
+      'real coral': '#E9755B', 'realtree all purpose': '#5B5236', 'realtree edge': '#5A4A38',
+      'realtree max4': '#54503C', 'realtree max7': '#4C4535', 'red': '#C8102E', 'red river clay': '#9C4B3A',
+      'royal': '#1F4E9C', 'royal blue': '#204FA3', 'royal blue heather': '#3E64B0', 'royal pine': '#1F4A3A',
+      'rustic orange': '#B5602A', 'safety green': '#C6FF00', 'safety orange': '#FF6D00', 'safety pink': '#FF6FAE',
+      'safety yellow': '#EEFF41', 'sage': '#8A9A7B', 'saltwater': '#7FB2C9', 'sand': '#D6CCB2',
+      'sandstone': '#D9C9A8', 'sapphire': '#0077B5', 'scarlet': '#B22234', 'sea blue': '#3C7A9E',
+      'seafoam': '#93E9BE', 'shiitake': '#9C8F7C', 'silver': '#C0C0C0', 'silver grey': '#BFC1C2', 'sky': '#87CEEB',
+      'sky blue': '#76D6FF', 'slate blue': '#5A6E8C', 'smoke blue': '#7C9AAE', 'sport athletic gold': '#B8860B',
+      'sport dark navy': '#182038', 'sport dark navy heather': '#28304D', 'sport forest': '#2E4A38',
+      'sport forest heather': '#2E4A38', 'sport graphite': '#54595B', 'sport grey': '#9EA0A3',
+      'sport light blue': '#9FC4E8', 'sport maroon': '#611F31', 'sport maroon heather': '#5C2A38',
+      'sport orange': '#E8621E', 'sport purple': '#5A3E82', 'sport red': '#C8102E', 'sport red heather': '#A33B3B',
+      'sport royal': '#2354AC', 'sport royal heather': '#3E63AC', 'spruce': '#3B4F41', 'steel blue': '#4682B4',
+      'stone': '#B5AC9A', 'stone blue': '#7C93A3', 'stone grey': '#9A9488', 'stonewash denim': '#7089A0',
+      'sunset': '#F4795B', 'tahiti blue': '#2FA4C9', 'tan': '#D2B48C', 'tangerine': '#F28500', 'teal': '#1D8A8A',
+      'team navy blue': '#14213E', 'team royal blue': '#2354AC', 'tennessee orange': '#F77F2C',
+      'terracotta': '#B15533', 'texas orange': '#B4552D', 'tropical blue': '#3FA9C9', 'true navy': '#202844',
+      'turf green': '#3E7A3E', 'turquoise': '#30D5C8', 'tweed': '#8A8272', 'utility green': '#5C6650',
+      'vegas gold': '#B79A54', 'veil wideland': '#5E5A44', 'violet': '#8D6CAB', 'vivid blue': '#2E6FD9',
+      'warm grey': '#948B84', 'washed denim': '#5F7A8E', 'watermelon': '#E8546C', 'white': '#FFFFFF',
+      'white realtree ap': '#D9D4C4', 'wine': '#4E2129', 'yam': '#C77B4C', 'yellow': '#FFD700',
+      'yellow haze': '#F5E1A4',
     },
-    // resolve a colour to a hex for SVG clip art / swatches
+    // Multi-tone names ("Black/ White", "Navy/ Red/ Black") -> array of hexes, one per
+    // token, each resolved independently. Falls back to the flat grey for any token this
+    // map doesn't recognise yet, rather than losing the whole swatch to grey.
+    hexTokensFor(name) {
+      return (name || '').split('/').map(s => s.trim().toLowerCase()).filter(Boolean)
+        .map(tok => this.colorHex[tok] || '#C4C4C4');
+    },
+    // resolve a colour to a single hex for SVG clip art (first token of a multi-tone name)
     hexFor(name) {
       const c = this.swatch(name) || {};
       if (c.hex) return c.hex;
-      return this.colorHex[(name || '').toLowerCase()] || '#C4C4C4';
+      return this.hexTokensFor(name)[0] || '#C4C4C4';
     },
     // which clip-art shape a print area uses
     artShape(areaName) {
@@ -425,9 +514,13 @@ window.gplQuickOrder = function (sectionId) {
     swatchStyle(name) {
       const c = this.swatch(name) || {};
       if (c.hex) return 'background-color:' + c.hex;
-      const hex = this.colorHex[(name || '').toLowerCase()];
-      if (hex) return 'background-color:' + hex;
-      return 'background-color:#C4C4C4';
+      const hexes = this.hexTokensFor(name);
+      if (hexes.length <= 1) return 'background-color:' + (hexes[0] || '#C4C4C4');
+      // Two/three-tone colourway ("Black/ White", "Navy/ Red/ Black") — split the
+      // swatch into even wedges instead of collapsing to one flat grey circle.
+      const step = 100 / hexes.length;
+      const stops = hexes.map((h, i) => h + ' ' + (i * step) + '%, ' + h + ' ' + ((i + 1) * step) + '%');
+      return 'background-image: linear-gradient(90deg, ' + stops.join(', ') + ');';
     },
     swatch(color) { return this.colors.find(c => c.name === color); },
     // ---- printing technique (per colour) ----
