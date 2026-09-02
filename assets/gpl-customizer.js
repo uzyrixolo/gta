@@ -17,6 +17,7 @@ window.gplQuickOrder = function (sectionId) {
     sizes: config.sizes,              // ordered unique sizes
     colors: config.colors,            // [{name, hex, image}]
     areas: config.areas,              // [{name, zone:{x,y,w,h}}]
+    isHeadwear: !!config.isHeadwear,  // swaps the STEP 2 area icons from shirt shapes to cap shapes
     mockups: config.mockups,          // {"Color|Area": url}
     fallbackImage: config.fallbackImage,
     uploadKey: config.uploadKey || '',
@@ -211,6 +212,36 @@ window.gplQuickOrder = function (sectionId) {
       this.colors.forEach(c => {
         if (!c.image) c.image = (this.variants.find(v => v.color === c.name && v.image) || {}).image || null;
       });
+
+      // Headwear catalogue images are named "{assetId}_f_fm.jpg" / "_b_fm.jpg" /
+      // "_d_fm.jpg" (front/back/detail-side) per colour, with no colour name in the
+      // filename at all — the text-matching above can never pair them to a colour.
+      // But each colour's variant.image already points at its "_f" shot (Shopify
+      // tracks that correctly), so the asset-id prefix from THAT one photo is enough
+      // to find its front/back/side siblings directly, with no alt-text tagging needed.
+      if (this.isHeadwear) {
+        const bySrc = new Map(images.map(img => [img.src, img]));
+        for (const c of this.colors) {
+          const frontSrc = c.image || (this.variants.find(v => v.color === c.name && v.image) || {}).image;
+          if (!frontSrc) continue;
+          const fname = (frontSrc.split('/').pop() || '').split('?')[0];
+          const m = fname.match(/^(.+)_f(_fm)?\.[a-z]+$/i);
+          if (!m) continue;
+          const prefix = m[1];
+          const frontKey = c.name + '|Front';
+          if (!this.mockups[frontKey]) this.mockups[frontKey] = frontSrc;
+          for (const img of images) {
+            const iname = (img.src.split('/').pop() || '').split('?')[0];
+            if (iname.startsWith(prefix + '_d')) {
+              const k = c.name + '|Side';
+              if (!this.mockups[k]) this.mockups[k] = img.src;
+            } else if (iname.startsWith(prefix + '_b')) {
+              const k = c.name + '|Back';
+              if (!this.mockups[k]) this.mockups[k] = img.src;
+            }
+          }
+        }
+      }
     },
 
     // Rebuild every variant from the compact map written by the build script.
@@ -344,6 +375,11 @@ window.gplQuickOrder = function (sectionId) {
     // which clip-art shape a print area uses
     artShape(areaName) {
       const n = (areaName || '').toLowerCase();
+      if (this.isHeadwear) {
+        if (n.includes('side')) return 'cap-side';
+        if (n.includes('back')) return 'cap-back';
+        return 'cap-front';
+      }
       if (n.includes('left')) return 'sleeve-left';
       if (n.includes('right')) return 'sleeve-right';
       if (n.includes('back')) return 'back';
@@ -358,12 +394,21 @@ window.gplQuickOrder = function (sectionId) {
       if (s === 'back') {
         return 'M32 14 L18 20 L8 36 L19 44 L26 36 L26 88 L74 88 L74 36 L81 44 L92 36 L82 20 L68 14 C63 19 37 19 32 14 Z';
       }
+      // Cap dome + brim, viewed head-on: rounded crown sitting on a curved brim.
+      if (s === 'cap-front' || s === 'cap-back') {
+        return 'M18 58 C18 28 32 12 50 12 C68 12 82 28 82 58 L82 63 C82 69 66 72 50 72 C34 72 18 69 18 63 Z';
+      }
+      // Cap side profile: crown with a brim projecting to the left.
+      if (s === 'cap-side') {
+        return 'M38 14 C56 14 70 26 72 44 L88 48 C92 49 92 55 88 56 L70 60 C66 68 56 74 42 74 C26 74 14 66 12 52 C10 38 20 20 38 14 Z';
+      }
       return 'M32 14 L18 20 L8 36 L19 44 L26 36 L26 88 L74 88 L74 36 L81 44 L92 36 L82 20 L68 14 C63 23 37 23 32 14 Z';
     },
     collarPath(areaName) {
       const s = this.artShape(areaName);
       if (s === 'front') return 'M32 14 C37 23 63 23 68 14';
       if (s === 'back') return 'M33 15 C38 20 62 20 67 15';
+      if (s === 'cap-front' || s === 'cap-back') return 'M18 58 C30 63 70 63 82 58';
       return '';
     },
     shapeTransform(areaName) {

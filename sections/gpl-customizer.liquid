@@ -48,6 +48,16 @@
 {%- endif -%}
 
 {%- comment -%}
+  Headwear has no torso/sleeves at all — it gets its own Front + Side zone pair
+  (the standard embroidery/print placements on a cap) instead of the shirt fallback,
+  and its own icon shapes (see artShape() in gpl-customizer.js).
+{%- endcomment -%}
+{%- assign is_headwear = false -%}
+{%- if product.type == 'Headwear' -%}
+  {%- assign is_headwear = true -%}
+{%- endif -%}
+
+{%- comment -%}
   First-paint fallback for the mockup image, before Alpine boots and currentMockup()
   takes over. Prefer a Front-tagged product photo (a clean per-colour shot) over
   product.featured_image, which on this catalogue is often an untagged lifestyle
@@ -55,7 +65,7 @@
 {%- endcomment -%}
 {%- assign default_mockup = product.featured_image -%}
 {%- for pimg in product.images -%}
-  {%- if pimg.alt == 'Front' -%}
+  {%- if pimg.alt == 'Front' or pimg.alt contains ':Front' -%}
     {%- assign default_mockup = pimg -%}
     {%- break -%}
   {%- endif -%}
@@ -88,7 +98,8 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "isHeadwear": {{ is_headwear }},
   "mockups": {{ mockups_json | strip }},
   "images": [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
   "fallbackImage": {{ default_mockup | image_url: width: 1100 | json }},
