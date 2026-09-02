@@ -12,9 +12,9 @@
     "collection-header": {
       "type": "collection-page-header",
       "blocks": {
-        "cat_men": {
+        "cat_unisex": {
           "type": "category_tab",
-          "settings": { "collection": "men" }
+          "settings": { "collection": "unisex" }
         },
         "cat_women": {
           "type": "category_tab",
@@ -24,12 +24,16 @@
           "type": "category_tab",
           "settings": { "collection": "kids" }
         },
-        "cat_unisex": {
+        "cat_headwear": {
           "type": "category_tab",
-          "settings": { "collection": "unisex" }
+          "settings": { "collection": "headwear" }
+        },
+        "cat_accessories": {
+          "type": "category_tab",
+          "settings": { "collection": "accessories" }
         }
       },
-      "block_order": ["cat_men", "cat_women", "cat_kids", "cat_unisex"],
+      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories"],
       "settings": {
         "container": "container",
         "layout": "inside",
