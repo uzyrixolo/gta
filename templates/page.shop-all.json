@@ -1,0 +1,109 @@
+{
+  "sections": {
+    "shop_hero": {
+      "type": "gpl-ft-hero",
+      "blocks": {
+        "tier_today": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 2 3 14h7l-1 8 11-14h-7z\"/></svg>",
+            "title": "Print Today",
+            "subtitle": "Order by 1PM"
+          }
+        },
+        "tier_tomorrow": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15l-3-3 1-6 4-2 4 2-1 8z\"/><path d=\"M9 12 5 15l1 4 4-1\"/><path d=\"M15 12l4 3-1 4-4-1\"/></svg>",
+            "title": "Print Tomorrow",
+            "subtitle": "Order by 8PM"
+          }
+        },
+        "tier_delivery": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"12\" height=\"10\" rx=\"1\"/><path d=\"M14.5 10h4l3 3.2V17h-7z\"/><circle cx=\"7\" cy=\"18.5\" r=\"1.6\"/><circle cx=\"17.5\" cy=\"18.5\" r=\"1.6\"/></svg>",
+            "title": "Local GTA Delivery",
+            "subtitle": "Same Day / Next Day"
+          }
+        }
+      },
+      "block_order": ["tier_today", "tier_tomorrow", "tier_delivery"],
+      "settings": {
+        "background_image": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
+        "image_position": "center right",
+        "scrim_strength": 90,
+        "min_height": 620,
+        "min_height_mobile": 680,
+        "badge_text": "",
+        "eyebrow": "GTA PRINT LAB ORIGINAL",
+        "heading_line1": "READY-MADE",
+        "heading_line2": "APPAREL",
+        "heading_line3_prefix": "",
+        "heading_line3_accent": "",
+        "subheading": "Premium quality. Exclusive designs. Made to wear. Ready to ship.",
+        "paragraph": "",
+        "button_1_text": "Shop Now",
+        "button_1_link": "#gpl-shop-grid-shop_grid",
+        "button_2_text": "",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0A0A0A"
+      }
+    },
+    "shop_titlebar": {
+      "type": "gpl-shop-titlebar",
+      "blocks": {
+        "tb_min": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"8\" width=\"16\" height=\"12\" rx=\"1\"/><path d=\"M8 8V6a4 4 0 0 1 8 0v2\"/></svg>",
+            "label": "No Minimums"
+          }
+        },
+        "tb_quality": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3h12l3 6-9 12L3 9z\"/><path d=\"M3 9h18M9 3l-2 6 5 12 5-12-2-6\"/></svg>",
+            "label": "Premium Quality"
+          }
+        },
+        "tb_returns": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 11a9 9 0 1 1 2.6 6.3\"/><path d=\"M3 5v6h6\"/></svg>",
+            "label": "Easy Returns"
+          }
+        },
+        "tb_support": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg>",
+            "label": "Local Support"
+          }
+        }
+      },
+      "block_order": ["tb_min", "tb_quality", "tb_returns", "tb_support"],
+      "settings": {
+        "heading": "GTA PRINT LAB",
+        "heading_accent": "Originals",
+        "subheading": "Curated designs. Premium apparel. No minimums.",
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF"
+      }
+    },
+    "shop_grid": {
+      "type": "gpl-shop-page-grid",
+      "settings": {
+        "source_collection": "shop-all",
+        "color_accent": "#D71920",
+        "promo_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"12\" height=\"10\" rx=\"1\"/><path d=\"M14.5 10h4l3 3.2V17h-7z\"/><circle cx=\"7\" cy=\"18.5\" r=\"1.6\"/><circle cx=\"17.5\" cy=\"18.5\" r=\"1.6\"/></svg>",
+        "promo_title": "Local GTA Delivery",
+        "promo_text": "Same Day / Next Day. Fast, reliable, local.",
+        "promo_link": "\/pages\/quote",
+        "promo_link_text": "Learn More"
+      }
+    }
+  },
+  "order": ["shop_hero", "shop_titlebar", "shop_grid"]
+}
