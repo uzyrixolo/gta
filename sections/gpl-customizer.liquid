@@ -58,6 +58,17 @@
 {%- endif -%}
 
 {%- comment -%}
+  Flat accessories (aprons/blankets/towels/bibs) have one printable face and no
+  torso/sleeves either — Front only. A real garment among the Accessories type
+  (e.g. the chef coat, which has sleeves and Front/Back/Side photos) is deliberately
+  NOT matched here and falls through to the standard shirt zones below, which fit it.
+{%- endcomment -%}
+{%- assign is_flat_accessory = false -%}
+{%- if product.title contains 'Apron' or product.title contains 'Blanket' or product.title contains 'Towel' or product.title contains 'Bib' -%}
+  {%- assign is_flat_accessory = true -%}
+{%- endif -%}
+
+{%- comment -%}
   First-paint fallback for the mockup image, before Alpine boots and currentMockup()
   takes over. Prefer a Front-tagged product photo (a clean per-colour shot) over
   product.featured_image, which on this catalogue is often an untagged lifestyle
@@ -98,8 +109,9 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
   "isHeadwear": {{ is_headwear }},
+  "isFlatAccessory": {{ is_flat_accessory }},
   "mockups": {{ mockups_json | strip }},
   "images": [{%- for img in product.images -%}{"src": {{ img | image_url: width: 1100 | json }}, "alt": {{ img.alt | default: '' | json }}}{% unless forloop.last %},{% endunless %}{%- endfor -%}],
   "fallbackImage": {{ default_mockup | image_url: width: 1100 | json }},

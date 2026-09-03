@@ -18,6 +18,7 @@ window.gplQuickOrder = function (sectionId) {
     colors: config.colors,            // [{name, hex, image}]
     areas: config.areas,              // [{name, zone:{x,y,w,h}}]
     isHeadwear: !!config.isHeadwear,  // swaps the STEP 2 area icons from shirt shapes to cap shapes
+    isFlatAccessory: !!config.isFlatAccessory,  // aprons/blankets/towels/bibs: one flat-panel icon
     mockups: config.mockups,          // {"Color|Area": url}
     fallbackImage: config.fallbackImage,
     uploadKey: config.uploadKey || '',
@@ -469,6 +470,7 @@ window.gplQuickOrder = function (sectionId) {
         if (n.includes('back')) return 'cap-back';
         return 'cap-front';
       }
+      if (this.isFlatAccessory) return 'panel';
       if (n.includes('left')) return 'sleeve-left';
       if (n.includes('right')) return 'sleeve-right';
       if (n.includes('back')) return 'back';
@@ -486,6 +488,10 @@ window.gplQuickOrder = function (sectionId) {
       // Cap dome + brim, viewed head-on: rounded crown sitting on a curved brim.
       if (s === 'cap-front' || s === 'cap-back') {
         return 'M18 58 C18 28 32 12 50 12 C68 12 82 28 82 58 L82 63 C82 69 66 72 50 72 C34 72 18 69 18 63 Z';
+      }
+      // Flat accessory (apron/blanket/towel/bib): a simple rounded panel, no torso shape.
+      if (s === 'panel') {
+        return 'M14 18 a6 6 0 0 1 6 -6 h60 a6 6 0 0 1 6 6 v64 a6 6 0 0 1 -6 6 h-60 a6 6 0 0 1 -6 -6 z';
       }
       // Cap side profile: crown with a brim projecting to the left.
       if (s === 'cap-side') {
