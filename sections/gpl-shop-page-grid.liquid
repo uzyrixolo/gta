@@ -14,7 +14,9 @@
 {%- assign color_names = '' -%}
 {%- assign size_names = '' -%}
 
-{%- for product in source.products limit: 300 -%}
+{%- paginate source.products by 250 -%}
+
+{%- for product in source.products -%}
   {%- unless type_names contains product.type -%}
     {%- assign type_names = type_names | append: product.type | append: '|||' -%}
   {%- endunless -%}
@@ -160,7 +162,7 @@
 
 <script type="application/json" id="gpl-shop-grid-data-{{ section.id }}">
 [
-  {%- for product in source.products limit: 300 -%}
+  {%- for product in source.products -%}
     {%- assign taxo = '' -%}
     {%- for c in product.collections -%}
       {%- if taxonomy_handles contains c.handle -%}
@@ -203,6 +205,8 @@
   {%- endfor -%}
 ]
 </script>
+
+{%- endpaginate -%}
 
 {{ 'gpl-shop-page-grid.js' | asset_url | script_tag }}
 <script>
