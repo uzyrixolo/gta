@@ -1,0 +1,465 @@
+{%- comment -%}
+  GTA Print Lab — Shop All PAGE: sidebar-filtered product grid.
+  Runs entirely client-side (this is a Page template, not a Collection template,
+  so there is no native Shopify facet/filter context to hook into). All filter
+  data (categories, colors, sizes, price, taxonomy collection) is computed here
+  from real product data and handed to assets/gpl-shop-page-grid.js as JSON.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign source = collections[s.source_collection] | default: collections['shop-all'] | default: collections['all'] -%}
+{%- assign taxonomy_handles = 'unisex,women,kids,headwear,accessories' | split: ',' -%}
+
+{%- assign type_names = '' -%}
+{%- assign color_names = '' -%}
+{%- assign size_names = '' -%}
+
+{%- for product in source.products limit: 300 -%}
+  {%- unless type_names contains product.type -%}
+    {%- assign type_names = type_names | append: product.type | append: '|||' -%}
+  {%- endunless -%}
+  {%- for opt in product.options_with_values -%}
+    {%- assign opt_lower = opt.name | downcase -%}
+    {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+      {%- for v in opt.values -%}
+        {%- unless color_names contains v -%}
+          {%- assign color_names = color_names | append: v | append: '|||' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- elsif opt_lower == 'size' -%}
+      {%- for v in opt.values -%}
+        {%- unless size_names contains v -%}
+          {%- assign size_names = size_names | append: v | append: '|||' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+
+{%- assign type_list = type_names | split: '|||' | sort -%}
+{%- assign color_list = color_names | split: '|||' -%}
+{%- assign size_list = size_names | split: '|||' -%}
+
+{%- assign new_arrivals = source.products | sort: 'created_at' | reverse -%}
+
+<section id="gpl-shop-grid-{{ section.id }}" class="gpl-shop-grid" data-shop-grid>
+  <div class="gpl-shop-grid__inner">
+    <aside class="gpl-shop-grid__sidebar">
+      <div class="gpl-shop-grid__sidebar-head">
+        <h3>Filter</h3>
+        <button type="button" class="gpl-shop-grid__clear" data-clear-filters>Clear all</button>
+      </div>
+
+      <div class="gpl-shop-grid__group">
+        <h4>Categories</h4>
+        <label class="gpl-shop-grid__radio">
+          <input type="radio" name="gpl-type-{{ section.id }}" value="" checked data-filter-type>
+          <span>All Products</span>
+          <span class="gpl-shop-grid__count" data-count-total></span>
+        </label>
+        {%- for t in type_list -%}
+          {%- if t != blank -%}
+            <label class="gpl-shop-grid__radio">
+              <input type="radio" name="gpl-type-{{ section.id }}" value="{{ t | escape }}" data-filter-type>
+              <span>{{ t }}</span>
+              <span class="gpl-shop-grid__count" data-count-type="{{ t | escape }}"></span>
+            </label>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if color_list.size > 0 -%}
+        <div class="gpl-shop-grid__group">
+          <h4>Color</h4>
+          <div class="gpl-shop-grid__swatches">
+            {%- for c in color_list limit: 24 -%}
+              {%- if c != blank -%}
+                <button type="button" class="gpl-shop-grid__swatch" data-filter-color="{{ c | escape }}" title="{{ c | escape }}" aria-label="{{ c | escape }}"></button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if size_list.size > 0 -%}
+        <div class="gpl-shop-grid__group">
+          <h4>Size</h4>
+          <div class="gpl-shop-grid__sizes">
+            {%- for sz in size_list limit: 16 -%}
+              {%- if sz != blank -%}
+                <button type="button" class="gpl-shop-grid__size-btn" data-filter-size="{{ sz | escape }}">{{ sz }}</button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="gpl-shop-grid__group">
+        <h4>Price</h4>
+        <div class="gpl-shop-grid__prices">
+          <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-price-{{ section.id }}" value="" checked data-filter-price><span>Any Price</span></label>
+          <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-price-{{ section.id }}" value="0-25" data-filter-price><span>$0 – $25</span></label>
+          <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-price-{{ section.id }}" value="25-50" data-filter-price><span>$25 – $50</span></label>
+          <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-price-{{ section.id }}" value="50-100" data-filter-price><span>$50 – $100</span></label>
+          <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-price-{{ section.id }}" value="100-99999" data-filter-price><span>$100+</span></label>
+        </div>
+      </div>
+
+      <div class="gpl-shop-grid__group">
+        <h4>Collection</h4>
+        <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-taxo-{{ section.id }}" value="" checked data-filter-taxo><span>All</span></label>
+        {%- for handle in taxonomy_handles -%}
+          {%- assign taxo_col = collections[handle] -%}
+          {%- if taxo_col != blank -%}
+            <label class="gpl-shop-grid__radio"><input type="radio" name="gpl-taxo-{{ section.id }}" value="{{ handle }}" data-filter-taxo><span>{{ taxo_col.title }}</span></label>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if s.promo_text != blank -%}
+        <div class="gpl-shop-grid__promo">
+          {%- if s.promo_icon != blank -%}<span class="gpl-shop-grid__promo-icon">{{ s.promo_icon }}</span>{%- endif -%}
+          <div>
+            <p class="gpl-shop-grid__promo-title">{{ s.promo_title }}</p>
+            <p class="gpl-shop-grid__promo-text">{{ s.promo_text }}</p>
+            {%- if s.promo_link != blank -%}<a href="{{ s.promo_link }}" class="gpl-shop-grid__promo-link">{{ s.promo_link_text | default: 'Learn More' }}</a>{%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </aside>
+
+    <div class="gpl-shop-grid__main">
+      <div class="gpl-shop-grid__toolbar">
+        <button type="button" class="gpl-shop-grid__filter-toggle" data-filter-toggle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filter
+        </button>
+        <span class="gpl-shop-grid__result-count" data-result-count></span>
+        <label class="gpl-shop-grid__sort">
+          Sort by
+          <select data-sort>
+            <option value="featured">Featured</option>
+            <option value="best-selling">Best Selling</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="newest">Newest</option>
+            <option value="title-asc">Alphabetically: A–Z</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="gpl-shop-grid__grid" data-grid-list></div>
+      <p class="gpl-shop-grid__empty" data-empty-state hidden>No products match these filters.</p>
+
+      <div class="gpl-shop-grid__load-more-wrap">
+        <button type="button" class="gpl-shop-grid__load-more" data-load-more hidden>Load More Products</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="gpl-shop-grid-data-{{ section.id }}">
+[
+  {%- for product in source.products limit: 300 -%}
+    {%- assign taxo = '' -%}
+    {%- for c in product.collections -%}
+      {%- if taxonomy_handles contains c.handle -%}
+        {%- assign taxo = taxo | append: c.handle | append: ',' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign p_colors = '' -%}
+    {%- assign p_sizes = '' -%}
+    {%- for opt in product.options_with_values -%}
+      {%- assign opt_lower = opt.name | downcase -%}
+      {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+        {%- assign p_colors = opt.values | join: '|' -%}
+      {%- elsif opt_lower == 'size' -%}
+        {%- assign p_sizes = opt.values | join: '|' -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign is_new = false -%}
+    {%- for np in new_arrivals limit: 6 -%}
+      {%- if np.id == product.id -%}{%- assign is_new = true -%}{%- endif -%}
+    {%- endfor -%}
+    {%- assign is_best = false -%}
+    {%- if forloop.index0 < 8 -%}{%- assign is_best = true -%}{%- endif -%}
+    {
+      "id": {{ product.id | json }},
+      "title": {{ product.title | json }},
+      "url": {{ product.url | json }},
+      "type": {{ product.type | json }},
+      "image": {{ product.featured_image | image_url: width: 600 | json }},
+      "alt": {{ product.featured_image.alt | default: product.title | json }},
+      "price": {{ product.price_min | json }},
+      "priceMax": {{ product.price_max | json }},
+      "compareAtPrice": {{ product.compare_at_price_max | json }},
+      "available": {{ product.available | json }},
+      "colors": {{ p_colors | json }},
+      "sizes": {{ p_sizes | json }},
+      "taxonomy": {{ taxo | json }},
+      "bestSeller": {{ is_best | json }},
+      "newArrival": {{ is_new | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+]
+</script>
+
+{{ 'gpl-shop-page-grid.js' | asset_url | script_tag }}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.gplShopGrid) { window.gplShopGrid('{{ section.id }}'); }
+  });
+  if (document.readyState !== 'loading' && window.gplShopGrid) { window.gplShopGrid('{{ section.id }}'); }
+</script>
+
+{% style %}
+  #gpl-shop-grid-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: #FFFFFF;
+    padding: clamp(24px, 3vw, 40px) 0 clamp(48px, 5vw, 80px);
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: clamp(24px, 2.5vw, 40px);
+    align-items: start;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar {
+    position: sticky;
+    top: 24px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar-head h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__clear {
+    background: none;
+    border: none;
+    color: var(--gpl-accent);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__group {
+    padding: 16px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__group h4 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #111;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #333;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__radio input { accent-color: var(--gpl-accent); }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__radio span:first-of-type { flex: 1; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__count {
+    color: rgba(0,0,0,0.4);
+    font-size: 11.5px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__swatches,
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__swatch {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.18);
+    cursor: pointer;
+    background: var(--sw, #ccc);
+    padding: 0;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__swatch.is-active { outline: 2px solid var(--gpl-accent); outline-offset: 2px; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__size-btn {
+    min-width: 34px;
+    padding: 5px 8px;
+    border: 1px solid rgba(0,0,0,0.18);
+    background: #fff;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__size-btn.is-active { background: #111; color: #fff; border-color: #111; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__promo {
+    margin-top: 16px;
+    background: var(--gpl-accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__promo-icon svg { width: 22px; height: 22px; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__promo-title { margin: 0 0 2px; font-weight: 800; font-size: 12.5px; text-transform: uppercase; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__promo-text { margin: 0 0 6px; font-size: 11.5px; opacity: 0.92; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__promo-link { color: #fff; font-size: 11px; font-weight: 800; text-decoration: underline; }
+
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__filter-toggle {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__filter-toggle svg { width: 15px; height: 15px; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__result-count { font-size: 12.5px; color: rgba(0,0,0,0.55); }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sort {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: rgba(0,0,0,0.6);
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sort select {
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card { display: block; text-decoration: none; color: inherit; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: #F4F4F4;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__media img { width: 100%; height: 100%; object-fit: cover; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__ribbon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 9px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #fff;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__ribbon--best { background: #111; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__ribbon--new { background: #2563EB; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__ribbon--ready { background: #16A34A; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__title {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.35;
+  }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__price { font-size: 13px; font-weight: 700; color: #111; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-card__price s { color: rgba(0,0,0,0.4); font-weight: 500; margin-right: 6px; }
+
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__empty { text-align: center; padding: 60px 0; color: rgba(0,0,0,0.5); }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__load-more-wrap { text-align: center; margin-top: 32px; }
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__load-more {
+    background: var(--gpl-accent);
+    color: #fff;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 1199px) {
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media screen and (max-width: 989px) {
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__inner { grid-template-columns: 1fr; }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar {
+      position: fixed;
+      inset: 0 0 0 auto;
+      width: min(320px, 85vw);
+      background: #fff;
+      z-index: 100;
+      padding: 20px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      box-shadow: -8px 0 24px rgba(0,0,0,0.15);
+    }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar.is-open { transform: translateX(0); }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__filter-toggle { display: inline-flex; }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media screen and (max-width: 480px) {
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__toolbar { flex-wrap: wrap; }
+    #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sort { margin-left: 0; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Shop page grid",
+  "tag": "section",
+  "class": "gpl-section-shop-page-grid",
+  "settings": [
+    { "type": "collection", "id": "source_collection", "label": "Product source", "info": "Defaults to the \"Shop All\" collection if left blank." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "header", "content": "Delivery promo card" },
+    { "type": "html", "id": "promo_icon", "label": "Icon (SVG code)" },
+    { "type": "text", "id": "promo_title", "label": "Title", "default": "Local GTA Delivery" },
+    { "type": "text", "id": "promo_text", "label": "Text", "default": "Same Day / Next Day. Fast, reliable, local." },
+    { "type": "url", "id": "promo_link", "label": "Link" },
+    { "type": "text", "id": "promo_link_text", "label": "Link text", "default": "Learn More" }
+  ],
+  "presets": [{ "name": "Shop page grid" }]
+}
+{% endschema %}
