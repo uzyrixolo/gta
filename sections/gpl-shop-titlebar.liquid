@@ -1,0 +1,139 @@
+{%- comment -%}
+  GTA Print Lab — Shop All page: "GTA Print Lab Originals" title bar.
+  Left: heading + crown mark + subheading. Right: compact 4-point trust row.
+  Same --gpl-accent / typography conventions as gpl-ft-trust.liquid.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-shop-tb-{{ section.id }}" class="gpl-shop-tb">
+  <div class="gpl-shop-tb__inner">
+    <div class="gpl-shop-tb__heading">
+      {%- if s.heading != blank or s.heading_accent != blank -%}
+        <h2 class="gpl-shop-tb__title">
+          {{ s.heading }}
+          {%- if s.heading_accent != blank -%}
+            <span class="gpl-shop-tb__title-accent">
+              {{ s.heading_accent }}
+              <svg class="gpl-shop-tb__crown" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 8.5 7 11l5-6.5L17 11l4-2.5-1.6 9.5H4.6L3 8.5Zm2.1 11h13.8v2H5.1v-2Z"/>
+              </svg>
+            </span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if s.subheading != blank -%}
+        <p class="gpl-shop-tb__sub">{{ s.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="gpl-shop-tb__points">
+        {%- for block in section.blocks -%}
+          <div class="gpl-shop-tb-point" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="gpl-shop-tb-point__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="gpl-shop-tb-point__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-shop-tb-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#FFFFFF' }};
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__inner {
+    box-sizing: border-box;
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: clamp(18px, 2vw, 28px) 0;
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__title {
+    margin: 0;
+    color: #111111;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.2;
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__title-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gpl-accent);
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__crown { width: 18px; height: 18px; }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__sub {
+    margin: 6px 0 0;
+    color: rgba(17, 17, 17, 0.6);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__points {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 2vw, 28px);
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb-point {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb-point__icon { display: flex; color: var(--gpl-accent); flex: 0 0 auto; }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb-point__icon svg { width: 20px; height: 20px; }
+  #gpl-shop-tb-{{ section.id }} .gpl-shop-tb-point__label {
+    color: #111111;
+    font-weight: 700;
+    font-size: clamp(11px, 0.8vw, 12.5px);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__inner { flex-direction: column; align-items: flex-start; }
+    #gpl-shop-tb-{{ section.id }} .gpl-shop-tb__points { gap: 14px 22px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Shop title bar",
+  "tag": "section",
+  "class": "gpl-section-shop-tb",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "GTA PRINT LAB" },
+    { "type": "text", "id": "heading_accent", "label": "Heading — accent word", "default": "Originals" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Curated designs. Premium apparel. No minimums." },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Trust point",
+      "limit": 4,
+      "settings": [
+        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
+        { "type": "text", "id": "label", "label": "Label", "default": "No Minimums" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Shop title bar" }]
+}
+{% endschema %}
