@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "shop_hero": {
@@ -95,7 +104,7 @@
     "shop_grid": {
       "type": "gpl-shop-page-grid",
       "settings": {
-        "source_collection": "shop-all",
+        "source_collection": "ready-made",
         "color_accent": "#D71920",
         "promo_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2.5\" y=\"7\" width=\"12\" height=\"10\" rx=\"1\"/><path d=\"M14.5 10h4l3 3.2V17h-7z\"/><circle cx=\"7\" cy=\"18.5\" r=\"1.6\"/><circle cx=\"17.5\" cy=\"18.5\" r=\"1.6\"/></svg>",
         "promo_title": "Local GTA Delivery",

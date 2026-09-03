@@ -7,7 +7,7 @@
 {%- endcomment -%}
 
 {%- assign s = section.settings -%}
-{%- assign source = collections[s.source_collection] | default: collections['shop-all'] | default: collections['all'] -%}
+{%- assign source = collections[s.source_collection] | default: collections['ready-made'] | default: collections['all'] -%}
 {%- assign taxonomy_handles = 'unisex,women,kids,headwear,accessories' | split: ',' -%}
 
 {%- assign type_names = '' -%}
