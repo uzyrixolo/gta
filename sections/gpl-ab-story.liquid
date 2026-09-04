@@ -1,0 +1,104 @@
+{%- comment -%}
+  GTA Print Lab — About page: "Our Story" — founder narrative + pull-quote.
+  Photo is optional (image_picker) rather than hard-coded, since no real
+  photo of the founder was supplied — falls back to a plain quote card.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-ab-story-{{ section.id }}" class="gpl-ab-story">
+  <div class="gpl-ab-story__inner">
+    {%- if s.photo != blank -%}
+      <div class="gpl-ab-story__photo">
+        {{ s.photo | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 340px', widths: '340, 500, 700', alt: s.photo_caption | default: s.photo.alt | escape }}
+        {%- if s.photo_caption != blank -%}
+          <p class="gpl-ab-story__photo-caption">{{ s.photo_caption }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="gpl-ab-story__content">
+      {%- if s.eyebrow != blank -%}<p class="gpl-ab-story__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="gpl-ab-story__heading">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.paragraph != blank -%}<div class="gpl-ab-story__paragraph">{{ s.paragraph }}</div>{%- endif -%}
+      {%- if s.quote != blank -%}
+        <blockquote class="gpl-ab-story__quote">
+          <p>{{ s.quote }}</p>
+          {%- if s.quote_attribution != blank -%}<cite>{{ s.quote_attribution }}</cite>{%- endif -%}
+        </blockquote>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-ab-story-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#0E0E0E' }};
+    padding: clamp(48px, 5.5vw, 88px) 0;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__inner {
+    box-sizing: border-box;
+    width: min(1200px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: {% if s.photo != blank %}340px 1fr{% else %}1fr{% endif %};
+    gap: clamp(28px, 3.5vw, 56px);
+    align-items: center;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo img {
+    width: 100%; border-radius: 12px; display: block; aspect-ratio: 4 / 5; object-fit: cover;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo-caption {
+    margin: 10px 0 0; color: #F2F2F2; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__eyebrow {
+    color: var(--gpl-accent); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12.5px; margin: 0 0 8px;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__heading {
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; line-height: 1.12;
+    font-size: clamp(22px, 2.4vw, 32px); margin: 0 0 16px; max-width: 26ch;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__paragraph {
+    color: #C9C9C9; font-size: clamp(13.5px, 1vw, 15px); line-height: 1.7; margin: 0 0 22px; max-width: 62ch;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__paragraph p { margin: 0 0 14px; }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__paragraph p:last-child { margin-bottom: 0; }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__quote {
+    margin: 0; padding: 18px 22px; border-left: 3px solid var(--gpl-accent);
+    background: rgba(255,255,255,0.04); border-radius: 0 8px 8px 0; max-width: 62ch;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__quote p {
+    margin: 0 0 8px; color: #FFFFFF; font-size: clamp(14px, 1.1vw, 16px); font-style: italic; line-height: 1.5;
+  }
+  #gpl-ab-story-{{ section.id }} .gpl-ab-story__quote cite {
+    color: rgba(255,255,255,0.55); font-size: 12.5px; font-style: normal; font-weight: 700;
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-ab-story-{{ section.id }} .gpl-ab-story__inner { grid-template-columns: 1fr; }
+    #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo img { aspect-ratio: 3 / 2; max-width: 320px; margin: 0 auto; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "About: Story",
+  "tag": "section",
+  "class": "gpl-section-ab-story",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "From Vision to a Global Apparel Powerhouse" },
+    { "type": "richtext", "id": "paragraph", "label": "Paragraph" },
+    { "type": "textarea", "id": "quote", "label": "Pull-quote" },
+    { "type": "text", "id": "quote_attribution", "label": "Quote attribution" },
+    { "type": "header", "content": "Photo (optional)" },
+    { "type": "image_picker", "id": "photo", "label": "Photo" },
+    { "type": "text", "id": "photo_caption", "label": "Photo caption" },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0E0E0E" }
+  ],
+  "presets": [{ "name": "About: Story" }]
+}
+{% endschema %}

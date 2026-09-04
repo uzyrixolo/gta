@@ -1,0 +1,139 @@
+{%- comment -%}
+  GTA Print Lab — About page: repeatable text/image split rows.
+  Used for "Why Toronto?" (1 image, optional overlay word) and
+  "Global Production, Local Impact" (up to 2 images, optional badge).
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+
+<section id="gpl-ab-split-{{ section.id }}" class="gpl-ab-split">
+  {%- for block in section.blocks -%}
+    {%- assign bs = block.settings -%}
+    <div class="gpl-ab-split__row{% if bs.reverse %} gpl-ab-split__row--reverse{% endif %}" {{ block.shopify_attributes }}>
+      <div class="gpl-ab-split__text">
+        {%- if bs.eyebrow != blank -%}<p class="gpl-ab-split__eyebrow">{{ bs.eyebrow }}</p>{%- endif -%}
+        {%- if bs.heading != blank -%}
+          <h2 class="gpl-ab-split__heading">
+            {{ bs.heading }}{% if bs.heading_accent != blank %} <span class="gpl-ab-split__heading-accent">{{ bs.heading_accent }}</span>{% endif %}
+          </h2>
+        {%- endif -%}
+        {%- if bs.text != blank -%}<div class="gpl-ab-split__paragraph">{{ bs.text }}</div>{%- endif -%}
+      </div>
+      <div class="gpl-ab-split__media">
+        {%- if bs.image_1 != blank -%}
+          <div class="gpl-ab-split__media-item">
+            {{ bs.image_1 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_1.alt | escape }}
+            {%- if bs.overlay_text != blank -%}
+              <span class="gpl-ab-split__overlay">{{ bs.overlay_text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if bs.image_2 != blank -%}
+          <div class="gpl-ab-split__media-item">
+            {{ bs.image_2 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_2.alt | escape }}
+            {%- if bs.badge_text != blank -%}
+              <span class="gpl-ab-split__badge">{{ bs.badge_text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+</section>
+
+{% style %}
+  #gpl-ab-split-{{ section.id }} {
+    --gpl-accent: {{ s.color_accent | default: '#D71920' }};
+    background: {{ s.color_background | default: '#FFFFFF' }};
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row {
+    box-sizing: border-box;
+    width: min(1200px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    padding: clamp(40px, 5vw, 76px) 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 3.5vw, 56px);
+    align-items: center;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row + .gpl-ab-split__row {
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__text { order: 2; }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__media { order: 1; }
+
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__eyebrow {
+    color: var(--gpl-accent); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12.5px; margin: 0 0 8px;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__heading {
+    font-weight: 800; text-transform: uppercase; line-height: 1.12;
+    font-size: clamp(22px, 2.2vw, 30px); margin: 0 0 14px; color: #111111;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__heading-accent { color: var(--gpl-accent); }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__paragraph {
+    color: rgba(17,17,17,0.68); font-size: clamp(13.5px, 1vw, 15px); line-height: 1.7; max-width: 52ch;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__paragraph p { margin: 0 0 12px; }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__paragraph p:last-child { margin-bottom: 0; }
+
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__media {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__media:has(.gpl-ab-split__media-item:nth-child(2)) {
+    grid-template-columns: 1fr 1fr;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__media-item { position: relative; }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__media-item img {
+    width: 100%; height: 100%; border-radius: 10px; display: block; aspect-ratio: 4 / 3; object-fit: cover;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__overlay {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #FFFFFF; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
+    font-size: clamp(30px, 4.5vw, 56px); text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+    background: linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.1));
+    border-radius: 10px;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__badge {
+    position: absolute; top: 10px; left: 10px; background: var(--gpl-accent); color: #FFFFFF;
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;
+    padding: 5px 10px; border-radius: 4px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__row,
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse { grid-template-columns: 1fr; }
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__text,
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__media { order: initial; }
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__paragraph { max-width: 100%; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "About: Text/Image rows",
+  "tag": "section",
+  "class": "gpl-section-ab-split",
+  "settings": [
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "text", "id": "heading_accent", "label": "Heading — accent word" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "checkbox", "id": "reverse", "label": "Image on left", "default": false },
+        { "type": "image_picker", "id": "image_1", "label": "Image 1" },
+        { "type": "text", "id": "overlay_text", "label": "Image 1 — overlay word", "info": "Optional large text overlaid on image 1." },
+        { "type": "image_picker", "id": "image_2", "label": "Image 2 (optional)", "info": "Adding a second image splits this row into two side-by-side photos." },
+        { "type": "text", "id": "badge_text", "label": "Image 2 — badge text", "info": "Optional small label badge on image 2." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "About: Text/Image rows" }]
+}
+{% endschema %}
