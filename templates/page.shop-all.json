@@ -39,7 +39,7 @@
       },
       "block_order": ["tier_today", "tier_tomorrow", "tier_delivery"],
       "settings": {
-        "background_image": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
+        "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_01_32_08_AM.webp",
         "image_position": "center right",
         "scrim_strength": 90,
         "min_height": 620,
