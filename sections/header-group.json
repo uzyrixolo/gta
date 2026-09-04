@@ -54,36 +54,44 @@
       "type": "header",
       "custom_css": [],
       "blocks": {
-        "cat_budget": {
+        "cat_unisex": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "budget" }
-        },
-        "cat_midrange": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "mid-range" }
-        },
-        "cat_premium": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "premium" }
-        },
-        "cat_luxury": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "luxury" }
-        },
-        "cat_kids": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "kids" }
+          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "unisex" }
         },
         "cat_women": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "women" }
+          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "women" }
+        },
+        "cat_kids": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "kids" }
         },
         "cat_headwear": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "collection": "headwear", "link": "/pages/fast-track-headwear", "label": "Headwear" }
+          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "headwear", "link": "/pages/fast-track-headwear", "label": "Headwear" }
+        },
+        "cat_accessories": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "accessories" }
+        },
+        "cat_budget": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "budget" }
+        },
+        "cat_midrange": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "mid-range" }
+        },
+        "cat_premium": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "premium" }
+        },
+        "cat_luxury": {
+          "type": "category_tile",
+          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "luxury" }
         }
       },
-      "block_order": ["cat_budget", "cat_midrange", "cat_premium", "cat_luxury", "cat_kids", "cat_women", "cat_headwear"],
+      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories", "cat_budget", "cat_midrange", "cat_premium", "cat_luxury"],
       "settings": {
         "logo_text_1": "GTA",
         "logo_text_2": "PRINT LAB",
