@@ -70,7 +70,7 @@
     "btn_weight": "500",
     "pcard_layout": "1",
     "pcard_alignment": "center",
-    "pcard_image_ratio": "1/1",
+    "pcard_image_ratio": "original",
     "show_swatch_option": false,
     "pcard_option_name": "Coloraa",
     "pcard_option_design": "button",
@@ -140,9 +140,7 @@
       "sections": {
         "featured-collection": {
           "type": "featured-collection",
-          "settings": {
-            "collection": "frontpage"
-          }
+          "settings": {}
         },
         "featured-product": {
           "type": "featured-product",
