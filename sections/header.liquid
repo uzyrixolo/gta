@@ -27,6 +27,7 @@
           {%- liquid
             assign category_tiles = ''
             assign tile_count = 0
+            assign group_keys = 'category,quality' | split: ','
             for block in section.blocks
               if block.type == 'category_tile' and block.settings.menu_item == link.title
                 assign tile_count = tile_count | plus: 1
@@ -42,24 +43,42 @@
             </a>
             {%- if tile_count > 0 -%}
               <div class="gpl-header__megapanel">
-                <div class="gpl-header__megapanel-grid">
+                {%- for group_key in group_keys -%}
+                  {%- assign group_title = '' -%}
+                  {%- case group_key -%}
+                    {%- when 'category' -%}{%- assign group_title = 'Shop by Category' -%}
+                    {%- when 'quality' -%}{%- assign group_title = 'Shop by Quality' -%}
+                  {%- endcase -%}
+                  {%- assign group_has_tiles = false -%}
                   {%- for block in section.blocks -%}
-                    {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
-                      {%- assign tile_collection = block.settings.collection -%}
-                      {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
-                      <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
-                        <span class="gpl-header__tile-image">
-                          {%- if tile_image != blank -%}
-                            {{ tile_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tile_collection.title | escape }}
-                          {%- else -%}
-                            {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
-                          {%- endif -%}
-                        </span>
-                        <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
-                      </a>
+                    {%- if block.type == 'category_tile' and block.settings.menu_item == link.title and block.settings.group == group_key -%}
+                      {%- assign group_has_tiles = true -%}
                     {%- endif -%}
                   {%- endfor -%}
-                </div>
+                  {%- if group_has_tiles -%}
+                    <div class="gpl-header__megapanel-group">
+                      <p class="gpl-header__megapanel-group-title">{{ group_title }}</p>
+                      <div class="gpl-header__megapanel-grid">
+                        {%- for block in section.blocks -%}
+                          {%- if block.type == 'category_tile' and block.settings.menu_item == link.title and block.settings.group == group_key -%}
+                            {%- assign tile_collection = block.settings.collection -%}
+                            {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
+                            <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                              <span class="gpl-header__tile-image">
+                                {%- if tile_image != blank -%}
+                                  {{ tile_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tile_collection.title | escape }}
+                                {%- else -%}
+                                  {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
+                                {%- endif -%}
+                              </span>
+                              <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
+                            </a>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
             {%- elsif link.links != blank -%}
               <ul class="gpl-header__submenu">
@@ -118,24 +137,40 @@
         <li>
           <a href="{{ link.url }}">{{ link.title }}</a>
           {%- if tile_count > 0 -%}
-            <div class="gpl-header__mobile-tiles">
+            {%- for group_key in group_keys -%}
+              {%- assign group_title = '' -%}
+              {%- case group_key -%}
+                {%- when 'category' -%}{%- assign group_title = 'Shop by Category' -%}
+                {%- when 'quality' -%}{%- assign group_title = 'Shop by Quality' -%}
+              {%- endcase -%}
+              {%- assign group_has_tiles = false -%}
               {%- for block in section.blocks -%}
-                {%- if block.type == 'category_tile' and block.settings.menu_item == link.title -%}
-                  {%- assign tile_collection = block.settings.collection -%}
-                  {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
-                  <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
-                    <span class="gpl-header__tile-image">
-                      {%- if tile_image != blank -%}
-                        {{ tile_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 150, 200', alt: block.settings.label | default: tile_collection.title | escape }}
-                      {%- else -%}
-                        {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
-                      {%- endif -%}
-                    </span>
-                    <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
-                  </a>
+                {%- if block.type == 'category_tile' and block.settings.menu_item == link.title and block.settings.group == group_key -%}
+                  {%- assign group_has_tiles = true -%}
                 {%- endif -%}
               {%- endfor -%}
-            </div>
+              {%- if group_has_tiles -%}
+                <p class="gpl-header__mobile-tiles-title">{{ group_title }}</p>
+                <div class="gpl-header__mobile-tiles">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'category_tile' and block.settings.menu_item == link.title and block.settings.group == group_key -%}
+                      {%- assign tile_collection = block.settings.collection -%}
+                      {%- assign tile_image = block.settings.image | default: tile_collection.image -%}
+                      <a href="{{ block.settings.link | default: tile_collection.url | default: '#' }}" class="gpl-header__tile" {{ block.shopify_attributes }}>
+                        <span class="gpl-header__tile-image">
+                          {%- if tile_image != blank -%}
+                            {{ tile_image | image_url: width: 200 | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 150, 200', alt: block.settings.label | default: tile_collection.title | escape }}
+                          {%- else -%}
+                            {{ 'collection-1' | placeholder_svg_tag: 'gpl-header__tile-placeholder' }}
+                          {%- endif -%}
+                        </span>
+                        <span class="gpl-header__tile-label">{{ block.settings.label | default: tile_collection.title }}</span>
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
           {%- elsif link.links != blank -%}
             <ul class="gpl-header__mobile-sublist">
               {%- for child in link.links -%}
@@ -219,8 +254,19 @@
   .gpl-header-{{ section.id }} .gpl-header__menu-item--mega:hover .gpl-header__megapanel {
     opacity: 1; visibility: visible; transform: translate(-50%, 0);
   }
+  .gpl-header-{{ section.id }} .gpl-header__megapanel-group + .gpl-header__megapanel-group {
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .gpl-header-{{ section.id }} .gpl-header__megapanel-group-title {
+    margin: 0 0 12px; color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
   .gpl-header-{{ section.id }} .gpl-header__megapanel-grid {
-    display: grid; grid-template-columns: repeat(6, minmax(0, 108px)); gap: 14px;
+    display: grid; grid-template-columns: repeat(5, minmax(0, 108px)); gap: 14px;
+  }
+  .gpl-header-{{ section.id }} .gpl-header__mobile-tiles-title {
+    margin: 14px 0 8px; color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
   }
   .gpl-header-{{ section.id }} .gpl-header__tile {
     display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none;
@@ -379,6 +425,10 @@
       "name": "Category tile",
       "settings": [
         { "type": "text", "id": "menu_item", "label": "Menu item title", "info": "Must exactly match a top-level menu title (e.g. PRODUCTS) to attach this tile's dropdown to it.", "default": "PRODUCTS" },
+        { "type": "select", "id": "group", "label": "Group", "info": "Which sub-heading this tile appears under in the dropdown.", "default": "category", "options": [
+          { "value": "category", "label": "Shop by Category" },
+          { "value": "quality", "label": "Shop by Quality" }
+        ] },
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
         { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." },
