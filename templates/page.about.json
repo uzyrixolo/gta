@@ -1,57 +1,21 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "ab_hero": {
       "type": "gpl-gd-hero",
-      "blocks": {
-        "prm_speed": {
-          "type": "promise",
-          "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
-            "title": "Same-Day Production",
-            "subtitle": "Fast Turnaround"
-          }
-        },
-        "prm_min": {
-          "type": "promise",
-          "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/><path d=\"M4 7l8 4 8-4M12 11v10\"/></svg>",
-            "title": "No Minimum Orders",
-            "subtitle": "1 Piece or 10,000"
-          }
-        },
-        "prm_quality": {
-          "type": "promise",
-          "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z\"/><path d=\"m9 12 2 2 4-4\"/></svg>",
-            "title": "Premium Quality",
-            "subtitle": "Every Order, Inspected"
-          }
-        },
-        "prm_delivery": {
-          "type": "promise",
-          "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"6\" width=\"15\" height=\"12\" rx=\"1\"/><path d=\"M16 10h4l3 3v5h-7z\"/><circle cx=\"6\" cy=\"19\" r=\"2\"/><circle cx=\"18\" cy=\"19\" r=\"2\"/></svg>",
-            "title": "GTA Delivery",
-            "subtitle": "Fast & Reliable"
-          }
-        }
-      },
-      "block_order": ["prm_speed", "prm_min", "prm_quality", "prm_delivery"],
+      "blocks": {},
+      "block_order": [],
       "settings": {
+        "background_image": "shopify://shop_images/gta-about.webp",
+        "image_position": "center right",
+        "scrim_strength": 75,
+        "min_height": 620,
+        "min_height_mobile": 680,
+        "badge_text": "",
         "eyebrow": "About GTA Print Lab",
         "heading_line1": "About",
         "heading_line2": "Us",
-        "subheading": "Toronto's Fastest Custom Apparel & Print Shop",
-        "paragraph": "<p>GTA Print Lab started with a simple idea: custom apparel shouldn't mean long waits, confusing minimums, or mystery pricing. We're a Toronto-based print shop built for businesses, sports teams, schools and brands who need quality merch fast — with same-day and next-day turnaround, no minimum order sizes, and pricing that scales with you.</p><p>From a single custom hoodie to a 500-piece team order, every job runs through our own shop using DTG, DTF and embroidery equipment we operate ourselves — so what you approve is exactly what you get, on time.</p>",
+        "subheading": "More Than Printing. A Higher Standard.",
+        "paragraph": "<p>At GTA Print Lab, we turn ideas into apparel that makes an impact. We combine creativity, quality and speed to help individuals, businesses and brands bring their vision to life.</p>",
         "button_1_text": "Start Your Order",
         "button_1_link": "/collections/all",
         "button_2_text": "Get a Quote",
@@ -61,69 +25,132 @@
         "color_background": "#0A0A0A"
       }
     },
-    "ab_why": {
+    "ab_story": {
+      "type": "gpl-ab-story",
+      "settings": {
+        "eyebrow": "Our Story",
+        "heading": "From Vision to a Global Apparel Powerhouse",
+        "paragraph": "<p>GTA Print Lab was founded by Didi Wambo, a visionary entrepreneur with over 10 years of experience in the custom apparel and manufacturing industry. What started in the United States has now grown into a Toronto-based company built on a simple belief — great apparel brings people, brands and communities together.</p><p>We relocated to Toronto to be closer to our growing Canadian customer base and tap into the incredible creativity, diversity and opportunity the city has to offer. Toronto is a global city, a hub for culture, fashion and business, and the perfect home for the next chapter of our journey.</p>",
+        "quote": "Our mission is to empower people and brands through high-quality custom apparel, innovative solutions, and unmatched service.",
+        "quote_attribution": "— Didi Wambo, Founder & CEO",
+        "color_accent": "#D71920",
+        "color_background": "#0E0E0E"
+      }
+    },
+    "ab_stats": {
       "type": "gpl-gd-why",
       "blocks": {
-        "why_roof": {
-          "type": "point",
-          "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 11 12 4l9 7\"/><path d=\"M5 10v10h14V10\"/></svg>",
-            "title": "Everything Under One Roof",
-            "description": "Design, printing and production all happen in-house — no outsourcing, no middlemen, no surprises."
-          }
-        },
-        "why_fast": {
+        "st_years": {
           "type": "point",
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
-            "title": "Toronto-Based, Toronto-Fast",
-            "description": "Local production means local turnaround — same-day and next-day options most print shops can't match."
+            "title": "10+ Years",
+            "description": "Industry experience in custom apparel, printing and manufacturing."
           }
         },
-        "why_min": {
+        "st_mfg": {
           "type": "point",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/></svg>",
-            "title": "No Minimums, No Barriers",
-            "description": "Order one piece or ten thousand. Every customer gets the same quality and attention."
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3c2.5 2.5 4 5.7 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.7-4-9s1.5-6.5 4-9Z\"/></svg>",
+            "title": "Domestic & Overseas Manufacturing",
+            "description": "Trusted production worldwide."
           }
         },
-        "why_price": {
+        "st_factory": {
           "type": "point",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6\"/></svg>",
-            "title": "Transparent, Fair Pricing",
-            "description": "Volume discounts that actually add up, with no hidden setup fees sprung on you later."
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 21V10l5 3v-3l5 3V6l5 4v11z\"/><path d=\"M3 21h18\"/></svg>",
+            "title": "Our Own Factory in Pakistan",
+            "description": "Dedicated manufacturing plant to serve our needs."
           }
         },
-        "why_quality": {
+        "st_toronto": {
           "type": "point",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 12 2 2 4-4\"/><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>",
-            "title": "Quality You Can Count On",
-            "description": "Every order is inspected before it leaves our facility, backed by real support if something's not right."
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/></svg>",
+            "title": "Toronto-Based",
+            "description": "Proudly serving Canada and beyond."
+          }
+        },
+        "st_quality": {
+          "type": "point",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z\"/><path d=\"m9 12 2 2 4-4\"/></svg>",
+            "title": "Premium Quality",
+            "description": "No shortcuts. No compromises."
           }
         }
       },
-      "block_order": ["why_roof", "why_fast", "why_min", "why_price", "why_quality"],
+      "block_order": ["st_years", "st_mfg", "st_factory", "st_toronto", "st_quality"],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#0E0E0E"
       }
     },
-    "ab_audience": {
-      "type": "gpl-gd-audience",
+    "ab_split": {
+      "type": "gpl-ab-split",
       "blocks": {
-        "aud_biz": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 8V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3\"/></svg>", "label": "Small Businesses" } },
-        "aud_sports": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v18M3 12h18\"/></svg>", "label": "Sports Teams" } },
-        "aud_school": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 9 12 5l10 4-10 4Z\"/><path d=\"M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5\"/></svg>", "label": "Schools & Organizations" } },
-        "aud_brand": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8L10.7 2.7a2 2 0 0 1 1.4-.6H19a2 2 0 0 1 2 2v6.9a2 2 0 0 1-.5 1.4Z\"/><circle cx=\"15.5\" cy=\"7.5\" r=\"1.5\"/></svg>", "label": "Fashion Brands" } },
-        "aud_corp": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M9 8h6M9 12h6M9 16h4\"/></svg>", "label": "Corporate Events" } },
-        "aud_fund": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z\"/></svg>", "label": "Fundraisers" } },
-        "aud_music": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 18V5l12-2v13\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/></svg>", "label": "Concerts & Tours" } },
-        "aud_startup": { "type": "audience", "settings": { "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.5 16.5c-1.5 1.5-2 5-2 5s3.5-.5 5-2c.8-.8 1-2 .2-2.8-.8-.8-2-.6-2.8.2Z\"/><path d=\"M14 10 2 22M18.4 5.6a4 4 0 0 1 0 5.7l-9.9 9.9-5.7-5.7 9.9-9.9a4 4 0 0 1 5.7 0Z\"/></svg>", "label": "Startups" } }
+        "row_toronto": {
+          "type": "row",
+          "settings": {
+            "eyebrow": "",
+            "heading": "Why",
+            "heading_accent": "Toronto?",
+            "text": "<p>We made the move from the United States to Toronto to be closer to our customers, strengthen our presence in the Canadian market, and take advantage of the city's dynamic business environment. Toronto's diversity, creativity and global reach align perfectly with our vision for growth, innovation and community impact.</p>",
+            "reverse": false,
+            "image_1": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_34_28_PM.png",
+            "overlay_text": "Toronto"
+          }
+        },
+        "row_production": {
+          "type": "row",
+          "settings": {
+            "eyebrow": "",
+            "heading": "Global Production,",
+            "heading_accent": "Local Impact",
+            "text": "<p>Didi Wambo has invested in his own dedicated manufacturing plant in Pakistan, giving GTA Print Lab full control over quality, production capacity and faster turnaround. With the ability to manufacture domestically and at our own overseas facility, we deliver the best of both worlds — high quality, cost efficiency and unmatched flexibility.</p>",
+            "reverse": true
+          }
+        }
       },
-      "block_order": ["aud_biz", "aud_sports", "aud_school", "aud_brand", "aud_corp", "aud_fund", "aud_music", "aud_startup"],
+      "block_order": ["row_toronto", "row_production"],
+      "settings": {
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF"
+      }
+    },
+    "ab_mission": {
+      "type": "gpl-ab-mission",
+      "blocks": {
+        "col_mission": {
+          "type": "column",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"4.5\"/><circle cx=\"12\" cy=\"12\" r=\"1\" fill=\"currentColor\"/></svg>",
+            "title": "Our Mission",
+            "text": "<p>To provide high-quality custom apparel and branding solutions that empower individuals, businesses and communities, while delivering exceptional service and innovative manufacturing capabilities.</p>"
+          }
+        },
+        "col_goals": {
+          "type": "column",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 8 12 4l8.5 4-8.5 4-8.5-4z\"/><path d=\"M3.5 8v8l8.5 4 8.5-4V8\"/><path d=\"M12 12v8\"/></svg>",
+            "title": "Our Goals",
+            "sub_1_title": "Short-Term Goals",
+            "sub_1_items": "Grow our presence across Canada\nExpand our product offering\nBuild strong community partnerships",
+            "sub_2_title": "Long-Term Goals",
+            "sub_2_items": "Become Canada's leading apparel brand\nExpand globally through our manufacturing network\nLaunch our own apparel brand\nContinue investing in people, technology and sustainable growth"
+          }
+        },
+        "col_team": {
+          "type": "column",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5\"/><circle cx=\"17.5\" cy=\"9\" r=\"2.4\"/><path d=\"M15.8 13.6c2.4.3 4.2 2.2 4.2 5.4\"/></svg>",
+            "title": "Our Team",
+            "text": "<p>Our team brings together experts in design, printing, embroidery, manufacturing and customer service with over a decade of industry experience. We're passionate about what we do and committed to helping you love your brand.</p>"
+          }
+        }
+      },
+      "block_order": ["col_mission", "col_goals", "col_team"],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#0E0E0E"
@@ -135,7 +162,7 @@
         "cta_order": {
           "type": "button",
           "settings": {
-            "label": "Start Your Order",
+            "label": "Let's Create Together",
             "link": "/collections/all",
             "style": "primary",
             "icon": ""
@@ -144,8 +171,8 @@
         "cta_contact": {
           "type": "button",
           "settings": {
-            "label": "Contact Us",
-            "link": "/pages/contact",
+            "label": "Get a Quote",
+            "link": "/pages/quote",
             "style": "outline",
             "icon": ""
           }
@@ -153,13 +180,13 @@
       },
       "block_order": ["cta_order", "cta_contact"],
       "settings": {
-        "heading": "Ready to Work",
-        "heading_accent": "Together?",
-        "text": "Whether it's one hoodie or a thousand, our team is ready to bring your idea to life — fast, local, and done right.",
+        "heading": "Built in Toronto.",
+        "heading_accent": "Worn Everywhere.",
+        "text": "Custom apparel. Bigger possibilities. Let's create something great together.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
       }
     }
   },
-  "order": ["ab_hero", "ab_why", "ab_audience", "ab_cta"]
+  "order": ["ab_hero", "ab_story", "ab_stats", "ab_split", "ab_mission", "ab_cta"]
 }
