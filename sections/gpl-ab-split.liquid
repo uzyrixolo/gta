@@ -9,7 +9,9 @@
 <section id="gpl-ab-split-{{ section.id }}" class="gpl-ab-split">
   {%- for block in section.blocks -%}
     {%- assign bs = block.settings -%}
-    <div class="gpl-ab-split__row{% if bs.reverse %} gpl-ab-split__row--reverse{% endif %}" {{ block.shopify_attributes }}>
+    {%- assign has_media = false -%}
+    {%- if bs.image_1 != blank or bs.image_2 != blank -%}{%- assign has_media = true -%}{%- endif -%}
+    <div class="gpl-ab-split__row{% if bs.reverse %} gpl-ab-split__row--reverse{% endif %}{% unless has_media %} gpl-ab-split__row--text-only{% endunless %}" {{ block.shopify_attributes }}>
       <div class="gpl-ab-split__text">
         {%- if bs.eyebrow != blank -%}<p class="gpl-ab-split__eyebrow">{{ bs.eyebrow }}</p>{%- endif -%}
         {%- if bs.heading != blank -%}
@@ -19,24 +21,26 @@
         {%- endif -%}
         {%- if bs.text != blank -%}<div class="gpl-ab-split__paragraph">{{ bs.text }}</div>{%- endif -%}
       </div>
-      <div class="gpl-ab-split__media">
-        {%- if bs.image_1 != blank -%}
-          <div class="gpl-ab-split__media-item">
-            {{ bs.image_1 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_1.alt | escape }}
-            {%- if bs.overlay_text != blank -%}
-              <span class="gpl-ab-split__overlay">{{ bs.overlay_text }}</span>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-        {%- if bs.image_2 != blank -%}
-          <div class="gpl-ab-split__media-item">
-            {{ bs.image_2 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_2.alt | escape }}
-            {%- if bs.badge_text != blank -%}
-              <span class="gpl-ab-split__badge">{{ bs.badge_text }}</span>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      </div>
+      {%- if has_media -%}
+        <div class="gpl-ab-split__media">
+          {%- if bs.image_1 != blank -%}
+            <div class="gpl-ab-split__media-item">
+              {{ bs.image_1 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_1.alt | escape }}
+              {%- if bs.overlay_text != blank -%}
+                <span class="gpl-ab-split__overlay">{{ bs.overlay_text }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if bs.image_2 != blank -%}
+            <div class="gpl-ab-split__media-item">
+              {{ bs.image_2 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_2.alt | escape }}
+              {%- if bs.badge_text != blank -%}
+                <span class="gpl-ab-split__badge">{{ bs.badge_text }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   {%- endfor -%}
 </section>
@@ -61,6 +65,15 @@
   }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__text { order: 2; }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--reverse .gpl-ab-split__media { order: 1; }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--text-only {
+    grid-template-columns: 1fr; text-align: center;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--text-only .gpl-ab-split__text {
+    max-width: 68ch; margin: 0 auto;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--text-only .gpl-ab-split__paragraph {
+    max-width: 100%; margin: 0 auto;
+  }
 
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__eyebrow {
     color: var(--gpl-accent); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12.5px; margin: 0 0 8px;
