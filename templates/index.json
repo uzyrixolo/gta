@@ -879,7 +879,7 @@
         "image_height_desktop": 110,
         "image_height_mobile": 70,
         "image_radius": 10,
-        "use_content": true,
+        "use_content": false,
         "content_position": "center",
         "content_max_width": 340,
         "content_max_width_mobile": 340,
