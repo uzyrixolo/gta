@@ -226,4 +226,15 @@ h6, .h6 {
    `body` prefix: search.css loads after this inline block with an equal-
    specificity rule, so a bare class selector loses. */
 body .m-search-popup { z-index: 1003; }
+
+/* The popup panel paints with the global "main background" (#111 on this
+   site) but its text uses the default black, and the input renders white
+   text on a white field — so on open, nothing was readable. Give the panel
+   a white surface so the theme's default dark text reads correctly. */
+body .m-search-popup--wrapper { background-color: #FFFFFF; color: #111111; }
+body .m-search-popup [data-search-input] {
+  color: #111111; background-color: #FFFFFF; border: 1px solid rgba(17, 17, 17, 0.25);
+}
+body .m-search-popup [data-search-input]::placeholder { color: rgba(17, 17, 17, 0.5); }
+body .m-search-popup [data-search-input]:focus { border-color: #D71920; outline: none; }
 </style>
