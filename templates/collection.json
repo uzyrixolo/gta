@@ -14,26 +14,48 @@
       "blocks": {
         "cat_unisex": {
           "type": "category_tab",
-          "settings": { "collection": "unisex" }
+          "settings": {
+            "collection": "unisex",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM.png",
+            "label": ""
+          }
         },
         "cat_women": {
           "type": "category_tab",
-          "settings": { "collection": "women" }
+          "settings": {
+            "collection": "women",
+            "label": ""
+          }
         },
         "cat_kids": {
           "type": "category_tab",
-          "settings": { "collection": "kids" }
+          "settings": {
+            "collection": "kids",
+            "label": ""
+          }
         },
         "cat_headwear": {
           "type": "category_tab",
-          "settings": { "collection": "headwear" }
+          "settings": {
+            "collection": "headwear",
+            "label": ""
+          }
         },
         "cat_accessories": {
           "type": "category_tab",
-          "settings": { "collection": "accessories" }
+          "settings": {
+            "collection": "accessories",
+            "label": ""
+          }
         }
       },
-      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories"],
+      "block_order": [
+        "cat_unisex",
+        "cat_women",
+        "cat_kids",
+        "cat_headwear",
+        "cat_accessories"
+      ],
       "settings": {
         "container": "container",
         "layout": "inside",
