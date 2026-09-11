@@ -10,7 +10,7 @@
   <div class="gpl-ab-story__inner">
     {%- if s.photo != blank -%}
       <div class="gpl-ab-story__photo">
-        {{ s.photo | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 340px', widths: '340, 500, 700', alt: s.photo_name | default: s.photo.alt | escape }}
+        {{ s.photo | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, (max-width: 1200px) 45vw, 560px', widths: '340, 500, 700, 900, 1200', alt: s.photo_name | default: s.photo.alt | escape }}
         {%- if s.photo_name != blank or s.photo_role != blank -%}
           <div class="gpl-ab-story__nameplate">
             {%- if s.photo_name != blank -%}<p class="gpl-ab-story__nameplate-name">{{ s.photo_name }}</p>{%- endif -%}
@@ -50,7 +50,9 @@
     width: min(1200px, calc(100% - clamp(28px, 3.2vw, 48px)));
     margin: 0 auto;
     display: grid;
-    grid-template-columns: {% if s.photo != blank %}340px 1fr{% else %}1fr{% endif %};
+    {%- comment -%} Near-even split: a fixed narrow photo column left the image
+       dwarfed by the text and floating in dead space. {%- endcomment -%}
+    grid-template-columns: {% if s.photo != blank %}minmax(0, 1fr) minmax(0, 1.15fr){% else %}1fr{% endif %};
     gap: clamp(28px, 3.5vw, 56px);
     align-items: center;
   }
@@ -101,7 +103,7 @@
 
   @media screen and (max-width: 749px) {
     #gpl-ab-story-{{ section.id }} .gpl-ab-story__inner { grid-template-columns: 1fr; }
-    #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo img { aspect-ratio: 3 / 2; max-width: 320px; margin: 0 auto; }
+    #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo img { max-width: 420px; margin: 0 auto; }
   }
 {% endstyle %}
 
