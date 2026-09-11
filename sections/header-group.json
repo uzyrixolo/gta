@@ -73,25 +73,9 @@
         "cat_accessories": {
           "type": "category_tile",
           "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "accessories" }
-        },
-        "cat_budget": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "budget" }
-        },
-        "cat_midrange": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "mid-range" }
-        },
-        "cat_premium": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "premium" }
-        },
-        "cat_luxury": {
-          "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "quality", "collection": "luxury" }
         }
       },
-      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories", "cat_budget", "cat_midrange", "cat_premium", "cat_luxury"],
+      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories"],
       "settings": {
         "logo_text_1": "GTA",
         "logo_text_2": "PRINT LAB",
