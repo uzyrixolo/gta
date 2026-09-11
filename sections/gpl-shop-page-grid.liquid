@@ -8,6 +8,10 @@
 
 {%- assign s = section.settings -%}
 {%- assign source = collections[s.source_collection] | default: collections['ready-made'] | default: collections['all'] -%}
+{%- comment -%} With nothing in the collection there is nothing to filter, so the
+   sidebar is skipped entirely rather than showing empty filter groups. {%- endcomment -%}
+{%- assign has_products = false -%}
+{%- if source.products_count > 0 -%}{%- assign has_products = true -%}{%- endif -%}
 {%- assign taxonomy_handles = 'unisex,women,kids,headwear,accessories' | split: ',' -%}
 
 {%- assign type_names = '' -%}
@@ -48,7 +52,8 @@
   {%- comment -%} Stable anchor: the section's own id is generated as
      "template--<id>__<key>", so it can't be linked to from theme settings. {%- endcomment -%}
   <span id="shop-grid" class="gpl-shop-grid__anchor" aria-hidden="true"></span>
-  <div class="gpl-shop-grid__inner">
+  <div class="gpl-shop-grid__inner{% unless has_products %} gpl-shop-grid__inner--no-sidebar{% endunless %}">
+    {%- if has_products -%}
     <aside class="gpl-shop-grid__sidebar">
       <div class="gpl-shop-grid__sidebar-head">
         <h3>Filter</h3>
@@ -132,13 +137,16 @@
         </div>
       {%- endif -%}
     </aside>
+    {%- endif -%}
 
     <div class="gpl-shop-grid__main">
       <div class="gpl-shop-grid__toolbar">
-        <button type="button" class="gpl-shop-grid__filter-toggle" data-filter-toggle>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-          Filter
-        </button>
+        {%- if has_products -%}
+          <button type="button" class="gpl-shop-grid__filter-toggle" data-filter-toggle>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            Filter
+          </button>
+        {%- endif -%}
         <span class="gpl-shop-grid__result-count" data-result-count></span>
         <label class="gpl-shop-grid__sort">
           Sort by
@@ -244,6 +252,8 @@
     gap: clamp(24px, 2.5vw, 40px);
     align-items: start;
   }
+  /* Declared after the base rule so it wins the cascade. */
+  #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__inner--no-sidebar { grid-template-columns: minmax(0, 1fr); }
   #gpl-shop-grid-{{ section.id }} .gpl-shop-grid__sidebar {
     position: sticky;
     top: 24px;

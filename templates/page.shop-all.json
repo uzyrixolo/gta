@@ -41,6 +41,7 @@
       "settings": {
         "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_01_32_08_AM.webp",
         "image_position": "center right",
+        "image_position_mobile": "50% center",
         "scrim_strength": 90,
         "min_height": 620,
         "min_height_mobile": 680,
