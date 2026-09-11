@@ -146,6 +146,9 @@
     align-items: center;
   }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--trio .gpl-ab-split__paragraph { max-width: 100%; }
+  @media screen and (max-width: 989px) {
+    #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--trio { grid-template-columns: minmax(0, 1fr); }
+  }
 
   @media screen and (max-width: 749px) {
     #gpl-ab-split-{{ section.id }} .gpl-ab-split__row,
