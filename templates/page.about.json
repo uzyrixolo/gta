@@ -220,13 +220,16 @@
         }
       },
       "block_order": [
-        "cta_order",
-        "cta_contact"
+        "cta_order"
       ],
       "settings": {
+        "layout": "bar",
+        "bar_logo_1": "GTA",
+        "bar_logo_2": "PRINT LAB",
+        "bar_tagline": "Custom Apparel. Bigger Possibilities.",
         "heading": "Built in Toronto.",
         "heading_accent": "Worn Everywhere.",
-        "text": "Custom apparel. Bigger possibilities. Let's create something great together.",
+        "text": "",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
       }
