@@ -93,6 +93,10 @@
     </nav>
 
     <div class="gpl-header__actions">
+      <button type="button" class="gpl-header__icon-btn gpl-header__icon-btn--search" data-open-search-popup aria-label="{{ 'general.search.placeholder_short' | t }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+
       {%- if shop.customer_accounts_enabled or shop.customer_accounts_optional -%}
         <a href="{{ routes.account_url }}" class="gpl-header__icon-btn gpl-header__icon-btn--account" aria-label="{{ 'layout.customer.account' | t }}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
