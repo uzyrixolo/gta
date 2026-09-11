@@ -1,16 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "ab_hero": {
       "type": "gpl-gd-hero",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "background_image": "shopify://shop_images/gta-about.webp",
         "image_position": "center right",
+        "image_position_mobile": "44% center",
         "scrim_strength": 75,
         "min_height": 620,
         "min_height_mobile": 680,
-        "badge_text": "",
         "eyebrow": "About GTA Print Lab",
         "heading_line1": "About",
         "heading_line2": "Us",
@@ -81,7 +88,13 @@
           }
         }
       },
-      "block_order": ["st_years", "st_mfg", "st_factory", "st_toronto", "st_quality"],
+      "block_order": [
+        "st_years",
+        "st_mfg",
+        "st_factory",
+        "st_toronto",
+        "st_quality"
+      ],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#0E0E0E"
@@ -113,7 +126,10 @@
           }
         }
       },
-      "block_order": ["row_toronto", "row_production"],
+      "block_order": [
+        "row_toronto",
+        "row_production"
+      ],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#FFFFFF"
@@ -150,7 +166,11 @@
           }
         }
       },
-      "block_order": ["col_mission", "col_goals", "col_team"],
+      "block_order": [
+        "col_mission",
+        "col_goals",
+        "col_team"
+      ],
       "settings": {
         "color_accent": "#D71920",
         "color_background": "#0E0E0E"
@@ -178,7 +198,10 @@
           }
         }
       },
-      "block_order": ["cta_order", "cta_contact"],
+      "block_order": [
+        "cta_order",
+        "cta_contact"
+      ],
       "settings": {
         "heading": "Built in Toronto.",
         "heading_accent": "Worn Everywhere.",
@@ -188,5 +211,12 @@
       }
     }
   },
-  "order": ["ab_hero", "ab_story", "ab_stats", "ab_split", "ab_mission", "ab_cta"]
+  "order": [
+    "ab_hero",
+    "ab_story",
+    "ab_stats",
+    "ab_split",
+    "ab_mission",
+    "ab_cta"
+  ]
 }

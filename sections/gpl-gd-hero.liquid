@@ -302,6 +302,9 @@
       #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img--desktop { display: none; }
       #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img--mobile { display: block; }
     {%- endif -%}
+    {%- if s.image_position_mobile != blank -%}
+      #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img { object-position: {{ s.image_position_mobile }}; }
+    {%- endif -%}
     #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__subheading { max-width: 100%; }
     #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__paragraph { max-width: 100%; }
     #gpl-gd-hero-{{ section_id }} .gpl-gd-btn { flex: 1 1 100%; }
@@ -327,6 +330,7 @@
       { "value": "center center", "label": "Centre" },
       { "value": "center right", "label": "Right" }
     ] },
+    { "type": "text", "id": "image_position_mobile", "label": "Image focal point (mobile)", "info": "Optional CSS object-position for phones, e.g. \"44% center\". Leave blank to use the desktop focal point." },
     { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 90 },
     { "type": "range", "id": "min_height", "label": "Minimum height", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 620 },
     { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile)", "min": 280, "max": 800, "step": 10, "unit": "px", "default": 480 },
