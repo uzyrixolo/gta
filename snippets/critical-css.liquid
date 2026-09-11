@@ -222,6 +222,8 @@ h6, .h6 {
 
 /* The custom sticky header sits at z-index 999, but the theme's search
    popup ships at 100 — so the search input rendered underneath the header.
-   Match the cart drawer (1002) / mobile menu (1001) that already sit above it. */
-.m-search-popup { z-index: 1003; }
+   Match the cart drawer (1002) / mobile menu (1001) that already sit above it.
+   `body` prefix: search.css loads after this inline block with an equal-
+   specificity rule, so a bare class selector loses. */
+body .m-search-popup { z-index: 1003; }
 </style>
