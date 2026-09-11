@@ -85,7 +85,9 @@
   .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-image {
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    /* Matches the category artwork's own proportions (340x553) so each tile
+       shows the whole image — no square crop, no letterbox bars. */
+    aspect-ratio: 340 / 553;
     border-radius: 10px;
     overflow: hidden;
     background: #F1F1F1;
@@ -96,7 +98,7 @@
   .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab-placeholder {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     fill: rgba(17, 17, 17, 0.2);
   }
   .m-collection-page-header--{{ section.id }} .m-collection-page-header__category-tab:hover .m-collection-page-header__category-tab-image {
