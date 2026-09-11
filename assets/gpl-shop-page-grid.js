@@ -124,6 +124,12 @@
       var visible = filtered.slice(0, state.visible);
 
       gridList.innerHTML = visible.map(cardHtml).join('');
+      if (filtered.length === 0) {
+        var emptyMessage = products.length === 0
+          ? emptyState.dataset.emptyCollection
+          : emptyState.dataset.emptyFiltered;
+        if (emptyMessage) emptyState.textContent = emptyMessage;
+      }
       emptyState.hidden = filtered.length > 0;
       resultCount.textContent = filtered.length + ' product' + (filtered.length === 1 ? '' : 's');
       loadMoreBtn.hidden = state.visible >= filtered.length;

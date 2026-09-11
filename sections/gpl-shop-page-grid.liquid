@@ -151,7 +151,15 @@
       </div>
 
       <div class="gpl-shop-grid__grid" data-grid-list></div>
-      <p class="gpl-shop-grid__empty" data-empty-state hidden>No products match these filters.</p>
+      {%- comment -%} Two cases: the collection has nothing in it yet, vs. filters
+         excluding everything. JS swaps between them as filters change. {%- endcomment -%}
+      <p
+        class="gpl-shop-grid__empty"
+        data-empty-state
+        data-empty-collection="{{ s.empty_collection_text | escape }}"
+        data-empty-filtered="{{ s.empty_filtered_text | escape }}"
+        hidden
+      >{% if source.products_count == 0 %}{{ s.empty_collection_text }}{% else %}{{ s.empty_filtered_text }}{% endif %}</p>
 
       <div class="gpl-shop-grid__load-more-wrap">
         <button type="button" class="gpl-shop-grid__load-more" data-load-more hidden>Load More Products</button>
@@ -455,8 +463,11 @@
   "tag": "section",
   "class": "gpl-section-shop-page-grid",
   "settings": [
-    { "type": "collection", "id": "source_collection", "label": "Product source", "info": "Defaults to the \"Shop All\" collection if left blank." },
+    { "type": "collection", "id": "source_collection", "label": "Product source", "info": "Defaults to the \"Ready Made\" collection if left blank." },
     { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "header", "content": "Empty states" },
+    { "type": "text", "id": "empty_collection_text", "label": "When the collection is empty", "default": "New ready-made items are coming soon — check back shortly." },
+    { "type": "text", "id": "empty_filtered_text", "label": "When filters match nothing", "default": "No products match these filters." },
     { "type": "header", "content": "Delivery promo card" },
     { "type": "html", "id": "promo_icon", "label": "Icon (SVG code)" },
     { "type": "text", "id": "promo_title", "label": "Title", "default": "Local GTA Delivery" },
