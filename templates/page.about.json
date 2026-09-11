@@ -24,9 +24,9 @@
         "heading_line3": "",
         "subheading": "More Than Printing. A Higher Standard.",
         "paragraph": "<p>At GTA Print Lab, we turn ideas into apparel that makes an impact. We combine creativity, quality and speed to help individuals, businesses and brands bring their vision to life.</p>",
-        "button_1_text": "Start Your Order",
+        "button_1_text": "",
         "button_1_link": "/collections/all",
-        "button_2_text": "Get a Quote",
+        "button_2_text": "",
         "button_2_link": "/pages/quote",
         "promise_heading": "Our Promise",
         "color_accent": "#d71920",
@@ -36,13 +36,16 @@
     "ab_story": {
       "type": "gpl-ab-story",
       "settings": {
-        "eyebrow": "Our Story",
-        "heading": "From Vision to a Global Apparel Powerhouse",
+        "eyebrow": "",
+        "heading": "Our",
+        "heading_accent": "Story",
+        "subheading": "From Vision to a Global Apparel Powerhouse",
         "paragraph": "<p>GTA Print Lab was founded by Didi Wambo, a visionary entrepreneur with over 10 years of experience in the custom apparel and manufacturing industry. What started in the United States has now grown into a Toronto-based company built on a simple belief — great apparel brings people, brands and communities together.</p><p>We relocated to Toronto to be closer to our growing Canadian customer base and tap into the incredible creativity, diversity and opportunity the city has to offer. Toronto is a global city, a hub for culture, fashion and business, and the perfect home for the next chapter of our journey.</p>",
         "quote": "Our mission is to empower people and brands through high-quality custom apparel, innovative solutions, and unmatched service.",
         "quote_attribution": "— Didi Wambo, Founder & CEO",
         "photo": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_21_11_AM.webp",
-        "photo_caption": "",
+        "photo_name": "Didi Wambo",
+        "photo_role": "Founder & CEO",
         "color_accent": "#d71920",
         "color_background": "#0e0e0e"
       }
@@ -126,11 +129,12 @@
             "heading": "Global Production,",
             "heading_accent": "Local Impact",
             "text": "<p>Didi Wambo has invested in his own dedicated manufacturing plant in Pakistan, giving GTA Print Lab full control over quality, production capacity and faster turnaround. With the ability to manufacture domestically and at our own overseas facility, we deliver the best of both worlds — high quality, cost efficiency and unmatched flexibility.</p>",
+            "layout": "text_between",
             "reverse": true,
             "image_1": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_11_06_AM_de5d81fc-8c6d-40ce-9573-2fa7ff5dcf20.png",
             "overlay_text": "",
             "image_2": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_11_06_AM_03eb2c6f-50a4-450d-8454-13dfbaa37d53.png",
-            "badge_text": ""
+            "badge_text": "Our Factory Pakistan"
           }
         }
       },
@@ -190,7 +194,7 @@
       ],
       "settings": {
         "color_accent": "#d71920",
-        "color_background": "#0e0e0e"
+        "color_background": "#ffffff"
       }
     },
     "ab_cta": {

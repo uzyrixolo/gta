@@ -11,7 +11,14 @@
     {%- assign bs = block.settings -%}
     {%- assign has_media = false -%}
     {%- if bs.image_1 != blank or bs.image_2 != blank -%}{%- assign has_media = true -%}{%- endif -%}
-    <div class="gpl-ab-split__row{% if bs.reverse %} gpl-ab-split__row--reverse{% endif %}{% unless has_media %} gpl-ab-split__row--text-only{% endunless %}" {{ block.shopify_attributes }}>
+    {%- comment -%} "Text between" needs both photos, otherwise fall back to the
+       standard text/media split. {%- endcomment -%}
+    {%- assign is_trio = false -%}
+    {%- if bs.layout == 'text_between' and bs.image_1 != blank and bs.image_2 != blank -%}
+      {%- assign is_trio = true -%}
+    {%- endif -%}
+
+    {%- capture text_block -%}
       <div class="gpl-ab-split__text">
         {%- if bs.eyebrow != blank -%}<p class="gpl-ab-split__eyebrow">{{ bs.eyebrow }}</p>{%- endif -%}
         {%- if bs.heading != blank -%}
@@ -21,27 +28,47 @@
         {%- endif -%}
         {%- if bs.text != blank -%}<div class="gpl-ab-split__paragraph">{{ bs.text }}</div>{%- endif -%}
       </div>
-      {%- if has_media -%}
-        <div class="gpl-ab-split__media">
-          {%- if bs.image_1 != blank -%}
-            <div class="gpl-ab-split__media-item">
-              {{ bs.image_1 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_1.alt | escape }}
-              {%- if bs.overlay_text != blank -%}
-                <span class="gpl-ab-split__overlay">{{ bs.overlay_text }}</span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-          {%- if bs.image_2 != blank -%}
-            <div class="gpl-ab-split__media-item">
-              {{ bs.image_2 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_2.alt | escape }}
-              {%- if bs.badge_text != blank -%}
-                <span class="gpl-ab-split__badge">{{ bs.badge_text }}</span>
-              {%- endif -%}
-            </div>
+    {%- endcapture -%}
+
+    {%- capture media_1 -%}
+      {%- if bs.image_1 != blank -%}
+        <div class="gpl-ab-split__media-item">
+          {{ bs.image_1 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_1.alt | escape }}
+          {%- if bs.overlay_text != blank -%}
+            <span class="gpl-ab-split__overlay">{{ bs.overlay_text }}</span>
           {%- endif -%}
         </div>
       {%- endif -%}
-    </div>
+    {%- endcapture -%}
+
+    {%- capture media_2 -%}
+      {%- if bs.image_2 != blank -%}
+        <div class="gpl-ab-split__media-item">
+          {{ bs.image_2 | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(max-width: 749px) 100vw, 480px', widths: '360, 480, 600, 700', alt: bs.image_2.alt | escape }}
+          {%- if bs.badge_text != blank -%}
+            <span class="gpl-ab-split__badge">{{ bs.badge_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- if is_trio -%}
+      <div class="gpl-ab-split__row gpl-ab-split__row--trio" {{ block.shopify_attributes }}>
+        {{ media_1 }}
+        {{ text_block }}
+        {{ media_2 }}
+      </div>
+    {%- else -%}
+      <div class="gpl-ab-split__row{% if bs.reverse %} gpl-ab-split__row--reverse{% endif %}{% unless has_media %} gpl-ab-split__row--text-only{% endunless %}" {{ block.shopify_attributes }}>
+        {{ text_block }}
+        {%- if has_media -%}
+          <div class="gpl-ab-split__media">
+            {{ media_1 }}
+            {{ media_2 }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   {%- endfor -%}
 </section>
 
@@ -109,10 +136,16 @@
     border-radius: 10px;
   }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__badge {
-    position: absolute; top: 10px; left: 10px; background: var(--gpl-accent); color: #FFFFFF;
+    position: absolute; top: 10px; right: 10px; background: var(--gpl-accent); color: #FFFFFF;
     font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;
     padding: 5px 10px; border-radius: 4px;
   }
+  /* Photo | text | photo */
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--trio {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr) minmax(0, 1fr);
+    align-items: center;
+  }
+  #gpl-ab-split-{{ section.id }} .gpl-ab-split__row--trio .gpl-ab-split__paragraph { max-width: 100%; }
 
   @media screen and (max-width: 749px) {
     #gpl-ab-split-{{ section.id }} .gpl-ab-split__row,
@@ -141,6 +174,10 @@
         { "type": "text", "id": "heading", "label": "Heading" },
         { "type": "text", "id": "heading_accent", "label": "Heading — accent word" },
         { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "select", "id": "layout", "label": "Layout", "default": "side", "options": [
+          { "value": "side", "label": "Text beside image(s)" },
+          { "value": "text_between", "label": "Text between two images" }
+        ] },
         { "type": "checkbox", "id": "reverse", "label": "Image on left", "default": false },
         { "type": "image_picker", "id": "image_1", "label": "Image 1" },
         { "type": "text", "id": "overlay_text", "label": "Image 1 — overlay word", "info": "Optional large text overlaid on image 1." },
