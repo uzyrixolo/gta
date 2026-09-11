@@ -46,8 +46,10 @@
     gap: clamp(28px, 3.5vw, 56px);
     align-items: center;
   }
+  /* No fixed ratio: the photo keeps its own proportions, so portrait or
+     landscape uploads both show in full instead of being cropped. */
   #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo img {
-    width: 100%; border-radius: 12px; display: block; aspect-ratio: 4 / 5; object-fit: cover;
+    width: 100%; height: auto; border-radius: 12px; display: block;
   }
   #gpl-ab-story-{{ section.id }} .gpl-ab-story__photo-caption {
     margin: 10px 0 0; color: #F2F2F2; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;

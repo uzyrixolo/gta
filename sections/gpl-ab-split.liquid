@@ -96,8 +96,10 @@
     grid-template-columns: 1fr 1fr;
   }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__media-item { position: relative; }
+  /* No fixed ratio: these photos vary between wide and portrait, so a forced
+     4:3 box cropped every one of them. Each keeps its own proportions. */
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__media-item img {
-    width: 100%; height: 100%; border-radius: 10px; display: block; aspect-ratio: 4 / 3; object-fit: cover;
+    width: 100%; height: auto; border-radius: 10px; display: block;
   }
   #gpl-ab-split-{{ section.id }} .gpl-ab-split__overlay {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
