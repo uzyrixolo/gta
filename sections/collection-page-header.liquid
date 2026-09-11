@@ -11,10 +11,17 @@
     assign show_breadcrumb = false
   endif
 
+  comment
+    Only "Custom banner" blocks set the page background. Without the type
+    check, a category tab's image was also picked up as this page's banner
+    whenever the tab pointed at the collection being viewed.
+  endcomment
   for block in section.blocks
-    assign selected_collection = collections[block.settings.collection]
-    if selected_collection.handle == collection.handle
-      assign bg_image = block.settings.image
+    if block.type == 'banner'
+      assign selected_collection = collections[block.settings.collection]
+      if selected_collection.handle == collection.handle
+        assign bg_image = block.settings.image
+      endif
     endif
   endfor
 
