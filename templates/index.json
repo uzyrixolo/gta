@@ -496,6 +496,7 @@
         "step_print": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/delivery_fdc1632f-3e83-48bf-80da-91c406d5bc82.png",
             "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
             "title": "We Print",
             "description": "Using premium equipment and quality materials, we print and inspect every item with care.",
