@@ -474,6 +474,7 @@
         "step_upload": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/delivery.png",
             "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 15.5a3.8 3.8 0 0 0-.8-7.5A5.6 5.6 0 0 0 6.4 9.4 3.9 3.9 0 0 0 7 17h3\"></path><path d=\"M12 21v-8\"></path><path d=\"M9 16l3-3 3 3\"></path></svg>",
             "title": "Upload Design",
             "description": "Upload your logo, artwork or ideas directly on our site. We accept all file types.",
@@ -484,6 +485,7 @@
         "step_approve": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/delivery_c620e1ec-2c9b-4eb7-9e53-c5d8b77e5544.png",
             "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M8 12.2l2.7 2.8L16 9.6\"></path></svg>",
             "title": "Approve Artwork",
             "description": "We create a digital mockup and send it to you for approval. You approve it, we get to work!",
@@ -504,6 +506,7 @@
         "step_deliver": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/delivery_7ed87441-22b7-43a9-b8e7-69866e906202.png",
             "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"></path><path d=\"M14 10h3.5l2.5 3v3h-6z\"></path><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"></circle><circle cx=\"17\" cy=\"18\" r=\"1.8\"></circle><path d=\"M4 10H1M4 13H2\"></path></svg>",
             "title": "Pickup or Delivery",
             "description": "Pick up in-store or choose local GTA delivery or nationwide shipping across Canada.",
