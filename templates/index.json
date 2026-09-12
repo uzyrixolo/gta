@@ -241,9 +241,9 @@
       "name": "GPL Delivery Speed",
       "settings": {
         "heading": "Choose Your Delivery Speed",
-        "heading_color": "#FFFFFF",
+        "heading_color": "#ffffff",
         "section_bg_color": "#111111",
-        "arrow_color": "#D71920",
+        "arrow_color": "#d71920",
         "card_radius": 4,
         "card_gap": 16,
         "padding_top": 56,
@@ -257,49 +257,56 @@
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_49_09_PM.png",
-            "label": "T-Shrts"
+            "label": "T-Shrts",
+            "link": ""
           }
         },
         "product_MfjpfX": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_53_02_PM.png",
-            "label": "hoodies"
+            "label": "hoodies",
+            "link": ""
           }
         },
         "product_3G3XCc": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_54_05_PM.png",
-            "label": "golf shirts"
+            "label": "golf shirts",
+            "link": ""
           }
         },
         "product_XazDFk": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_56_13_PM.png",
-            "label": "hats & toques"
+            "label": "hats & toques",
+            "link": ""
           }
         },
         "product_YDUQ7a": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_58_02_PM.png",
-            "label": "jackets"
+            "label": "jackets",
+            "link": ""
           }
         },
         "product_nynr7h": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_59_27_PM.png",
-            "label": "team uniforms"
+            "label": "team uniforms",
+            "link": ""
           }
         },
         "product_VaMVEQ": {
           "type": "product",
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_10_05_29_PM.png",
-            "label": "promo products"
+            "label": "promo products",
+            "link": ""
           }
         }
       },
@@ -326,12 +333,13 @@
         "reason_toronto": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v4M12 6l-2 5h4z\"/><path d=\"M10 11h4l1.5 10h-7z\"/><path d=\"M3 21h18\"/><path d=\"M4 21v-7h3v7M17 21v-9h3v9\"/></svg>",
+            "image": "shopify://shop_images/how.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v4M12 6l-2 5h4z\"></path><path d=\"M10 11h4l1.5 10h-7z\"></path><path d=\"M3 21h18\"></path><path d=\"M4 21v-7h3v7M17 21v-9h3v9\"></path></svg>",
             "title_accent": "Toronto",
             "title_dark": "-Based",
             "title_inline": true,
             "description": "Proudly based in Toronto. Local production, local jobs, and local service you can count on.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z\"/><circle cx=\"12\" cy=\"10\" r=\"2.6\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"2.6\"></circle></svg>",
             "foot_line_1": "Local pride.",
             "foot_line_2": "Local service."
           }
@@ -339,12 +347,13 @@
         "reason_turnaround": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2\"/><path d=\"M9 2h6\"/><path d=\"M12 2v3\"/></svg>",
+            "image": "shopify://shop_images/how_dae81ed3-6803-43e2-8172-1a1cdd566134.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13\" r=\"8\"></circle><path d=\"M12 9v4l2.5 2\"></path><path d=\"M9 2h6\"></path><path d=\"M12 2v3\"></path></svg>",
             "title_accent": "Fastest",
             "title_dark": "Turnaround",
             "title_inline": false,
             "description": "Same-day and next-day printing options to meet your tightest deadlines. When you need it, we make it happen.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2 4 14h6l-1 8 9-12h-6z\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2 4 14h6l-1 8 9-12h-6z\"></path></svg>",
             "foot_line_1": "Same day.",
             "foot_line_2": "Next day."
           }
@@ -352,12 +361,13 @@
         "reason_quality": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 8l4 3 5-7 5 7 4-3-2 11H5z\"/><path d=\"M5 21h14\"/></svg>",
+            "image": "shopify://shop_images/how_2f6d5ce8-4c8b-47d8-a269-3cc147b4c284.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 8l4 3 5-7 5 7 4-3-2 11H5z\"></path><path d=\"M5 21h14\"></path></svg>",
             "title_accent": "Premium",
             "title_dark": "Quality",
             "title_inline": false,
             "description": "Top-of-the-line equipment, premium materials and expert craftsmanship ensure every item looks amazing and lasts long.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"10\" r=\"7\"/><path d=\"M9 10l2 2 4-4\"/><path d=\"M8 16l-1 6 5-2.5L17 22l-1-6\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"10\" r=\"7\"></circle><path d=\"M9 10l2 2 4-4\"></path><path d=\"M8 16l-1 6 5-2.5L17 22l-1-6\"></path></svg>",
             "foot_line_1": "Quality you can see.",
             "foot_line_2": "Quality you can feel."
           }
@@ -365,12 +375,13 @@
         "reason_minimums": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "image": "shopify://shop_images/how_ac75b10c-98f3-420d-8374-6ca755df59c6.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
             "title_accent": "No",
             "title_dark": "Minimums",
             "title_inline": false,
             "description": "Order just one piece or thousands. We make custom easy for everyone.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
             "foot_line_1": "1 piece or",
             "foot_line_2": "10,000 pieces."
           }
@@ -378,12 +389,13 @@
         "reason_volume": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5 3.5 11.5v-8h8z\"/><circle cx=\"8\" cy=\"8\" r=\"1.6\"/></svg>",
+            "image": "shopify://shop_images/how_ac75b10c-98f3-420d-8374-6ca755df59c6.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.5 12.5 12.5 20.5 3.5 11.5v-8h8z\"></path><circle cx=\"8\" cy=\"8\" r=\"1.6\"></circle></svg>",
             "title_accent": "Volume",
             "title_dark": "Discounts",
             "title_inline": false,
             "description": "The more you order, the more you save. Great pricing for teams, businesses and events.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 15l6-6\"/><circle cx=\"9.2\" cy=\"9.2\" r=\"1.2\"/><circle cx=\"14.8\" cy=\"14.8\" r=\"1.2\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M9 15l6-6\"></path><circle cx=\"9.2\" cy=\"9.2\" r=\"1.2\"></circle><circle cx=\"14.8\" cy=\"14.8\" r=\"1.2\"></circle></svg>",
             "foot_line_1": "More quantity.",
             "foot_line_2": "More savings."
           }
@@ -391,12 +403,13 @@
         "reason_delivery": {
           "type": "reason",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"/><path d=\"M14 10h3.5l2.5 3v3h-6z\"/><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17\" cy=\"18\" r=\"1.8\"/><path d=\"M4 10H1M4 13H2\"/></svg>",
+            "image": "shopify://shop_images/how_bfa75a17-7f2c-4bad-ae77-71ff7a0712a2.png",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"></path><path d=\"M14 10h3.5l2.5 3v3h-6z\"></path><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"></circle><circle cx=\"17\" cy=\"18\" r=\"1.8\"></circle><path d=\"M4 10H1M4 13H2\"></path></svg>",
             "title_accent": "Delivery",
             "title_dark": "",
             "title_inline": false,
             "description": "Fast local delivery across the GTA and reliable shipping across Canada. We deliver on time, every time.",
-            "foot_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18\"/><path d=\"M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z\"/></svg>",
+            "foot_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M3 12h18\"></path><path d=\"M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z\"></path></svg>",
             "foot_line_1": "GTA delivery.",
             "foot_line_2": "Canada wide shipping."
           }
@@ -404,7 +417,7 @@
         "trust_customers": {
           "type": "trust",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8.5 14a4.2 4.2 0 0 0 7 0\"/><circle cx=\"9.2\" cy=\"9.8\" r=\"1\"/><circle cx=\"14.8\" cy=\"9.8\" r=\"1\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M8.5 14a4.2 4.2 0 0 0 7 0\"></path><circle cx=\"9.2\" cy=\"9.8\" r=\"1\"></circle><circle cx=\"14.8\" cy=\"9.8\" r=\"1\"></circle></svg>",
             "title": "Thousands of happy customers",
             "description": "Trusted by businesses, teams & organizations across Toronto."
           }
@@ -412,7 +425,7 @@
         "trust_guarantee": {
           "type": "trust",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z\"></path><path d=\"M9 12l2 2 4-4\"></path></svg>",
             "title": "Quality guaranteed",
             "description": "Every order is inspected for quality before it leaves our facility."
           }
@@ -420,7 +433,7 @@
         "trust_support": {
           "type": "trust",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"/><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"/><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"/><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 13v-1a8 8 0 0 1 16 0v1\"></path><path d=\"M4 13h3v5H5.5A1.5 1.5 0 0 1 4 16.5z\"></path><path d=\"M20 13h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z\"></path><path d=\"M17 18v1.5a2 2 0 0 1-2 2h-3\"></path></svg>",
             "title": "Support you can count on",
             "description": "Our team is here to help you every step of the way."
           }
@@ -445,14 +458,14 @@
         "tagline": "We don't just print. We deliver",
         "tagline_accent": "Excellence.",
         "show_promise": true,
-        "promise_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"/></svg>",
+        "promise_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"></path></svg>",
         "promise_line_1": "Fast. Reliable. Premium.",
         "promise_line_2": "That's the GTA Print Lab promise.",
         "button_text": "Get Started Today",
         "button_link": "",
-        "button_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"/></svg>",
-        "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "button_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path><path d=\"M4 11.5H1M4.5 14.5H2M5 17.5H3\"></path></svg>",
+        "color_accent": "#d71920",
+        "color_background": "#0a0a0a"
       }
     },
     "image_with_text_UwCU9T": {
@@ -461,47 +474,47 @@
         "step_upload": {
           "type": "step",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 15.5a3.8 3.8 0 0 0-.8-7.5A5.6 5.6 0 0 0 6.4 9.4 3.9 3.9 0 0 0 7 17h3\"/><path d=\"M12 21v-8\"/><path d=\"M9 16l3-3 3 3\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 15.5a3.8 3.8 0 0 0-.8-7.5A5.6 5.6 0 0 0 6.4 9.4 3.9 3.9 0 0 0 7 17h3\"></path><path d=\"M12 21v-8\"></path><path d=\"M9 16l3-3 3 3\"></path></svg>",
             "title": "Upload Design",
             "description": "Upload your logo, artwork or ideas directly on our site. We accept all file types.",
-            "chip_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>",
+            "chip_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M12 7v5l3 2\"></path></svg>",
             "chip_text": "Takes Less Than 2 Minutes"
           }
         },
         "step_approve": {
           "type": "step",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8 12.2l2.7 2.8L16 9.6\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M8 12.2l2.7 2.8L16 9.6\"></path></svg>",
             "title": "Approve Artwork",
             "description": "We create a digital mockup and send it to you for approval. You approve it, we get to work!",
-            "chip_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>",
+            "chip_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M12 7v5l3 2\"></path></svg>",
             "chip_text": "Usually Within 1 Hour"
           }
         },
         "step_print": {
           "type": "step",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
             "title": "We Print",
             "description": "Using premium equipment and quality materials, we print and inspect every item with care.",
-            "chip_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>",
+            "chip_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M12 7v5l3 2\"></path></svg>",
             "chip_text": "Fast & High Quality"
           }
         },
         "step_deliver": {
           "type": "step",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"/><path d=\"M14 10h3.5l2.5 3v3h-6z\"/><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17\" cy=\"18\" r=\"1.8\"/><path d=\"M4 10H1M4 13H2\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 7h8v9H6z\"></path><path d=\"M14 10h3.5l2.5 3v3h-6z\"></path><circle cx=\"8.5\" cy=\"18\" r=\"1.8\"></circle><circle cx=\"17\" cy=\"18\" r=\"1.8\"></circle><path d=\"M4 10H1M4 13H2\"></path></svg>",
             "title": "Pickup or Delivery",
             "description": "Pick up in-store or choose local GTA delivery or nationwide shipping across Canada.",
-            "chip_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>",
+            "chip_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"></circle><path d=\"M12 7v5l3 2\"></path></svg>",
             "chip_text": "Delivered Your Way"
           }
         },
         "feature_speed": {
           "type": "feature",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"/><path d=\"M12 14.5l4-4\"/><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3.5 17a9 9 0 1 1 17 0z\"></path><path d=\"M12 14.5l4-4\"></path><circle cx=\"12\" cy=\"15.5\" r=\"1.4\"></circle></svg>",
             "title": "Fast Turnaround",
             "description": "Same-day & next-day printing options available."
           }
@@ -509,7 +522,7 @@
         "feature_quality": {
           "type": "feature",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"/><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l7.5 3v6c0 4.6-3.2 8.1-7.5 9.4C7.7 20.1 4.5 16.6 4.5 12V6z\"></path><path d=\"M8.7 12.2l2.4 2.4 4.2-4.6\"></path></svg>",
             "title": "Premium Quality",
             "description": "Top-quality prints that look great and last long."
           }
@@ -517,7 +530,7 @@
         "feature_minimums": {
           "type": "feature",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"/><path d=\"M9.2 9.7l2 2 3.6-3.9\"/><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"9.6\" r=\"6.6\"></circle><path d=\"M9.2 9.7l2 2 3.6-3.9\"></path><path d=\"M8 15.4 6.6 21.5 12 19l5.4 2.5-1.4-6.1\"></path></svg>",
             "title": "No Minimums",
             "description": "Order 1 piece or thousands — your choice."
           }
@@ -525,7 +538,7 @@
         "feature_delivery": {
           "type": "feature",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h8v9H7z\"/><path d=\"M15 10h3.5l2.5 3v3h-6z\"/><circle cx=\"9.5\" cy=\"18\" r=\"1.8\"/><circle cx=\"17.5\" cy=\"18\" r=\"1.8\"/><path d=\"M5 10H1.5M5 13H3M5 16H4\"/></svg>",
+            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 7h8v9H7z\"></path><path d=\"M15 10h3.5l2.5 3v3h-6z\"></path><circle cx=\"9.5\" cy=\"18\" r=\"1.8\"></circle><circle cx=\"17.5\" cy=\"18\" r=\"1.8\"></circle><path d=\"M5 10H1.5M5 13H3M5 16H4\"></path></svg>",
             "title": "Reliable Delivery",
             "description": "Fast local delivery across the GTA & shipping across Canada."
           }
@@ -549,9 +562,9 @@
         "intro": "From your idea to your front door — we make custom printing fast, easy and hassle-free.",
         "button_text": "Start Your Order Now",
         "button_link": "",
-        "button_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"/></svg>",
-        "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "button_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
+        "color_accent": "#d71920",
+        "color_background": "#0a0a0a"
       }
     },
     "collapsible_tabs_FRqwjp": {
