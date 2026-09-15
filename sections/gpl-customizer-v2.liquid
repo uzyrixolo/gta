@@ -1,5 +1,5 @@
 {%- comment -%}
-  GTA Print Lab — Quick-order customizer (Printeez-style)
+  GTA Print Lab — Customizer v2 (Printeez-style design workspace)
   Data contract: docs/customizer-data-model.md
   Requires product options: Color / Size / # of Print Areas
 {%- endcomment -%}
@@ -14,7 +14,7 @@
 {%- comment -%} Editor fonts (Google Fonts, open licences suitable for print) {%- endcomment -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bangers&family=Bebas+Neue&family=Black+Ops+One&family=Montserrat:wght@800&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Roboto+Condensed:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bangers&family=Bebas+Neue&family=Black+Ops+One&family=Dancing+Script:wght@700&family=Inter:wght@400;700&family=Lobster&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Oswald:wght@400;700&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&family=Russo+One&family=Teko:wght@700&display=swap">
 
 {%- capture variants_json -%}
 [{%- for v in product.variants -%}
@@ -167,142 +167,449 @@
 
 <section
   id="gpl-cz-{{ section.id }}"
-  class="gpl-cz"
+  class="gpl-cz gpl-cz--ws"
   x-data="gplQuickOrderV2('{{ section.id }}')"
+  :class="{'is-editing': sel.has, 'panel-edit': panel === 'edit'}"
 >
-  <div class="gpl-cz__inner">
-    {%- comment -%} ============ MEDIA / PREVIEW ============ {%- endcomment -%}
-    <div class="gpl-cz__media">
-      <div class="gpl-cz__stage" data-gpl-stage>
-        <img class="gpl-cz__mockup" src="{{ default_mockup | image_url: width: 1100 }}" :src="currentMockup()" alt="{{ product.title | escape }}" loading="eager">
-        <template x-for="area in areas" :key="area.name">
-          <div
-            class="gpl-cz__zone"
-            x-show="activePrintArea === area.name"
-            :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
-          >
-            <template x-if="!designHasObjects(activeColor, area.name)">
-              <div class="gpl-cz__zone-cta gpl-cz__zone-cta--v2">
-                <label class="gpl-cz__zone-btn">
-                  <span>Upload Image</span>
-                  <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff" hidden
-                    @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
-                </label>
-                <button type="button" class="gpl-cz__zone-btn" @click="addText()">Add Text</button>
-                <button type="button" class="gpl-cz__zone-btn" @click="addNumber()">Add Number</button>
+  <div class="gpl-cz__ws">
+    {%- comment -%} ============ RAIL ============ {%- endcomment -%}
+    <nav class="gpl-cz__rail" aria-label="Designer tools">
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'product'}" @click="panel = 'product'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 3 6l2 4 2-1v11h10V9l2 1 2-4-5-3a3 3 0 0 1-8 0Z"/></svg>
+        <span>Product</span>
+      </button>
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'layers'}" @click="panel = 'layers'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>
+        <span>Layers</span>
+        <em class="gpl-cz__rail-badge" x-show="objectsInArea().length" x-text="objectsInArea().length" x-cloak></em>
+      </button>
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'files'}" @click="panel = 'files'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M12 10v6M9 13l3-3 3 3"/></svg>
+        <span>Files</span>
+      </button>
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'text'}" @click="panel = 'text'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+        <span>Text</span>
+      </button>
+      <button type="button" class="gpl-cz__rail-btn gpl-cz__rail-btn--edit" :class="{'is-active': panel === 'edit'}" @click="panel = 'edit'" x-show="sel.has" x-cloak>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16v4Z"/><path d="m12 8 4 4"/></svg>
+        <span>Edit</span>
+      </button>
+    </nav>
+
+    {%- comment -%} ============ PANEL ============ {%- endcomment -%}
+    <aside class="gpl-cz__panel">
+      {%- comment -%} ---- Product ---- {%- endcomment -%}
+      <div class="gpl-cz__pane" x-show="panel === 'product'">
+        {%- assign title_parts = product.title | split: '|' -%}
+        <div class="gpl-cz__product">
+          <img class="gpl-cz__product-thumb" src="{{ default_mockup | image_url: width: 160 }}" width="56" height="56" alt="">
+          <div class="gpl-cz__product-copy">
+            {%- if title_parts.size > 1 -%}
+              <h1 class="gpl-cz__title">{{ title_parts[1] | strip }}</h1>
+              <p class="gpl-cz__subtitle">{{ title_parts[0] | strip }}</p>
+            {%- else -%}
+              <h1 class="gpl-cz__title">{{ product.title }}</h1>
+            {%- endif -%}
+            <p class="gpl-cz__subtitle"><span x-text="openColors.length + (openColors.length === 1 ? ' colour' : ' colours')"></span> · <span x-text="areas.length + ' print areas'"></span></p>
+          </div>
+        </div>
+
+        <template x-for="colorName in openColors" :key="colorName">
+          <div class="gpl-cz__card" :class="{'is-active': activeColor === colorName}">
+            <button type="button" class="gpl-cz__card-head" title="Show this colour on the stage"
+              @click="activeColor = colorName; previewColorName = null; syncVariantUrl()">
+              <span class="gpl-cz__grid-thumb" :style="swatchStyle(colorName)"></span>
+              <strong x-text="colorName"></strong>
+              <em x-text="unitsFor(colorName) ? unitsFor(colorName) + ' pcs' : ''"></em>
+              <span class="gpl-cz__card-remove" title="Remove colour" @click.stop="removeColor(colorName)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </span>
+            </button>
+            <div class="gpl-cz__sizes">
+              <template x-for="size in sizes" :key="size">
+                <div class="gpl-cz__size">
+                  <span class="gpl-cz__size-label" x-text="size"></span>
+                  <template x-if="availableFor(colorName, size)">
+                    <input type="number" min="0" inputmode="numeric" placeholder="0"
+                      :value="qty[key(colorName,size)] || ''"
+                      @input="setQty(colorName, size, $event.target.value)">
+                  </template>
+                  <template x-if="!availableFor(colorName, size)">
+                    <span class="gpl-cz__oos">Sold out</span>
+                  </template>
+                  <span class="gpl-cz__size-price" x-text="money(priceFor(colorName, size))"></span>
+                </div>
+              </template>
+            </div>
+            <div class="gpl-cz__card-areas">
+              <template x-for="area in areas" :key="area.name">
+                <button type="button" class="gpl-cz__card-area" :class="{'is-done': designHasObjects(colorName, area.name), 'is-active': activeColor === colorName && activePrintArea === area.name}"
+                  @click="activeColor = colorName; previewColorName = null; setArea(area.name)">
+                  <span x-text="area.name"></span>
+                  <svg x-show="designHasObjects(colorName, area.name)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+                </button>
+              </template>
+            </div>
+            <p class="gpl-cz__card-warn" x-show="!hasArtworkFor(colorName)" x-cloak>No design yet — add artwork or text on the stage.</p>
+            {%- if section.blocks.size > 0 -%}
+              <div class="gpl-cz__seg">
+                <template x-for="m in methods" :key="m.name">
+                  <button type="button" class="gpl-cz__seg-btn" :class="{'is-active': methodFor(colorName) === m.name}" :title="m.description" @click="setMethod(colorName, m.name)" x-text="m.name"></button>
+                </template>
               </div>
-            </template>
+            {%- endif -%}
           </div>
         </template>
-        {%- comment -%} Canvas stays interactive whenever the area has objects; when it's
-             empty, clicks fall through to the zone's Upload/Add buttons underneath. {%- endcomment -%}
-        <div class="gpl-cz__fwrap" :style="designHasObjects(activeColor, activePrintArea) ? '' : 'pointer-events:none'">
-          <canvas x-ref="fcanvas"></canvas>
-        </div>
-      </div>
-      <p class="gpl-cz__stage-hint">
-        Viewing: <strong x-text="(previewColorName || activeColor) + ' — ' + activePrintArea"></strong>
-      </p>
-    </div>
 
-    {%- comment -%} ============ FORM ============ {%- endcomment -%}
-    <div class="gpl-cz__form">
-      {%- assign title_parts = product.title | split: '|' -%}
-      {%- if title_parts.size > 1 -%}
-        <h1 class="gpl-cz__title">{{ title_parts[1] | strip }}</h1>
-        <p class="gpl-cz__subtitle">{{ title_parts[0] | strip }}</p>
-      {%- else -%}
-        <h1 class="gpl-cz__title">{{ product.title }}</h1>
-      {%- endif -%}
-      {%- if product.description != blank -%}
-        <div class="gpl-cz__desc">{{ product.description | strip_html | truncate: 180 }}</div>
-      {%- endif -%}
-
-      {%- comment -%} Step 1 — colors {%- endcomment -%}
-      <h2 class="gpl-cz__step">Step 1. Select Colours<span x-text="': ' + activeColor"></span></h2>
-      <div class="gpl-cz__swatches">
-        <template x-for="c in colors" :key="c.name">
-          <button type="button" class="gpl-cz__swatch"
-            :class="{'is-active': openColors.includes(c.name)}"
-            :title="c.name"
-            :style="swatchStyle(c.name)"
-            @click="toggleColor(c.name)"
-            @mouseenter="previewColor(c.name)"
-            @mouseleave="resetPreviewColor()"></button>
-        </template>
-      </div>
-
-      {%- comment -%} Step 2 — print areas {%- endcomment -%}
-      <h2 class="gpl-cz__step">Step 2. Select Print Areas<span x-text="': ' + activePrintArea"></span></h2>
-      <div class="gpl-cz__areas">
-        <template x-for="area in areas" :key="area.name">
-          <button type="button" class="gpl-cz__area"
-            :class="{'is-active': activePrintArea === area.name}"
-            @click="activePrintArea = area.name">
-            <span class="gpl-cz__area-thumb">
-              {%- comment -%} clip-art garment shapes, tinted to the selected colour {%- endcomment -%}
-              <svg viewBox="0 0 100 100" aria-hidden="true" :class="{'is-light': isLight(activeColor)}">
-                <path :d="shapePath(area.name)" :fill="hexFor(activeColor)" :transform="shapeTransform(area.name)"/>
-                <path :d="collarPath(area.name)" fill="none" stroke="rgba(0,0,0,.3)" stroke-width="2.5" x-show="collarPath(area.name)"/>
-              </svg>
-            </span>
-            <span class="gpl-cz__area-label" x-text="area.name"></span>
-            <span class="gpl-cz__area-x" x-show="designHasObjects(activeColor, area.name)"
-              @click.stop="clearArea(activeColor, area.name)" title="Clear this area">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-            </span>
+        <div class="gpl-cz__addcolor">
+          <button type="button" class="gpl-cz__addcolor-btn" @click="showAddColor = !showAddColor; colorSearch = ''">
+            <span>+ Add colour</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" :style="showAddColor ? 'transform:rotate(180deg)' : ''"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-        </template>
+          <div class="gpl-cz__addcolor-list" x-show="showAddColor" x-cloak>
+            <div class="gpl-cz__addcolor-tools">
+              <input type="search" placeholder="Search colours…" x-model="colorSearch">
+              <button type="button" class="gpl-cz__link" @click="addAllColors()">Select all</button>
+            </div>
+            <div class="gpl-cz__addcolor-items">
+              <template x-for="c in filteredColors()" :key="c.name">
+                <button type="button" class="gpl-cz__addcolor-item" @click="toggleColor(c.name); showAddColor = false; activeColor = c.name">
+                  <span class="gpl-cz__addcolor-swatch" :style="swatchStyle(c.name)"></span>
+                  <span x-text="c.name"></span>
+                </button>
+              </template>
+            </div>
+            <p class="gpl-cz__addcolor-empty" x-show="!filteredColors().length">No more colours</p>
+          </div>
+        </div>
+
+        {%- if s.learn_more_link != blank -%}
+          <p class="gpl-cz__learn">Not sure which printing technique to choose? <a href="{{ s.learn_more_link }}">Learn more</a></p>
+        {%- endif -%}
+        <label class="gpl-cz__notes-wrap">
+          <span class="gpl-cz__label">Notes for our designers <em>(optional)</em></span>
+          <textarea class="gpl-cz__notes" rows="2" maxlength="500"
+            placeholder="Ex: Remove background and change the black text to white"
+            x-model="designerNotes" @change="persist()"></textarea>
+        </label>
       </div>
 
-      <div class="gpl-cz__upload-box gpl-cz__tools">
-        <p class="gpl-cz__upload-title">
-          Design <em>(Required)</em>
-          <span class="gpl-cz__upload-for">
-            for <span class="gpl-cz__upload-for-swatch" :style="swatchStyle(activeColor)"></span><strong x-text="activeColor"></strong>&nbsp;— <strong x-text="activePrintArea"></strong>
-          </span>
-        </p>
-        <div class="gpl-cz__toolbar">
+      {%- comment -%} ---- Layers ---- {%- endcomment -%}
+      <div class="gpl-cz__pane" x-show="panel === 'layers'" x-cloak>
+        <div class="gpl-cz__pane-head">
+          <strong x-text="activePrintArea"></strong>
+          <span class="gpl-cz__muted" x-text="objectsInArea().length + (objectsInArea().length === 1 ? ' layer' : ' layers')"></span>
+          <span class="gpl-cz__pill" x-text="methodFor(activeColor)"></span>
+        </div>
+        <div class="gpl-cz__hist">
+          <button type="button" class="gpl-cz__ico" title="Undo (⌘Z)" :disabled="!canUndo()" @click="undo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-2"/></svg></button>
+          <button type="button" class="gpl-cz__ico" title="Redo (⇧⌘Z)" :disabled="!canRedo()" @click="redo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h2"/></svg></button>
+          <button type="button" class="gpl-cz__link gpl-cz__link--danger" x-show="objectsInArea().length" @click="clearArea(activeColor, activePrintArea)">Delete all</button>
+        </div>
+        <div class="gpl-cz__addrow">
           <label class="gpl-cz__btn gpl-cz__btn--tool">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <span>Upload Image</span>
-            <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff" hidden
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></svg>
+            <span>Upload</span>
+            <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff,.eps,.ai" hidden
               @change="uploadArtwork(activeColor, activePrintArea, $event.target.files[0]); $event.target.value=''">
           </label>
           <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addText()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
-            <span>Add Text</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+            <span>Text</span>
           </button>
           <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addNumber()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
-            <span>Add Number</span>
+            <span>Number</span>
           </button>
           <span class="gpl-cz__uploading" x-show="uploadingCount > 0" x-cloak>
             <svg class="gpl-cz__spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg> Uploading…
           </span>
         </div>
+        <div class="gpl-cz__layers">
+          <p class="gpl-cz__empty" x-show="!objectsInArea().length">No layers on <span x-text="activePrintArea"></span> yet. Upload artwork or add text to start.</p>
+          <template x-for="o in objectsInArea().slice().reverse()" :key="o.id">
+            <div class="gpl-cz__layer" :class="{'is-active': sel.id === o.id, 'is-locked': o.locked}">
+              <button type="button" class="gpl-cz__layer-main" @click="selectById(o.id)">
+                <span class="gpl-cz__layer-type" x-text="o.type === 'image' ? 'IMG' : 'TXT'"></span>
+                <span class="gpl-cz__layer-name" x-text="layerLabel(o)"></span>
+              </button>
+              <button type="button" class="gpl-cz__ico gpl-cz__ico--sm" title="Move up" @click="moveLayer(o.id, 'up')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/></svg></button>
+              <button type="button" class="gpl-cz__ico gpl-cz__ico--sm" title="Move down" @click="moveLayer(o.id, 'down')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 10 6 6 6-6"/></svg></button>
+              <button type="button" class="gpl-cz__ico gpl-cz__ico--sm" :title="o.locked ? 'Unlock' : 'Lock'" @click="toggleLock(o.id)">
+                <svg x-show="!o.locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>
+                <svg x-show="o.locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              </button>
+              <button type="button" class="gpl-cz__ico gpl-cz__ico--sm gpl-cz__ico--danger" title="Delete" @click="removeById(o.id)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg></button>
+            </div>
+          </template>
+        </div>
+        <div class="gpl-cz__areasum">
+          <p class="gpl-cz__label">Print areas — <span x-text="activeColor"></span></p>
+          <template x-for="area in areas" :key="area.name">
+            <button type="button" class="gpl-cz__areasum-row" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
+              <span x-text="area.name"></span>
+              <em x-text="zoneLabel(area.name)"></em>
+              <strong x-text="designCount(activeColor, area.name) ? designCount(activeColor, area.name) + ' layer' + (designCount(activeColor, area.name) === 1 ? '' : 's') : '—'"></strong>
+            </button>
+          </template>
+        </div>
+      </div>
 
-        <div class="gpl-cz__props" x-show="sel.has" x-cloak>
-          <template x-if="sel.type === 'text'">
-            <div class="gpl-cz__props-grid">
-              <label class="gpl-cz__field gpl-cz__field--wide">
-                <span>Text</span>
-                <input type="text" maxlength="60" x-model="sel.text" @input="applySel()">
-              </label>
+      {%- comment -%} ---- Files ---- {%- endcomment -%}
+      <div class="gpl-cz__pane" x-show="panel === 'files'" x-cloak>
+        <label class="gpl-cz__drop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V6M7 11l5-5 5 5"/><path d="M4 20h16"/></svg>
+          <strong>Upload artwork to <span x-text="activePrintArea"></span></strong>
+          <span>PNG, JPG, SVG, PDF, EPS, AI, HEIC, TIFF or WEBP · max 50 MB</span>
+          <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff,.eps,.ai" hidden
+            @change="uploadArtwork(activeColor, activePrintArea, $event.target.files[0]); $event.target.value=''">
+        </label>
+        <p class="gpl-cz__fine">Originals are kept at full resolution for print. By uploading you confirm you have the right to use this artwork.</p>
+        <p class="gpl-cz__label">Your library <span class="gpl-cz__muted" x-text="library.length ? '(' + library.length + ')' : ''"></span></p>
+        <p class="gpl-cz__empty" x-show="!library.length">Files you upload appear here so you can reuse them on other sides and colours.</p>
+        <div class="gpl-cz__lib">
+          <template x-for="item in library" :key="item.url">
+            <div class="gpl-cz__lib-item">
+              <button type="button" class="gpl-cz__lib-thumb" :title="'Add to ' + activePrintArea" @click="useLibrary(item)">
+                <img :src="thumbFor(item)" width="120" height="120" alt="" loading="lazy">
+              </button>
+              <span class="gpl-cz__lib-name" x-text="item.filename"></span>
+              <div class="gpl-cz__lib-actions">
+                <button type="button" class="gpl-cz__link" @click="useLibrary(item)">Use</button>
+                <button type="button" class="gpl-cz__link gpl-cz__link--danger" @click="removeFromLibrary(item.url)">Remove</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      {%- comment -%} ---- Text ---- {%- endcomment -%}
+      <div class="gpl-cz__pane" x-show="panel === 'text'" x-cloak>
+        <div class="gpl-cz__addrow gpl-cz__addrow--stack">
+          <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addText()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+            <span>Add text</span>
+          </button>
+          <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addNumber()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+            <span>Add number</span>
+          </button>
+          <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addNameNumber()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h8"/><path d="M14 20l3-8 3 8M15.2 17h3.6"/></svg>
+            <span>Name + number</span>
+          </button>
+        </div>
+        <p class="gpl-cz__label">Font styles</p>
+        <template x-for="g in fontGroups" :key="g">
+          <div class="gpl-cz__fontgroup">
+            <p class="gpl-cz__muted" x-text="g"></p>
+            <div class="gpl-cz__fonts">
+              <template x-for="f in fontsIn(g)" :key="f.name">
+                <button type="button" class="gpl-cz__font" :style="'font-family:\'' + f.name + '\';font-weight:' + f.weights[0]" :title="f.name"
+                  @click="sel.has && sel.type === 'text' ? (sel.fontFamily = f.name, sel.fontWeight = f.weights[0], applySel()) : addText({ fontFamily: f.name, fontWeight: f.weights[0] })">
+                  <span x-text="f.name"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+        <p class="gpl-cz__fine">Tip: with text selected, clicking a font applies it. Otherwise it adds new text in that font.</p>
+      </div>
+    </aside>
+
+    {%- comment -%} ============ CANVAS ============ {%- endcomment -%}
+    <div class="gpl-cz__canvas">
+      <div class="gpl-cz__viewport" data-gpl-viewport :style="'--zoom:' + zoom">
+        <div class="gpl-cz__stage" data-gpl-stage>
+          <img class="gpl-cz__mockup" src="{{ default_mockup | image_url: width: 1100 }}" :src="currentMockup()" width="{{ default_mockup.width | default: 764 }}" height="{{ default_mockup.height | default: 861 }}" alt="{{ product.title | escape }}" loading="eager">
+          <template x-for="area in areas" :key="area.name">
+            <div
+              class="gpl-cz__zone"
+              x-show="activePrintArea === area.name"
+              :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
+            >
+              <span class="gpl-cz__zone-label">Print area <b x-text="zoneLabel(area.name)"></b></span>
+              <template x-if="!designHasObjects(activeColor, area.name)">
+                <div class="gpl-cz__zone-cta gpl-cz__zone-cta--v2">
+                  <label class="gpl-cz__zone-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></svg>
+                    <span>Upload artwork</span>
+                    <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff,.eps,.ai" hidden
+                      @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
+                  </label>
+                  <button type="button" class="gpl-cz__zone-btn" @click="addText()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+                    <span>Add text</span>
+                  </button>
+                  <button type="button" class="gpl-cz__zone-btn" @click="addNumber()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+                    <span>Add number</span>
+                  </button>
+                  <button type="button" class="gpl-cz__zone-btn" x-show="library.length" @click="panel = 'files'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg>
+                    <span>From library</span>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </template>
+          {%- comment -%} Canvas stays interactive whenever the area has objects; when it's
+               empty, clicks fall through to the zone's Upload/Add buttons underneath. {%- endcomment -%}
+          <div class="gpl-cz__fwrap" :style="designHasObjects(activeColor, activePrintArea) ? '' : 'pointer-events:none'">
+            <canvas x-ref="fcanvas"></canvas>
+          </div>
+          <span class="gpl-cz__chip" x-show="chip.show" x-cloak :style="`left:${chip.x}px;top:${chip.y + 10}px`" x-text="chip.text"></span>
+        </div>
+      </div>
+      <div class="gpl-cz__zoombar">
+        <span class="gpl-cz__stage-hint"><strong x-text="(previewColorName || activeColor)"></strong> · <span x-text="activePrintArea"></span></span>
+        <button type="button" class="gpl-cz__ico" title="Zoom out" @click="zoomOut()" :disabled="zoom <= 1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+        <button type="button" class="gpl-cz__zoomval" title="Reset zoom" @click="zoomReset()" x-text="Math.round(zoom * 100) + '%'"></button>
+        <button type="button" class="gpl-cz__ico" title="Zoom in" @click="zoomIn()" :disabled="zoom >= 3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="gpl-cz__views">
+        <template x-for="area in areas" :key="area.name">
+          <button type="button" class="gpl-cz__view" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
+            <span class="gpl-cz__view-thumb">
+              <img :src="mockupFor(activeColor, area.name)" width="76" height="76" alt="" loading="lazy">
+              <span class="gpl-cz__view-check" x-show="designHasObjects(activeColor, area.name)" x-cloak>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+              </span>
+            </span>
+            <span class="gpl-cz__view-label" x-text="area.name"></span>
+          </button>
+        </template>
+      </div>
+    </div>
+
+    {%- comment -%} ============ PROPERTIES ============ {%- endcomment -%}
+    <aside class="gpl-cz__props">
+      <div class="gpl-cz__props-empty" x-show="!sel.has">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 7 16 2-7 7-2L4 4Z"/></svg>
+        <strong>Choose a layer to edit</strong>
+        <span>Click artwork or text on the stage. Drag to move, corners to resize, the top handle to rotate.</span>
+        <dl class="gpl-cz__props-facts">
+          <dt>Print area</dt><dd><span x-text="activePrintArea"></span> · <span x-text="zoneLabel(activePrintArea)"></span></dd>
+          <dt>Method</dt><dd x-text="methodFor(activeColor)"></dd>
+          <dt>Shortcuts</dt><dd>Arrows nudge · ⌘Z undo · ⌘D duplicate · Delete removes</dd>
+        </dl>
+      </div>
+
+      <div class="gpl-cz__props-body" x-show="sel.has" x-cloak>
+        <div class="gpl-cz__group" x-show="placementsFor(activePrintArea).length">
+          <p class="gpl-cz__group-title">Smart placements</p>
+          <div class="gpl-cz__placements">
+            <template x-for="p in placementsFor(activePrintArea)" :key="p.id">
+              <button type="button" class="gpl-cz__placement" :class="{'is-active': sel.placement === p.id}" @click="applyPlacement(p.id)">
+                <i :class="'gpl-cz__placement-ico gpl-cz__placement-ico--' + p.id"></i>
+                <strong x-text="p.name"></strong>
+                <span x-text="p.desc"></span>
+              </button>
+            </template>
+          </div>
+        </div>
+
+        <div class="gpl-cz__group">
+          <p class="gpl-cz__group-title">Transforms <em x-text="sel.locked ? '· locked' : ''"></em></p>
+          <div class="gpl-cz__row4">
+            <label class="gpl-cz__num"><span>X</span><input type="number" step="0.05" :value="sel.xIn" :disabled="sel.locked" @change="setPosIn('x', $event.target.value)"><b>in</b></label>
+            <label class="gpl-cz__num"><span>Y</span><input type="number" step="0.05" :value="sel.yIn" :disabled="sel.locked" @change="setPosIn('y', $event.target.value)"><b>in</b></label>
+            <label class="gpl-cz__num"><span>W</span><input type="number" step="0.05" min="0.1" :value="sel.wIn" :disabled="sel.locked" @change="setDimIn('w', $event.target.value)"><b>in</b></label>
+            <label class="gpl-cz__num"><span>H</span><input type="number" step="0.05" min="0.1" :value="sel.hIn" :disabled="sel.locked" @change="setDimIn('h', $event.target.value)"><b>in</b></label>
+          </div>
+          <div class="gpl-cz__row4 gpl-cz__row4--rot">
+            <label class="gpl-cz__num gpl-cz__num--wide"><span>Rotate</span><input type="number" step="1" :value="sel.angle" :disabled="sel.locked" @change="setAngle($event.target.value)"><b>°</b></label>
+            <button type="button" class="gpl-cz__ico" title="Reset rotation" :disabled="sel.locked" @click="setAngle(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Flip horizontal" :class="{'is-active': sel.flipX}" :disabled="sel.locked" @click="flip('x')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Flip vertical" :class="{'is-active': sel.flipY}" :disabled="sel.locked" @click="flip('y')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="m7 8 5-5 5 5"/><path d="m7 16 5 5 5-5"/></svg></button>
+          </div>
+          <p class="gpl-cz__label">Align to print area</p>
+          <div class="gpl-cz__row6">
+            <button type="button" class="gpl-cz__ico" title="Align left" :disabled="sel.locked" @click="align('left')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3v18"/><rect x="7" y="7" width="12" height="4" rx="1"/><rect x="7" y="13" width="8" height="4" rx="1"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Center horizontally" :disabled="sel.locked" @click="align('hcenter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18"/><rect x="5" y="7" width="14" height="4" rx="1"/><rect x="8" y="13" width="8" height="4" rx="1"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Align right" :disabled="sel.locked" @click="align('right')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 3v18"/><rect x="5" y="7" width="12" height="4" rx="1"/><rect x="9" y="13" width="8" height="4" rx="1"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Align top" :disabled="sel.locked" @click="align('top')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4h18"/><rect x="7" y="7" width="4" height="12" rx="1"/><rect x="13" y="7" width="4" height="8" rx="1"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Center vertically" :disabled="sel.locked" @click="align('vcenter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><rect x="7" y="5" width="4" height="14" rx="1"/><rect x="13" y="8" width="4" height="8" rx="1"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Align bottom" :disabled="sel.locked" @click="align('bottom')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><rect x="7" y="5" width="4" height="12" rx="1"/><rect x="13" y="9" width="4" height="8" rx="1"/></svg></button>
+          </div>
+          <p class="gpl-cz__label">Arrange</p>
+          <div class="gpl-cz__row6">
+            <button type="button" class="gpl-cz__ico" title="Bring forward" @click="arrange('forward')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="4" width="11" height="11" rx="1"/><path d="M4 9v11h11"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Send backward" @click="arrange('backward')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="11" height="11" rx="1"/><path d="M9 4h11v11"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Bring to front" @click="arrange('front')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/><path d="M6 20h12"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Send to back" @click="arrange('back')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 10 6 6 6-6"/><path d="M6 4h12"/></svg></button>
+            <button type="button" class="gpl-cz__ico" title="Duplicate (⌘D)" @click="duplicateSelected()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 5H6a2 2 0 0 0-2 2v9"/></svg></button>
+            <button type="button" class="gpl-cz__ico" :title="sel.locked ? 'Unlock' : 'Lock'" :class="{'is-active': sel.locked}" @click="toggleLock()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button>
+          </div>
+          <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost gpl-cz__btn--danger gpl-cz__btn--block" @click="deleteSelected()">Delete layer</button>
+        </div>
+
+        <template x-if="sel.type === 'text'">
+          <div class="gpl-cz__group">
+            <p class="gpl-cz__group-title">Text styling</p>
+            <label class="gpl-cz__field gpl-cz__field--wide">
+              <span>Text</span>
+              <textarea rows="2" maxlength="120" x-model="sel.text" @input="applySel()"></textarea>
+            </label>
+            <label class="gpl-cz__field gpl-cz__field--wide">
+              <span>Font</span>
+              <select x-model="sel.fontFamily" @change="applySel()" :style="'font-family:\'' + sel.fontFamily + '\''">
+                <template x-for="g in fontGroups" :key="g">
+                  <optgroup :label="g">
+                    <template x-for="f in fontsIn(g)" :key="f.name">
+                      <option :value="f.name" x-text="f.name" :style="'font-family:\'' + f.name + '\''"></option>
+                    </template>
+                  </optgroup>
+                </template>
+              </select>
+            </label>
+            <div class="gpl-cz__row3">
               <label class="gpl-cz__field">
-                <span>Font</span>
-                <select x-model="sel.fontFamily" @change="applySel()">
-                  <template x-for="f in fonts" :key="f.name">
-                    <option :value="f.name" x-text="f.name"></option>
+                <span>Size</span>
+                <input type="number" min="20" max="900" step="5" x-model.number="sel.fontSize" @change="applySel()">
+              </label>
+              <label class="gpl-cz__field" x-show="fontMeta(sel.fontFamily).weights.length > 1">
+                <span>Weight</span>
+                <select x-model="sel.fontWeight" @change="applySel()">
+                  <template x-for="w in fontMeta(sel.fontFamily).weights" :key="w">
+                    <option :value="w" x-text="w === '400' ? 'Normal' : (w === '700' ? 'Bold' : 'Extra bold')"></option>
                   </template>
                 </select>
               </label>
-              <label class="gpl-cz__field">
-                <span>Size <em x-text="sel.fontSize"></em></span>
-                <input type="range" min="40" max="900" step="5" x-model.number="sel.fontSize" @input="applySel()">
+              <label class="gpl-cz__field" x-show="fontMeta(sel.fontFamily).italic">
+                <span>Style</span>
+                <select x-model="sel.fontStyle" @change="applySel()">
+                  <option value="normal">Normal</option>
+                  <option value="italic">Italic</option>
+                </select>
               </label>
+              <label class="gpl-cz__field">
+                <span>Align</span>
+                <select x-model="sel.textAlign" @change="applySel()">
+                  <option value="left">Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select>
+              </label>
+            </div>
+            <label class="gpl-cz__field">
+              <span>Font size <em x-text="sel.fontSize"></em></span>
+              <input type="range" min="20" max="900" step="5" x-model.number="sel.fontSize" @input="applySel()">
+            </label>
+            <div class="gpl-cz__row2">
+              <label class="gpl-cz__field">
+                <span>Line height</span>
+                <input type="number" min="0.6" max="3" step="0.05" x-model.number="sel.lineHeight" @change="applySel()">
+              </label>
+              <label class="gpl-cz__field">
+                <span>Letter spacing <em x-text="sel.charSpacing"></em></span>
+                <input type="range" min="-100" max="600" step="10" x-model.number="sel.charSpacing" @input="applySel()">
+              </label>
+            </div>
+            <div class="gpl-cz__row3">
               <label class="gpl-cz__field gpl-cz__field--color">
-                <span>Colour</span>
+                <span>Text colour</span>
                 <input type="color" x-model="sel.fill" @input="applySel()">
               </label>
               <label class="gpl-cz__field gpl-cz__field--color">
@@ -313,425 +620,365 @@
                 <span>Outline width <em x-text="sel.strokeWidth"></em></span>
                 <input type="range" min="0" max="40" step="1" x-model.number="sel.strokeWidth" @input="applySel()">
               </label>
+            </div>
+            <p class="gpl-cz__label">Warp effect</p>
+            <div class="gpl-cz__row2">
               <label class="gpl-cz__field">
-                <span>Letter spacing <em x-text="sel.charSpacing"></em></span>
-                <input type="range" min="-100" max="400" step="10" x-model.number="sel.charSpacing" @input="applySel()">
+                <span>Effect</span>
+                <select x-model="sel.warp" @change="applySel()">
+                  <template x-for="w in warps" :key="w.id">
+                    <option :value="w.id" x-text="w.name"></option>
+                  </template>
+                </select>
               </label>
-            </div>
-          </template>
-          <div class="gpl-cz__props-actions">
-            <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="centerSelected()">Center</button>
-            <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="bringForward()">Forward</button>
-            <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="sendBackward()">Backward</button>
-            <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost" @click="duplicateSelected()">Duplicate</button>
-            <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost gpl-cz__btn--danger" @click="deleteSelected()">Delete</button>
-          </div>
-        </div>
-
-        <div class="gpl-cz__layers" x-show="objectsInArea().length" x-cloak>
-          <p class="gpl-cz__layers-title">Layers on <span x-text="activePrintArea"></span> <em>(top first)</em></p>
-          <template x-for="o in objectsInArea().slice().reverse()" :key="o.id">
-            <button type="button" class="gpl-cz__layer" :class="{'is-active': sel.id === o.id}" @click="selectById(o.id)">
-              <span class="gpl-cz__layer-type" x-text="o.type === 'image' ? 'IMG' : 'TXT'"></span>
-              <span class="gpl-cz__layer-name" x-text="o.type === 'image' ? (o.filename || 'Image') : o.text"></span>
-            </button>
-          </template>
-          <button type="button" class="gpl-cz__btn gpl-cz__btn--ghost gpl-cz__layers-clear" @click="clearArea(activeColor, activePrintArea)">Clear this area</button>
-        </div>
-
-        <p class="gpl-cz__upload-note">Max. file size 50MB. PNG, SVG, JPG, HEIC, TIFF or PDF — originals are kept at full resolution for print. Each colour has its own design.</p>
-        <p class="gpl-cz__upload-title gpl-cz__notes-title">Add Notes for our Designers <em>(Optional)</em></p>
-        <textarea class="gpl-cz__notes" rows="2" maxlength="500"
-          placeholder="Ex: Remove background and change the black text to white"
-          x-model="designerNotes" @change="persist()"></textarea>
-      </div>
-
-      {%- comment -%} Step 3 — sizes & quantities. Grids render here, not under Step 1, so a
-           colour's order line only appears after stepping through areas / artwork / technique —
-           matching the reference site. "Add Another Colour" adds more rows in this step. {%- endcomment -%}
-      <h2 class="gpl-cz__step">Step 3. Select Sizes and Quantities</h2>
-      <div class="gpl-cz__addcolor">
-        <button type="button" class="gpl-cz__addcolor-btn" @click="showAddColor = !showAddColor">
-          <span>+ Add Another Colour</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" :style="showAddColor ? 'transform:rotate(180deg)' : ''"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="gpl-cz__addcolor-list" x-show="showAddColor" x-cloak>
-          <template x-for="c in colors.filter(c => !openColors.includes(c.name))" :key="c.name">
-            <button type="button" class="gpl-cz__addcolor-item" @click="toggleColor(c.name); showAddColor = false">
-              <span class="gpl-cz__addcolor-swatch" :style="swatchStyle(c.name)"></span>
-              <span x-text="c.name"></span>
-            </button>
-          </template>
-          <p class="gpl-cz__addcolor-empty" x-show="colors.length === openColors.length">All colours added</p>
-        </div>
-      </div>
-
-      <template x-for="colorName in openColors" :key="colorName">
-        <div class="gpl-cz__grid" :class="{'is-active': activeColor === colorName}">
-          <button type="button" class="gpl-cz__grid-head" title="Show this colour in the preview"
-            @click="activeColor = colorName; previewColorName = null; syncVariantUrl()">
-            <span class="gpl-cz__grid-thumb" :style="swatchStyle(colorName)"></span>
-            <strong x-text="colorName"></strong>
-            <span class="gpl-cz__grid-remove" title="Remove colour" @click.stop="removeColor(colorName)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
-            </span>
-          </button>
-          <div class="gpl-cz__sizes">
-            <template x-for="size in sizes" :key="size">
-              <div class="gpl-cz__size">
-                <template x-if="availableFor(colorName, size)">
-                  <input type="number" min="0" inputmode="numeric" placeholder="0"
-                    :value="qty[key(colorName,size)] || ''"
-                    @input="setQty(colorName, size, $event.target.value)">
-                </template>
-                <template x-if="!availableFor(colorName, size)">
-                  <span class="gpl-cz__oos">Out of stock</span>
-                </template>
-                <span class="gpl-cz__size-label" x-text="size"></span>
-                <span class="gpl-cz__size-price" x-text="money(priceFor(colorName, size))"></span>
-              </div>
-            </template>
-          </div>
-        </div>
-      </template>
-
-      {%- comment -%} Step 4 — printing type, chosen separately for each colour added
-           in Step 3 (different colours can use different techniques). {%- endcomment -%}
-      {%- if section.blocks.size > 0 -%}
-        <h2 class="gpl-cz__step">Step 4. Printing Type</h2>
-        {%- if s.learn_more_link != blank -%}
-          <p class="gpl-cz__learn">Not sure which printing technique to choose? <a href="{{ s.learn_more_link }}">Learn more</a></p>
-        {%- endif -%}
-        <template x-for="colorName in openColors" :key="colorName">
-          <div class="gpl-cz__methodgroup">
-            <div class="gpl-cz__methodgroup-head">
-              <span class="gpl-cz__grid-thumb" :style="swatchStyle(colorName)"></span>
-              <strong x-text="colorName"></strong>
-              <span class="gpl-cz__methodgroup-current" x-text="methodFor(colorName)"></span>
-            </div>
-            <div class="gpl-cz__methods">
-              <template x-for="m in methods" :key="m.name">
-                <button type="button" class="gpl-cz__method" :class="{'is-active': methodFor(colorName) === m.name}" @click="setMethod(colorName, m.name)">
-                  <template x-if="m.image"><img class="gpl-cz__method-img" :src="m.image" alt="" loading="lazy"></template>
-                  <div class="gpl-cz__method-copy">
-                    <strong x-text="m.name"></strong>
-                    <span x-text="m.description"></span>
-                  </div>
-                </button>
-              </template>
+              <label class="gpl-cz__field" x-show="sel.warp !== 'none'">
+                <span>Intensity <em x-text="sel.warpAmt + '%'"></em></span>
+                <input type="range" min="5" max="100" step="5" x-model.number="sel.warpAmt" @input="applySel()">
+              </label>
             </div>
           </div>
         </template>
-      {%- endif -%}
-
-      {%- comment -%} Summary + submit {%- endcomment -%}
-      <div class="gpl-cz__summary">
-        <div class="gpl-cz__summary-line">
-          <span x-text="totalUnits() + ' piece' + (totalUnits() === 1 ? '' : 's')"></span>
-          <span x-show="areasUsed() > 0" x-text="areasUsed() + ' print area' + (areasUsed() === 1 ? '' : 's')"></span>
-          <strong x-text="money(totalPrice())"></strong>
-        </div>
-        <button type="button" class="gpl-cz__submit" :disabled="!canSubmit()" @click="addToCart()">
-          <span x-show="!submitting" x-text="canSubmit() ? 'Add to Cart' : (gateMessage() || 'Add to Cart')"></span>
-          <span x-show="submitting">Adding…</span>
-        </button>
-        <p class="gpl-cz__error" x-show="errorMsg" x-text="errorMsg"></p>
-        <p class="gpl-cz__delivery">Order today and we'll print and ship your order by <strong x-text="deliveryRange()"></strong></p>
-        {%- if s.upload_public_key == blank -%}
-          <p class="gpl-cz__admin-warn">⚠ Admin: set the Uploadcare public key in the customizer section settings — uploads are disabled until then.</p>
-        {%- endif -%}
       </div>
+    </aside>
+  </div>
+
+  {%- comment -%} ============ BOTTOM BAR ============ {%- endcomment -%}
+  <div class="gpl-cz__bar">
+    <div class="gpl-cz__bar-sum">
+      <strong x-text="money(totalPrice())"></strong>
+      <span x-text="totalUnits() + ' piece' + (totalUnits() === 1 ? '' : 's') + (areasUsed() > 0 ? ' · ' + areasUsed() + ' print area' + (areasUsed() === 1 ? '' : 's') : '')"></span>
+      <span class="gpl-cz__bar-ship">Order today, ships by <b x-text="deliveryRange()"></b></span>
     </div>
+    <p class="gpl-cz__bar-gate" x-show="!canSubmit() && !submitting" x-text="gateMessage()"></p>
+    <p class="gpl-cz__error" x-show="errorMsg" x-text="errorMsg"></p>
+    <button type="button" class="gpl-cz__submit" :disabled="!canSubmit()" @click="addToCart()">
+      <span x-show="!submitting">Add to Cart</span>
+      <span x-show="submitting">Preparing print files…</span>
+    </button>
+    {%- if s.upload_public_key == blank -%}
+      <p class="gpl-cz__admin-warn">⚠ Admin: set the Uploadcare public key in the customizer section settings — uploads are disabled until then.</p>
+    {%- endif -%}
   </div>
 </section>
 
 {% style %}
   #gpl-cz-{{ section.id }} {
     --cz-red: {{ s.color_accent | default: '#D71920' }};
+    --cz-line: #E4E4E4;
+    --cz-bg: #F5F5F5;
     background: #FFFFFF;
     color: #111111;
-    padding: clamp(20px, 2.4vw, 40px) 0 clamp(34px, 4vw, 60px);
+    font-size: 13px;
   }
-  #gpl-cz-{{ section.id }} .gpl-cz__inner {
-    box-sizing: border-box;
-    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: clamp(20px, 2.4vw, 40px);
-    align-items: start;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__media { position: sticky; top: 90px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__stage { position: relative; border-radius: 8px; overflow: hidden; background: #F4F4F4; }
-  #gpl-cz-{{ section.id }} .gpl-cz__mockup { display: block; width: 100%; height: auto; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone {
-    position: absolute;
-    border: 2px dashed rgba(60, 60, 60, 0.65);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
-    display: flex; align-items: center; justify-content: center;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__fwrap { position: absolute; inset: 0; z-index: 3; }
-  #gpl-cz-{{ section.id }} .gpl-cz__fwrap .canvas-container { position: absolute !important; inset: 0; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone { z-index: 2; pointer-events: none; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta { pointer-events: auto; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta {
-    cursor: pointer; color: #FFFFFF; font-weight: 800; text-decoration: underline;
-    font-size: clamp(13px, 1.1vw, 17px); background: rgba(0, 0, 0, 0.55); padding: 8px 14px; border-radius: 5px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__stage-hint { margin: 8px 0 0; color: #666666; font-size: 12px; }
-
-  #gpl-cz-{{ section.id }} .gpl-cz__title {
-    margin: 0 0 14px;
-    font-family: var(--gpl-font-heading, inherit);
-    font-weight: 800; text-transform: uppercase; line-height: 1.02;
-    font-size: clamp(24px, 2.6vw, 38px);
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__subtitle { margin: -8px 0 4px; color: #666; font-size: 13.5px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__desc { margin: 0 0 6px; color: #444; font-size: 13.5px; line-height: 1.55; padding-bottom: 12px; border-bottom: 1px solid #E8E8E8; }
-  #gpl-cz-{{ section.id }} .gpl-cz__learn { margin: -2px 0 10px; color: #555; font-size: 12.5px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__learn a { color: inherit; font-weight: 700; }
-  #gpl-cz-{{ section.id }} .gpl-cz__delivery { margin: 12px 0 0; text-align: center; color: #444; font-size: 12.5px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__method-img { width: 64px; height: 48px; object-fit: cover; border-radius: 4px; flex: 0 0 auto; }
-  #gpl-cz-{{ section.id }} .gpl-cz__method-copy { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-  #gpl-cz-{{ section.id }} .gpl-cz__step {
-    margin: clamp(26px, 3vw, 40px) 0 12px;
-    padding-top: clamp(20px, 2.4vw, 30px);
-    border-top: 1px solid #ECECEC;
-    font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
-    font-size: clamp(13px, 1vw, 16px);
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__step:first-of-type { margin-top: clamp(16px, 1.8vw, 26px); padding-top: 0; border-top: none; }
-  #gpl-cz-{{ section.id }} .gpl-cz__step span { color: var(--cz-red); }
-
-  #gpl-cz-{{ section.id }} .gpl-cz__swatches { display: flex; flex-wrap: wrap; gap: 10px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__swatch {
-    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-    border: 2px solid rgba(0,0,0,0.18);
-    background-color: #DDD; background-size: cover; background-position: center;
-    padding: 0;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__swatch.is-active { border-color: var(--cz-red); box-shadow: 0 0 0 2px rgba(215,25,32,0.4); }
-
+  #gpl-cz-{{ section.id }} * { box-sizing: border-box; }
   #gpl-cz-{{ section.id }} [x-cloak] { display: none !important; }
-  #gpl-cz-{{ section.id }} .gpl-cz__addcolor { position: relative; margin-top: 2px; }
+  #gpl-cz-{{ section.id }} button { font-family: inherit; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ws {
+    display: grid;
+    grid-template-columns: 68px 340px minmax(0, 1fr) 300px;
+    grid-template-areas: "rail panel canvas props";
+    min-height: 720px;
+    border-top: 1px solid var(--cz-line);
+    border-bottom: 1px solid var(--cz-line);
+  }
+
+  /* ---- rail ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__rail { grid-area: rail; display: flex; flex-direction: column; gap: 2px; padding: 8px 6px; border-right: 1px solid var(--cz-line); background: #FAFAFA; }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-btn {
+    position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%;
+    padding: 10px 2px; border: 1px solid transparent; border-radius: 8px; background: none; color: #555; cursor: pointer;
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.01em;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-btn svg { width: 22px; height: 22px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-btn:hover { color: #111; background: #F0F0F0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-btn.is-active { color: #111; background: #FFFFFF; border-color: var(--cz-line); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-badge { position: absolute; top: 6px; right: 8px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--cz-red); color: #FFF; font-style: normal; font-size: 10px; line-height: 16px; text-align: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__rail-btn--edit { display: none; }
+
+  /* ---- panel ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__panel { grid-area: panel; border-right: 1px solid var(--cz-line); overflow-y: auto; max-height: 860px; background: #FFFFFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__pane { padding: 16px 16px 24px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__pane-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__pane-head strong { font-size: 15px; text-transform: uppercase; }
+  #gpl-cz-{{ section.id }} .gpl-cz__muted { color: #777; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__pill { margin-left: auto; padding: 3px 9px; border-radius: 999px; background: rgba(215,25,32,0.08); color: var(--cz-red); font-size: 10.5px; font-weight: 800; text-transform: uppercase; }
+  #gpl-cz-{{ section.id }} .gpl-cz__label { margin: 14px 0 6px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #555; }
+  #gpl-cz-{{ section.id }} .gpl-cz__label em { font-style: normal; font-weight: 500; text-transform: none; color: #999; }
+  #gpl-cz-{{ section.id }} .gpl-cz__fine { margin: 8px 0 0; color: #777; font-size: 11.5px; line-height: 1.5; }
+  #gpl-cz-{{ section.id }} .gpl-cz__empty { margin: 6px 0; padding: 12px; border: 1px dashed #D5D5D5; border-radius: 6px; color: #777; font-size: 12px; line-height: 1.5; }
+  #gpl-cz-{{ section.id }} .gpl-cz__link { border: none; background: none; padding: 4px 6px; color: #111; font-size: 11.5px; font-weight: 800; text-transform: uppercase; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__link--danger { color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico {
+    display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; flex: 0 0 auto;
+    border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; color: #333; cursor: pointer; padding: 0;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico svg { width: 17px; height: 17px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico:hover:not(:disabled) { border-color: #111; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico.is-active { border-color: var(--cz-red); color: var(--cz-red); background: rgba(215,25,32,0.06); }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico:disabled { opacity: 0.35; cursor: default; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico--sm { width: 28px; height: 28px; border-color: transparent; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico--sm svg { width: 15px; height: 15px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__ico--danger:hover:not(:disabled) { color: var(--cz-red); border-color: var(--cz-red); }
+
+  /* product pane */
+  #gpl-cz-{{ section.id }} .gpl-cz__product { display: flex; gap: 12px; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--cz-line); }
+  #gpl-cz-{{ section.id }} .gpl-cz__product-thumb { width: 56px; height: 56px; object-fit: contain; border-radius: 6px; background: var(--cz-bg); flex: 0 0 auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__title { margin: 0; font-family: var(--gpl-font-heading, inherit); font-weight: 800; text-transform: uppercase; line-height: 1.05; font-size: 15px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__subtitle { margin: 3px 0 0; color: #666; font-size: 11.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card { margin-top: 12px; border: 1px solid var(--cz-line); border-radius: 8px; background: #FFFFFF; padding: 10px 12px 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card.is-active { border-color: #111; box-shadow: 0 0 0 1px #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-head { display: flex; align-items: center; gap: 9px; width: 100%; background: none; border: none; padding: 0 0 8px; cursor: pointer; color: #111; text-align: left; font-size: 13px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-head em { font-style: normal; color: #777; font-size: 11.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__grid-thumb { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); background-color: #DDD; background-size: cover; background-position: center; flex: 0 0 auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-remove { margin-left: auto; display: flex; color: #999; padding: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-remove svg { width: 14px; height: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-remove:hover { color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__sizes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__size { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__size input { width: 100%; padding: 8px 4px; text-align: center; background: #FFFFFF; border: 1px solid #CFCFCF; border-radius: 5px; color: #111; font: inherit; font-size: 13px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__size input:focus { outline: none; border-color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__oos { width: 100%; text-align: center; color: var(--cz-red); font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 10px 0; border: 1px dashed #E0E0E0; border-radius: 5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__size-label { font-weight: 800; font-size: 10.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__size-price { color: #888; font-size: 10.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-areas { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-area { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border: 1px solid var(--cz-line); border-radius: 999px; background: #FAFAFA; color: #666; font-size: 11px; font-weight: 700; cursor: pointer; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-area svg { width: 12px; height: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-area.is-done { color: #1E7A45; border-color: #BFE3CC; background: #EEF9F2; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-area.is-active { box-shadow: 0 0 0 1.5px #111; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__card-warn { margin: 8px 0 0; color: #9A6B00; font-size: 11.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__seg { display: flex; margin-top: 10px; border: 1px solid var(--cz-line); border-radius: 6px; overflow: hidden; }
+  #gpl-cz-{{ section.id }} .gpl-cz__seg-btn { flex: 1; padding: 7px 4px; border: none; border-right: 1px solid var(--cz-line); background: #FFFFFF; color: #555; font-size: 11px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+  #gpl-cz-{{ section.id }} .gpl-cz__seg-btn:last-child { border-right: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__seg-btn.is-active { background: #111; color: #FFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor { position: relative; margin-top: 12px; }
   #gpl-cz-{{ section.id }} .gpl-cz__addcolor-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
-    cursor: pointer; padding: 12px; border: 1px solid #C9C9C9; border-radius: 5px;
-    background: #FFFFFF; color: #111; font: inherit; font-weight: 800; text-transform: uppercase; font-size: 12.5px;
+    cursor: pointer; padding: 11px; border: 1px dashed #B5B5B5; border-radius: 6px;
+    background: #FFFFFF; color: #111; font: inherit; font-weight: 800; text-transform: uppercase; font-size: 12px;
   }
   #gpl-cz-{{ section.id }} .gpl-cz__addcolor-btn:hover { border-color: #111; }
-  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-btn svg { width: 15px; height: 15px; transition: transform 0.15s ease; }
-  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-list {
-    margin-top: 6px; border: 1px solid #E2E2E2; border-radius: 6px; background: #FFFFFF;
-    padding: 8px; display: flex; flex-wrap: wrap; gap: 6px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-item {
-    display: flex; align-items: center; gap: 7px; cursor: pointer;
-    padding: 6px 10px 6px 6px; border: 1px solid #E2E2E2; border-radius: 20px;
-    background: #FAFAFA; color: #111; font: inherit; font-size: 12px; font-weight: 600;
-  }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-btn svg { width: 14px; height: 14px; transition: transform 0.15s ease; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-list { margin-top: 6px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; padding: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-tools { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-tools input { flex: 1; min-width: 0; padding: 8px 10px; border: 1px solid #CFCFCF; border-radius: 5px; font: inherit; font-size: 12.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-items { display: flex; flex-wrap: wrap; gap: 6px; max-height: 220px; overflow-y: auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-item { display: flex; align-items: center; gap: 7px; cursor: pointer; padding: 5px 10px 5px 5px; border: 1px solid var(--cz-line); border-radius: 20px; background: #FAFAFA; color: #111; font: inherit; font-size: 12px; font-weight: 600; }
   #gpl-cz-{{ section.id }} .gpl-cz__addcolor-item:hover { border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-swatch {
-    width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2);
-    background-color: #DDD; flex: 0 0 auto;
-  }
+  #gpl-cz-{{ section.id }} .gpl-cz__addcolor-swatch { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); background-color: #DDD; background-size: cover; flex: 0 0 auto; }
   #gpl-cz-{{ section.id }} .gpl-cz__addcolor-empty { margin: 4px 6px; color: #888; font-size: 12px; }
-
-  #gpl-cz-{{ section.id }} .gpl-cz__grid {
-    margin-top: 10px; border: 1px solid #E2E2E2; border-radius: 8px;
-    background: #FAFAFA; padding: 12px 14px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid:first-of-type { margin-top: 14px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid.is-active { border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid-head {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 10px; width: 100%;
-    background: none; border: none; padding: 0; cursor: pointer; font: inherit; color: #111; text-align: left;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid-thumb {
-    width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2);
-    background-color: #DDD; background-size: cover; background-position: center;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid.is-active .gpl-cz__grid-thumb { box-shadow: 0 0 0 2px rgba(215,25,32,0.4); }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid-remove {
-    margin-left: auto; display: flex; color: #888888; cursor: pointer; padding: 4px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid-remove svg { width: 18px; height: 18px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__grid-remove:hover { color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__sizes { display: flex; flex-wrap: wrap; gap: 10px 12px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__size { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 74px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__size input {
-    width: 100%; box-sizing: border-box; padding: 9px 6px; text-align: center;
-    background: #FFFFFF; border: 1px solid #C9C9C9; border-radius: 4px; color: #111;
-    font: inherit; font-size: 14px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__size input:focus { outline: none; border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__oos { color: var(--cz-red); font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 12px 0; }
-  #gpl-cz-{{ section.id }} .gpl-cz__size-label { font-weight: 800; font-size: 11px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__size-price { color: #777777; font-size: 11.5px; }
-
-  #gpl-cz-{{ section.id }} .gpl-cz__areas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area {
-    position: relative; cursor: pointer; padding: 10px 8px 8px; border-radius: 6px;
-    border: 1px solid #C9C9C9; background: #FFFFFF; color: #111;
-    font: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__area.is-active { border-color: #111; box-shadow: 0 0 0 1px #111; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-thumb { width: 100%; aspect-ratio: 1 / 1.1; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-thumb svg { width: 100%; height: 100%; display: block; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-thumb svg path { stroke: rgba(0,0,0,0.14); stroke-width: 1.5; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-thumb svg.is-light path { stroke: rgba(0,0,0,0.35); }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-label { font-weight: 800; font-size: 12px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-x {
-    position: absolute; top: -8px; right: -8px; width: 22px; height: 22px; border-radius: 50%;
-    background: #111; color: #FFF; display: flex; align-items: center; justify-content: center; cursor: pointer;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__area-x svg { width: 12px; height: 12px; }
-
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-box {
-    margin-top: 12px; border: 1px solid #C9C9C9; border-radius: 6px; padding: 14px 16px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-title { margin: 0 0 2px; font-weight: 800; font-size: 13.5px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-title em { font-weight: 400; font-style: italic; color: #777; font-size: 12px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-for {
-    display: inline-flex; align-items: center; gap: 5px; margin-left: auto;
-    padding: 3px 10px 3px 6px; border-radius: 999px; background: #F0F0F0;
-    font-weight: 700; font-size: 11.5px; text-transform: none; color: #444;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-for strong { color: #111; text-transform: capitalize; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-for-swatch {
-    width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2);
-    background-color: #DDD; background-size: cover; background-position: center; flex: 0 0 auto;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__notes-title { margin-top: 14px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-note { margin: 0 0 10px; color: #555; font-size: 12.5px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__notes {
-    width: 100%; box-sizing: border-box; margin-top: 6px; padding: 10px 12px;
-    border: 1px solid #C9C9C9; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #333;
-    resize: vertical;
-  }
+  #gpl-cz-{{ section.id }} .gpl-cz__learn { margin: 14px 0 0; color: #555; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__learn a { color: inherit; font-weight: 700; }
+  #gpl-cz-{{ section.id }} .gpl-cz__notes-wrap { display: block; margin-top: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__notes { width: 100%; padding: 9px 11px; border: 1px solid #CFCFCF; border-radius: 5px; font: inherit; font-size: 12.5px; color: #333; resize: vertical; }
   #gpl-cz-{{ section.id }} .gpl-cz__notes:focus { outline: none; border-color: #111; }
 
-  #gpl-cz-{{ section.id }} .gpl-cz__upload { margin-top: 10px; }
+  /* layers pane */
+  #gpl-cz-{{ section.id }} .gpl-cz__hist { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__hist .gpl-cz__link { margin-left: auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addrow--stack { flex-direction: column; align-items: stretch; }
+  #gpl-cz-{{ section.id }} .gpl-cz__addrow--stack .gpl-cz__btn { justify-content: center; padding: 12px; }
   #gpl-cz-{{ section.id }} .gpl-cz__btn {
-    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-    padding: 10px 16px; border-radius: 4px; font-weight: 800; text-transform: uppercase; font-size: 11.5px;
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    padding: 9px 12px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 11px;
     border: 1px solid #B5B5B5; color: #111; background: transparent; font-family: inherit;
   }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--upload { border-style: dashed; width: 100%; justify-content: center; padding: 16px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--upload:hover { border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-file { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-name { font-size: 12.5px; color: #333333; max-width: 34ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-status { flex: 0 0 auto; display: flex; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-status svg { width: 16px; height: 16px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__upload-status--ok { color: #1E9E5A; }
-  #gpl-cz-{{ section.id }} .gpl-cz__spin { animation: gpl-cz-spin 0.8s linear infinite; color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool { border-color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool:hover { background: #111; color: #FFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool svg { width: 15px; height: 15px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--ghost { border-color: var(--cz-line); }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--danger { color: var(--cz-red); border-color: rgba(215,25,32,0.4); }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--danger:hover { background: var(--cz-red); border-color: var(--cz-red); color: #FFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__btn--block { width: 100%; justify-content: center; margin-top: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__uploading { display: inline-flex; align-items: center; gap: 6px; color: var(--cz-red); font-size: 12px; font-weight: 700; }
+  #gpl-cz-{{ section.id }} .gpl-cz__uploading svg { width: 14px; height: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__spin { animation: gpl-cz-spin 0.8s linear infinite; }
   @keyframes gpl-cz-spin { to { transform: rotate(360deg); } }
+  #gpl-cz-{{ section.id }} .gpl-cz__layers { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer { display: flex; align-items: center; gap: 2px; padding: 3px 4px 3px 6px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer.is-active { border-color: var(--cz-red); background: rgba(215,25,32,0.04); }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer.is-locked .gpl-cz__layer-name { color: #999; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; background: none; border: none; padding: 6px 4px; cursor: pointer; text-align: left; color: #111; font-size: 12.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer-type { font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 4px; background: #111; color: #FFF; flex: 0 0 auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #gpl-cz-{{ section.id }} .gpl-cz__areasum { margin-top: 18px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__areasum-row { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; margin-top: 4px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; cursor: pointer; font-size: 12.5px; color: #111; text-align: left; }
+  #gpl-cz-{{ section.id }} .gpl-cz__areasum-row.is-active { border-color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__areasum-row em { font-style: normal; color: #999; font-size: 11px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__areasum-row strong { margin-left: auto; font-size: 11.5px; color: #555; }
 
-  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup { margin-top: 14px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup:first-of-type { margin-top: 4px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__methodgroup-current { margin-left: auto; color: var(--cz-red); font-weight: 800; font-size: 11.5px; text-transform: uppercase; }
-  #gpl-cz-{{ section.id }} .gpl-cz__methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__method {
-    cursor: pointer; text-align: left; padding: 12px 14px; border-radius: 6px;
-    border: 1px solid #DCDCDC; background: #FFFFFF; color: #111; font: inherit;
-    display: flex; flex-direction: row; align-items: center; gap: 10px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__method.is-active { border-color: var(--cz-red); background: rgba(215,25,32,0.05); }
-  #gpl-cz-{{ section.id }} .gpl-cz__method strong { text-transform: uppercase; font-size: 13px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__method span { color: #6B6B6B; font-size: 11.5px; line-height: 1.4; }
+  /* files pane */
+  #gpl-cz-{{ section.id }} .gpl-cz__drop { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 22px 14px; border: 2px dashed #C9C9C9; border-radius: 8px; background: #FAFAFA; text-align: center; cursor: pointer; color: #555; font-size: 11.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__drop:hover { border-color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__drop svg { width: 28px; height: 28px; color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__drop strong { color: #111; font-size: 13px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-item { display: flex; flex-direction: column; gap: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-thumb { width: 100%; aspect-ratio: 1; border: 1px solid var(--cz-line); border-radius: 6px; background: repeating-conic-gradient(#F2F2F2 0 25%, #FFF 0 50%) 0 0 / 16px 16px; padding: 6px; cursor: pointer; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-thumb:hover { border-color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-thumb img { width: 100%; height: 100%; object-fit: contain; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-name { font-size: 11px; color: #444; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-actions { display: flex; gap: 2px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__lib-actions .gpl-cz__link { padding: 2px 4px; font-size: 10.5px; }
 
-  #gpl-cz-{{ section.id }} .gpl-cz__summary {
-    margin-top: clamp(18px, 2vw, 28px); border-top: 1px solid #E2E2E2; padding-top: 16px;
+  /* text pane */
+  #gpl-cz-{{ section.id }} .gpl-cz__fontgroup { margin-top: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__fontgroup .gpl-cz__muted { margin: 0 0 5px; font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; }
+  #gpl-cz-{{ section.id }} .gpl-cz__fonts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__font { padding: 9px 8px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; color: #111; font-size: 17px; line-height: 1; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #gpl-cz-{{ section.id }} .gpl-cz__font:hover { border-color: #111; }
+
+  /* ---- canvas ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__canvas { grid-area: canvas; display: flex; flex-direction: column; min-width: 0; background: var(--cz-bg); }
+  #gpl-cz-{{ section.id }} .gpl-cz__viewport { --zoom: 1; --stage-h: 560px; position: relative; flex: 1; min-height: 0; display: flex; overflow: auto; padding: 16px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__stage { position: relative; margin: auto; flex: 0 0 auto; line-height: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__mockup { display: block; height: calc(var(--stage-h) * var(--zoom)); width: auto; max-width: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone {
+    position: absolute; z-index: 2; pointer-events: none;
+    border: 1.5px dashed rgba(40, 40, 40, 0.55);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+    display: flex; align-items: center; justify-content: center;
   }
-  #gpl-cz-{{ section.id }} .gpl-cz__summary-line {
-    display: flex; gap: 16px; align-items: baseline; margin-bottom: 12px;
-    color: #555555; font-size: 13.5px;
+  #gpl-cz-{{ section.id }} .gpl-cz__zone::before, #gpl-cz-{{ section.id }} .gpl-cz__zone::after {
+    content: ""; position: absolute; border: 0 dashed rgba(255,255,255,0.55); opacity: 0; transition: opacity 0.15s ease;
   }
-  #gpl-cz-{{ section.id }} .gpl-cz__summary-line strong { margin-left: auto; color: #111; font-size: clamp(18px, 1.6vw, 24px); }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone::before { left: 50%; top: 0; bottom: 0; border-left-width: 1px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone::after { top: 50%; left: 0; right: 0; border-top-width: 1px; }
+  #gpl-cz-{{ section.id }}.is-editing .gpl-cz__zone { border-color: rgba(255,255,255,0.85); box-shadow: 0 0 0 1px rgba(0,0,0,0.35), inset 0 0 0 200vmax rgba(0,0,0,0.18); }
+  #gpl-cz-{{ section.id }}.is-editing .gpl-cz__zone::before, #gpl-cz-{{ section.id }}.is-editing .gpl-cz__zone::after { opacity: 1; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-label {
+    position: absolute; left: 50%; bottom: -24px; transform: translateX(-50%); white-space: nowrap; line-height: 1;
+    padding: 4px 8px; border-radius: 4px; background: rgba(17,17,17,0.82); color: #FFF; font-size: 10.5px; font-weight: 600;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-label b { font-weight: 800; }
+  #gpl-cz-{{ section.id }} .gpl-cz__fwrap { position: absolute; inset: 0; z-index: 3; }
+  #gpl-cz-{{ section.id }} .gpl-cz__fwrap .canvas-container { position: absolute !important; inset: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta { pointer-events: auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: min(78%, 220px); }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; line-height: 1.2;
+    color: #111; background: rgba(255, 255, 255, 0.94); border: 1px dashed #B5B5B5;
+    padding: 10px 12px; border-radius: 6px; font: inherit; font-weight: 800; font-size: 11.5px; text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-btn svg { width: 16px; height: 16px; color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-btn:hover { border-color: var(--cz-red); border-style: solid; }
+  #gpl-cz-{{ section.id }} .gpl-cz__chip {
+    position: absolute; z-index: 4; transform: translateX(-50%); pointer-events: none; white-space: nowrap; line-height: 1;
+    padding: 5px 8px; border-radius: 4px; background: #111; color: #FFF; font-size: 10.5px; font-weight: 700;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__zoombar { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-top: 1px solid var(--cz-line); background: #FFFFFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__stage-hint { margin-right: auto; color: #666; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__stage-hint strong { color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zoomval { min-width: 56px; height: 34px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFF; color: #111; font-size: 12px; font-weight: 700; cursor: pointer; }
+  #gpl-cz-{{ section.id }} .gpl-cz__views { display: flex; gap: 6px; padding: 10px 14px 12px; border-top: 1px solid var(--cz-line); background: #FFFFFF; overflow-x: auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view { flex: 0 0 auto; width: 92px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; border: 1px solid transparent; border-radius: 8px; background: none; cursor: pointer; color: #666; font-size: 11.5px; font-weight: 700; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view:hover { background: #F5F5F5; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view.is-active { border-color: #111; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view-thumb { position: relative; width: 76px; height: 76px; display: flex; align-items: center; justify-content: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view-check { position: absolute; top: -2px; right: -2px; width: 20px; height: 20px; border-radius: 50%; background: #1E9E5A; color: #FFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #FFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__view-check svg { width: 12px; height: 12px; }
+
+  /* ---- props ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__props { grid-area: props; border-left: 1px solid var(--cz-line); overflow-y: auto; max-height: 860px; background: #FFFFFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 22px; text-align: center; color: #666; font-size: 12px; line-height: 1.5; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-empty svg { width: 30px; height: 30px; color: #BBB; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-empty strong { color: #111; font-size: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-facts { width: 100%; margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--cz-line); text-align: left; display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 11.5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-facts dt { font-weight: 800; text-transform: uppercase; font-size: 10px; color: #555; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-facts dd { margin: 0; color: #333; }
+  #gpl-cz-{{ section.id }} .gpl-cz__group { padding: 14px 16px; border-bottom: 1px solid var(--cz-line); }
+  #gpl-cz-{{ section.id }} .gpl-cz__group-title { margin: 0 0 10px; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__group-title em { font-style: normal; color: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__group .gpl-cz__label { margin-top: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placements { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement { display: grid; grid-template-columns: 26px 1fr; grid-template-rows: auto auto; column-gap: 8px; align-items: center; padding: 7px 8px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFFFFF; cursor: pointer; text-align: left; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement.is-active { border-color: var(--cz-red); box-shadow: 0 0 0 1px var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement strong { font-size: 11px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement span { grid-column: 2; font-size: 9.5px; color: #888; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico { grid-row: 1 / span 2; position: relative; width: 26px; height: 32px; border: 1px solid #CFCFCF; border-radius: 3px; background: #F6F6F6; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico::after { content: ""; position: absolute; background: #999; border-radius: 1px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--free::after { left: 6px; top: 8px; width: 12px; height: 12px; border: 1px dashed #999; background: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--standard::after { left: 4px; top: 7px; width: 16px; height: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--left_chest::after { left: 15px; top: 6px; width: 6px; height: 5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--center_chest::after { left: 7px; top: 9px; width: 10px; height: 7px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--oversized::after { left: 2px; top: 4px; width: 20px; height: 20px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row4--rot { grid-template-columns: minmax(0, 1fr) 34px 34px 34px; margin-top: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row6 .gpl-cz__ico { width: 100%; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); gap: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__num { display: flex; align-items: center; gap: 4px; padding: 0 6px; height: 34px; border: 1px solid var(--cz-line); border-radius: 6px; background: #FFF; font-size: 10px; font-weight: 800; color: #777; }
+  #gpl-cz-{{ section.id }} .gpl-cz__num input { width: 100%; min-width: 0; border: none; padding: 0; font: inherit; font-size: 12px; font-weight: 600; color: #111; background: none; text-align: right; -moz-appearance: textfield; }
+  #gpl-cz-{{ section.id }} .gpl-cz__num input::-webkit-inner-spin-button { display: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__num input:focus { outline: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__num b { font-weight: 600; color: #999; font-size: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #555; min-width: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field em { font-style: normal; color: #999; font-weight: 600; margin-left: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field--wide { grid-column: 1 / -1; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="text"], #gpl-cz-{{ section.id }} .gpl-cz__field input[type="number"], #gpl-cz-{{ section.id }} .gpl-cz__field select, #gpl-cz-{{ section.id }} .gpl-cz__field textarea {
+    width: 100%; padding: 8px 9px; border: 1px solid #CFCFCF; border-radius: 5px; font: inherit; font-size: 13px; color: #111; background: #FFF; text-transform: none; font-weight: 500;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__field textarea { resize: vertical; min-height: 44px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="range"] { width: 100%; accent-color: var(--cz-red); margin: 8px 0 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field--color { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="color"] { width: 38px; height: 30px; padding: 0; border: 1px solid #CFCFCF; border-radius: 4px; background: #FFF; cursor: pointer; flex: 0 0 auto; }
+
+  /* ---- bottom bar ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__bar {
+    position: sticky; bottom: 0; z-index: 20;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 12px clamp(16px, 2vw, 28px); background: #FFFFFF; border-top: 1px solid var(--cz-line);
+    box-shadow: 0 -6px 18px rgba(0,0,0,0.06);
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__bar-sum { display: flex; flex-direction: column; gap: 2px; margin-right: auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__bar-sum strong { font-size: 20px; line-height: 1.1; }
+  #gpl-cz-{{ section.id }} .gpl-cz__bar-sum span { color: #555; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__bar-ship b { color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__bar-gate { margin: 0; color: #9A6B00; font-size: 12px; font-weight: 700; }
+  #gpl-cz-{{ section.id }} .gpl-cz__error { margin: 0; color: var(--cz-red); font-weight: 700; font-size: 12.5px; }
   #gpl-cz-{{ section.id }} .gpl-cz__submit {
-    width: 100%; cursor: pointer; padding: 16px; border: none; border-radius: 5px;
+    min-width: 220px; cursor: pointer; padding: 15px 28px; border: none; border-radius: 6px;
     background: var(--cz-red); color: #FFF; font: inherit; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.02em; font-size: 14px; transition: background-color 0.2s ease;
+    letter-spacing: 0.03em; font-size: 13.5px; transition: background-color 0.2s ease;
   }
   #gpl-cz-{{ section.id }} .gpl-cz__submit:hover:not(:disabled) { background: #B5141A; }
   #gpl-cz-{{ section.id }} .gpl-cz__submit:disabled { background: #E4E4E4; color: #8A8A8A; cursor: not-allowed; }
-  #gpl-cz-{{ section.id }} .gpl-cz__error { margin: 10px 0 0; color: var(--cz-red); font-weight: 700; font-size: 13px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__admin-warn { margin: 10px 0 0; color: #9A6B00; font-size: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__admin-warn { width: 100%; margin: 0; color: #9A6B00; font-size: 12px; }
 
+  @media screen and (max-width: 1279px) {
+    #gpl-cz-{{ section.id }} .gpl-cz__ws { grid-template-columns: 64px 300px minmax(0, 1fr) 272px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__viewport { --stage-h: 480px; }
+  }
   @media screen and (max-width: 989px) {
-    #gpl-cz-{{ section.id }} .gpl-cz__inner { grid-template-columns: minmax(0, 1fr); }
-    /* keep the shirt pinned while the form scrolls beneath it */
-    #gpl-cz-{{ section.id }} .gpl-cz__media {
-      position: sticky;
-      top: 62px;
-      z-index: 5;
-      background: #FFFFFF;
-      padding-bottom: 6px;
-    }
-    #gpl-cz-{{ section.id }} .gpl-cz__stage {
-      /* Kept intentionally small: this panel is pinned (sticky) while the form
-         scrolls beneath it, in the SAME single column on mobile (unlike desktop's
-         two-column split) — at the old 44vh it was tall enough to sit on top of
-         and hide Step 1's colour swatches for most of the scroll. */
-      max-height: 28vh;
-      display: flex;
-      justify-content: center;
-    }
-    #gpl-cz-{{ section.id }} .gpl-cz__stage .gpl-cz__mockup {
-      width: auto;
-      max-width: 100%;
-      max-height: 28vh;
-    }
-    #gpl-cz-{{ section.id }} .gpl-cz__stage-hint { display: none; }
+    #gpl-cz-{{ section.id }} .gpl-cz__ws { display: flex; flex-direction: column; min-height: 0; border-top: none; }
+    #gpl-cz-{{ section.id }} .gpl-cz__canvas { order: 1; }
+    #gpl-cz-{{ section.id }} .gpl-cz__viewport { --stage-h: min(48vh, 420px); padding: 10px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__views { padding: 6px 10px 8px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__view { width: 72px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__view-thumb { width: 56px; height: 56px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail { order: 2; flex-direction: row; gap: 4px; padding: 6px 8px; border-right: none; border-top: 1px solid var(--cz-line); border-bottom: 1px solid var(--cz-line); overflow-x: auto; }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail-btn { flex: 1 0 auto; min-width: 64px; padding: 6px 4px; gap: 3px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail-btn svg { width: 20px; height: 20px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail-btn--edit { display: flex; }
+    #gpl-cz-{{ section.id }} .gpl-cz__panel, #gpl-cz-{{ section.id }} .gpl-cz__props { order: 3; border: none; max-height: none; }
+    #gpl-cz-{{ section.id }} .gpl-cz__props { display: none; }
+    #gpl-cz-{{ section.id }}.panel-edit .gpl-cz__props { display: block; }
+    #gpl-cz-{{ section.id }}.panel-edit .gpl-cz__panel { display: none; }
+    #gpl-cz-{{ section.id }} .gpl-cz__props-empty { padding: 28px 18px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__bar { gap: 10px; padding: 10px 14px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__bar-ship { display: none; }
+    #gpl-cz-{{ section.id }} .gpl-cz__submit { min-width: 0; flex: 1 0 160px; padding: 14px 18px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__bar-gate, #gpl-cz-{{ section.id }} .gpl-cz__error { width: 100%; order: 5; }
+    #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { width: min(80%, 200px); gap: 6px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__zone-btn { padding: 8px 10px; font-size: 10.5px; }
   }
   @media screen and (max-width: 549px) {
-    #gpl-cz-{{ section.id }} .gpl-cz__methods { grid-template-columns: minmax(0, 1fr); }
-    #gpl-cz-{{ section.id }} .gpl-cz__size { width: calc(25% - 9px); }
-  }
-  /* ---- v2 editor UI ---- */
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 {
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; background: transparent; padding: 0; text-decoration: none;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-btn {
-    cursor: pointer; color: #FFFFFF; background: rgba(0, 0, 0, 0.62); border: 1px solid rgba(255,255,255,0.35);
-    padding: 8px 12px; border-radius: 5px; font: inherit; font-weight: 800; font-size: clamp(11px, 0.9vw, 13px); text-transform: uppercase;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-btn:hover { background: var(--cz-red); border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 4px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool { border-style: solid; border-color: #111; }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool:hover { background: #111; color: #FFF; }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--tool svg { width: 16px; height: 16px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__btn--danger { color: var(--cz-red); border-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__uploading { display: inline-flex; align-items: center; gap: 6px; color: var(--cz-red); font-size: 12px; font-weight: 700; }
-  #gpl-cz-{{ section.id }} .gpl-cz__uploading svg { width: 14px; height: 14px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__props { margin-top: 12px; padding: 12px; border: 1px solid #E2E2E2; border-radius: 6px; background: #FAFAFA; }
-  #gpl-cz-{{ section.id }} .gpl-cz__props-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__field { display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #444; }
-  #gpl-cz-{{ section.id }} .gpl-cz__field em { font-style: normal; color: #999; font-weight: 600; margin-left: 4px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__field--wide { grid-column: 1 / -1; }
-  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="text"], #gpl-cz-{{ section.id }} .gpl-cz__field select {
-    width: 100%; box-sizing: border-box; padding: 9px 10px; border: 1px solid #C9C9C9; border-radius: 4px; font: inherit; font-size: 14px; color: #111; background: #FFF; text-transform: none; font-weight: 500;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="range"] { width: 100%; accent-color: var(--cz-red); }
-  #gpl-cz-{{ section.id }} .gpl-cz__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
-  #gpl-cz-{{ section.id }} .gpl-cz__field input[type="color"] { width: 44px; height: 30px; padding: 0; border: 1px solid #C9C9C9; border-radius: 4px; background: #FFF; cursor: pointer; }
-  #gpl-cz-{{ section.id }} .gpl-cz__props-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__props-actions .gpl-cz__btn { padding: 7px 10px; font-size: 10.5px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layers { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layers-title { width: 100%; margin: 0 0 2px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #444; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layers-title em { font-style: normal; color: #999; font-weight: 600; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layer {
-    display: inline-flex; align-items: center; gap: 6px; cursor: pointer; max-width: 100%;
-    padding: 5px 9px 5px 5px; border: 1px solid #E2E2E2; border-radius: 20px; background: #FAFAFA; color: #111; font: inherit; font-size: 12px;
-  }
-  #gpl-cz-{{ section.id }} .gpl-cz__layer.is-active { border-color: var(--cz-red); background: rgba(215,25,32,0.06); }
-  #gpl-cz-{{ section.id }} .gpl-cz__layer-type { font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 10px; background: #111; color: #FFF; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layer-name { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  #gpl-cz-{{ section.id }} .gpl-cz__layers-clear { margin-left: auto; padding: 6px 10px; font-size: 10.5px; }
-  @media screen and (max-width: 549px) {
-    #gpl-cz-{{ section.id }} .gpl-cz__props-grid { grid-template-columns: minmax(0, 1fr); }
+    #gpl-cz-{{ section.id }} .gpl-cz__sizes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #gpl-cz-{{ section.id }} .gpl-cz__lib { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #gpl-cz-{{ section.id }} .gpl-cz__viewport { --stage-h: min(44vh, 360px); }
   }
 {% endstyle %}
 

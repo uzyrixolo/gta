@@ -1,47 +1,103 @@
-/* GTA Print Lab — customizer v2 editor mixin.
-   Merged over the base Alpine component (gpl-customizer-v2.js) and overrides the
+/* GTA Print Lab — customizer v2 editor mixin (Printeez-style workspace).
+   Merged over the base Alpine component (gpl-customizer-v2.js) and replaces the
    single-image Fabric editor with a multi-object design editor: uploaded images,
-   text and numbers, all per (colour | print area).
+   text and numbers, all per (colour | print area), with smart placements,
+   inch-accurate transforms, text styling + warp, undo/redo, layers and an
+   artwork library.
 
    Design storage is resolution-independent: every object's position and size is
    stored in "zone units" where the print zone is 1000 units wide, so the same
-   design renders on the 900px preview, on the phone-sized stage, and at 300 DPI
+   design renders on the stage at any zoom, on the 900px preview, and at 300 DPI
    on a print server (Phase 2) by changing one scale factor. */
 (function () {
   const ZU = 1000;                       // zone width in design units
   const STORE = new WeakMap();           // fabric state kept OUT of Alpine's reactive proxy
   const PROOF_DPI = 150;                 // client-side proof; real 300 DPI render is Phase 2
+  const HISTORY_MAX = 40;
+  const LIB_KEY = 'gpl-customizer-v2-library';
+  const ZOOMS = [1, 1.25, 1.5, 2, 2.5, 3];
 
+  // Google Fonts loaded by the section; weights/italic describe what each family ships.
   const FONTS = [
-    { name: 'Anton', weight: '400' },
-    { name: 'Bebas Neue', weight: '400' },
-    { name: 'Oswald', weight: '700' },
-    { name: 'Archivo Black', weight: '400' },
-    { name: 'Black Ops One', weight: '400' },
-    { name: 'Bangers', weight: '400' },
-    { name: 'Montserrat', weight: '800' },
-    { name: 'Roboto Condensed', weight: '700' },
-    { name: 'Permanent Marker', weight: '400' },
-    { name: 'Pacifico', weight: '400' },
+    { name: 'Anton', group: 'Sport & display', weights: ['400'] },
+    { name: 'Bebas Neue', group: 'Sport & display', weights: ['400'] },
+    { name: 'Oswald', group: 'Sport & display', weights: ['400', '700'] },
+    { name: 'Teko', group: 'Sport & display', weights: ['700'] },
+    { name: 'Russo One', group: 'Sport & display', weights: ['400'] },
+    { name: 'Archivo Black', group: 'Sport & display', weights: ['400'] },
+    { name: 'Black Ops One', group: 'Sport & display', weights: ['400'] },
+    { name: 'Bangers', group: 'Sport & display', weights: ['400'] },
+    { name: 'Montserrat', group: 'Business', weights: ['400', '700', '800'], italic: true },
+    { name: 'Roboto Condensed', group: 'Business', weights: ['400', '700'], italic: true },
+    { name: 'Open Sans', group: 'Business', weights: ['400', '700'], italic: true },
+    { name: 'Inter', group: 'Business', weights: ['400', '700'] },
+    { name: 'Playfair Display', group: 'Serif', weights: ['400', '700'], italic: true },
+    { name: 'Merriweather', group: 'Serif', weights: ['400', '700'], italic: true },
+    { name: 'Permanent Marker', group: 'Script & handwritten', weights: ['400'] },
+    { name: 'Pacifico', group: 'Script & handwritten', weights: ['400'] },
+    { name: 'Lobster', group: 'Script & handwritten', weights: ['400'] },
+    { name: 'Dancing Script', group: 'Script & handwritten', weights: ['700'] },
+  ];
+
+  // Smart placements (inches, relative to the print area). Only offered on areas
+  // at least 8in wide (chest/back), never on sleeves or cap panels.
+  const PLACEMENTS = [
+    { id: 'free', name: 'Free form', desc: 'Place anywhere' },
+    { id: 'standard', name: 'Standard', desc: '10 in wide · 2 in down', w: 10, top: 2, x: 'center' },
+    { id: 'left_chest', name: 'Left chest', desc: '4 in wide · pocket side', w: 4, top: 1.5, x: 'left_chest' },
+    { id: 'center_chest', name: 'Center chest', desc: '7 in wide · 3 in down', w: 7, top: 3, x: 'center' },
+    { id: 'oversized', name: 'Oversized', desc: 'Full print width', w: 'full', top: 0.5, x: 'center' },
+  ];
+
+  const WARPS = [
+    { id: 'none', name: 'None' },
+    { id: 'arc_up', name: 'Arc up' },
+    { id: 'arc_down', name: 'Arc down' },
+    { id: 'circle', name: 'Circle' },
+    { id: 'slant', name: 'Slant' },
   ];
 
   const uid = () => 'o' + Math.random().toString(36).slice(2, 9);
   const clone = (o) => JSON.parse(JSON.stringify(o));
+  const r2 = (n) => Math.round(n * 100) / 100;
+  const isMobile = () => window.matchMedia('(max-width: 989px)').matches;
 
   window.gplEditorMixin = {
     // ---- extra state ----
     designs: {},                          // "Color|Area" -> { objects: [...] } in zone units
     fonts: FONTS,
-    sel: { has: false, id: '', type: '', text: '', fontFamily: 'Anton', fontSize: 140, fill: '#FFFFFF',
-           stroke: '#000000', strokeWidth: 0, fontWeight: '400', charSpacing: 0 },
-    tool: 'select',
+    fontGroups: [...new Set(FONTS.map(f => f.group))],
+    placements: PLACEMENTS,
+    warps: WARPS,
+    panel: 'product',                     // rail tab: product | layers | files | text | edit
+    zoom: 1,
+    histTick: 0,                          // bumps so canUndo()/canRedo() re-evaluate
+    library: [],                          // uploaded artwork, shared across products
+    colorSearch: '',
+    chip: { show: false, x: 0, y: 0, text: '' },
+    sel: {
+      has: false, id: '', type: '', text: '', fontFamily: 'Anton', fontSize: 140, fill: '#FFFFFF',
+      stroke: '#000000', strokeWidth: 0, fontWeight: '400', fontStyle: 'normal', charSpacing: 0,
+      lineHeight: 1.1, textAlign: 'center', warp: 'none', warpAmt: 50,
+      xIn: 0, yIn: 0, wIn: 0, hIn: 0, angle: 0, locked: false, placement: 'free', flipX: false, flipY: false,
+    },
 
     // ---- fabric state ----
     fx() {
       let s = STORE.get(this.$root);
-      if (!s) { s = { canvas: null, ro: null, loading: false }; STORE.set(this.$root, s); }
+      if (!s) { s = { canvas: null, ro: null, loading: false, history: {}, lastJson: {} }; STORE.set(this.$root, s); }
       return s;
     },
+    areaDef(name) { return this.areas.find(a => a.name === (name || this.activePrintArea)); },
+    areaWIn(name) { const a = this.areaDef(name); return (a && a.w_in) || 12; },
+    areaHIn(name) {
+      const a = this.areaDef(name); if (!a) return 16;
+      if (a.h_in) return a.h_in;
+      return r2(this.areaWIn(name) * (a.zone.h / a.zone.w));
+    },
+    ppi(name) { const z = this.zonePx(name || this.activePrintArea); return z ? z.w / this.areaWIn(name) : 1; },
+    zoneLabel(name) { return this.areaWIn(name) + ' × ' + this.areaHIn(name) + ' in'; },
+    placementsFor(name) { return this.areaWIn(name) >= 8 ? PLACEMENTS : []; },
     zoneFactor(areaName) {
       const z = this.zonePx(areaName || this.activePrintArea);
       return z ? z.w / ZU : 1;
@@ -49,6 +105,7 @@
     designKey(color, area) { return (color || this.activeColor) + '|' + (area || this.activePrintArea); },
     designFor(color, area) { return this.designs[this.designKey(color, area)] || { objects: [] }; },
     designHasObjects(color, area) { return this.designFor(color, area).objects.length > 0; },
+    designCount(color, area) { return this.designFor(color, area).objects.length; },
 
     // ---- editor bootstrap (overrides base) ----
     initFabric() {
@@ -57,9 +114,10 @@
       const stage = this.stageEl();
       if (!el || !stage) return;
       const fx = this.fx();
+      this.loadLibrary();
       fabric.Object.prototype.set({
         cornerColor: '#D71920', cornerStrokeColor: '#FFFFFF', borderColor: '#D71920',
-        cornerSize: 11, transparentCorners: false, lockScalingFlip: true,
+        cornerSize: 11, transparentCorners: false, lockScalingFlip: true, borderScaleFactor: 1.5,
       });
       fx.canvas = new fabric.Canvas(el, { selection: true, preserveObjectStacking: true });
       const size = () => {
@@ -71,41 +129,67 @@
       size();
       fx.ro = new ResizeObserver(() => size());
       fx.ro.observe(stage);
+      // the stage scrolls inside its viewport when zoomed — keep Fabric's pointer offset honest
+      const vp = this.$root.querySelector('[data-gpl-viewport]');
+      if (vp) vp.addEventListener('scroll', () => fx.canvas.calcOffset(), { passive: true });
+      window.addEventListener('scroll', () => fx.canvas.calcOffset(), { passive: true });
 
-      const clamp = (o) => {
-        const z = this.zonePx(this.activePrintArea);
-        if (!z || !o) return;
-        const b = o.getBoundingRect(true, true);
-        if (b.width > z.w || b.height > z.h) {
-          const s = Math.min(z.w / b.width, z.h / b.height);
-          o.scaleX *= s; o.scaleY *= s;
-        }
-        const nb = o.getBoundingRect(true, true);
-        let dx = 0, dy = 0;
-        if (nb.left < z.x) dx = z.x - nb.left;
-        if (nb.top < z.y) dy = z.y - nb.top;
-        if (nb.left + nb.width > z.x + z.w) dx = (z.x + z.w) - (nb.left + nb.width);
-        if (nb.top + nb.height > z.y + z.h) dy = (z.y + z.h) - (nb.top + nb.height);
-        o.left += dx; o.top += dy;
-        o.setCoords();
-      };
-      fx.canvas.on('object:moving', e => clamp(e.target));
-      fx.canvas.on('object:scaling', e => clamp(e.target));
-      fx.canvas.on('object:rotating', e => clamp(e.target));
-      fx.canvas.on('object:modified', e => { clamp(e.target); this.saveDesign(); fx.canvas.requestRenderAll(); });
-      fx.canvas.on('selection:created', () => this.syncSel());
-      fx.canvas.on('selection:updated', () => this.syncSel());
-      fx.canvas.on('selection:cleared', () => this.syncSel());
+      fx.canvas.on('object:moving', e => this.clampToZone(e.target));
+      fx.canvas.on('object:scaling', e => this.clampToZone(e.target));
+      fx.canvas.on('object:rotating', e => this.clampToZone(e.target));
+      fx.canvas.on('object:modified', e => {
+        this.clampToZone(e.target);
+        if (e.target) e.target._gplPlacement = 'free';
+        this.saveDesign(); this.syncSel(); fx.canvas.requestRenderAll();
+      });
+      fx.canvas.on('selection:created', () => this.onSelect());
+      fx.canvas.on('selection:updated', () => this.onSelect());
+      fx.canvas.on('selection:cleared', () => this.onSelect());
+      fx.canvas.on('after:render', () => this.updateChip());
       fx.canvas.on('text:changed', () => { this.syncSel(); this.saveDesign(); });
-      // keyboard: delete removes selection unless typing in a field
+      // keyboard: delete / nudge / undo / duplicate unless typing in a field
       this._onKey = (ev) => {
-        if ((ev.key === 'Delete' || ev.key === 'Backspace') && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)
-            && fx.canvas.getActiveObject() && !fx.canvas.getActiveObject().isEditing) {
-          ev.preventDefault(); this.deleteSelected();
+        if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+        const o = fx.canvas.getActiveObject();
+        const meta = ev.metaKey || ev.ctrlKey;
+        if (meta && ev.key.toLowerCase() === 'z') { ev.preventDefault(); ev.shiftKey ? this.redo() : this.undo(); return; }
+        if (meta && ev.key.toLowerCase() === 'd' && o) { ev.preventDefault(); this.duplicateSelected(); return; }
+        if (!o || o.isEditing) return;
+        if (ev.key === 'Delete' || ev.key === 'Backspace') { ev.preventDefault(); this.deleteSelected(); return; }
+        const step = ev.shiftKey ? 10 : 1;
+        const nudge = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[ev.key];
+        if (nudge) {
+          ev.preventDefault();
+          o.left += nudge[0]; o.top += nudge[1]; o.setCoords(); this.clampToZone(o);
+          o._gplPlacement = 'free'; fx.canvas.requestRenderAll(); this.saveDesign(); this.syncSel();
         }
       };
       document.addEventListener('keydown', this._onKey);
       this.loadAreaIntoFabric();
+    },
+    clampToZone(o) {
+      const z = this.zonePx(this.activePrintArea);
+      if (!z || !o) return;
+      const b = o.getBoundingRect(true, true);
+      if (b.width > z.w || b.height > z.h) {
+        const s = Math.min(z.w / b.width, z.h / b.height);
+        o.scaleX *= s; o.scaleY *= s;
+      }
+      const nb = o.getBoundingRect(true, true);
+      let dx = 0, dy = 0;
+      if (nb.left < z.x) dx = z.x - nb.left;
+      if (nb.top < z.y) dy = z.y - nb.top;
+      if (nb.left + nb.width > z.x + z.w) dx = (z.x + z.w) - (nb.left + nb.width);
+      if (nb.top + nb.height > z.y + z.h) dy = (z.y + z.h) - (nb.top + nb.height);
+      o.left += dx; o.top += dy;
+      o.setCoords();
+    },
+    onSelect() {
+      this.syncSel();
+      if (isMobile()) {
+        if (this.sel.has) this.panel = 'edit';
+        else if (this.panel === 'edit') this.panel = 'layers';
+      }
     },
 
     // ---- (de)serialisation in zone units ----
@@ -118,6 +202,9 @@
         cx: +((o.left - z.x) / f).toFixed(2),
         cy: +((o.top - z.y) / f).toFixed(2),
         angle: Math.round(o.angle || 0),
+        flipX: !!o.flipX, flipY: !!o.flipY,
+        locked: !!o._gplLocked,
+        placement: o._gplPlacement || 'free',
       };
       if (base.type === 'image') {
         base.src = o._gplSrc || (o.getSrc && o.getSrc()) || '';
@@ -128,32 +215,78 @@
         base.text = o.text;
         base.fontFamily = o.fontFamily;
         base.fontWeight = String(o.fontWeight || '400');
+        base.fontStyle = o.fontStyle || 'normal';
         base.fontSize = +((o.fontSize * (o.scaleY || 1)) / f).toFixed(2);
         base.fill = o.fill;
         base.stroke = o.stroke || '';
         base.strokeWidth = +(((o.strokeWidth || 0) * (o.scaleY || 1)) / f).toFixed(2);
         base.charSpacing = o.charSpacing || 0;
+        base.lineHeight = o.lineHeight || 1.1;
         base.textAlign = o.textAlign || 'center';
+        base.warp = o._gplWarp || 'none';
+        base.warpAmt = o._gplWarpAmt == null ? 50 : o._gplWarpAmt;
       }
       return base;
     },
-    saveDesign() {
+    saveDesign(opts) {
       const fx = this.fx();
       if (!fx.canvas || fx.loading) return;
-      // dedupe by id: guards against any object that got onto the canvas twice
       const seen = new Set();
       const objs = fx.canvas.getObjects().map(o => this.serializeObject(o)).filter(d => !seen.has(d.id) && seen.add(d.id));
       const key = this.designKey();
+      const prev = this.designFor().objects;
+      const json = JSON.stringify(objs);
+      if (json === JSON.stringify(prev)) return;
+      if (!(opts && opts.noHistory)) this.pushHistory(key, clone(prev));
       if (objs.length) this.designs[key] = { objects: objs };
       else delete this.designs[key];
       this.persist();
+    },
+    applyLock(o, locked) {
+      o._gplLocked = !!locked;
+      o.set({ lockMovementX: !!locked, lockMovementY: !!locked, lockScalingX: !!locked, lockScalingY: !!locked, lockRotation: !!locked, hasControls: !locked });
+    },
+    // Text warp: arcs/circle use Fabric's text-on-path; slant is a skew. Path is
+    // rebuilt from the text's natural width so it always fits the whole string.
+    applyWarp(t, warp, amt) {
+      t._gplWarp = warp || 'none';
+      t._gplWarpAmt = amt == null ? 50 : amt;
+      t.set({ path: null, skewX: 0 });
+      t.initDimensions();
+      if (warp === 'slant') { t.set({ skewX: -Math.round((amt / 100) * 30) }); t.setCoords(); return; }
+      if (warp !== 'arc_up' && warp !== 'arc_down' && warp !== 'circle') { t.setCoords(); return; }
+      const k = Math.max(0.05, Math.min(1, amt / 100));
+      const c = Math.max(4, t.width) * 1.02;               // arc length = text width
+      let d, r, len;
+      if (warp === 'circle') {
+        r = c / (2 * Math.PI * k);
+        const half = (c / 2) / r;                          // centre the text at 12 o'clock
+        const a0 = -Math.PI / 2 - half;
+        const p = (a) => (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2);
+        d = 'M ' + p(a0) + ' A ' + r + ' ' + r + ' 0 1 1 ' + p(a0 + Math.PI) + ' A ' + r + ' ' + r + ' 0 1 1 ' + p(a0);
+        len = 2 * Math.PI * r;
+      } else {
+        const theta = k * Math.PI;                         // up to a half circle
+        r = c / theta;
+        const mid = warp === 'arc_up' ? -Math.PI / 2 : Math.PI / 2;
+        const sweep = warp === 'arc_up' ? 1 : 0;
+        const a0 = warp === 'arc_up' ? mid - theta / 2 : mid + theta / 2;
+        const a1 = warp === 'arc_up' ? mid + theta / 2 : mid - theta / 2;
+        const p = (a) => (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2);
+        d = 'M ' + p(a0) + ' A ' + r + ' ' + r + ' 0 ' + (theta > Math.PI ? 1 : 0) + ' ' + sweep + ' ' + p(a1);
+        len = c;
+      }
+      const path = new fabric.Path(d, { fill: '', stroke: '', visible: false, objectCaching: false });
+      t.set({ path, pathAlign: 'center', pathSide: 'left', pathStartOffset: Math.max(0, (len - t.width) / 2) });
+      t.initDimensions();
+      t.setCoords();
     },
     // build a fabric object from a stored one, at a given zone rect (px)
     enliven(d, z) {
       const f = z.w / ZU;
       const common = {
         left: z.x + d.cx * f, top: z.y + d.cy * f, angle: d.angle || 0,
-        originX: 'center', originY: 'center',
+        originX: 'center', originY: 'center', flipX: !!d.flipX, flipY: !!d.flipY,
       };
       return new Promise((resolve) => {
         if (d.type === 'image') {
@@ -161,24 +294,30 @@
             if (!img) return resolve(null);
             img.set(common);
             img.scaleToWidth(Math.max(1, d.w * f));
-            img._gplId = d.id; img._gplSrc = d.src; img._gplFilename = d.filename || '';
+            img._gplId = d.id; img._gplSrc = d.src; img._gplFilename = d.filename || ''; img._gplPlacement = d.placement || 'free';
             img.setControlsVisibility({ ml: false, mr: false, mt: false, mb: false });
+            this.applyLock(img, d.locked);
             resolve(img);
           }, { crossOrigin: 'anonymous' });
         } else {
           const t = new fabric.Text(d.text || '', Object.assign(common, {
             fontFamily: d.fontFamily || 'Anton',
             fontWeight: d.fontWeight || '400',
+            fontStyle: d.fontStyle || 'normal',
             fontSize: Math.max(4, (d.fontSize || 140) * f),
             fill: d.fill || '#FFFFFF',
             stroke: d.stroke || '',
             strokeWidth: (d.strokeWidth || 0) * f,
             paintFirst: 'stroke',
             charSpacing: d.charSpacing || 0,
+            lineHeight: d.lineHeight || 1.1,
             textAlign: d.textAlign || 'center',
+            objectCaching: false,
           }));
-          t._gplId = d.id;
+          t._gplId = d.id; t._gplPlacement = d.placement || 'free';
           t.setControlsVisibility({ ml: false, mr: false, mt: false, mb: false });
+          this.applyWarp(t, d.warp || 'none', d.warpAmt == null ? 50 : d.warpAmt);
+          this.applyLock(t, d.locked);
           resolve(t);
         }
       });
@@ -189,14 +328,12 @@
       const area = this.activePrintArea, color = this.activeColor;
       const z = this.zonePx(area);
       if (!z) { fx.canvas.clear(); return; }
-      // Loads overlap constantly (font swaps and image loads resize the stage, and
-      // the ResizeObserver reloads on every resize). Only the newest load may touch
-      // the canvas, and it clears + repopulates in one synchronous step after its
-      // images have arrived — so two in-flight loads can never both add the same
-      // design (which is what produced duplicate objects).
+      // Only the newest load may touch the canvas; it clears + repopulates in one
+      // synchronous step after its images (and fonts) have arrived.
       const seq = (fx.loadSeq = (fx.loadSeq || 0) + 1);
       fx.loading = true;
       const design = this.designFor(color, area);
+      await Promise.all(design.objects.filter(d => d.type === 'text').map(d => this.ensureFont(d.fontFamily, d.fontWeight, d.fontStyle)));
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, z)));
       if (seq !== fx.loadSeq) return;                                    // superseded
       if (this.activePrintArea !== area || this.activeColor !== color) { fx.loading = false; return; }
@@ -209,37 +346,76 @@
     },
     savePlacement() { this.saveDesign(); },   // base name, kept for safety
 
+    // ---- history ----
+    pushHistory(key, prevObjs) {
+      const h = this.fx().history;
+      const s = h[key] || (h[key] = { undo: [], redo: [] });
+      s.undo.push(prevObjs);
+      if (s.undo.length > HISTORY_MAX) s.undo.shift();
+      s.redo = [];
+      this.histTick++;
+    },
+    canUndo() { this.histTick; const s = this.fx().history[this.designKey()]; return !!(s && s.undo.length); },
+    canRedo() { this.histTick; const s = this.fx().history[this.designKey()]; return !!(s && s.redo.length); },
+    undo() { this.stepHistory('undo'); },
+    redo() { this.stepHistory('redo'); },
+    stepHistory(dir) {
+      const key = this.designKey();
+      const s = this.fx().history[key];
+      if (!s || !s[dir].length) return;
+      const cur = clone(this.designFor().objects);
+      const next = s[dir].pop();
+      s[dir === 'undo' ? 'redo' : 'undo'].push(cur);
+      if (next.length) this.designs[key] = { objects: next }; else delete this.designs[key];
+      this.histTick++;
+      this.persist();
+      this.loadAreaIntoFabric();
+    },
+
     // ---- selection <-> panel ----
+    inchesOf(o) {
+      const z = this.zonePx(this.activePrintArea);
+      const p = this.ppi();
+      if (!o || !z) return { x: 0, y: 0, w: 0, h: 0 };
+      const b = o.getBoundingRect(true, true);
+      return { x: r2((b.left - z.x) / p), y: r2((b.top - z.y) / p), w: r2(b.width / p), h: r2(b.height / p) };
+    },
     syncSel() {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getActiveObject();
-      if (!o || o.type === 'activeSelection') { this.sel.has = false; this.sel.id = ''; this.sel.type = ''; return; }
+      if (!o || o.type === 'activeSelection') { this.sel.has = false; this.sel.id = ''; this.sel.type = ''; this.updateChip(); return; }
       const f = this.zoneFactor();
-      this.sel.has = true;
-      this.sel.id = o._gplId || '';
-      this.sel.type = o.type === 'image' ? 'image' : 'text';
+      const inch = this.inchesOf(o);
+      Object.assign(this.sel, {
+        has: true, id: o._gplId || '', type: o.type === 'image' ? 'image' : 'text',
+        xIn: inch.x, yIn: inch.y, wIn: inch.w, hIn: inch.h, angle: Math.round(o.angle || 0),
+        locked: !!o._gplLocked, placement: o._gplPlacement || 'free', flipX: !!o.flipX, flipY: !!o.flipY,
+      });
       if (this.sel.type === 'text') {
-        this.sel.text = o.text;
-        this.sel.fontFamily = o.fontFamily;
-        this.sel.fontWeight = String(o.fontWeight || '400');
-        this.sel.fontSize = Math.round((o.fontSize * (o.scaleY || 1)) / f);
-        this.sel.fill = o.fill;
-        this.sel.stroke = o.stroke || '#000000';
-        this.sel.strokeWidth = Math.round(((o.strokeWidth || 0) * (o.scaleY || 1)) / f);
-        this.sel.charSpacing = o.charSpacing || 0;
+        Object.assign(this.sel, {
+          text: o.text, fontFamily: o.fontFamily, fontWeight: String(o.fontWeight || '400'), fontStyle: o.fontStyle || 'normal',
+          fontSize: Math.round((o.fontSize * (o.scaleY || 1)) / f), fill: o.fill, stroke: o.stroke || '#000000',
+          strokeWidth: Math.round(((o.strokeWidth || 0) * (o.scaleY || 1)) / f), charSpacing: o.charSpacing || 0,
+          lineHeight: o.lineHeight || 1.1, textAlign: o.textAlign || 'center',
+          warp: o._gplWarp || 'none', warpAmt: o._gplWarpAmt == null ? 50 : o._gplWarpAmt,
+        });
       }
+      this.updateChip();
     },
     async applySel() {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getActiveObject();
       if (!o || this.sel.type !== 'text') return;
       const f = this.zoneFactor();
-      await this.ensureFont(this.sel.fontFamily, this.sel.fontWeight);
-      // un-fold scale so size edits are absolute
+      const font = FONTS.find(x => x.name === this.sel.fontFamily) || FONTS[0];
+      if (!font.weights.includes(this.sel.fontWeight)) this.sel.fontWeight = font.weights.includes('700') ? '700' : font.weights[0];
+      if (!font.italic) this.sel.fontStyle = 'normal';
+      await this.ensureFont(this.sel.fontFamily, this.sel.fontWeight, this.sel.fontStyle);
       o.set({
-        text: this.sel.text,
+        text: String(this.sel.text || '').slice(0, 120),
         fontFamily: this.sel.fontFamily,
         fontWeight: this.sel.fontWeight,
+        fontStyle: this.sel.fontStyle,
         fontSize: Math.max(4, this.sel.fontSize * f),
         scaleX: 1, scaleY: 1,
         fill: this.sel.fill,
@@ -247,14 +423,112 @@
         strokeWidth: this.sel.strokeWidth * f,
         paintFirst: 'stroke',
         charSpacing: Number(this.sel.charSpacing) || 0,
+        lineHeight: Number(this.sel.lineHeight) || 1.1,
+        textAlign: this.sel.textAlign,
       });
-      o.setCoords();
+      this.applyWarp(o, this.sel.warp, Number(this.sel.warpAmt));
+      this.clampToZone(o);
       fx.canvas.requestRenderAll();
       this.saveDesign();
+      this.syncSel();
     },
-    ensureFont(family, weight) {
-      try { return document.fonts.load((weight || '400') + ' 40px "' + family + '"'); } catch (e) { return Promise.resolve(); }
+    ensureFont(family, weight, style) {
+      try { return document.fonts.load((style === 'italic' ? 'italic ' : '') + (weight || '400') + ' 40px "' + family + '"'); } catch (e) { return Promise.resolve(); }
     },
+    fontMeta(name) { return FONTS.find(f => f.name === name) || FONTS[0]; },
+    fontsIn(group) { return FONTS.filter(f => f.group === group); },
+
+    // ---- transforms (inches) ----
+    withSel(fn) {
+      const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject();
+      const z = this.zonePx(this.activePrintArea);
+      if (!o || o.type === 'activeSelection' || !z) return;
+      fn(o, z, this.ppi());
+      this.clampToZone(o);
+      o.setCoords(); fx.canvas.requestRenderAll();
+      this.saveDesign(); this.syncSel();
+    },
+    setPosIn(axis, val) {
+      const v = Number(val); if (isNaN(v)) return;
+      this.withSel((o, z, p) => {
+        const b = o.getBoundingRect(true, true);
+        if (axis === 'x') o.left += (z.x + v * p) - b.left; else o.top += (z.y + v * p) - b.top;
+        o._gplPlacement = 'free';
+      });
+    },
+    setDimIn(axis, val) {
+      const v = Number(val); if (!(v > 0)) return;
+      this.withSel((o, z, p) => {
+        const b = o.getBoundingRect(true, true);
+        const s = (v * p) / (axis === 'w' ? b.width : b.height);
+        if (o.type === 'image') { o.scaleX *= s; o.scaleY *= s; }
+        else { o.set({ fontSize: o.fontSize * s * (o.scaleY || 1), scaleX: 1, scaleY: 1, strokeWidth: (o.strokeWidth || 0) * s }); this.applyWarp(o, o._gplWarp, o._gplWarpAmt); }
+        o._gplPlacement = 'free';
+      });
+    },
+    setAngle(val) {
+      const v = Number(val); if (isNaN(v)) return;
+      this.withSel((o) => { o.rotate(((v % 360) + 360) % 360); });
+    },
+    flip(axis) { this.withSel((o) => { if (axis === 'x') o.flipX = !o.flipX; else o.flipY = !o.flipY; }); },
+    align(kind) {
+      this.withSel((o, z) => {
+        const b = o.getBoundingRect(true, true);
+        if (kind === 'left') o.left += z.x - b.left;
+        if (kind === 'hcenter') o.left += (z.x + z.w / 2) - (b.left + b.width / 2);
+        if (kind === 'right') o.left += (z.x + z.w) - (b.left + b.width);
+        if (kind === 'top') o.top += z.y - b.top;
+        if (kind === 'vcenter') o.top += (z.y + z.h / 2) - (b.top + b.height / 2);
+        if (kind === 'bottom') o.top += (z.y + z.h) - (b.top + b.height);
+        o._gplPlacement = 'free';
+      });
+    },
+    applyPlacement(id) {
+      const pl = PLACEMENTS.find(p => p.id === id);
+      if (!pl) return;
+      if (pl.id === 'free') { this.withSel((o) => { o._gplPlacement = 'free'; }); return; }
+      this.withSel((o, z, p) => {
+        const wIn = this.areaWIn();
+        const targetW = pl.w === 'full' ? wIn : Math.min(pl.w, wIn);
+        const b0 = o.getBoundingRect(true, true);
+        const s = (targetW * p) / b0.width;
+        if (o.type === 'image') { o.scaleX *= s; o.scaleY *= s; }
+        else { o.set({ fontSize: o.fontSize * s * (o.scaleY || 1), scaleX: 1, scaleY: 1, strokeWidth: (o.strokeWidth || 0) * s }); this.applyWarp(o, o._gplWarp, o._gplWarpAmt); }
+        o.setCoords();
+        const b = o.getBoundingRect(true, true);
+        let left;
+        if (pl.x === 'left_chest') left = z.x + z.w / 2 + 1.5 * p;             // wearer's left = viewer's right
+        else left = z.x + z.w / 2 - b.width / 2;
+        o.left += left - b.left;
+        o.top += (z.y + pl.top * p) - b.top;
+        o._gplPlacement = pl.id;
+      });
+    },
+    toggleLock(id) {
+      const fx = this.fx();
+      const o = id ? fx.canvas.getObjects().find(x => x._gplId === id) : fx.canvas.getActiveObject();
+      if (!o) return;
+      this.applyLock(o, !o._gplLocked);
+      fx.canvas.requestRenderAll(); this.saveDesign(); this.syncSel();
+    },
+
+    // ---- size chip under the selection ----
+    updateChip() {
+      const fx = this.fx();
+      const o = fx.canvas && fx.canvas.getActiveObject();
+      if (!o || o.type === 'activeSelection') { if (this.chip.show) this.chip.show = false; return; }
+      const b = o.getBoundingRect(true, true);
+      const i = this.inchesOf(o);
+      const text = i.w.toFixed(2) + ' × ' + i.h.toFixed(2) + ' in · ' + i.y.toFixed(1) + ' in from top';
+      if (this.chip.text !== text || Math.abs(this.chip.x - (b.left + b.width / 2)) > 0.5 || Math.abs(this.chip.y - (b.top + b.height)) > 0.5 || !this.chip.show) {
+        Object.assign(this.chip, { show: true, x: b.left + b.width / 2, y: b.top + b.height, text });
+      }
+    },
+
+    // ---- zoom ----
+    zoomIn() { const i = ZOOMS.indexOf(this.zoom); this.zoom = ZOOMS[Math.min(ZOOMS.length - 1, i + 1)]; },
+    zoomOut() { const i = ZOOMS.indexOf(this.zoom); this.zoom = ZOOMS[Math.max(0, i - 1)]; },
+    zoomReset() { this.zoom = 1; },
 
     // ---- tools ----
     async addText(preset) {
@@ -263,16 +537,20 @@
       if (!fx.canvas || !z) return;
       const f = z.w / ZU;
       const p = Object.assign({
-        text: 'YOUR TEXT', fontFamily: 'Anton', fontWeight: '400', fontSize: 140,
+        text: 'YOUR TEXT', fontFamily: 'Anton', fontWeight: '400', fontStyle: 'normal', fontSize: 140,
         fill: this.isLight(this.activeColor) ? '#111111' : '#FFFFFF', stroke: '', strokeWidth: 0, charSpacing: 0,
+        lineHeight: 1.1, textAlign: 'center', warp: 'none', warpAmt: 50,
       }, preset || {});
-      await this.ensureFont(p.fontFamily, p.fontWeight);
+      await this.ensureFont(p.fontFamily, p.fontWeight, p.fontStyle);
       const t = await this.enliven(Object.assign({ id: uid(), type: 'text', cx: ZU / 2, cy: (z.h / f) / 2, angle: 0 }, p), z);
+      // never larger than the zone
+      this.clampToZone(t);
       fx.canvas.add(t);
       fx.canvas.setActiveObject(t);
       fx.canvas.requestRenderAll();
       this.saveDesign();
       this.syncSel();
+      if (isMobile()) this.panel = 'edit';
     },
     addNumber() {
       const dark = this.isLight(this.activeColor);
@@ -280,6 +558,13 @@
         text: '00', fontFamily: 'Anton', fontSize: 420,
         fill: dark ? '#111111' : '#FFFFFF', stroke: dark ? '#FFFFFF' : '#111111', strokeWidth: 14, charSpacing: 20,
       });
+    },
+    async addNameNumber() {
+      const dark = this.isLight(this.activeColor);
+      const z = this.zonePx(this.activePrintArea); if (!z) return;
+      const f = z.w / ZU; const hZ = z.h / f;
+      await this.addText({ text: 'NAME', fontFamily: 'Anton', fontSize: 150, charSpacing: 60, cy: hZ * 0.22 });
+      await this.addText({ text: '00', fontFamily: 'Anton', fontSize: 460, fill: dark ? '#111111' : '#FFFFFF', stroke: dark ? '#FFFFFF' : '#111111', strokeWidth: 14, charSpacing: 20, cy: hZ * 0.6 });
     },
     async addImageFromUrl(url, filename) {
       const fx = this.fx();
@@ -311,44 +596,85 @@
       this.saveDesign();
       this.syncSel();
     },
+    removeById(id) {
+      const fx = this.fx();
+      const o = fx.canvas && fx.canvas.getObjects().find(x => x._gplId === id);
+      if (!o) return;
+      fx.canvas.remove(o); fx.canvas.discardActiveObject(); fx.canvas.requestRenderAll();
+      this.saveDesign(); this.syncSel();
+    },
     duplicateSelected() {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getActiveObject();
       if (!o || o.type === 'activeSelection') return;
       const d = this.serializeObject(o);
-      d.id = uid(); d.cx += 40; d.cy += 40;
+      d.id = uid(); d.cx += 40; d.cy += 40; d.placement = 'free';
       this.enliven(d, this.zonePx(this.activePrintArea)).then(n => {
         if (!n) return;
+        this.clampToZone(n);
         fx.canvas.add(n); fx.canvas.setActiveObject(n); fx.canvas.requestRenderAll();
         this.saveDesign(); this.syncSel();
       });
     },
-    bringForward() { const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject(); if (o) { fx.canvas.bringForward(o); fx.canvas.requestRenderAll(); this.saveDesign(); } },
-    sendBackward() { const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject(); if (o) { fx.canvas.sendBackwards(o); fx.canvas.requestRenderAll(); this.saveDesign(); } },
-    centerSelected() {
-      const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject(); const z = this.zonePx(this.activePrintArea);
-      if (!o || !z) return;
-      o.set({ left: z.x + z.w / 2, top: z.y + z.h / 2 }); o.setCoords(); fx.canvas.requestRenderAll(); this.saveDesign();
+    arrange(kind) {
+      const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject(); if (!o) return;
+      if (kind === 'forward') fx.canvas.bringForward(o);
+      if (kind === 'backward') fx.canvas.sendBackwards(o);
+      if (kind === 'front') fx.canvas.bringToFront(o);
+      if (kind === 'back') fx.canvas.sendToBack(o);
+      fx.canvas.requestRenderAll(); this.saveDesign();
     },
+    bringForward() { this.arrange('forward'); },
+    sendBackward() { this.arrange('backward'); },
+    moveLayer(id, dir) {
+      const fx = this.fx(); const o = fx.canvas && fx.canvas.getObjects().find(x => x._gplId === id); if (!o) return;
+      if (dir === 'up') fx.canvas.bringForward(o); else fx.canvas.sendBackwards(o);
+      fx.canvas.requestRenderAll(); this.saveDesign();
+    },
+    centerSelected() { this.align('hcenter'); this.align('vcenter'); },
     clearArea(color, area) {
-      delete this.designs[this.designKey(color, area)];
+      const key = this.designKey(color, area);
+      if (this.designs[key]) this.pushHistory(key, clone(this.designs[key].objects));
+      delete this.designs[key];
       delete this.artwork[this.key(color, area)];
       this.persist();
       if ((color || this.activeColor) === this.activeColor && (area || this.activePrintArea) === this.activePrintArea) this.loadAreaIntoFabric();
     },
     objectsInArea() { return this.designFor().objects; },
+    layerLabel(o) { return o.type === 'image' ? (o.filename || 'Image') : (o.text || 'Text'); },
     selectById(id) {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getObjects().find(x => x._gplId === id);
-      if (o) { fx.canvas.setActiveObject(o); fx.canvas.requestRenderAll(); this.syncSel(); }
+      if (o) { fx.canvas.setActiveObject(o); fx.canvas.requestRenderAll(); this.syncSel(); if (isMobile()) this.panel = 'edit'; }
     },
+    setArea(name) {
+      this.activePrintArea = name;
+      if (this.panel === 'edit') this.panel = 'layers';
+    },
+
+    // ---- artwork library (persisted across products) ----
+    loadLibrary() {
+      try { const raw = localStorage.getItem(LIB_KEY); this.library = raw ? JSON.parse(raw) : []; } catch (e) { this.library = []; }
+    },
+    saveLibrary() { try { localStorage.setItem(LIB_KEY, JSON.stringify(this.library.slice(0, 40))); } catch (e) {} },
+    addToLibrary(item) {
+      this.library = [item].concat(this.library.filter(x => x.url !== item.url)).slice(0, 40);
+      this.saveLibrary();
+    },
+    removeFromLibrary(url) { this.library = this.library.filter(x => x.url !== url); this.saveLibrary(); },
+    useLibrary(item) { return this.addImageFromUrl(item.previewUrl || item.url, item.filename); },
+    previewUrlFor(url, filename) {
+      // canvas can't paint PDF/HEIC/TIFF/EPS/AI; Uploadcare converts them for the preview
+      return /\.(pdf|heic|tiff?|eps|ai)$/i.test(filename || url) ? url.replace(/\/[^/]*$/, '/-/format/png/-/preview/2000x2000/') : url;
+    },
+    thumbFor(item) { return (item.previewUrl || item.url).replace(/\/[^/]*$/, '/-/preview/200x200/'); },
 
     // ---- uploads: originals are kept at full resolution (no downscale) ----
     async uploadArtwork(color, area, file) {
       this.errorMsg = '';
       if (!file) return;
-      const okExt = /\.(png|jpe?g|svg|webp|pdf|heic|tiff?)$/i;
-      if (!okExt.test(file.name)) return (this.errorMsg = 'Please upload a PNG, SVG, JPG, HEIC, TIFF, WEBP or PDF file.');
+      const okExt = /\.(png|jpe?g|svg|webp|pdf|heic|tiff?|eps|ai)$/i;
+      if (!okExt.test(file.name)) return (this.errorMsg = 'Please upload a PNG, SVG, JPG, HEIC, TIFF, WEBP, PDF, EPS or AI file.');
       if (file.size > 50 * 1024 * 1024) return (this.errorMsg = 'File is too large (max 50 MB).');
       if (!this.uploadKey) return (this.errorMsg = 'Uploads are not configured yet — please contact us to place this order.');
       const artKey = this.key(color, area);
@@ -358,8 +684,8 @@
         const list = (this.artwork[artKey] && Array.isArray(this.artwork[artKey])) ? this.artwork[artKey] : [];
         list.push({ url, filename: file.name });
         this.artwork[artKey] = list;
-        // canvas can't paint PDF/HEIC/TIFF; Uploadcare can convert them for the preview
-        const previewUrl = /\.(pdf|heic|tiff?)$/i.test(file.name) ? url.replace(/\/[^/]*$/, '/-/format/png/-/preview/2000x2000/') : url;
+        const previewUrl = this.previewUrlFor(url, file.name);
+        this.addToLibrary({ url, previewUrl, filename: file.name, at: Date.now() });
         if (color === this.activeColor && area === this.activePrintArea) await this.addImageFromUrl(previewUrl, file.name);
         else {
           const d = this.designFor(color, area);
@@ -375,6 +701,13 @@
     },
     removeArtwork(color, area) { this.clearArea(color, area); },
 
+    // ---- colour picker ----
+    filteredColors() {
+      const q = (this.colorSearch || '').trim().toLowerCase();
+      return this.colors.filter(c => !this.openColors.includes(c.name) && (!q || c.name.toLowerCase().includes(q)));
+    },
+    addAllColors() { this.colors.forEach(c => { if (!this.openColors.includes(c.name)) this.openColors.push(c.name); }); this.showAddColor = false; this.persist(); },
+
     // ---- coverage / gating ----
     areasUsedFor(color) {
       return this.areas.filter(a => this.designHasObjects(color, a.name)).length;
@@ -386,10 +719,11 @@
     gateMessage() {
       if (!this.openColors.length) return 'Please select at least one colour';
       const missing = this.openColors.filter(c => !this.hasArtworkFor(c));
-      if (missing.length) return 'Please add a design for ' + missing.join(', ');
-      if (this.totalUnits() === 0) return 'Please enter quantities for at least one colour and size';
+      if (missing.length) return 'Add a design for ' + missing.join(', ');
+      if (this.totalUnits() === 0) return 'Enter quantities for at least one size';
       return '';
     },
+    unitsFor(color) { let n = 0; for (const k in this.qty) if (k.startsWith(color + '|')) n += this.qty[k]; return n; },
 
     // ---- order data ----
     lineProperties(colorName) {
@@ -412,13 +746,13 @@
     async renderDesign(color, area, zonePxRect, canvasW, canvasH, background) {
       const sc = new fabric.StaticCanvas(null, { width: canvasW, height: canvasH });
       if (background) {
-        // setBackgroundImage wants a fabric.Image (a bare <img> throws "setOptions is not a function")
         const bg = new fabric.Image(background, { originX: 'left', originY: 'top', left: 0, top: 0 });
         bg.scaleX = canvasW / background.width;
         bg.scaleY = canvasH / background.height;
         await new Promise(res => sc.setBackgroundImage(bg, res));
       }
       const design = this.designFor(color, area);
+      await Promise.all(design.objects.filter(d => d.type === 'text').map(d => this.ensureFont(d.fontFamily, d.fontWeight, d.fontStyle)));
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, zonePxRect)));
       objs.filter(Boolean).forEach(o => sc.add(o));
       sc.renderAll();
@@ -439,10 +773,7 @@
     // Transparent proof of the print area alone at PROOF_DPI (Phase 2 replaces with 300 DPI server render)
     async generateProof(color, area) {
       if (!this.designHasObjects(color, area)) return null;
-      const a = this.areas.find(x => x.name === area);
-      const stageZ = this.zonePx(area);
-      const wIn = a.w_in || 12;
-      const hIn = a.h_in || (stageZ ? wIn * (stageZ.h / stageZ.w) : 16);
+      const wIn = this.areaWIn(area), hIn = this.areaHIn(area);
       const W = Math.round(wIn * PROOF_DPI), H = Math.round(hIn * PROOF_DPI);
       const blob = await this.renderDesign(color, area, { x: 0, y: 0, w: W, h: H }, W, H, null);
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
@@ -450,7 +781,7 @@
     },
     async uploadDesignJson(color, area) {
       const a = this.areas.find(x => x.name === area);
-      const payload = { version: 2, units: ZU, area: a, design: this.designFor(color, area) };
+      const payload = { version: 2, units: ZU, area: a, w_in: this.areaWIn(area), h_in: this.areaHIn(area), design: this.designFor(color, area) };
       const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
       return await this.uploadBlob('design-' + slug(color) + '-' + slug(area) + '.json', blob);
