@@ -412,7 +412,11 @@
     async renderDesign(color, area, zonePxRect, canvasW, canvasH, background) {
       const sc = new fabric.StaticCanvas(null, { width: canvasW, height: canvasH });
       if (background) {
-        await new Promise(res => sc.setBackgroundImage(background, res, { scaleX: canvasW / background.width, scaleY: canvasH / background.height }));
+        // setBackgroundImage wants a fabric.Image (a bare <img> throws "setOptions is not a function")
+        const bg = new fabric.Image(background, { originX: 'left', originY: 'top', left: 0, top: 0 });
+        bg.scaleX = canvasW / background.width;
+        bg.scaleY = canvasH / background.height;
+        await new Promise(res => sc.setBackgroundImage(bg, res));
       }
       const design = this.designFor(color, area);
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, zonePxRect)));

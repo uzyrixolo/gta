@@ -46,8 +46,19 @@
   print size in inches — needed later to render print files at 300 DPI.
 {%- endcomment -%}
 {%- assign areas_override_raw = '' -%}
-{%- if areas_meta == blank and s.print_areas_json != blank -%}
+{%- if s.print_areas_json != blank -%}
   {%- assign areas_override_raw = s.print_areas_json | strip -%}
+{%- endif -%}
+{%- comment -%}
+  Precedence: product metafield wins over the section override, unless
+  "Override product metafield zones" is ticked — used while calibrating a product
+  from the theme editor, or for a pilot template before the metafield is updated.
+{%- endcomment -%}
+{%- assign use_override = false -%}
+{%- if areas_override_raw != blank -%}
+  {%- if s.print_areas_force or areas_meta == blank -%}
+    {%- assign use_override = true -%}
+  {%- endif -%}
 {%- endif -%}
 
 {%- comment -%}
@@ -126,8 +137,8 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif areas_override_raw != blank %}{{ areas_override_raw }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
-  "areasSource": "{% if areas_meta %}metafield{% elsif areas_override_raw != blank %}override{% else %}fallback{% endif %}",
+  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areasSource": "{% if use_override %}override{% elsif areas_meta %}metafield{% else %}fallback{% endif %}",
   "isHeadwear": {{ is_headwear }},
   "isFlatAccessory": {{ is_flat_accessory }},
   "mockups": {{ mockups_json | strip }},
@@ -734,6 +745,7 @@
     { "type": "text", "id": "storefront_token", "label": "Storefront API token (optional)", "info": "Only needed for products with more than 250 variants. Admin → Settings → Apps and sales channels → Develop apps → create app → Storefront API access token (scope: unauthenticated_read_product_listings)." },
     { "type": "text", "id": "upload_cdn_base", "label": "Uploadcare CDN base", "default": "ucarecdn.com", "info": "From Uploadcare dashboard → Settings → Delivery (e.g. abc12345.ucarecd.net). Newer accounts don't serve from ucarecdn.com." },
     { "type": "textarea", "id": "print_areas_json", "label": "Print areas override (JSON array)", "info": "Used only when the product has no custom.print_areas metafield. Same shape as the metafield's areas array. w_in/h_in = physical print size in inches." },
+    { "type": "checkbox", "id": "print_areas_force", "label": "Override product metafield zones", "default": false, "info": "Tick while calibrating: the JSON above wins even if the product has a custom.print_areas metafield." },
     { "type": "url", "id": "learn_more_link", "label": "\"Learn more\" link (printing techniques)" },
     { "type": "range", "id": "ship_min_days", "label": "Ship estimate — min days", "min": 1, "max": 30, "step": 1, "default": 8 },
     { "type": "range", "id": "ship_max_days", "label": "Ship estimate — max days", "min": 1, "max": 60, "step": 1, "default": 14 },
