@@ -140,7 +140,9 @@
     saveDesign() {
       const fx = this.fx();
       if (!fx.canvas || fx.loading) return;
-      const objs = fx.canvas.getObjects().map(o => this.serializeObject(o));
+      // dedupe by id: guards against any object that got onto the canvas twice
+      const seen = new Set();
+      const objs = fx.canvas.getObjects().map(o => this.serializeObject(o)).filter(d => !seen.has(d.id) && seen.add(d.id));
       const key = this.designKey();
       if (objs.length) this.designs[key] = { objects: objs };
       else delete this.designs[key];
@@ -186,13 +188,19 @@
       if (!fx.canvas) return;
       const area = this.activePrintArea, color = this.activeColor;
       const z = this.zonePx(area);
+      if (!z) { fx.canvas.clear(); return; }
+      // Loads overlap constantly (font swaps and image loads resize the stage, and
+      // the ResizeObserver reloads on every resize). Only the newest load may touch
+      // the canvas, and it clears + repopulates in one synchronous step after its
+      // images have arrived — so two in-flight loads can never both add the same
+      // design (which is what produced duplicate objects).
+      const seq = (fx.loadSeq = (fx.loadSeq || 0) + 1);
       fx.loading = true;
-      fx.canvas.clear();
-      if (!z) { fx.loading = false; return; }
       const design = this.designFor(color, area);
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, z)));
-      // the user may have switched area/colour while images were loading
+      if (seq !== fx.loadSeq) return;                                    // superseded
       if (this.activePrintArea !== area || this.activeColor !== color) { fx.loading = false; return; }
+      fx.canvas.clear();
       objs.filter(Boolean).forEach(o => fx.canvas.add(o));
       fx.canvas.discardActiveObject();
       fx.canvas.requestRenderAll();

@@ -127,6 +127,7 @@
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
   "areas": {% if areas_meta %}{{ areas_meta.areas | json }}{% elsif areas_override_raw != blank %}{{ areas_override_raw }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areasSource": "{% if areas_meta %}metafield{% elsif areas_override_raw != blank %}override{% else %}fallback{% endif %}",
   "isHeadwear": {{ is_headwear }},
   "isFlatAccessory": {{ is_flat_accessory }},
   "mockups": {{ mockups_json | strip }},
