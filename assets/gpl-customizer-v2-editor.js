@@ -789,16 +789,28 @@
       r[field] = val;
       this.persist();
     },
-    // "Name, 23, L" / "Name 23 L" / tab-separated — one player per line
+    // Size tokens people type (S, Med, XXL…) vs. the product's own labels (SM, MD, 2XL…)
+    canonSize(x) {
+      let v = String(x || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      v = v.replace(/^x{1,2}small$|^xs$/, 'xs').replace(/^small$|^sm$/, 's').replace(/^medium$|^med$|^md$/, 'm').replace(/^large$|^lg$/, 'l');
+      v = v.replace(/^(\d)?x{0,1}(x+)l$/, (m, d, xs) => (d ? d : (xs.length + 1)) + 'xl').replace(/^xl$/, 'xl');
+      return v;
+    },
+    matchSize(tok) {
+      const c = this.canonSize(tok); if (!c) return '';
+      const hit = this.sizes.find(sz => this.canonSize(sz) === c);
+      return hit || '';
+    },
+    // "Name, 23, L" / "Name 23 L" / "#10 Garcia M" / "Jones 7 XL x2" — one player per line
     importRoster(color, text) {
-      const sizeSet = this.sizes.map(s => s.toLowerCase());
+      // drop untouched blank rows so the import doesn't sit under an empty one
+      this.roster[color] = this.rosterFor(color).filter(r => r.name || r.number || r.size);
       String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean).forEach(line => {
         const parts = line.split(/[\t,;|]+|\s{2,}/).map(x => x.trim()).filter(Boolean);
         const tokens = parts.length > 1 ? parts : line.split(/\s+/);
         let name = '', number = '', size = '', qty = 1;
         tokens.forEach(t => {
-          const tl = t.toLowerCase();
-          if (!size && sizeSet.includes(tl)) size = this.sizes[sizeSet.indexOf(tl)];
+          if (!size && this.matchSize(t)) size = this.matchSize(t);
           else if (!number && /^#?\d{1,3}$/.test(t)) number = t.replace('#', '');
           else if (/^x\d{1,2}$/i.test(t)) qty = parseInt(t.slice(1), 10) || 1;
           else name = (name ? name + ' ' : '') + t;
@@ -855,6 +867,8 @@
       if (missing.length) return 'Add a design for ' + missing.join(', ');
       const noRoster = this.openColors.filter(c => this.isTeam(c) && !this.rosterFor(c).some(r => r.size));
       if (noRoster.length) return 'Add players with a size for ' + noRoster.join(', ');
+      const unsized = this.openColors.filter(c => this.isTeam(c) && this.rosterFor(c).some(r => (r.name || r.number) && !r.size));
+      if (unsized.length) return 'Choose a size for every player (' + unsized.join(', ') + ')';
       if (this.totalUnits() === 0) return 'Enter quantities for at least one size';
       return '';
     },
