@@ -137,7 +137,7 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}}]{% endif %},
+  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% endif %},
   "areasSource": "{% if use_override %}override{% elsif areas_meta %}metafield{% else %}fallback{% endif %}",
   "isHeadwear": {{ is_headwear }},
   "isFlatAccessory": {{ is_flat_accessory }},
@@ -226,7 +226,7 @@
         <template x-for="area in areas" :key="area.name">
           <button type="button" class="gpl-cz__view" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
             <span class="gpl-cz__view-thumb">
-              <img :src="mockupFor(activeColor, area.name)" width="76" height="76" alt="" loading="lazy">
+              <img :src="viewImage(activeColor, area.name)" width="76" height="76" alt="" loading="lazy">
               <span class="gpl-cz__view-check" x-show="designHasObjects(activeColor, area.name)" x-cloak>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
               </span>
@@ -293,7 +293,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
               </span>
             </button>
-            <div class="gpl-cz__sizes">
+            <div class="gpl-cz__sizes" x-show="!isTeam(colorName)">
               <template x-for="size in sizes" :key="size">
                 <div class="gpl-cz__size">
                   <span class="gpl-cz__size-label" x-text="size"></span>
@@ -308,6 +308,41 @@
                   <span class="gpl-cz__size-price" x-text="money(priceFor(colorName, size))"></span>
                 </div>
               </template>
+            </div>
+            <label class="gpl-cz__toggle">
+              <input type="checkbox" :checked="isTeam(colorName)" @change="setTeam(colorName, $event.target.checked)">
+              <span class="gpl-cz__toggle-track"></span>
+              <span>Team order <em>names &amp; numbers, one shirt per player</em></span>
+            </label>
+            <div class="gpl-cz__roster" x-show="isTeam(colorName)" x-cloak>
+              <p class="gpl-cz__fine" x-show="!areas.some(a => areaHasRoles(colorName, a.name))">Tip: use <b>Text → Name + number</b> to add player fields to the design, or bind any text layer with “Team field”. Each player's name and number is printed on their shirt.</p>
+              <div class="gpl-cz__roster-head"><span>Player</span><span>#</span><span>Size</span><span>Qty</span><span></span></div>
+              <template x-for="row in rosterFor(colorName)" :key="row.id">
+                <div class="gpl-cz__roster-row">
+                  <input type="text" maxlength="20" placeholder="Name" :value="row.name" @input="setRow(colorName, row.id, 'name', $event.target.value)">
+                  <input type="text" inputmode="numeric" maxlength="3" placeholder="00" :value="row.number" @input="setRow(colorName, row.id, 'number', $event.target.value)">
+                  <select :value="row.size" :class="{'is-empty': !row.size}" @change="setRow(colorName, row.id, 'size', $event.target.value)">
+                    <option value="">Size</option>
+                    <template x-for="size in sizes" :key="size">
+                      <option :value="size" x-text="size" :disabled="!availableFor(colorName, size)"></option>
+                    </template>
+                  </select>
+                  <input type="number" min="1" :value="row.qty" @input="setRow(colorName, row.id, 'qty', $event.target.value)">
+                  <button type="button" class="gpl-cz__ico gpl-cz__ico--sm gpl-cz__ico--danger" title="Remove player" @click="removeRow(colorName, row.id)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                </div>
+              </template>
+              <div class="gpl-cz__roster-actions">
+                <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addRow(colorName)">+ Add player</button>
+                <button type="button" class="gpl-cz__link" @click="pasteOpen = pasteOpen === colorName ? '' : colorName">Paste a list</button>
+              </div>
+              <div class="gpl-cz__paste" x-data="{ txt: '' }" x-show="pasteOpen === colorName" x-cloak>
+                <textarea rows="4" x-model="txt" placeholder="One player per line, e.g.&#10;Smith, 23, L&#10;Jones 7 XL x2"></textarea>
+                <div class="gpl-cz__roster-actions">
+                  <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="importRoster(colorName, txt); txt = ''; pasteOpen = ''">Import players</button>
+                  <button type="button" class="gpl-cz__link" @click="pasteOpen = ''">Cancel</button>
+                </div>
+              </div>
+              <p class="gpl-cz__muted gpl-cz__roster-sum" x-text="rosterSummary(colorName)"></p>
             </div>
             <div class="gpl-cz__card-areas">
               <template x-for="area in areas" :key="area.name">
@@ -394,12 +429,38 @@
           </span>
         </div>
         <div class="gpl-cz__layers">
-          <p class="gpl-cz__empty" x-show="!objectsInArea().length">No layers on <span x-text="activePrintArea"></span> yet. Upload artwork or add text to start.</p>
+          <template x-if="isLabelArea(activePrintArea) && !objectsInArea().length">
+            <div class="gpl-cz__guide gpl-cz__guide--mobile">
+          <h3 class="gpl-cz__guide-title">Create a neck tag for your brand</h3>
+          <div class="gpl-cz__guide-box">
+            <div class="gpl-cz__guide-tag">
+              <span class="gpl-cz__guide-brand">YOUR BRAND</span>
+              <span class="gpl-cz__guide-size">M</span>
+              <span class="gpl-cz__guide-made">Made in Canada</span>
+            </div>
+          </div>
+          <p>The outer square is the full <b>3 × 3 in</b> print area. For PNG files use a transparent <b>900 × 900 px</b> canvas at 300 DPI; for SVG a 3 × 3 in artboard. Leave unused space transparent.</p>
+          <div class="gpl-cz__guide-actions">
+            <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addLabelTemplate()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+              <span>Start from template</span>
+            </button>
+            <a class="gpl-cz__link" href="{{ 'gpl-neck-tag-template.svg' | asset_url }}" download="gta-neck-tag-template.svg">Download template (SVG)</a>
+          </div>
+          <ul class="gpl-cz__guide-list">
+            <li>Include size, fibre content, country of origin, care instructions and your business identity — required for apparel sold in Canada.</li>
+            <li>Make one label per size (a separate artwork file for each) so the printed size is right on every shirt.</li>
+            <li>Pick text and logo colours that contrast with the garment so the tag stays legible.</li>
+          </ul>
+        </div>
+          </template>
+          <p class="gpl-cz__empty" x-show="!isLabelArea(activePrintArea) && !objectsInArea().length">No layers on <span x-text="activePrintArea"></span> yet. Upload artwork or add text to start.</p>
           <template x-for="o in objectsInArea().slice().reverse()" :key="o.id">
             <div class="gpl-cz__layer" :class="{'is-active': sel.id === o.id, 'is-locked': o.locked}">
               <button type="button" class="gpl-cz__layer-main" @click="selectById(o.id)">
                 <span class="gpl-cz__layer-type" x-text="o.type === 'image' ? 'IMG' : 'TXT'"></span>
                 <span class="gpl-cz__layer-name" x-text="layerLabel(o)"></span>
+                <span class="gpl-cz__layer-role" x-show="o.role" x-text="roleLabel(o)"></span>
               </button>
               <button type="button" class="gpl-cz__ico gpl-cz__ico--sm" title="Move up" @click="moveLayer(o.id, 'up')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"/></svg></button>
               <button type="button" class="gpl-cz__ico gpl-cz__ico--sm" title="Move down" @click="moveLayer(o.id, 'down')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 10 6 6 6-6"/></svg></button>
@@ -489,6 +550,33 @@
     <aside class="gpl-cz__props">
       <button type="button" class="gpl-cz__sheet-close" @click="sheet = false" aria-label="Close panel"><span></span></button>
       <div class="gpl-cz__props-empty" x-show="!sel.has">
+        <template x-if="isLabelArea(activePrintArea)">
+        <div class="gpl-cz__guide">
+          <h3 class="gpl-cz__guide-title">Create a neck tag for your brand</h3>
+          <div class="gpl-cz__guide-box">
+            <div class="gpl-cz__guide-tag">
+              <span class="gpl-cz__guide-brand">YOUR BRAND</span>
+              <span class="gpl-cz__guide-size">M</span>
+              <span class="gpl-cz__guide-made">Made in Canada</span>
+            </div>
+          </div>
+          <p>The outer square is the full <b>3 × 3 in</b> print area. For PNG files use a transparent <b>900 × 900 px</b> canvas at 300 DPI; for SVG a 3 × 3 in artboard. Leave unused space transparent.</p>
+          <div class="gpl-cz__guide-actions">
+            <button type="button" class="gpl-cz__btn gpl-cz__btn--tool" @click="addLabelTemplate()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+              <span>Start from template</span>
+            </button>
+            <a class="gpl-cz__link" href="{{ 'gpl-neck-tag-template.svg' | asset_url }}" download="gta-neck-tag-template.svg">Download template (SVG)</a>
+          </div>
+          <ul class="gpl-cz__guide-list">
+            <li>Include size, fibre content, country of origin, care instructions and your business identity — required for apparel sold in Canada.</li>
+            <li>Make one label per size (a separate artwork file for each) so the printed size is right on every shirt.</li>
+            <li>Pick text and logo colours that contrast with the garment so the tag stays legible.</li>
+          </ul>
+        </div>
+        </template>
+        <template x-if="!isLabelArea(activePrintArea)">
+        <div class="gpl-cz__props-empty-inner">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 7 16 2-7 7-2L4 4Z"/></svg>
         <strong>Choose a layer to edit</strong>
         <span>Click artwork or text on the stage. Drag to move, corners to resize, the top handle to rotate.</span>
@@ -497,6 +585,8 @@
           <dt>Method</dt><dd x-text="methodFor(activeColor)"></dd>
           <dt>Shortcuts</dt><dd>Arrows nudge · ⌘Z undo · ⌘D duplicate · Delete removes</dd>
         </dl>
+        </div>
+        </template>
       </div>
 
       <div class="gpl-cz__props-body" x-show="sel.has" x-cloak>
@@ -600,6 +690,14 @@
               <span>Font size <em x-text="sel.fontSize"></em></span>
               <input type="range" min="20" max="900" step="5" x-model.number="sel.fontSize" @input="applySel()">
             </label>
+            <label class="gpl-cz__field gpl-cz__field--wide">
+              <span>Team field <em>replaced per player on team orders</em></span>
+              <select x-model="sel.role" @change="applySel()">
+                <option value="">None — fixed text</option>
+                <option value="name">Player name</option>
+                <option value="number">Player number</option>
+              </select>
+            </label>
             <div class="gpl-cz__row2">
               <label class="gpl-cz__field">
                 <span>Line height</span>
@@ -655,7 +753,7 @@
     <p class="gpl-cz__error" x-show="errorMsg" x-text="errorMsg"></p>
     <button type="button" class="gpl-cz__submit" :disabled="!canSubmit()" @click="addToCart()">
       <span x-show="!submitting">Add to Cart</span>
-      <span x-show="submitting">Preparing print files…</span>
+      <span x-show="submitting" x-text="progressMsg || 'Preparing print files…'"></span>
     </button>
     {%- if s.upload_public_key == blank -%}
       <p class="gpl-cz__admin-warn">⚠ Admin: set the Uploadcare public key in the customizer section settings — uploads are disabled until then.</p>
@@ -933,6 +1031,47 @@
   #gpl-cz-{{ section.id }} .gpl-cz__field--color { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; }
   #gpl-cz-{{ section.id }} .gpl-cz__field input[type="color"] { width: 38px; height: 30px; padding: 0; border: 1px solid #CFCFCF; border-radius: 4px; background: #FFF; cursor: pointer; flex: 0 0 auto; }
 
+  /* ---- team roster ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle { display: flex; align-items: center; gap: 8px; margin-top: 12px; cursor: pointer; font-size: 12px; font-weight: 800; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle em { display: block; font-style: normal; font-weight: 500; color: #777; font-size: 11px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle-track { position: relative; flex: 0 0 auto; width: 34px; height: 20px; border-radius: 10px; background: #CFCFCF; transition: background 0.15s ease; }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle-track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #FFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25); transition: transform 0.15s ease; }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle input:checked + .gpl-cz__toggle-track { background: var(--cz-red); }
+  #gpl-cz-{{ section.id }} .gpl-cz__toggle input:checked + .gpl-cz__toggle-track::after { transform: translateX(14px); }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster { margin-top: 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster .gpl-cz__fine { margin: 0 0 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-head, #gpl-cz-{{ section.id }} .gpl-cz__roster-row { display: grid; grid-template-columns: minmax(0, 1.6fr) 44px 64px 46px 28px; gap: 4px; align-items: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-head { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #777; padding: 0 2px 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-row { margin-bottom: 4px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-row input, #gpl-cz-{{ section.id }} .gpl-cz__roster-row select { width: 100%; min-width: 0; padding: 7px 6px; border: 1px solid #CFCFCF; border-radius: 5px; font: inherit; font-size: 12.5px; color: #111; background: #FFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-row input[type="number"], #gpl-cz-{{ section.id }} .gpl-cz__roster-row input[inputmode="numeric"] { text-align: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-row select.is-empty { color: var(--cz-red); border-color: rgba(215,25,32,0.5); }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-row input:focus, #gpl-cz-{{ section.id }} .gpl-cz__roster-row select:focus { outline: none; border-color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-actions { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__paste { margin-top: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__paste textarea { width: 100%; padding: 8px 10px; border: 1px solid #CFCFCF; border-radius: 5px; font: inherit; font-size: 12.5px; resize: vertical; }
+  #gpl-cz-{{ section.id }} .gpl-cz__roster-sum { margin: 8px 0 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__layer-role { flex: 0 0 auto; padding: 2px 6px; border-radius: 4px; background: rgba(215,25,32,0.1); color: var(--cz-red); font-size: 9px; font-weight: 800; text-transform: uppercase; }
+  #gpl-cz-{{ section.id }} .gpl-cz__placement-ico--pocket::after { left: 14px; top: 11px; width: 7px; height: 7px; border-radius: 0 0 2px 2px; }
+
+  /* ---- neck tag guidance ---- */
+  #gpl-cz-{{ section.id }} .gpl-cz__props-empty-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide { width: 100%; text-align: left; color: #333; font-size: 12px; line-height: 1.55; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide p { margin: 0 0 10px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-title { margin: 0 0 12px; font-size: 14px; font-weight: 800; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-box { width: 168px; aspect-ratio: 1; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; border: 2px dashed #C9C9C9; border-radius: 6px; background: var(--cz-bg); }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-tag { width: 112px; height: 112px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #DDD; border-radius: 4px; background: #FFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); text-align: center; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-brand { font-size: 12px; font-weight: 800; letter-spacing: 0.04em; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-size { margin-top: 6px; font-size: 20px; font-weight: 700; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-made { margin-top: 4px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #777; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 12px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-actions .gpl-cz__link { padding-left: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-list { margin: 0; padding: 12px 0 0; border-top: 1px solid var(--cz-line); list-style: none; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-list li { position: relative; padding-left: 20px; margin-bottom: 8px; color: #555; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide-list li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #1E9E5A; font-weight: 800; }
+  #gpl-cz-{{ section.id }} .gpl-cz__guide--mobile { display: none; margin: 6px 0 10px; }
+
   /* ---- bottom bar ---- */
   #gpl-cz-{{ section.id }} .gpl-cz__bar {
     grid-area: bar; position: sticky; bottom: 0; z-index: 20;
@@ -979,6 +1118,7 @@
     #gpl-cz-{{ section.id }} .gpl-cz__sheet-close { display: flex; justify-content: center; width: 100%; padding: 8px 0 2px; border: none; background: none; cursor: pointer; position: sticky; top: 0; z-index: 2; }
     #gpl-cz-{{ section.id }} .gpl-cz__sheet-close span { width: 40px; height: 4px; border-radius: 2px; background: #D0D0D0; }
     #gpl-cz-{{ section.id }} .gpl-cz__props-empty { padding: 20px 18px 28px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__guide--mobile { display: block; }
     #gpl-cz-{{ section.id }} .gpl-cz__bar { order: 3; position: static; box-shadow: none; gap: 10px; padding: 10px 14px; }
     #gpl-cz-{{ section.id }} .gpl-cz__bar-ship { display: none; }
     #gpl-cz-{{ section.id }} .gpl-cz__submit { min-width: 0; flex: 1 0 160px; padding: 14px 18px; }

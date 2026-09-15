@@ -45,6 +45,7 @@
     { id: 'free', name: 'Free form', desc: 'Place anywhere' },
     { id: 'standard', name: 'Standard', desc: '10 in wide · 2 in down', w: 10, top: 2, x: 'center' },
     { id: 'left_chest', name: 'Left chest', desc: '4 in wide · pocket side', w: 4, top: 1.5, x: 'left_chest' },
+    { id: 'pocket', name: 'Pocket', desc: '3.5 in · on the pocket', w: 3.5, top: 3, x: 'left_chest' },
     { id: 'center_chest', name: 'Center chest', desc: '7 in wide · 3 in down', w: 7, top: 3, x: 'center' },
     { id: 'oversized', name: 'Oversized', desc: 'Full print width', w: 'full', top: 0.5, x: 'center' },
   ];
@@ -76,11 +77,16 @@
     library: [],                          // uploaded artwork, shared across products
     colorSearch: '',
     chip: { show: false, x: 0, y: 0, text: '' },
+    roster: {},                           // "Color" -> [{id, name, number, size, qty}]
+    team: {},                             // "Color" -> true when ordering from the roster
+    pasteOpen: '',
+    progressMsg: '',
     sel: {
       has: false, id: '', type: '', text: '', fontFamily: 'Anton', fontSize: 140, fill: '#FFFFFF',
       stroke: '#000000', strokeWidth: 0, fontWeight: '400', fontStyle: 'normal', charSpacing: 0,
       lineHeight: 1.1, textAlign: 'center', warp: 'none', warpAmt: 50,
       xIn: 0, yIn: 0, wIn: 0, hIn: 0, angle: 0, locked: false, placement: 'free', flipX: false, flipY: false,
+      role: '',                           // '' | 'name' | 'number' — team roster substitution
     },
 
     // ---- fabric state ----
@@ -98,6 +104,31 @@
     },
     ppi(name) { const z = this.zonePx(name || this.activePrintArea); return z ? z.w / this.areaWIn(name) : 1; },
     zoneLabel(name) { return this.areaWIn(name) + ' × ' + this.areaHIn(name) + ' in'; },
+    isLabelArea(name) { const a = this.areaDef(name); return !!(a && a.view === 'inside_label'); },
+    // Areas with an illustrated view (inside label) have no product photo: draw a
+    // colour-tinted collar illustration instead. Data URLs draw on canvas untainted.
+    viewImage(color, area) {
+      const a = this.areaDef(area);
+      if (a && a.view === 'inside_label') return this.insideLabelSvg(this.hexFor(color || this.activeColor));
+      return this.mockupFor(color, area);
+    },
+    currentMockup() { return this.viewImage(this.previewColorName || this.activeColor, this.activePrintArea); },
+    insideLabelSvg(hex) {
+      const h = (hex || '#888888').replace('#', '');
+      const rgb = h.length === 3 ? h.split('').map(c => parseInt(c + c, 16)) : [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16));
+      const shade = (k) => 'rgb(' + rgb.map(v => Math.round(v * k)).join(',') + ')';
+      const light = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000 > 150;
+      const stitch = light ? 'rgba(0,0,0,0.28)' : 'rgba(255,255,255,0.35)';
+      const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">'
+        + '<rect width="1000" height="1000" fill="#F4F4F4"/>'
+        + '<path d="M0,1000 L0,300 C80,240 170,200 260,180 C360,160 420,150 500,150 C580,150 640,160 740,180 C830,200 920,240 1000,300 L1000,1000 Z" fill="' + hex + '"/>'
+        + '<path d="M110,330 C250,215 400,190 500,190 C600,190 750,215 890,330 C750,265 600,245 500,245 C400,245 250,265 110,330 Z" fill="' + shade(0.72) + '"/>'
+        + '<path d="M110,330 C250,265 400,245 500,245 C600,245 750,265 890,330" fill="none" stroke="' + stitch + '" stroke-width="4" stroke-dasharray="14 10"/>'
+        + '<path d="M0,300 C80,240 170,200 260,180" fill="none" stroke="' + stitch + '" stroke-width="3" stroke-dasharray="12 9"/>'
+        + '<path d="M740,180 C830,200 920,240 1000,300" fill="none" stroke="' + stitch + '" stroke-width="3" stroke-dasharray="12 9"/>'
+        + '</svg>';
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    },
     placementsFor(name) { return this.areaWIn(name) >= 8 ? PLACEMENTS : []; },
     zoneFactor(areaName) {
       const z = this.zonePx(areaName || this.activePrintArea);
@@ -231,6 +262,7 @@
         base.textAlign = o.textAlign || 'center';
         base.warp = o._gplWarp || 'none';
         base.warpAmt = o._gplWarpAmt == null ? 50 : o._gplWarpAmt;
+        if (o._gplRole) base.role = o._gplRole;
       }
       return base;
     },
@@ -320,7 +352,7 @@
             textAlign: d.textAlign || 'center',
             objectCaching: false,
           }));
-          t._gplId = d.id; t._gplPlacement = d.placement || 'free';
+          t._gplId = d.id; t._gplPlacement = d.placement || 'free'; t._gplRole = d.role || '';
           t.setControlsVisibility({ ml: false, mr: false, mt: false, mb: false });
           this.applyWarp(t, d.warp || 'none', d.warpAmt == null ? 50 : d.warpAmt);
           this.applyLock(t, d.locked);
@@ -409,6 +441,7 @@
           strokeWidth: Math.round(((o.strokeWidth || 0) * (o.scaleY || 1)) / f), charSpacing: o.charSpacing || 0,
           lineHeight: o.lineHeight || 1.1, textAlign: o.textAlign || 'center',
           warp: o._gplWarp || 'none', warpAmt: o._gplWarpAmt == null ? 50 : o._gplWarpAmt,
+          role: o._gplRole || '',
         });
       }
       this.updateChip();
@@ -438,6 +471,7 @@
         textAlign: this.sel.textAlign,
       });
       this.applyWarp(o, this.sel.warp, Number(this.sel.warpAmt));
+      o._gplRole = this.sel.role || '';
       this.clampToZone(o);
       fx.canvas.requestRenderAll();
       this.saveDesign();
@@ -570,12 +604,22 @@
         fill: dark ? '#111111' : '#FFFFFF', stroke: dark ? '#FFFFFF' : '#111111', strokeWidth: 14, charSpacing: 20,
       });
     },
+    // Inside label starter: brand / size / origin lines inside the 3 × 3 in tag area
+    async addLabelTemplate() {
+      const dark = this.isLight(this.activeColor);
+      const z = this.zonePx(this.activePrintArea); if (!z) return;
+      const f = z.w / ZU; const hZ = z.h / f;
+      const fill = dark ? '#111111' : '#FFFFFF';
+      await this.addText({ text: 'YOUR BRAND', fontFamily: 'Montserrat', fontWeight: '800', fontSize: 95, charSpacing: 60, fill, cy: hZ * 0.3 });
+      await this.addText({ text: 'M', fontFamily: 'Montserrat', fontWeight: '700', fontSize: 150, fill, cy: hZ * 0.53 });
+      await this.addText({ text: 'MADE IN CANADA', fontFamily: 'Montserrat', fontWeight: '400', fontSize: 58, charSpacing: 120, fill, cy: hZ * 0.74 });
+    },
     async addNameNumber() {
       const dark = this.isLight(this.activeColor);
       const z = this.zonePx(this.activePrintArea); if (!z) return;
       const f = z.w / ZU; const hZ = z.h / f;
-      await this.addText({ text: 'NAME', fontFamily: 'Anton', fontSize: 150, charSpacing: 60, cy: hZ * 0.22 });
-      await this.addText({ text: '00', fontFamily: 'Anton', fontSize: 460, fill: dark ? '#111111' : '#FFFFFF', stroke: dark ? '#FFFFFF' : '#111111', strokeWidth: 14, charSpacing: 20, cy: hZ * 0.6 });
+      await this.addText({ text: 'NAME', fontFamily: 'Anton', fontSize: 150, charSpacing: 60, cy: hZ * 0.22, role: 'name' });
+      await this.addText({ text: '00', fontFamily: 'Anton', fontSize: 460, fill: dark ? '#111111' : '#FFFFFF', stroke: dark ? '#FFFFFF' : '#111111', strokeWidth: 14, charSpacing: 20, cy: hZ * 0.6, role: 'number' });
     },
     async addImageFromUrl(url, filename) {
       const fx = this.fx();
@@ -653,6 +697,7 @@
     },
     objectsInArea() { return this.designFor().objects; },
     layerLabel(o) { return o.type === 'image' ? (o.filename || 'Image') : (o.text || 'Text'); },
+    roleLabel(o) { return o.role === 'name' ? 'Player name' : (o.role === 'number' ? 'Player number' : ''); },
     selectById(id) {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getObjects().find(x => x._gplId === id);
@@ -719,6 +764,83 @@
     },
     addAllColors() { this.colors.forEach(c => { if (!this.openColors.includes(c.name)) this.openColors.push(c.name); }); this.showAddColor = false; this.persist(); },
 
+    // ---- team roster (bulk ordering) ----
+    isTeam(color) { return !!this.team[color]; },
+    setTeam(color, on) {
+      this.team[color] = !!on;
+      if (on) {
+        Object.keys(this.qty).forEach(k => { if (k.startsWith(color + '|')) delete this.qty[k]; });
+        if (!this.rosterFor(color).length) this.addRow(color);
+      }
+      this.persist();
+    },
+    rosterFor(color) { return this.roster[color] || []; },
+    addRow(color, row) {
+      const list = this.roster[color] || (this.roster[color] = []);
+      list.push(Object.assign({ id: uid(), name: '', number: '', size: '', qty: 1 }, row || {}));
+      this.persist();
+    },
+    removeRow(color, id) { this.roster[color] = this.rosterFor(color).filter(r => r.id !== id); this.persist(); },
+    setRow(color, id, field, val) {
+      const r = this.rosterFor(color).find(x => x.id === id); if (!r) return;
+      if (field === 'number') val = String(val || '').replace(/[^0-9]/g, '').slice(0, 3);
+      if (field === 'name') val = String(val || '').slice(0, 20);
+      if (field === 'qty') val = Math.max(1, parseInt(val, 10) || 1);
+      r[field] = val;
+      this.persist();
+    },
+    // "Name, 23, L" / "Name 23 L" / tab-separated — one player per line
+    importRoster(color, text) {
+      const sizeSet = this.sizes.map(s => s.toLowerCase());
+      String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean).forEach(line => {
+        const parts = line.split(/[\t,;|]+|\s{2,}/).map(x => x.trim()).filter(Boolean);
+        const tokens = parts.length > 1 ? parts : line.split(/\s+/);
+        let name = '', number = '', size = '', qty = 1;
+        tokens.forEach(t => {
+          const tl = t.toLowerCase();
+          if (!size && sizeSet.includes(tl)) size = this.sizes[sizeSet.indexOf(tl)];
+          else if (!number && /^#?\d{1,3}$/.test(t)) number = t.replace('#', '');
+          else if (/^x\d{1,2}$/i.test(t)) qty = parseInt(t.slice(1), 10) || 1;
+          else name = (name ? name + ' ' : '') + t;
+        });
+        if (name || number) this.addRow(color, { name: name.slice(0, 20), number, size, qty });
+      });
+    },
+    rosterSummary(color) {
+      const rows = this.rosterFor(color);
+      const ok = rows.filter(r => r.size);
+      const units = ok.reduce((a, r) => a + (parseInt(r.qty, 10) || 1), 0);
+      if (!rows.length) return 'No players yet';
+      return units + ' shirt' + (units === 1 ? '' : 's') + ' · ' + ok.length + ' of ' + rows.length + ' player' + (rows.length === 1 ? '' : 's') + ' have a size';
+    },
+    areaHasRoles(color, area) { return this.designFor(color, area).objects.some(o => o.role); },
+    substitute(objects, player) {
+      if (!player) return objects;
+      return objects.map(o => {
+        if (o.type !== 'text' || !o.role) return o;
+        const v = o.role === 'name' ? (player.name || '').toUpperCase() : (player.number || '');
+        return Object.assign({}, o, { text: v || o.text });
+      });
+    },
+    // every line item to be created: grid quantities, or one row per player
+    orderLines() {
+      const lines = [];
+      for (const color of this.openColors) {
+        if (this.isTeam(color)) {
+          this.rosterFor(color).forEach(r => {
+            if (!r.size) return;
+            lines.push({ color, size: r.size, quantity: Math.max(1, parseInt(r.qty, 10) || 1), player: { id: r.id, name: (r.name || '').trim(), number: (r.number || '').trim() } });
+          });
+        } else {
+          for (const k in this.qty) { const [c, s] = k.split('|'); if (c === color && this.qty[k] > 0) lines.push({ color, size: s, quantity: this.qty[k], player: null }); }
+        }
+      }
+      return lines;
+    },
+    totalUnits() { return this.orderLines().reduce((a, l) => a + l.quantity, 0); },
+    totalPrice() { let c = 0; this.orderLines().forEach(l => { const v = this.resolvedVariant(l.color, l.size); if (v) c += v.price * l.quantity; }); return c; },
+    unitsFor(color) { return this.orderLines().filter(l => l.color === color).reduce((a, l) => a + l.quantity, 0); },
+
     // ---- coverage / gating ----
     areasUsedFor(color) {
       return this.areas.filter(a => this.designHasObjects(color, a.name)).length;
@@ -731,21 +853,26 @@
       if (!this.openColors.length) return 'Please select at least one colour';
       const missing = this.openColors.filter(c => !this.hasArtworkFor(c));
       if (missing.length) return 'Add a design for ' + missing.join(', ');
+      const noRoster = this.openColors.filter(c => this.isTeam(c) && !this.rosterFor(c).some(r => r.size));
+      if (noRoster.length) return 'Add players with a size for ' + noRoster.join(', ');
       if (this.totalUnits() === 0) return 'Enter quantities for at least one size';
       return '';
     },
-    unitsFor(color) { let n = 0; for (const k in this.qty) if (k.startsWith(color + '|')) n += this.qty[k]; return n; },
 
     // ---- order data ----
-    lineProperties(colorName) {
+    lineProperties(colorName, player) {
       const used = this.areas.map(a => a.name).filter(a => this.designHasObjects(colorName, a));
       const props = {
         'Print Method': this.methodFor(colorName),
         'Print Areas': used.join(', '),
       };
+      if (player) {
+        if (player.name) props['Player Name'] = player.name;
+        if (player.number) props['Player Number'] = player.number;
+      }
       if (this.designerNotes && this.designerNotes.trim()) props['Designer Notes'] = this.designerNotes.trim().slice(0, 500);
       used.forEach(a => {
-        const d = this.designFor(colorName, a);
+        const d = { objects: this.substitute(this.designFor(colorName, a).objects, player) };
         const imgs = d.objects.filter(o => o.type === 'image').map(o => o.src);
         const texts = d.objects.filter(o => o.type === 'text').map(o => o.text);
         if (imgs.length) props['Artwork — ' + a] = imgs.join(' , ');
@@ -754,7 +881,7 @@
       return props;
     },
     // Render a (colour, area) design onto a static canvas at an arbitrary zone size.
-    async renderDesign(color, area, zonePxRect, canvasW, canvasH, background) {
+    async renderDesign(color, area, zonePxRect, canvasW, canvasH, background, player) {
       const sc = new fabric.StaticCanvas(null, { width: canvasW, height: canvasH });
       if (background) {
         const bg = new fabric.Image(background, { originX: 'left', originY: 'top', left: 0, top: 0 });
@@ -762,7 +889,7 @@
         bg.scaleY = canvasH / background.height;
         await new Promise(res => sc.setBackgroundImage(bg, res));
       }
-      const design = this.designFor(color, area);
+      const design = { objects: this.substitute(this.designFor(color, area).objects, player) };
       await Promise.all(design.objects.filter(d => d.type === 'text').map(d => this.ensureFont(d.fontFamily, d.fontWeight, d.fontStyle)));
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, zonePxRect)));
       objs.filter(Boolean).forEach(o => sc.add(o));
@@ -771,61 +898,78 @@
       sc.dispose();
       return await (await fetch(dataUrl)).blob();
     },
-    async generatePreview(color, area) {
+    playerSlug(player) { return player ? '-' + ((player.name || 'player').toLowerCase().replace(/[^a-z0-9]+/g, '-') + (player.number ? '-' + player.number : '')) : ''; },
+    async generatePreview(color, area, player) {
       if (!this.designHasObjects(color, area)) return null;
       const a = this.areas.find(x => x.name === area);
-      const mock = await this.loadImg(this.mockupFor(color, area));
+      const mock = await this.loadImg(this.viewImage(color, area));
       const W = 900, H = Math.round(W * mock.height / mock.width);
       const z = { x: a.zone.x * W, y: a.zone.y * H, w: a.zone.w * W, h: a.zone.h * H };
-      const blob = await this.renderDesign(color, area, z, W, H, mock);
+      const blob = await this.renderDesign(color, area, z, W, H, mock, player);
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
-      return await this.uploadBlob('preview-' + slug(color) + '-' + slug(area) + '.jpg', blob);
+      return await this.uploadBlob('preview-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + '.jpg', blob);
     },
     // Transparent proof of the print area alone at PROOF_DPI (Phase 2 replaces with 300 DPI server render)
-    async generateProof(color, area) {
+    async generateProof(color, area, player) {
       if (!this.designHasObjects(color, area)) return null;
       const wIn = this.areaWIn(area), hIn = this.areaHIn(area);
       const W = Math.round(wIn * PROOF_DPI), H = Math.round(hIn * PROOF_DPI);
-      const blob = await this.renderDesign(color, area, { x: 0, y: 0, w: W, h: H }, W, H, null);
+      const blob = await this.renderDesign(color, area, { x: 0, y: 0, w: W, h: H }, W, H, null, player);
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
-      return await this.uploadBlob('proof-' + slug(color) + '-' + slug(area) + '-' + PROOF_DPI + 'dpi.png', blob);
+      return await this.uploadBlob('proof-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + '-' + PROOF_DPI + 'dpi.png', blob);
     },
-    async uploadDesignJson(color, area) {
+    async uploadDesignJson(color, area, player) {
       const a = this.areas.find(x => x.name === area);
-      const payload = { version: 2, units: ZU, area: a, w_in: this.areaWIn(area), h_in: this.areaHIn(area), design: this.designFor(color, area) };
+      const payload = { version: 2, units: ZU, area: a, w_in: this.areaWIn(area), h_in: this.areaHIn(area), player: player || null, design: { objects: this.substitute(this.designFor(color, area).objects, player) } };
       const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
-      return await this.uploadBlob('design-' + slug(color) + '-' + slug(area) + '.json', blob);
+      return await this.uploadBlob('design-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + '.json', blob);
+    },
+    async artifactsFor(color, areaNames, player) {
+      const props = {};
+      for (const area of areaNames) {
+        const [pv, pf, dj] = await Promise.all([
+          this.generatePreview(color, area, player).catch(() => null),
+          this.generateProof(color, area, player).catch(() => null),
+          this.uploadDesignJson(color, area, player).catch(() => null),
+        ]);
+        if (pv) props['Preview — ' + area] = pv;
+        if (pf) props['Proof — ' + area] = pf;
+        if (dj) props['_Design ' + area] = dj;
+      }
+      return props;
     },
     async addToCart() {
       if (!this.canSubmit()) return;
       this.submitting = true;
       this.errorMsg = '';
-      const extraByColor = {};
-      try {
-        for (const color of this.openColors) {
-          const props = {};
-          for (const a of this.areas) {
-            if (!this.designHasObjects(color, a.name)) continue;
-            const [pv, pf, dj] = await Promise.all([
-              this.generatePreview(color, a.name).catch(() => null),
-              this.generateProof(color, a.name).catch(() => null),
-              this.uploadDesignJson(color, a.name).catch(() => null),
-            ]);
-            if (pv) props['Preview — ' + a.name] = pv;
-            if (pf) props['Proof — ' + a.name] = pf;
-            if (dj) props['_Design ' + a.name] = dj;
-          }
-          extraByColor[color] = props;
-        }
-      } catch (e) { /* best effort */ }
+      this.progressMsg = 'Preparing print files…';
+      const lines = this.orderLines();
       const items = [];
-      for (const k in this.qty) {
-        const [color, size] = k.split('|');
-        const v = this.resolvedVariant(color, size);
-        if (!v) { this.errorMsg = 'Missing variant for ' + color + ' / ' + size; this.submitting = false; return; }
-        items.push({ id: v.id, quantity: this.qty[k], properties: Object.assign(this.lineProperties(color), extraByColor[color] || {}) });
-      }
+      try {
+        // Shared artifacts once per colour (areas without player fields); per-player
+        // artifacts only for the areas that carry a name/number field.
+        const shared = {};
+        for (const color of this.openColors) {
+          const used = this.areas.map(a => a.name).filter(a => this.designHasObjects(color, a));
+          const isTeam = this.isTeam(color);
+          const sharedAreas = used.filter(a => !(isTeam && this.areaHasRoles(color, a)));
+          shared[color] = await this.artifactsFor(color, sharedAreas, null);
+        }
+        let done = 0;
+        for (const l of lines) {
+          const v = this.resolvedVariant(l.color, l.size);
+          if (!v) { this.errorMsg = 'Missing variant for ' + l.color + ' / ' + l.size; this.submitting = false; this.progressMsg = ''; return; }
+          let props = Object.assign(this.lineProperties(l.color, l.player), shared[l.color] || {});
+          if (l.player) {
+            this.progressMsg = 'Preparing print files… player ' + (++done) + ' of ' + lines.filter(x => x.player).length;
+            const roleAreas = this.areas.map(a => a.name).filter(a => this.designHasObjects(l.color, a) && this.areaHasRoles(l.color, a));
+            props = Object.assign(props, await this.artifactsFor(l.color, roleAreas, l.player));
+          }
+          items.push({ id: v.id, quantity: l.quantity, properties: props });
+        }
+      } catch (e) { /* best effort — the order still carries the design JSON references it managed to upload */ }
+      this.progressMsg = 'Adding to cart…';
       try {
         const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) });
         if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.description || err.message || 'Could not add to cart'); }
@@ -834,6 +978,7 @@
       } catch (e) {
         this.errorMsg = e.message || 'Could not add to cart — please try again.';
         this.submitting = false;
+        this.progressMsg = '';
       }
     },
 
@@ -844,7 +989,7 @@
       [this.qty, this.artwork, this.designs].forEach(map => {
         Object.keys(map).forEach(k => { if (k.startsWith(prefix)) delete map[k]; });
       });
-      delete this.methodByColor[name];
+      delete this.methodByColor[name]; delete this.roster[name]; delete this.team[name];
       if (this.activeColor === name) this.activeColor = this.openColors[0] || '';
       this.persist();
       this.loadAreaIntoFabric();
@@ -856,6 +1001,7 @@
         localStorage.setItem(this.persistKey(), JSON.stringify({
           v: 2, qty: this.qty, designs: this.designs, artwork: this.artwork,
           methodByColor: this.methodByColor, openColors: this.openColors, notes: this.designerNotes,
+          roster: this.roster, team: this.team,
         }));
       } catch (e) { /* private mode */ }
     },
@@ -869,6 +1015,8 @@
         this.designs = s.designs || {};
         this.artwork = s.artwork || {};
         if (s.methodByColor) this.methodByColor = s.methodByColor;
+        if (s.roster) this.roster = s.roster;
+        if (s.team) this.team = s.team;
         if (s.notes) this.designerNotes = s.notes;
         if (s.openColors && s.openColors.length) { this.openColors = s.openColors; this.activeColor = s.openColors[0]; }
       } catch (e) { /* ignore */ }

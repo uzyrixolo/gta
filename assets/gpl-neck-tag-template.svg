@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GTA Print Lab — inside neck tag template. Artboard = 3 x 3 in (900 x 900 px at 300 DPI).
+     Keep artwork inside the dashed safe area; leave the background transparent. Make one file per size. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="3in" height="3in" viewBox="0 0 900 900">
+  <g id="guides-delete-before-export" stroke="#9A9A9A" stroke-width="2" fill="none">
+    <rect x="1" y="1" width="898" height="898" stroke-dasharray="14 10"/>
+    <rect x="75" y="75" width="750" height="750" stroke-dasharray="8 8" opacity="0.6"/>
+    <text x="450" y="52" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#9A9A9A" stroke="none" text-anchor="middle">3 x 3 in print area — safe area inside dotted line</text>
+  </g>
+  <g id="label" font-family="Arial, Helvetica, sans-serif" fill="#111111" text-anchor="middle">
+    <text x="450" y="330" font-size="64" font-weight="700" letter-spacing="6">YOUR BRAND</text>
+    <text x="450" y="500" font-size="120" font-weight="700">M</text>
+    <text x="450" y="600" font-size="30" letter-spacing="8">100% COTTON</text>
+    <text x="450" y="655" font-size="30" letter-spacing="8">MADE IN CANADA</text>
+    <text x="450" y="740" font-size="24" fill="#555555">MACHINE WASH COLD · TUMBLE DRY LOW</text>
+  </g>
+</svg>
