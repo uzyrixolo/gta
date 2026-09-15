@@ -866,7 +866,7 @@
     },
     hasArtworkFor(color) { return this.areasUsedFor(color) > 0; },
     canSubmit() {
-      return this.hasArtwork() && this.totalUnits() > 0 && !this.submitting && !(this.uploadingCount > 0);
+      return this.hasArtwork() && this.totalUnits() > 0 && !this.gateMessage() && !this.submitting && !(this.uploadingCount > 0);
     },
     gateMessage() {
       if (!this.openColors.length) return 'Please select at least one colour';

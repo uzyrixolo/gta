@@ -321,7 +321,7 @@
                 <div class="gpl-cz__roster-row">
                   <input type="text" maxlength="20" placeholder="Name" :value="row.name" @input="setRow(colorName, row.id, 'name', $event.target.value)">
                   <input type="text" inputmode="numeric" maxlength="3" placeholder="00" :value="row.number" @input="setRow(colorName, row.id, 'number', $event.target.value)">
-                  <select :value="row.size" :class="{'is-empty': !row.size}" @change="setRow(colorName, row.id, 'size', $event.target.value)">
+                  <select x-effect="const v = row.size; $nextTick(() => { $el.value = v })" :class="{'is-empty': !row.size}" @change="setRow(colorName, row.id, 'size', $event.target.value)">
                     <option value="">Size</option>
                     <template x-for="size in sizes" :key="size">
                       <option :value="size" x-text="size" :disabled="!availableFor(colorName, size)"></option>
