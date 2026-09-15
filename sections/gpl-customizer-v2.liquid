@@ -169,29 +169,95 @@
   id="gpl-cz-{{ section.id }}"
   class="gpl-cz gpl-cz--ws"
   x-data="gplQuickOrderV2('{{ section.id }}')"
-  :class="{'is-editing': sel.has, 'panel-edit': panel === 'edit'}"
+  :class="{'is-editing': sel.has, 'panel-edit': panel === 'edit', 'sheet-open': sheet}"
 >
   <div class="gpl-cz__ws">
+    {%- comment -%} ============ CANVAS ============ {%- endcomment -%}
+    <div class="gpl-cz__canvas">
+      <div class="gpl-cz__viewport" data-gpl-viewport :style="'--zoom:' + zoom">
+        <div class="gpl-cz__stage" data-gpl-stage>
+          <img class="gpl-cz__mockup" src="{{ default_mockup | image_url: width: 1100 }}" :src="currentMockup()" width="{{ default_mockup.width | default: 764 }}" height="{{ default_mockup.height | default: 861 }}" alt="{{ product.title | escape }}" loading="eager">
+          <template x-for="area in areas" :key="area.name">
+            <div
+              class="gpl-cz__zone"
+              x-show="activePrintArea === area.name"
+              :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
+            >
+              <span class="gpl-cz__zone-label">Print area <b x-text="zoneLabel(area.name)"></b></span>
+              <template x-if="!designHasObjects(activeColor, area.name)">
+                <div class="gpl-cz__zone-cta gpl-cz__zone-cta--v2">
+                  <label class="gpl-cz__zone-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></svg>
+                    <span>Upload artwork</span>
+                    <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff,.eps,.ai" hidden
+                      @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
+                  </label>
+                  <button type="button" class="gpl-cz__zone-btn" @click="addText()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
+                    <span>Add text</span>
+                  </button>
+                  <button type="button" class="gpl-cz__zone-btn" @click="addNumber()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+                    <span>Add number</span>
+                  </button>
+                  <button type="button" class="gpl-cz__zone-btn" x-show="library.length" @click="panel = 'files'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg>
+                    <span>From library</span>
+                  </button>
+                </div>
+              </template>
+            </div>
+          </template>
+          {%- comment -%} Canvas stays interactive whenever the area has objects; when it's
+               empty, clicks fall through to the zone's Upload/Add buttons underneath. {%- endcomment -%}
+          <div class="gpl-cz__fwrap" :style="designHasObjects(activeColor, activePrintArea) ? '' : 'pointer-events:none'">
+            <canvas x-ref="fcanvas"></canvas>
+          </div>
+          <span class="gpl-cz__chip" x-show="chip.show" x-cloak :style="`left:${chip.x}px;top:${chip.y + 10}px`" x-text="chip.text"></span>
+        </div>
+      </div>
+      <div class="gpl-cz__zoombar">
+        <span class="gpl-cz__stage-hint"><strong x-text="(previewColorName || activeColor)"></strong> · <span x-text="activePrintArea"></span></span>
+        <button type="button" class="gpl-cz__ico" title="Zoom out" @click="zoomOut()" :disabled="zoom <= 1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+        <button type="button" class="gpl-cz__zoomval" title="Reset zoom" @click="zoomReset()" x-text="Math.round(zoom * 100) + '%'"></button>
+        <button type="button" class="gpl-cz__ico" title="Zoom in" @click="zoomIn()" :disabled="zoom >= 3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <div class="gpl-cz__views">
+        <template x-for="area in areas" :key="area.name">
+          <button type="button" class="gpl-cz__view" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
+            <span class="gpl-cz__view-thumb">
+              <img :src="mockupFor(activeColor, area.name)" width="76" height="76" alt="" loading="lazy">
+              <span class="gpl-cz__view-check" x-show="designHasObjects(activeColor, area.name)" x-cloak>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+              </span>
+            </span>
+            <span class="gpl-cz__view-label" x-text="area.name"></span>
+          </button>
+        </template>
+      </div>
+    </div>
+
+   <div class="gpl-cz__dock">
     {%- comment -%} ============ RAIL ============ {%- endcomment -%}
     <nav class="gpl-cz__rail" aria-label="Designer tools">
-      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'product'}" @click="panel = 'product'">
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'product'}" @click="openPanel('product')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 3 6l2 4 2-1v11h10V9l2 1 2-4-5-3a3 3 0 0 1-8 0Z"/></svg>
         <span>Product</span>
       </button>
-      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'layers'}" @click="panel = 'layers'">
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'layers'}" @click="openPanel('layers')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>
         <span>Layers</span>
         <em class="gpl-cz__rail-badge" x-show="objectsInArea().length" x-text="objectsInArea().length" x-cloak></em>
       </button>
-      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'files'}" @click="panel = 'files'">
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'files'}" @click="openPanel('files')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M12 10v6M9 13l3-3 3 3"/></svg>
         <span>Files</span>
       </button>
-      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'text'}" @click="panel = 'text'">
+      <button type="button" class="gpl-cz__rail-btn" :class="{'is-active': panel === 'text'}" @click="openPanel('text')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
         <span>Text</span>
       </button>
-      <button type="button" class="gpl-cz__rail-btn gpl-cz__rail-btn--edit" :class="{'is-active': panel === 'edit'}" @click="panel = 'edit'" x-show="sel.has" x-cloak>
+      <button type="button" class="gpl-cz__rail-btn gpl-cz__rail-btn--edit" :class="{'is-active': panel === 'edit'}" @click="openPanel('edit')" x-show="sel.has" x-cloak>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16v4Z"/><path d="m12 8 4 4"/></svg>
         <span>Edit</span>
       </button>
@@ -199,6 +265,7 @@
 
     {%- comment -%} ============ PANEL ============ {%- endcomment -%}
     <aside class="gpl-cz__panel">
+      <button type="button" class="gpl-cz__sheet-close" @click="sheet = false" aria-label="Close panel"><span></span></button>
       {%- comment -%} ---- Product ---- {%- endcomment -%}
       <div class="gpl-cz__pane" x-show="panel === 'product'">
         {%- assign title_parts = product.title | split: '|' -%}
@@ -418,73 +485,9 @@
       </div>
     </aside>
 
-    {%- comment -%} ============ CANVAS ============ {%- endcomment -%}
-    <div class="gpl-cz__canvas">
-      <div class="gpl-cz__viewport" data-gpl-viewport :style="'--zoom:' + zoom">
-        <div class="gpl-cz__stage" data-gpl-stage>
-          <img class="gpl-cz__mockup" src="{{ default_mockup | image_url: width: 1100 }}" :src="currentMockup()" width="{{ default_mockup.width | default: 764 }}" height="{{ default_mockup.height | default: 861 }}" alt="{{ product.title | escape }}" loading="eager">
-          <template x-for="area in areas" :key="area.name">
-            <div
-              class="gpl-cz__zone"
-              x-show="activePrintArea === area.name"
-              :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
-            >
-              <span class="gpl-cz__zone-label">Print area <b x-text="zoneLabel(area.name)"></b></span>
-              <template x-if="!designHasObjects(activeColor, area.name)">
-                <div class="gpl-cz__zone-cta gpl-cz__zone-cta--v2">
-                  <label class="gpl-cz__zone-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></svg>
-                    <span>Upload artwork</span>
-                    <input type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.heic,.tif,.tiff,.eps,.ai" hidden
-                      @change="uploadArtwork(activeColor, area.name, $event.target.files[0]); $event.target.value=''">
-                  </label>
-                  <button type="button" class="gpl-cz__zone-btn" @click="addText()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7V4h14v3M9 20h6M12 4v16"/></svg>
-                    <span>Add text</span>
-                  </button>
-                  <button type="button" class="gpl-cz__zone-btn" @click="addNumber()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
-                    <span>Add number</span>
-                  </button>
-                  <button type="button" class="gpl-cz__zone-btn" x-show="library.length" @click="panel = 'files'">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg>
-                    <span>From library</span>
-                  </button>
-                </div>
-              </template>
-            </div>
-          </template>
-          {%- comment -%} Canvas stays interactive whenever the area has objects; when it's
-               empty, clicks fall through to the zone's Upload/Add buttons underneath. {%- endcomment -%}
-          <div class="gpl-cz__fwrap" :style="designHasObjects(activeColor, activePrintArea) ? '' : 'pointer-events:none'">
-            <canvas x-ref="fcanvas"></canvas>
-          </div>
-          <span class="gpl-cz__chip" x-show="chip.show" x-cloak :style="`left:${chip.x}px;top:${chip.y + 10}px`" x-text="chip.text"></span>
-        </div>
-      </div>
-      <div class="gpl-cz__zoombar">
-        <span class="gpl-cz__stage-hint"><strong x-text="(previewColorName || activeColor)"></strong> · <span x-text="activePrintArea"></span></span>
-        <button type="button" class="gpl-cz__ico" title="Zoom out" @click="zoomOut()" :disabled="zoom <= 1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
-        <button type="button" class="gpl-cz__zoomval" title="Reset zoom" @click="zoomReset()" x-text="Math.round(zoom * 100) + '%'"></button>
-        <button type="button" class="gpl-cz__ico" title="Zoom in" @click="zoomIn()" :disabled="zoom >= 3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-      </div>
-      <div class="gpl-cz__views">
-        <template x-for="area in areas" :key="area.name">
-          <button type="button" class="gpl-cz__view" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
-            <span class="gpl-cz__view-thumb">
-              <img :src="mockupFor(activeColor, area.name)" width="76" height="76" alt="" loading="lazy">
-              <span class="gpl-cz__view-check" x-show="designHasObjects(activeColor, area.name)" x-cloak>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
-              </span>
-            </span>
-            <span class="gpl-cz__view-label" x-text="area.name"></span>
-          </button>
-        </template>
-      </div>
-    </div>
-
     {%- comment -%} ============ PROPERTIES ============ {%- endcomment -%}
     <aside class="gpl-cz__props">
+      <button type="button" class="gpl-cz__sheet-close" @click="sheet = false" aria-label="Close panel"><span></span></button>
       <div class="gpl-cz__props-empty" x-show="!sel.has">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 4 7 16 2-7 7-2L4 4Z"/></svg>
         <strong>Choose a layer to edit</strong>
@@ -640,7 +643,6 @@
         </template>
       </div>
     </aside>
-  </div>
 
   {%- comment -%} ============ BOTTOM BAR ============ {%- endcomment -%}
   <div class="gpl-cz__bar">
@@ -659,6 +661,8 @@
       <p class="gpl-cz__admin-warn">⚠ Admin: set the Uploadcare public key in the customizer section settings — uploads are disabled until then.</p>
     {%- endif -%}
   </div>
+   </div>
+  </div>
 </section>
 
 {% style %}
@@ -676,11 +680,14 @@
   #gpl-cz-{{ section.id }} .gpl-cz__ws {
     display: grid;
     grid-template-columns: 68px 340px minmax(0, 1fr) 300px;
-    grid-template-areas: "rail panel canvas props";
-    min-height: 720px;
+    grid-template-rows: minmax(720px, auto) auto;
+    grid-template-areas: "rail panel canvas props" "bar bar bar bar";
     border-top: 1px solid var(--cz-line);
     border-bottom: 1px solid var(--cz-line);
   }
+
+  #gpl-cz-{{ section.id }} .gpl-cz__dock { display: contents; }
+  #gpl-cz-{{ section.id }} .gpl-cz__sheet-close { display: none; }
 
   /* ---- rail ---- */
   #gpl-cz-{{ section.id }} .gpl-cz__rail { grid-area: rail; display: flex; flex-direction: column; gap: 2px; padding: 8px 6px; border-right: 1px solid var(--cz-line); background: #FAFAFA; }
@@ -928,7 +935,7 @@
 
   /* ---- bottom bar ---- */
   #gpl-cz-{{ section.id }} .gpl-cz__bar {
-    position: sticky; bottom: 0; z-index: 20;
+    grid-area: bar; position: sticky; bottom: 0; z-index: 20;
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     padding: 12px clamp(16px, 2vw, 28px); background: #FFFFFF; border-top: 1px solid var(--cz-line);
     box-shadow: 0 -6px 18px rgba(0,0,0,0.06);
@@ -954,24 +961,28 @@
   }
   @media screen and (max-width: 989px) {
     #gpl-cz-{{ section.id }} .gpl-cz__ws { display: flex; flex-direction: column; min-height: 0; border-top: none; }
-    #gpl-cz-{{ section.id }} .gpl-cz__canvas { order: 1; }
     #gpl-cz-{{ section.id }} .gpl-cz__viewport { --stage-h: min(48vh, 420px); padding: 10px; }
     #gpl-cz-{{ section.id }} .gpl-cz__views { padding: 6px 10px 8px; }
     #gpl-cz-{{ section.id }} .gpl-cz__view { width: 72px; }
     #gpl-cz-{{ section.id }} .gpl-cz__view-thumb { width: 56px; height: 56px; }
-    #gpl-cz-{{ section.id }} .gpl-cz__rail { order: 2; flex-direction: row; gap: 4px; padding: 6px 8px; border-right: none; border-top: 1px solid var(--cz-line); border-bottom: 1px solid var(--cz-line); overflow-x: auto; }
-    #gpl-cz-{{ section.id }} .gpl-cz__rail-btn { flex: 1 0 auto; min-width: 64px; padding: 6px 4px; gap: 3px; }
+    /* Printeez-style dock: tool tabs + order bar pinned to the bottom of the screen
+       while the workspace is in view; the active panel slides up as a sheet above them. */
+    #gpl-cz-{{ section.id }} .gpl-cz__dock { display: flex; flex-direction: column; position: sticky; bottom: 0; z-index: 30; background: #FFFFFF; box-shadow: 0 -8px 24px rgba(0,0,0,0.10); }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail { order: 2; flex-direction: row; gap: 4px; padding: 6px 8px; border-right: none; border-top: 1px solid var(--cz-line); overflow-x: auto; }
+    #gpl-cz-{{ section.id }} .gpl-cz__rail-btn { flex: 1 0 auto; width: auto; min-width: 64px; padding: 6px 4px; gap: 3px; }
     #gpl-cz-{{ section.id }} .gpl-cz__rail-btn svg { width: 20px; height: 20px; }
     #gpl-cz-{{ section.id }} .gpl-cz__rail-btn--edit { display: flex; }
-    #gpl-cz-{{ section.id }} .gpl-cz__panel, #gpl-cz-{{ section.id }} .gpl-cz__props { order: 3; border: none; max-height: none; }
-    #gpl-cz-{{ section.id }} .gpl-cz__props { display: none; }
-    #gpl-cz-{{ section.id }}.panel-edit .gpl-cz__props { display: block; }
-    #gpl-cz-{{ section.id }}.panel-edit .gpl-cz__panel { display: none; }
-    #gpl-cz-{{ section.id }} .gpl-cz__props-empty { padding: 28px 18px; }
-    #gpl-cz-{{ section.id }} .gpl-cz__bar { gap: 10px; padding: 10px 14px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__panel, #gpl-cz-{{ section.id }} .gpl-cz__props { display: none; order: 1; border: none; border-top: 1px solid var(--cz-line); max-height: min(52vh, 520px); overflow-y: auto; }
+    #gpl-cz-{{ section.id }}.sheet-open .gpl-cz__panel { display: block; }
+    #gpl-cz-{{ section.id }}.sheet-open.panel-edit .gpl-cz__panel { display: none; }
+    #gpl-cz-{{ section.id }}.sheet-open.panel-edit .gpl-cz__props { display: block; }
+    #gpl-cz-{{ section.id }} .gpl-cz__sheet-close { display: flex; justify-content: center; width: 100%; padding: 8px 0 2px; border: none; background: none; cursor: pointer; position: sticky; top: 0; z-index: 2; }
+    #gpl-cz-{{ section.id }} .gpl-cz__sheet-close span { width: 40px; height: 4px; border-radius: 2px; background: #D0D0D0; }
+    #gpl-cz-{{ section.id }} .gpl-cz__props-empty { padding: 20px 18px 28px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__bar { order: 3; position: static; box-shadow: none; gap: 10px; padding: 10px 14px; }
     #gpl-cz-{{ section.id }} .gpl-cz__bar-ship { display: none; }
     #gpl-cz-{{ section.id }} .gpl-cz__submit { min-width: 0; flex: 1 0 160px; padding: 14px 18px; }
-    #gpl-cz-{{ section.id }} .gpl-cz__bar-gate, #gpl-cz-{{ section.id }} .gpl-cz__error { width: 100%; order: 5; }
+    #gpl-cz-{{ section.id }} .gpl-cz__bar-gate, #gpl-cz-{{ section.id }} .gpl-cz__error { width: 100%; order: 5; margin-top: -4px; }
     #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { width: min(80%, 200px); gap: 6px; }
     #gpl-cz-{{ section.id }} .gpl-cz__zone-btn { padding: 8px 10px; font-size: 10.5px; }
   }

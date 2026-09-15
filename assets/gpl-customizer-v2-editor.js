@@ -70,6 +70,7 @@
     placements: PLACEMENTS,
     warps: WARPS,
     panel: 'product',                     // rail tab: product | layers | files | text | edit
+    sheet: false,                         // mobile: is the tool sheet open above the dock
     zoom: 1,
     histTick: 0,                          // bumps so canUndo()/canRedo() re-evaluate
     library: [],                          // uploaded artwork, shared across products
@@ -187,9 +188,14 @@
     onSelect() {
       this.syncSel();
       if (isMobile()) {
-        if (this.sel.has) this.panel = 'edit';
+        if (this.sel.has) { this.panel = 'edit'; this.sheet = true; }
         else if (this.panel === 'edit') this.panel = 'layers';
       }
+    },
+    // rail tabs: on mobile a second tap on the active tab closes the sheet
+    openPanel(tab) {
+      if (isMobile() && this.sheet && this.panel === tab) { this.sheet = false; return; }
+      this.panel = tab; this.sheet = true;
     },
 
     // ---- (de)serialisation in zone units ----
@@ -332,6 +338,9 @@
       // synchronous step after its images (and fonts) have arrived.
       const seq = (fx.loadSeq = (fx.loadSeq || 0) + 1);
       fx.loading = true;
+      // keep the current selection across reloads (zoom, undo, resize)
+      const keep = fx.canvas.getActiveObject();
+      const keepId = keep && keep.type !== 'activeSelection' ? keep._gplId : null;
       const design = this.designFor(color, area);
       await Promise.all(design.objects.filter(d => d.type === 'text').map(d => this.ensureFont(d.fontFamily, d.fontWeight, d.fontStyle)));
       const objs = await Promise.all(design.objects.map(d => this.enliven(d, z)));
@@ -340,6 +349,8 @@
       fx.canvas.clear();
       objs.filter(Boolean).forEach(o => fx.canvas.add(o));
       fx.canvas.discardActiveObject();
+      const again = keepId && fx.canvas.getObjects().find(o => o._gplId === keepId);
+      if (again) fx.canvas.setActiveObject(again);
       fx.canvas.requestRenderAll();
       fx.loading = false;
       this.syncSel();
@@ -550,7 +561,7 @@
       fx.canvas.requestRenderAll();
       this.saveDesign();
       this.syncSel();
-      if (isMobile()) this.panel = 'edit';
+      if (isMobile()) { this.panel = 'edit'; this.sheet = true; }
     },
     addNumber() {
       const dark = this.isLight(this.activeColor);
@@ -645,7 +656,7 @@
     selectById(id) {
       const fx = this.fx();
       const o = fx.canvas && fx.canvas.getObjects().find(x => x._gplId === id);
-      if (o) { fx.canvas.setActiveObject(o); fx.canvas.requestRenderAll(); this.syncSel(); if (isMobile()) this.panel = 'edit'; }
+      if (o) { fx.canvas.setActiveObject(o); fx.canvas.requestRenderAll(); this.syncSel(); if (isMobile()) { this.panel = 'edit'; this.sheet = true; } }
     },
     setArea(name) {
       this.activePrintArea = name;
