@@ -791,9 +791,16 @@
     },
     // Size tokens people type (S, Med, XXL…) vs. the product's own labels (SM, MD, 2XL…)
     canonSize(x) {
-      let v = String(x || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-      v = v.replace(/^x{1,2}small$|^xs$/, 'xs').replace(/^small$|^sm$/, 's').replace(/^medium$|^med$|^md$/, 'm').replace(/^large$|^lg$/, 'l');
-      v = v.replace(/^(\d)?x{0,1}(x+)l$/, (m, d, xs) => (d ? d : (xs.length + 1)) + 'xl').replace(/^xl$/, 'xl');
+      const v = String(x || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (/^(xs|xsmall|extrasmall)$/.test(v)) return 'xs';
+      if (/^(s|sm|small)$/.test(v)) return 's';
+      if (/^(m|md|med|medium)$/.test(v)) return 'm';
+      if (/^(l|lg|large)$/.test(v)) return 'l';
+      if (/^(xl|xlarge|extralarge)$/.test(v)) return 'xl';
+      const nx = v.match(/^(\d)xl$/);            // 2xl, 3xl …
+      if (nx) return nx[1] + 'xl';
+      const xx = v.match(/^(x{2,})l$/);           // xxl, xxxl …
+      if (xx) return xx[1].length + 'xl';
       return v;
     },
     matchSize(tok) {
