@@ -183,7 +183,7 @@
               x-show="activePrintArea === area.name"
               :style="`left:${area.zone.x*100}%;top:${area.zone.y*100}%;width:${area.zone.w*100}%;height:${area.zone.h*100}%`"
             >
-              <span class="gpl-cz__zone-label">Print area <b x-text="zoneLabel(area.name)"></b></span>
+              <span class="gpl-cz__zone-label" x-show="zoneLabel(area.name)" x-text="'Print area ' + zoneLabel(area.name)"></span>
               <template x-if="!designHasObjects(activeColor, area.name)">
                 <div class="gpl-cz__zone-cta gpl-cz__zone-cta--v2">
                   <label class="gpl-cz__zone-btn">
@@ -477,7 +477,7 @@
           <template x-for="area in areas" :key="area.name">
             <button type="button" class="gpl-cz__areasum-row" :class="{'is-active': activePrintArea === area.name}" @click="setArea(area.name)">
               <span x-text="area.name"></span>
-              <em x-text="zoneLabel(area.name)"></em>
+              <em x-show="zoneLabel(area.name)" x-text="zoneLabel(area.name)"></em>
               <strong x-text="designCount(activeColor, area.name) ? designCount(activeColor, area.name) + ' layer' + (designCount(activeColor, area.name) === 1 ? '' : 's') : '—'"></strong>
             </button>
           </template>
@@ -581,7 +581,7 @@
         <strong>Choose a layer to edit</strong>
         <span>Click artwork or text on the stage. Drag to move, corners to resize, the top handle to rotate.</span>
         <dl class="gpl-cz__props-facts">
-          <dt>Print area</dt><dd><span x-text="activePrintArea"></span> · <span x-text="zoneLabel(activePrintArea)"></span></dd>
+          <dt>Print area</dt><dd><span x-text="activePrintArea"></span><span x-show="zoneLabel(activePrintArea)" x-text="' · ' + zoneLabel(activePrintArea)"></span></dd>
           <dt>Method</dt><dd x-text="methodFor(activeColor)"></dd>
           <dt>Shortcuts</dt><dd>Arrows nudge · ⌘Z undo · ⌘D duplicate · Delete removes</dd>
         </dl>
@@ -597,19 +597,19 @@
               <button type="button" class="gpl-cz__placement" :class="{'is-active': sel.placement === p.id}" @click="applyPlacement(p.id)">
                 <i :class="'gpl-cz__placement-ico gpl-cz__placement-ico--' + p.id"></i>
                 <strong x-text="p.name"></strong>
-                <span x-text="p.desc"></span>
+                <span x-text="placementDesc(p)"></span>
               </button>
             </template>
           </div>
         </div>
 
         <div class="gpl-cz__group">
-          <p class="gpl-cz__group-title">Transforms <em x-text="sel.locked ? '· locked' : ''"></em></p>
+          <p class="gpl-cz__group-title">Transforms <em x-text="(isCalibrated() ? '· inches' : '· % of print area') + (sel.locked ? ' · locked' : '')"></em></p>
           <div class="gpl-cz__row4">
-            <label class="gpl-cz__num"><span>X</span><input type="number" step="0.05" :value="sel.xIn" :disabled="sel.locked" @change="setPosIn('x', $event.target.value)"><b>in</b></label>
-            <label class="gpl-cz__num"><span>Y</span><input type="number" step="0.05" :value="sel.yIn" :disabled="sel.locked" @change="setPosIn('y', $event.target.value)"><b>in</b></label>
-            <label class="gpl-cz__num"><span>W</span><input type="number" step="0.05" min="0.1" :value="sel.wIn" :disabled="sel.locked" @change="setDimIn('w', $event.target.value)"><b>in</b></label>
-            <label class="gpl-cz__num"><span>H</span><input type="number" step="0.05" min="0.1" :value="sel.hIn" :disabled="sel.locked" @change="setDimIn('h', $event.target.value)"><b>in</b></label>
+            <label class="gpl-cz__num"><span>X</span><input type="number" step="0.05" :value="sel.xIn" :disabled="sel.locked" @change="setPosIn('x', $event.target.value)"><b x-text="unit()"></b></label>
+            <label class="gpl-cz__num"><span>Y</span><input type="number" step="0.05" :value="sel.yIn" :disabled="sel.locked" @change="setPosIn('y', $event.target.value)"><b x-text="unit()"></b></label>
+            <label class="gpl-cz__num"><span>W</span><input type="number" step="0.05" min="0.1" :value="sel.wIn" :disabled="sel.locked" @change="setDimIn('w', $event.target.value)"><b x-text="unit()"></b></label>
+            <label class="gpl-cz__num"><span>H</span><input type="number" step="0.05" min="0.1" :value="sel.hIn" :disabled="sel.locked" @change="setDimIn('h', $event.target.value)"><b x-text="unit()"></b></label>
           </div>
           <div class="gpl-cz__row4 gpl-cz__row4--rot">
             <label class="gpl-cz__num gpl-cz__num--wide"><span>Rotate</span><input type="number" step="1" :value="sel.angle" :disabled="sel.locked" @change="setAngle($event.target.value)"><b>°</b></label>

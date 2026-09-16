@@ -13,6 +13,7 @@
   const ZU = 1000;                       // zone width in design units
   const STORE = new WeakMap();           // fabric state kept OUT of Alpine's reactive proxy
   const PROOF_DPI = 150;                 // client-side proof; real 300 DPI render is Phase 2
+  const PROOF_UNCAL_W = 1800;            // proof width (px) when the print area has no real-world size
   const HISTORY_MAX = 40;
   const LIB_KEY = 'gpl-customizer-v2-library';
   const ZOOMS = [1, 1.25, 1.5, 2, 2.5, 3];
@@ -41,13 +42,17 @@
 
   // Smart placements (inches, relative to the print area). Only offered on areas
   // at least 8in wide (chest/back), never on sleeves or cap panels.
+  // Smart placements. `w`/`top` are inches and are used only on a garment whose print
+  // area is calibrated (the zone carries a real w_in). Everywhere else the same
+  // placement is applied as `wf`/`topf` — a fraction of the print area — so the tool
+  // still works without inventing a measurement we have not actually measured.
   const PLACEMENTS = [
-    { id: 'free', name: 'Free form', desc: 'Place anywhere' },
-    { id: 'standard', name: 'Standard', desc: '10 in wide · 2 in down', w: 10, top: 2, x: 'center' },
-    { id: 'left_chest', name: 'Left chest', desc: '4 in wide · pocket side', w: 4, top: 1.5, x: 'left_chest' },
-    { id: 'pocket', name: 'Pocket', desc: '3.5 in · on the pocket', w: 3.5, top: 3, x: 'left_chest' },
-    { id: 'center_chest', name: 'Center chest', desc: '7 in wide · 3 in down', w: 7, top: 3, x: 'center' },
-    { id: 'oversized', name: 'Oversized', desc: 'Full print width', w: 'full', top: 0.5, x: 'center' },
+    { id: 'free', name: 'Free form', desc: 'Place anywhere', descf: 'Place anywhere' },
+    { id: 'standard', name: 'Standard', desc: '10 in wide · 2 in down', descf: 'Large · high on the chest', w: 10, top: 2, wf: 0.83, topf: 0.125, x: 'center' },
+    { id: 'left_chest', name: 'Left chest', desc: '4 in wide · pocket side', descf: 'Small · pocket side', w: 4, top: 1.5, wf: 0.33, topf: 0.09, x: 'left_chest' },
+    { id: 'pocket', name: 'Pocket', desc: '3.5 in · on the pocket', descf: 'Small · on the pocket', w: 3.5, top: 3, wf: 0.29, topf: 0.19, x: 'left_chest' },
+    { id: 'center_chest', name: 'Center chest', desc: '7 in wide · 3 in down', descf: 'Medium · centred', w: 7, top: 3, wf: 0.58, topf: 0.19, x: 'center' },
+    { id: 'oversized', name: 'Oversized', desc: 'Full print width', descf: 'Fills the print area', w: 'full', top: 0.5, wf: 1, topf: 0.03, x: 'center' },
   ];
 
   const WARPS = [
@@ -96,14 +101,20 @@
       return s;
     },
     areaDef(name) { return this.areas.find(a => a.name === (name || this.activePrintArea)); },
-    areaWIn(name) { const a = this.areaDef(name); return (a && a.w_in) || 12; },
+    // A zone is "calibrated" only when the product data gives it a real physical
+    // width. Without that we know where the artwork sits on the photo but NOT how
+    // big it prints, so no inch figure may be shown, stored or used for a proof.
+    isCalibrated(name) { const a = this.areaDef(name); return !!(a && a.w_in > 0); },
+    areaWIn(name) { const a = this.areaDef(name); return (a && a.w_in) || 0; },
     areaHIn(name) {
-      const a = this.areaDef(name); if (!a) return 16;
+      const a = this.areaDef(name); if (!a || !a.w_in) return 0;
       if (a.h_in) return a.h_in;
-      return r2(this.areaWIn(name) * (a.zone.h / a.zone.w));
+      return r2(a.w_in * (a.zone.h / a.zone.w));
     },
-    ppi(name) { const z = this.zonePx(name || this.activePrintArea); return z ? z.w / this.areaWIn(name) : 1; },
-    zoneLabel(name) { return this.areaWIn(name) + ' × ' + this.areaHIn(name) + ' in'; },
+    // px per inch on the stage; 0 when the zone has no real-world size
+    ppi(name) { const n = name || this.activePrintArea; const z = this.zonePx(n); return (z && this.isCalibrated(n)) ? z.w / this.areaWIn(n) : 0; },
+    unit(name) { return this.isCalibrated(name || this.activePrintArea) ? 'in' : '%'; },
+    zoneLabel(name) { return this.isCalibrated(name) ? (this.areaWIn(name) + ' × ' + this.areaHIn(name) + ' in') : ''; },
     isLabelArea(name) { const a = this.areaDef(name); return !!(a && a.view === 'inside_label'); },
     // Areas with an illustrated view (inside label) have no product photo: draw a
     // colour-tinted collar illustration instead. Data URLs draw on canvas untainted.
@@ -129,7 +140,15 @@
         + '</svg>';
       return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
     },
-    placementsFor(name) { return this.areaWIn(name) >= 8 ? PLACEMENTS : []; },
+    // Chest placements only make sense on a big panel: a calibrated area at least
+    // 8in wide, or an uncalibrated one whose zone covers a torso-sized part of the
+    // photo (sleeve and cap panels are much smaller than that).
+    placementsFor(name) {
+      const a = this.areaDef(name); if (!a) return [];
+      if (this.isCalibrated(name)) return this.areaWIn(name) >= 8 ? PLACEMENTS : [];
+      return a.zone.w >= 0.3 ? PLACEMENTS : [];
+    },
+    placementDesc(p) { return this.isCalibrated() ? p.desc : (p.descf || p.desc); },
     zoneFactor(areaName) {
       const z = this.zonePx(areaName || this.activePrintArea);
       return z ? z.w / ZU : 1;
@@ -416,12 +435,21 @@
     },
 
     // ---- selection <-> panel ----
+    // Measurements in the zone's display unit: real inches when the print area is
+    // calibrated, otherwise percent of the print area.
     inchesOf(o) {
       const z = this.zonePx(this.activePrintArea);
-      const p = this.ppi();
       if (!o || !z) return { x: 0, y: 0, w: 0, h: 0 };
       const b = o.getBoundingRect(true, true);
-      return { x: r2((b.left - z.x) / p), y: r2((b.top - z.y) / p), w: r2(b.width / p), h: r2(b.height / p) };
+      const p = this.ppi();
+      if (p > 0) return { x: r2((b.left - z.x) / p), y: r2((b.top - z.y) / p), w: r2(b.width / p), h: r2(b.height / p) };
+      return { x: r2(((b.left - z.x) / z.w) * 100), y: r2(((b.top - z.y) / z.h) * 100), w: r2((b.width / z.w) * 100), h: r2((b.height / z.h) * 100) };
+    },
+    // one display unit expressed in stage px, per axis
+    unitPx(axis) {
+      const p = this.ppi(); if (p > 0) return p;
+      const z = this.zonePx(this.activePrintArea); if (!z) return 1;
+      return (axis === 'y' || axis === 'h') ? z.h / 100 : z.w / 100;
     },
     syncSel() {
       const fx = this.fx();
@@ -483,29 +511,31 @@
     fontMeta(name) { return FONTS.find(f => f.name === name) || FONTS[0]; },
     fontsIn(group) { return FONTS.filter(f => f.group === group); },
 
-    // ---- transforms (inches) ----
+    // ---- transforms (display unit: inches when calibrated, else % of print area) ----
     withSel(fn) {
       const fx = this.fx(); const o = fx.canvas && fx.canvas.getActiveObject();
       const z = this.zonePx(this.activePrintArea);
       if (!o || o.type === 'activeSelection' || !z) return;
-      fn(o, z, this.ppi());
+      fn(o, z, this.unitPx('x'));
       this.clampToZone(o);
       o.setCoords(); fx.canvas.requestRenderAll();
       this.saveDesign(); this.syncSel();
     },
     setPosIn(axis, val) {
       const v = Number(val); if (isNaN(v)) return;
-      this.withSel((o, z, p) => {
+      this.withSel((o, z) => {
+        const u = this.unitPx(axis);
         const b = o.getBoundingRect(true, true);
-        if (axis === 'x') o.left += (z.x + v * p) - b.left; else o.top += (z.y + v * p) - b.top;
+        if (axis === 'x') o.left += (z.x + v * u) - b.left; else o.top += (z.y + v * u) - b.top;
         o._gplPlacement = 'free';
       });
     },
     setDimIn(axis, val) {
       const v = Number(val); if (!(v > 0)) return;
-      this.withSel((o, z, p) => {
+      this.withSel((o, z) => {
+        const u = this.unitPx(axis);
         const b = o.getBoundingRect(true, true);
-        const s = (v * p) / (axis === 'w' ? b.width : b.height);
+        const s = (v * u) / (axis === 'w' ? b.width : b.height);
         if (o.type === 'image') { o.scaleX *= s; o.scaleY *= s; }
         else { o.set({ fontSize: o.fontSize * s * (o.scaleY || 1), scaleX: 1, scaleY: 1, strokeWidth: (o.strokeWidth || 0) * s }); this.applyWarp(o, o._gplWarp, o._gplWarpAmt); }
         o._gplPlacement = 'free';
@@ -532,20 +562,26 @@
       const pl = PLACEMENTS.find(p => p.id === id);
       if (!pl) return;
       if (pl.id === 'free') { this.withSel((o) => { o._gplPlacement = 'free'; }); return; }
-      this.withSel((o, z, p) => {
-        const wIn = this.areaWIn();
-        const targetW = pl.w === 'full' ? wIn : Math.min(pl.w, wIn);
+      this.withSel((o, z) => {
+        const cal = this.isCalibrated();
+        const p = cal ? this.ppi() : 0;
+        // calibrated: real inches. uncalibrated: the same placement as a fraction of the zone.
+        const targetPx = cal
+          ? (pl.w === 'full' ? this.areaWIn() : Math.min(pl.w, this.areaWIn())) * p
+          : (pl.wf != null ? pl.wf : 1) * z.w;
+        const topPx = cal ? pl.top * p : (pl.topf != null ? pl.topf : 0) * z.h;
+        const offPx = cal ? 1.5 * p : 0.12 * z.w;      // left-chest offset from centre
         const b0 = o.getBoundingRect(true, true);
-        const s = (targetW * p) / b0.width;
+        const s = targetPx / b0.width;
         if (o.type === 'image') { o.scaleX *= s; o.scaleY *= s; }
         else { o.set({ fontSize: o.fontSize * s * (o.scaleY || 1), scaleX: 1, scaleY: 1, strokeWidth: (o.strokeWidth || 0) * s }); this.applyWarp(o, o._gplWarp, o._gplWarpAmt); }
         o.setCoords();
         const b = o.getBoundingRect(true, true);
         let left;
-        if (pl.x === 'left_chest') left = z.x + z.w / 2 + 1.5 * p;             // wearer's left = viewer's right
+        if (pl.x === 'left_chest') left = z.x + z.w / 2 + offPx;               // wearer's left = viewer's right
         else left = z.x + z.w / 2 - b.width / 2;
         o.left += left - b.left;
-        o.top += (z.y + pl.top * p) - b.top;
+        o.top += (z.y + topPx) - b.top;
         o._gplPlacement = pl.id;
       });
     },
@@ -564,7 +600,9 @@
       if (!o || o.type === 'activeSelection') { if (this.chip.show) this.chip.show = false; return; }
       const b = o.getBoundingRect(true, true);
       const i = this.inchesOf(o);
-      const text = i.w.toFixed(2) + ' × ' + i.h.toFixed(2) + ' in · ' + i.y.toFixed(1) + ' in from top';
+      const text = this.isCalibrated()
+        ? (i.w.toFixed(2) + ' × ' + i.h.toFixed(2) + ' in · ' + i.y.toFixed(1) + ' in from top')
+        : (Math.round(i.w) + '% × ' + Math.round(i.h) + '% of print area');
       if (this.chip.text !== text || Math.abs(this.chip.x - (b.left + b.width / 2)) > 0.5 || Math.abs(this.chip.y - (b.top + b.height)) > 0.5 || !this.chip.show) {
         Object.assign(this.chip, { show: true, x: b.left + b.width / 2, y: b.top + b.height, text });
       }
@@ -933,15 +971,24 @@
     // Transparent proof of the print area alone at PROOF_DPI (Phase 2 replaces with 300 DPI server render)
     async generateProof(color, area, player) {
       if (!this.designHasObjects(color, area)) return null;
-      const wIn = this.areaWIn(area), hIn = this.areaHIn(area);
-      const W = Math.round(wIn * PROOF_DPI), H = Math.round(hIn * PROOF_DPI);
+      const cal = this.isCalibrated(area);
+      const a = this.areaDef(area);
+      // Calibrated: a true physical proof at PROOF_DPI. Uncalibrated: we know the
+      // artwork's proportions but not its printed size, so render a generous
+      // fixed-width sheet and say so in the filename rather than assert a DPI.
+      const W = cal ? Math.round(this.areaWIn(area) * PROOF_DPI) : PROOF_UNCAL_W;
+      const H = cal ? Math.round(this.areaHIn(area) * PROOF_DPI) : Math.round(PROOF_UNCAL_W * (a ? a.zone.h / a.zone.w : 1.33));
       const blob = await this.renderDesign(color, area, { x: 0, y: 0, w: W, h: H }, W, H, null, player);
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
-      return await this.uploadBlob('proof-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + '-' + PROOF_DPI + 'dpi.png', blob);
+      const suffix = cal ? ('-' + PROOF_DPI + 'dpi') : '-uncalibrated';
+      return await this.uploadBlob('proof-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + suffix + '.png', blob);
     },
     async uploadDesignJson(color, area, player) {
       const a = this.areas.find(x => x.name === area);
-      const payload = { version: 2, units: ZU, area: a, w_in: this.areaWIn(area), h_in: this.areaHIn(area), player: player || null, design: { objects: this.substitute(this.designFor(color, area).objects, player) } };
+      const payload = { version: 2, units: ZU, area: a, calibrated: this.isCalibrated(area),
+        w_in: this.isCalibrated(area) ? this.areaWIn(area) : null,
+        h_in: this.isCalibrated(area) ? this.areaHIn(area) : null,
+        player: player || null, design: { objects: this.substitute(this.designFor(color, area).objects, player) } };
       const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
       const slug = s => s.toLowerCase().replace(/\s+/g, '-');
       return await this.uploadBlob('design-' + slug(color) + '-' + slug(area) + this.playerSlug(player) + '.json', blob);
