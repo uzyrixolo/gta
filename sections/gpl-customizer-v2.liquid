@@ -8,6 +8,8 @@
 
 {%- comment -%} gpl-customizer.js must load BEFORE Alpine — Alpine starts on execute and needs gplQuickOrder defined {%- endcomment -%}
 <script src="{{ 'gpl-fabric.min.js' | asset_url }}" defer></script>
+{%- comment -%} shared with the 300 DPI print-file service — must load before the editor {%- endcomment -%}
+<script src="{{ 'gpl-design-render.js' | asset_url }}" defer></script>
 <script src="{{ 'gpl-customizer-v2-editor.js' | asset_url }}" defer></script>
 <script src="{{ 'gpl-customizer-v2.js' | asset_url }}" defer></script>
 <script src="{{ 'gpl-alpine.min.js' | asset_url }}" defer></script>

@@ -192,6 +192,14 @@
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
+  // The geometry of "stored object -> fabric object" lives in gpl-design-render.js so
+  // the 300 DPI print file and the customer's proof come from the same code.
+  const GDR = () => {
+    const r = window.gplDesignRender;
+    if (!r) throw new Error('gpl-design-render.js did not load');
+    return r;
+  };
+
   const uid = () => 'o' + Math.random().toString(36).slice(2, 9);
   const clone = (o) => JSON.parse(JSON.stringify(o));
   const r2 = (n) => Math.round(n * 100) / 100;
@@ -490,88 +498,12 @@
       else delete this.designs[key];
       this.persist();
     },
-    applyLock(o, locked) {
-      o._gplLocked = !!locked;
-      o.set({ lockMovementX: !!locked, lockMovementY: !!locked, lockScalingX: !!locked, lockScalingY: !!locked, lockRotation: !!locked, hasControls: !locked });
-    },
+    applyLock(o, locked) { GDR().applyLock(o, locked); },
     // Text warp: arcs/circle use Fabric's text-on-path; slant is a skew. Path is
     // rebuilt from the text's natural width so it always fits the whole string.
-    applyWarp(t, warp, amt) {
-      t._gplWarp = warp || 'none';
-      t._gplWarpAmt = amt == null ? 50 : amt;
-      t.set({ path: null, skewX: 0 });
-      t.initDimensions();
-      if (warp === 'slant') { t.set({ skewX: -Math.round((amt / 100) * 30) }); t.setCoords(); return; }
-      if (warp !== 'arc_up' && warp !== 'arc_down' && warp !== 'circle') { t.setCoords(); return; }
-      const k = Math.max(0.05, Math.min(1, amt / 100));
-      const c = Math.max(4, t.width) * 1.02;               // arc length = text width
-      let d, r, len;
-      if (warp === 'circle') {
-        r = c / (2 * Math.PI * k);
-        const half = (c / 2) / r;                          // centre the text at 12 o'clock
-        const a0 = -Math.PI / 2 - half;
-        const p = (a) => (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2);
-        d = 'M ' + p(a0) + ' A ' + r + ' ' + r + ' 0 1 1 ' + p(a0 + Math.PI) + ' A ' + r + ' ' + r + ' 0 1 1 ' + p(a0);
-        len = 2 * Math.PI * r;
-      } else {
-        const theta = k * Math.PI;                         // up to a half circle
-        r = c / theta;
-        const mid = warp === 'arc_up' ? -Math.PI / 2 : Math.PI / 2;
-        const sweep = warp === 'arc_up' ? 1 : 0;
-        const a0 = warp === 'arc_up' ? mid - theta / 2 : mid + theta / 2;
-        const a1 = warp === 'arc_up' ? mid + theta / 2 : mid - theta / 2;
-        const p = (a) => (r * Math.cos(a)).toFixed(2) + ',' + (r * Math.sin(a)).toFixed(2);
-        d = 'M ' + p(a0) + ' A ' + r + ' ' + r + ' 0 ' + (theta > Math.PI ? 1 : 0) + ' ' + sweep + ' ' + p(a1);
-        len = c;
-      }
-      const path = new fabric.Path(d, { fill: '', stroke: '', visible: false, objectCaching: false });
-      t.set({ path, pathAlign: 'center', pathSide: 'left', pathStartOffset: Math.max(0, (len - t.width) / 2) });
-      t.initDimensions();
-      t.setCoords();
-    },
+    applyWarp(t, warp, amt) { GDR().applyWarp(fabric, t, warp, amt); },
     // build a fabric object from a stored one, at a given zone rect (px)
-    enliven(d, z) {
-      if (!z || !(z.w > 0)) return Promise.resolve(null);
-      const f = z.w / ZU;
-      const num = (v, fb) => (typeof v === 'number' && isFinite(v) ? v : fb);
-      const common = {
-        left: z.x + num(d.cx, ZU / 2) * f, top: z.y + num(d.cy, ZU / 2) * f, angle: num(d.angle, 0),
-        originX: 'center', originY: 'center', flipX: !!d.flipX, flipY: !!d.flipY,
-      };
-      return new Promise((resolve) => {
-        if (d.type === 'image') {
-          fabric.Image.fromURL(d.src, (img) => {
-            if (!img) return resolve(null);
-            img.set(common);
-            img.scaleToWidth(Math.max(1, d.w * f));
-            img._gplId = d.id; img._gplSrc = d.src; img._gplFilename = d.filename || ''; img._gplPlacement = d.placement || 'free';
-            img.setControlsVisibility({ ml: false, mr: false, mt: false, mb: false });
-            this.applyLock(img, d.locked);
-            resolve(img);
-          }, { crossOrigin: 'anonymous' });
-        } else {
-          const t = new fabric.Text(d.text || '', Object.assign(common, {
-            fontFamily: d.fontFamily || 'Anton',
-            fontWeight: d.fontWeight || '400',
-            fontStyle: d.fontStyle || 'normal',
-            fontSize: Math.max(4, (d.fontSize || 140) * f),
-            fill: d.fill || '#FFFFFF',
-            stroke: d.stroke || '',
-            strokeWidth: (d.strokeWidth || 0) * f,
-            paintFirst: 'stroke',
-            charSpacing: d.charSpacing || 0,
-            lineHeight: d.lineHeight || 1.1,
-            textAlign: d.textAlign || 'center',
-            objectCaching: false,
-          }));
-          t._gplId = d.id; t._gplPlacement = d.placement || 'free'; t._gplRole = d.role || '';
-          t.setControlsVisibility({ ml: false, mr: false, mt: false, mb: false });
-          this.applyWarp(t, d.warp || 'none', d.warpAmt == null ? 50 : d.warpAmt);
-          this.applyLock(t, d.locked);
-          resolve(t);
-        }
-      });
-    },
+    enliven(d, z) { return GDR().enliven(fabric, d, z); },
     async loadAreaIntoFabric() {
       const fx = this.fx();
       if (!fx.canvas) return;
@@ -1081,14 +1013,7 @@
       return units + ' shirt' + (units === 1 ? '' : 's') + ' · ' + ok.length + ' of ' + rows.length + ' player' + (rows.length === 1 ? '' : 's') + ' have a size';
     },
     areaHasRoles(color, area) { return this.designFor(color, area).objects.some(o => o.role); },
-    substitute(objects, player) {
-      if (!player) return objects;
-      return objects.map(o => {
-        if (o.type !== 'text' || !o.role) return o;
-        const v = o.role === 'name' ? (player.name || '').toUpperCase() : (player.number || '');
-        return Object.assign({}, o, { text: v || o.text });
-      });
-    },
+    substitute(objects, player) { return GDR().substitute(objects, player); },
     // every line item to be created: grid quantities, or one row per player
     orderLines() {
       const lines = [];
