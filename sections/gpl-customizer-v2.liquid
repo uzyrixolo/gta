@@ -203,13 +203,13 @@
 {%- assign pocket_zw = 0.133 -%}
 {%- assign pocket_zh = pocket_zw | divided_by: img_ar -%}
 {%- comment -%}
-  The neck tag is drawn on insideLabelSvg, which is always 1000x1250 (4:5) whatever
-  the product photo looks like — so its height fraction is measured against 1.25,
-  not the photo. 0.3 x 0.3 of a 4:5 canvas is NOT square: it was a 3 x 3.75 in box
-  wearing a "3 x 3 in" label, and the print file would have cropped the bottom.
+  The neck tag is drawn on insideLabelSvg, which is a SQUARE 1000x1000 canvas (not
+  the 1000x1250 the garment shapes use), so equal fractions are already a square
+  box and 0.3 x 0.3 correctly means 3 x 3 in. Measure this with Inside Label as the
+  ACTIVE area — checking zonePx while another area is showing measures it against
+  that area's image and makes a correct box look wrong.
 {%- endcomment -%}
-{%- assign label_zh = 0.3 | divided_by: 1.25 -%}
-{%- capture label_zone -%}"zone":{"x":0.35,"y":0.3,"w":0.3,"h":{{ label_zh }}},"w_in":3,"h_in":3,"view":"inside_label"{%- endcapture -%}
+{%- assign label_zone = '"zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"' -%}
 
 {%- comment -%} Headwear: small panels, and a cap back/side are smaller again. {%- endcomment -%}
 {%- assign cap_f_w = 4.5 -%}{%- assign cap_f_h = 2.25 -%}
