@@ -12,7 +12,7 @@
                                    rendered and the links are written back to it
 */
 const express = require('express');
-const { boot, renderDesign, closeBrowser } = require('./lib/render');
+const { boot, renderDesign, closeBrowser, status } = require('./lib/render');
 const { uploadBuffer } = require('./lib/uploadcare');
 const { verifyWebhook, attachPrintFiles, adminGraphQL } = require('./lib/shopify');
 
@@ -34,7 +34,17 @@ function requireToken(req, res) {
   return true;
 }
 
-app.get('/health', (req, res) => res.json({ ok: true, dpi: Number(process.env.PRINT_DPI || 300) }));
+app.get('/health', (req, res) => {
+  const s = status();
+  res.json({
+    ok: true,
+    booted: s.ok,
+    fontsLoaded: s.fonts,
+    bootWarning: s.error,
+    dpi: Number(process.env.PRINT_DPI || 300),
+    chromium: process.env.PUPPETEER_EXECUTABLE_PATH || 'bundled'
+  });
+});
 
 /* Render one design.
    body: { designUrl } or { design, w_in, h_in }, plus optional { dpi, player, upload } */
@@ -137,13 +147,14 @@ app.post('/webhooks/orders/create', async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, async () => {
+const server = app.listen(PORT, '0.0.0.0', async () => {
   try {
-    await boot();
     console.log('print-file service listening on ' + PORT + ' at ' + (process.env.PRINT_DPI || 300) + ' DPI');
+    await boot();
+    console.log('boot complete:', JSON.stringify(status()));
   } catch (e) {
-    console.error('boot failed:', e);
-    process.exit(1);
+    // Stay up: /health will report booted:false so the cause is visible.
+    console.error('boot failed (service still listening so you can read /health):', e);
   }
 });
 

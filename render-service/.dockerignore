@@ -1,0 +1,7 @@
+node_modules
+out
+browser/fonts
+browser/fonts.css
+browser/fabric.min.js
+browser/gpl-design-render.js
+.env

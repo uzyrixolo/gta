@@ -37,6 +37,10 @@ function syncSharedAssets() {
 async function ensureFontCss() {
   const cssPath = path.join(BROWSER_DIR, 'fonts.css');
   if (fs.existsSync(cssPath)) return;
+  // Non-fatal by design: if Google is unreachable at boot the service must still
+  // come up and answer /health, so the problem is diagnosable instead of the
+  // container just dying. Text would fall back to a default face until a redeploy.
+
   // Pull the webfont CSS + files once, at boot, so rendering never depends on a
   // third party being up while an order is being processed.
   const fam = FONTS.map(([f, w]) => 'family=' + encodeURIComponent(f).replace(/%20/g, '+') + ':wght@' + w).join('&');
@@ -84,9 +88,19 @@ async function closeBrowser() {
   }
 }
 
+let bootState = { ok: false, fonts: false, error: null };
+function status() { return bootState; }
+
 async function boot() {
   syncSharedAssets();
-  await ensureFontCss();
+  try {
+    await ensureFontCss();
+    bootState.fonts = true;
+  } catch (e) {
+    // See ensureFontCss: never take the service down over this.
+    console.error('[boot] fonts unavailable, continuing without them:', e.message);
+    bootState.error = 'fonts: ' + e.message;
+  }
   // link the stylesheet into the harness once the file exists
   const htmlPath = path.join(BROWSER_DIR, 'render.html');
   let html = fs.readFileSync(htmlPath, 'utf8');
@@ -95,6 +109,7 @@ async function boot() {
       '<link rel="stylesheet" href="fonts.css">\n<script src="fabric.min.js"></script>');
     fs.writeFileSync(htmlPath, html);
   }
+  bootState.ok = true;
 }
 
 /**
@@ -155,4 +170,4 @@ async function renderDesign(opts) {
   }
 }
 
-module.exports = { boot, renderDesign, closeBrowser, FONTS };
+module.exports = { boot, renderDesign, closeBrowser, status, FONTS };
