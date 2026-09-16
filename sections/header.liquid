@@ -278,13 +278,16 @@
     display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none;
     width: 108px;
   }
+  /* These tiles show the same full-length model shots as the collection page
+     category tabs (320x520 on white). A square tile with object-fit:cover cut the
+     model's head and legs off, so match the source ratio and contain the image. */
   .gpl-header-{{ section.id }} .gpl-header__tile-image {
-    display: block; width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden;
-    background: #262626; transition: transform .18s ease;
+    display: block; width: 100%; aspect-ratio: 320 / 520; border-radius: 8px; overflow: hidden;
+    background: #FFFFFF; transition: transform .18s ease;
   }
   .gpl-header-{{ section.id }} .gpl-header__tile-image img,
   .gpl-header-{{ section.id }} .gpl-header__tile-placeholder {
-    width: 100%; height: 100%; object-fit: cover; fill: rgba(255,255,255,0.2);
+    width: 100%; height: 100%; object-fit: contain; fill: rgba(0,0,0,0.18);
   }
   .gpl-header-{{ section.id }} .gpl-header__tile:hover .gpl-header__tile-image { transform: scale(1.05); }
   .gpl-header-{{ section.id }} .gpl-header__tile-label {

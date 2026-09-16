@@ -56,26 +56,59 @@
       "blocks": {
         "cat_unisex": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "unisex" }
+          "settings": {
+            "menu_item": "PRODUCTS",
+            "group": "category",
+            "collection": "unisex",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM.png"
+          }
         },
         "cat_women": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "women" }
+          "settings": {
+            "menu_item": "PRODUCTS",
+            "group": "category",
+            "collection": "women",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM_371b6276-f352-4db5-8a1e-78adf28c6fda.png"
+          }
         },
         "cat_kids": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "kids" }
+          "settings": {
+            "menu_item": "PRODUCTS",
+            "group": "category",
+            "collection": "kids",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM_af06b38e-6090-4874-a016-c20858f5900f.png"
+          }
         },
         "cat_headwear": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "headwear", "link": "/pages/fast-track-headwear", "label": "Headwear" }
+          "settings": {
+            "menu_item": "PRODUCTS",
+            "group": "category",
+            "collection": "headwear",
+            "link": "/pages/fast-track-headwear",
+            "label": "Headwear",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM_4574bee9-0a26-4b14-860d-b7d064cffe92.png"
+          }
         },
         "cat_accessories": {
           "type": "category_tile",
-          "settings": { "menu_item": "PRODUCTS", "group": "category", "collection": "accessories" }
+          "settings": {
+            "menu_item": "PRODUCTS",
+            "group": "category",
+            "collection": "accessories",
+            "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_03_19_45_AM_0b2bd1fc-9cf0-4129-8ec0-24c427963bba.png"
+          }
         }
       },
-      "block_order": ["cat_unisex", "cat_women", "cat_kids", "cat_headwear", "cat_accessories"],
+      "block_order": [
+        "cat_unisex",
+        "cat_women",
+        "cat_kids",
+        "cat_headwear",
+        "cat_accessories"
+      ],
       "settings": {
         "logo_text_1": "GTA",
         "logo_text_2": "PRINT LAB",
