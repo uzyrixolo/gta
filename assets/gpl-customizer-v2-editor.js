@@ -251,6 +251,7 @@
     // ---- (de)serialisation in zone units ----
     serializeObject(o) {
       const z = this.zonePx(this.activePrintArea);
+      if (!z) return null;
       const f = z.w / ZU;
       const base = {
         id: o._gplId || (o._gplId = uid()),
@@ -288,8 +289,10 @@
     saveDesign(opts) {
       const fx = this.fx();
       if (!fx.canvas || fx.loading) return;
+      if (!this.zonePx(this.activePrintArea)) return;   // stage not measured yet
       const seen = new Set();
-      const objs = fx.canvas.getObjects().map(o => this.serializeObject(o)).filter(d => !seen.has(d.id) && seen.add(d.id));
+      const objs = fx.canvas.getObjects().map(o => this.serializeObject(o))
+        .filter(d => d && !seen.has(d.id) && seen.add(d.id));
       const key = this.designKey();
       const prev = this.designFor().objects;
       const json = JSON.stringify(objs);
@@ -340,9 +343,11 @@
     },
     // build a fabric object from a stored one, at a given zone rect (px)
     enliven(d, z) {
+      if (!z || !(z.w > 0)) return Promise.resolve(null);
       const f = z.w / ZU;
+      const num = (v, fb) => (typeof v === 'number' && isFinite(v) ? v : fb);
       const common = {
-        left: z.x + d.cx * f, top: z.y + d.cy * f, angle: d.angle || 0,
+        left: z.x + num(d.cx, ZU / 2) * f, top: z.y + num(d.cy, ZU / 2) * f, angle: num(d.angle, 0),
         originX: 'center', originY: 'center', flipX: !!d.flipX, flipY: !!d.flipY,
       };
       return new Promise((resolve) => {
@@ -701,6 +706,7 @@
       const o = fx.canvas && fx.canvas.getActiveObject();
       if (!o || o.type === 'activeSelection') return;
       const d = this.serializeObject(o);
+      if (!d) return;
       d.id = uid(); d.cx += 40; d.cy += 40; d.placement = 'free';
       this.enliven(d, this.zonePx(this.activePrintArea)).then(n => {
         if (!n) return;

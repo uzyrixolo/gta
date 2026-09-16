@@ -88,6 +88,12 @@ window.gplQuickOrderV2 = function (sectionId) {
       const a = this.areas.find(x => x.name === areaName);
       if (!stage || !a) return null;
       const W = stage.clientWidth, H = stage.clientHeight;
+      // A stage with no measured size (section still hidden, laid out in a collapsed
+      // tab, or the tab is in the background) would give a zero-width zone. Every
+      // caller divides by that width, so returning it produces Infinity/NaN
+      // coordinates that can be written straight into the saved design. Report "no
+      // zone yet" instead; the ResizeObserver re-runs once the stage has a size.
+      if (!(W > 0) || !(H > 0)) return null;
       return { x: a.zone.x * W, y: a.zone.y * H, w: a.zone.w * W, h: a.zone.h * H };
     },
     initFabric() {
