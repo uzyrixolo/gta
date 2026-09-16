@@ -28,12 +28,20 @@ async function adminGraphQL(query, variables) {
 
 /* Attach the finished print files to the order so production can find them without
    leaving Shopify: a JSON metafield for machines, and a note for a human. */
+function canWriteBackToShopify() {
+  return !!(process.env.SHOPIFY_SHOP && process.env.SHOPIFY_ADMIN_TOKEN);
+}
+
+/* Writing back needs an Admin API token, which now means creating an app in
+   Shopify's Dev Dashboard and installing it. That is optional: without a token the
+   files are still rendered and stored, named by order number, and logged. */
 async function attachPrintFiles(orderGid, files) {
   const lines = files.map(f =>
     '• ' + f.lineTitle + ' — ' + f.area + (f.player ? ' (' + f.player + ')' : '') +
     ': ' + f.url + ' [' + f.width + '×' + f.height + (f.dpi ? ' @' + f.dpi + 'dpi' : ' uncalibrated') + ']'
   ).join('\n');
 
+  if (!canWriteBackToShopify()) return lines;
   await adminGraphQL(`
     mutation($metafields: [MetafieldsSetInput!]!) {
       metafieldsSet(metafields: $metafields) {
@@ -52,4 +60,4 @@ async function attachPrintFiles(orderGid, files) {
   return lines;
 }
 
-module.exports = { verifyWebhook, adminGraphQL, attachPrintFiles };
+module.exports = { verifyWebhook, adminGraphQL, attachPrintFiles, canWriteBackToShopify };

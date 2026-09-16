@@ -14,7 +14,7 @@
 const express = require('express');
 const { boot, renderDesign, closeBrowser, status } = require('./lib/render');
 const { uploadBuffer } = require('./lib/uploadcare');
-const { verifyWebhook, attachPrintFiles, adminGraphQL } = require('./lib/shopify');
+const { verifyWebhook, attachPrintFiles, canWriteBackToShopify } = require('./lib/shopify');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,7 +42,9 @@ app.get('/health', (req, res) => {
     fontsLoaded: s.fonts,
     bootWarning: s.error,
     dpi: Number(process.env.PRINT_DPI || 300),
-    chromium: process.env.PUPPETEER_EXECUTABLE_PATH || 'bundled'
+    chromium: process.env.PUPPETEER_EXECUTABLE_PATH || 'bundled',
+    webhookConfigured: !!process.env.SHOPIFY_WEBHOOK_SECRET,
+    writesBackToOrders: canWriteBackToShopify()
   });
 });
 
@@ -141,7 +143,9 @@ app.post('/webhooks/orders/create', async (req, res) => {
     }
     if (!files.length) return console.log('[webhook] order ' + order.order_number + ': no customizer designs');
     const summary = await attachPrintFiles('gid://shopify/Order/' + order.id, files);
-    console.log('[webhook] order ' + order.order_number + ': ' + files.length + ' print file(s)\n' + summary);
+    console.log('[webhook] order ' + order.order_number + ': ' + files.length + ' print file(s)'
+      + (canWriteBackToShopify() ? ' (written onto the order)' : ' (no admin token: find them by order number in Uploadcare)')
+      + '\n' + summary);
   } catch (e) {
     console.error('[webhook]', e);
   }
