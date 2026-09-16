@@ -134,6 +134,105 @@
 {%- endif -%}
 
 {%- comment -%}
+  ---- Physical print sizes -------------------------------------------------
+  Max printable area per garment, confirmed by the client 2026-09-16 (adult
+  front/back 12 x 16 in, the standard DTF/DTG maximum). These are what let the
+  customizer show real inches and the print service render at a true 300 DPI;
+  without them an area falls back to percentages (see isCalibrated()).
+
+  A product's own custom.print_areas metafield still wins — this is the default
+  for the 132 products that do not have one.
+
+  The zone rectangle has to AGREE with the inches: the box drawn on the photo is
+  a fraction of the image, so its pixel aspect is (zone.h / zone.w) * (imageH /
+  imageW). For a 12 x 16 in area that must equal 16/12. The heights below are
+  therefore derived from the declared inches and the product photo's own aspect,
+  anchored at the top edge (prints are measured down from the collar), rather
+  than hard-coded — otherwise "12 x 16 in" would label a box of the wrong shape.
+{%- endcomment -%}
+{%- assign img_w = default_mockup.width | default: 500 -%}
+{%- assign img_h = default_mockup.height | default: 625 -%}
+{%- if img_w == 0 -%}{%- assign img_w = 500 -%}{%- endif -%}
+{%- if img_h == 0 -%}{%- assign img_h = 625 -%}{%- endif -%}
+{%- assign img_ar = img_h | times: 1.0 | divided_by: img_w -%}
+
+{%- comment -%} Age class: a youth tee cannot take an adult print. {%- endcomment -%}
+{%- assign t = product.title | downcase -%}
+{%- assign age = 'adult' -%}
+{%- if t contains 'infant' or t contains 'bodysuit' or t contains 'newborn' -%}
+  {%- assign age = 'infant' -%}
+{%- elsif t contains 'toddler' -%}
+  {%- assign age = 'toddler' -%}
+{%- elsif t contains 'youth' or t contains 'junior' -%}
+  {%- assign age = 'youth' -%}
+{%- endif -%}
+
+{%- comment -%} Front/back maxima by garment, then trimmed by age. {%- endcomment -%}
+{%- assign front_w = 12 -%}{%- assign front_h = 16 -%}
+{%- assign back_w = 12 -%}{%- assign back_h = 16 -%}
+{%- assign sleeve_in = 4 -%}
+{%- assign pocket_in = 4 -%}
+{%- if garment == 'polo' -%}
+  {%- assign front_w = 10 -%}{%- assign front_h = 10 -%}
+  {%- assign back_w = 10 -%}{%- assign back_h = 10 -%}
+{%- elsif garment == 'hoodie' or garment == 'crew' -%}
+  {%- comment -%} the pouch and the hood cap the front; the back is unobstructed {%- endcomment -%}
+  {%- assign front_w = 12 -%}{%- assign front_h = 14 -%}
+{%- endif -%}
+{%- if age == 'youth' -%}
+  {%- assign front_w = 10 -%}{%- assign front_h = 12 -%}
+  {%- assign back_w = 10 -%}{%- assign back_h = 12 -%}
+  {%- assign sleeve_in = 3 -%}{%- assign pocket_in = 3 -%}
+{%- elsif age == 'toddler' -%}
+  {%- assign front_w = 8 -%}{%- assign front_h = 10 -%}
+  {%- assign back_w = 8 -%}{%- assign back_h = 10 -%}
+  {%- assign sleeve_in = 3 -%}{%- assign pocket_in = 3 -%}
+{%- elsif age == 'infant' -%}
+  {%- assign front_w = 6 -%}{%- assign front_h = 6 -%}
+  {%- assign back_w = 6 -%}{%- assign back_h = 6 -%}
+  {%- assign sleeve_in = 3 -%}{%- assign pocket_in = 3 -%}
+{%- endif -%}
+
+{%- comment -%} Zone heights derived so the drawn box matches the declared inches. {%- endcomment -%}
+{%- assign front_zw = 0.4 -%}
+{%- assign front_zh = front_h | times: 1.0 | divided_by: front_w | times: front_zw | divided_by: img_ar -%}
+{%- assign back_zw = 0.4 -%}
+{%- assign back_zh = back_h | times: 1.0 | divided_by: back_w | times: back_zw | divided_by: img_ar -%}
+{%- assign sleeve_zw = 0.24 -%}
+{%- assign sleeve_zh = sleeve_zw | divided_by: img_ar -%}
+{%- assign pocket_zw = 0.133 -%}
+{%- assign pocket_zh = pocket_zw | divided_by: img_ar -%}
+{%- comment -%} the neck tag sits on a drawing we control, so its box is already square {%- endcomment -%}
+{%- assign label_zone = '"zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"' -%}
+
+{%- comment -%} Headwear: small panels, and a cap back/side are smaller again. {%- endcomment -%}
+{%- assign cap_f_w = 4.5 -%}{%- assign cap_f_h = 2.25 -%}
+{%- assign cap_b_w = 4 -%}{%- assign cap_b_h = 1.5 -%}
+{%- assign cap_s_w = 2.5 -%}{%- assign cap_s_h = 1.5 -%}
+{%- assign beanie_w = 4 -%}{%- assign beanie_h = 2 -%}
+{%- assign visor_w = 4 -%}{%- assign visor_h = 1.5 -%}
+{%- assign cap_f_zw = 0.36 -%}
+{%- assign cap_f_zh = cap_f_h | times: 1.0 | divided_by: cap_f_w | times: cap_f_zw | divided_by: img_ar -%}
+{%- assign cap_b_zw = 0.32 -%}
+{%- assign cap_b_zh = cap_b_h | times: 1.0 | divided_by: cap_b_w | times: cap_b_zw | divided_by: img_ar -%}
+{%- assign cap_s_zw = 0.22 -%}
+{%- assign cap_s_zh = cap_s_h | times: 1.0 | divided_by: cap_s_w | times: cap_s_zw | divided_by: img_ar -%}
+{%- assign bea_zw = 0.40 -%}
+{%- assign bea_zh = beanie_h | times: 1.0 | divided_by: beanie_w | times: bea_zw | divided_by: img_ar -%}
+{%- assign vis_zw = 0.36 -%}
+{%- assign vis_zh = visor_h | times: 1.0 | divided_by: visor_w | times: vis_zw | divided_by: img_ar -%}
+
+{%- comment -%} Flat goods: an apron takes a full front, a towel or bib does not. {%- endcomment -%}
+{%- assign flat_w = 12 -%}{%- assign flat_h = 16 -%}
+{%- if t contains 'towel' -%}
+  {%- assign flat_w = 6 -%}{%- assign flat_h = 6 -%}
+{%- elsif t contains 'bib' and t contains 'infant' -%}
+  {%- assign flat_w = 4 -%}{%- assign flat_h = 4 -%}
+{%- endif -%}
+{%- assign flat_zw = 0.44 -%}
+{%- assign flat_zh = flat_h | times: 1.0 | divided_by: flat_w | times: flat_zw | divided_by: img_ar -%}
+
+{%- comment -%}
   First-paint fallback for the mockup image, before Alpine boots and currentMockup()
   takes over. Prefer a Front-tagged product photo (a clean per-colour shot) over
   product.featured_image, which on this catalogue is often an untagged lifestyle
@@ -174,7 +273,7 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}{% if head_kind == 'beanie' %}[{"name":"Front","zone":{"x":0.30,"y":0.40,"w":0.40,"h":0.18}},{"name":"Back","zone":{"x":0.30,"y":0.40,"w":0.40,"h":0.18}}]{% elsif head_kind == 'visor' %}[{"name":"Front","zone":{"x":0.32,"y":0.56,"w":0.36,"h":0.10}}]{% else %}[{"name":"Front","zone":{"x":0.32,"y":0.34,"w":0.36,"h":0.16}},{"name":"Back","zone":{"x":0.34,"y":0.36,"w":0.32,"h":0.14}},{"name":"Side","zone":{"x":0.30,"y":0.36,"w":0.22,"h":0.13}}]{% endif %}{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":0.133,"h":0.115},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":0.133,"h":0.115},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% endif %},
+  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}{% if head_kind == 'beanie' %}[{"name":"Front","zone":{"x":0.30,"y":0.40,"w":{{ bea_zw }},"h":{{ bea_zh }}},"w_in":{{ beanie_w }},"h_in":{{ beanie_h }}},{"name":"Back","zone":{"x":0.30,"y":0.40,"w":{{ bea_zw }},"h":{{ bea_zh }}},"w_in":{{ beanie_w }},"h_in":{{ beanie_h }}}]{% elsif head_kind == 'visor' %}[{"name":"Front","zone":{"x":0.32,"y":0.56,"w":{{ vis_zw }},"h":{{ vis_zh }}},"w_in":{{ visor_w }},"h_in":{{ visor_h }}}]{% else %}[{"name":"Front","zone":{"x":0.32,"y":0.34,"w":{{ cap_f_zw }},"h":{{ cap_f_zh }}},"w_in":{{ cap_f_w }},"h_in":{{ cap_f_h }}},{"name":"Back","zone":{"x":0.34,"y":0.36,"w":{{ cap_b_zw }},"h":{{ cap_b_zh }}},"w_in":{{ cap_b_w }},"h_in":{{ cap_b_h }}},{"name":"Side","zone":{"x":0.30,"y":0.36,"w":{{ cap_s_zw }},"h":{{ cap_s_zh }}},"w_in":{{ cap_s_w }},"h_in":{{ cap_s_h }}}]{% endif %}{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":{{ flat_zw }},"h":{{ flat_zh }}},"w_in":{{ flat_w }},"h_in":{{ flat_h }}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":{{ front_zw }},"h":{{ front_zh }}},"w_in":{{ front_w }},"h_in":{{ front_h }}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":{{ pocket_zw }},"h":{{ pocket_zh }}},"w_in":{{ pocket_in }},"h_in":{{ pocket_in }},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":{{ back_zw }},"h":{{ back_zh }}},"w_in":{{ back_w }},"h_in":{{ back_h }}},{"name":"Inside Label",{{ label_zone }}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":{{ front_zw }},"h":{{ front_zh }}},"w_in":{{ front_w }},"h_in":{{ front_h }}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":{{ pocket_zw }},"h":{{ pocket_zh }}},"w_in":{{ pocket_in }},"h_in":{{ pocket_in }},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":{{ back_zw }},"h":{{ back_zh }}},"w_in":{{ back_w }},"h_in":{{ back_h }}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":{{ sleeve_zw }},"h":{{ sleeve_zh }}},"w_in":{{ sleeve_in }},"h_in":{{ sleeve_in }}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":{{ sleeve_zw }},"h":{{ sleeve_zh }}},"w_in":{{ sleeve_in }},"h_in":{{ sleeve_in }}},{"name":"Inside Label",{{ label_zone }}}]{% endif %},
   "areasSource": "{% if use_override %}override{% elsif areas_meta %}metafield{% else %}fallback{% endif %}",
   "garment": {{ garment | json }},
   "isHeadwear": {{ is_headwear }},
