@@ -326,6 +326,10 @@
     // photo (sleeve and cap panels are much smaller than that).
     placementsFor(name) {
       const a = this.areaDef(name); if (!a) return [];
+      // These are chest placements. A cap panel is wide enough to pass the size
+      // test below but "Left chest" on a hat is meaningless, so headwear and flat
+      // goods opt out entirely.
+      if (this.isHeadwear || this.isFlatAccessory) return [];
       if (this.isCalibrated(name)) return this.areaWIn(name) >= 8 ? PLACEMENTS : [];
       return a.zone.w >= 0.3 ? PLACEMENTS : [];
     },
