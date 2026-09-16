@@ -30,16 +30,30 @@ the theme repo and read that one shared file.
    | `RENDER_TOKEN` | any long random string; guards `/render` |
    | `SHOPIFY_WEBHOOK_SECRET` | from the webhook you create in step 5 |
    | `SHOPIFY_SHOP` | `rfa089-71.myshopify.com` |
-   | `SHOPIFY_ADMIN_TOKEN` | custom app token, scopes `read_orders`, `write_orders` |
+   | `SHOPIFY_ADMIN_TOKEN` | **optional**, see below |
    | `UPLOADCARE_PUBLIC_KEY` | same project the customizer uploads to |
    | `UPLOADCARE_CDN_BASE` | `2nfggcljwz.ucarecd.net` |
    | `PRINT_DPI` | `300` |
 
 4. Deploy, then check `https://<your-app>.up.railway.app/health` returns `{"ok":true}`.
-5. **Shopify Admin → Settings → Notifications → Webhooks → Create webhook**
+5. **Networking → Generate Domain.** Set the domain's **target port to match the
+   port the app logs on boot** (Railway injects `PORT`, usually 8080). A healthy
+   container behind a mismatched target port returns "Application failed to respond".
+6. **Shopify Admin → Settings → Notifications → Webhooks → Create webhook**
    - Event: *Order creation*, Format: JSON
    - URL: `https://<your-app>.up.railway.app/webhooks/orders/create`
    - Copy the signing secret into `SHOPIFY_WEBHOOK_SECRET` and redeploy.
+
+### Writing links back onto the order (optional)
+
+Shopify no longer allows admin-created custom apps, so an Admin API token now means
+creating an app in the [Dev Dashboard](https://dev.shopify.com), releasing a version
+with the `read_orders` and `write_orders` scopes, and installing it on the store.
+
+Without `SHOPIFY_ADMIN_TOKEN` the service still renders and stores every print file,
+named `order-<number>-<product>-<area>[-<player>]-300dpi.png`, so production can find
+them by order number. Adding the token later turns on the `custom.print_files`
+metafield write-back with no other change. `/health` shows which mode it is in.
 
 ## What happens on an order
 
