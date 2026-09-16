@@ -72,6 +72,9 @@
     polo:       { sleeve: 'short', placket: true, collar: true },
     crew:       { sleeve: 'long', rib: true },
     hoodie:     { sleeve: 'long', rib: true, hood: true, pouch: true },
+    cap:        { head: 'cap' },
+    beanie:     { head: 'beanie' },
+    visor:      { head: 'visor' },
   };
   const pts = (a) => 'M ' + a.map(p => p[0] + ',' + p[1]).join(' L ') + ' Z';
 
@@ -121,7 +124,31 @@
     const edge = ' stroke="rgba(0,0,0,0.16)" stroke-width="3"';
     const dark = helpers.shade(0.80), darker = helpers.shade(0.66), light = helpers.shade(1.12);
     let g = '';
-    if (sleeveView) {
+    if (cfg.head) {
+      const side = view === 'Side' || view === 'Left Side' || view === 'Right Side';
+      const band = '<path d="M 232,742 L 768,742 L 772,812 L 228,812 Z" fill="' + darker + '"' + edge + '/>';
+      if (cfg.head === 'beanie') {
+        g = '<path d="M 282,846 C 282,392 718,392 718,846 Z" fill="' + hex + '"' + edge + '/>'
+          + '<path d="M 268,838 L 732,838 L 740,1012 L 260,1012 Z" fill="' + darker + '"' + edge + '/>'
+          + '<path d="M 350,846 L 350,1006 M 500,846 L 500,1006 M 650,846 L 650,1006" stroke="' + stitch + '" stroke-width="5" fill="none"/>';
+      } else if (cfg.head === 'visor') {
+        g = '<path d="M 296,700 L 704,700 L 712,790 L 288,790 Z" fill="' + hex + '"' + edge + '/>'
+          + '<path d="M 250,786 C 346,918 654,918 750,786 C 654,846 346,846 250,786 Z" fill="' + dark + '"' + edge + '/>';
+      } else if (side) {
+        g = '<path d="M 244,764 C 244,372 688,352 704,764 Z" fill="' + hex + '"' + edge + '/>'
+          + '<path d="M 690,712 C 812,716 886,748 906,786 L 688,790 Z" fill="' + dark + '"' + edge + '/>'
+          + '<path d="M 244,764 L 704,764" stroke="' + stitch + '" stroke-width="6" fill="none"/>';
+      } else if (view === 'Back') {
+        g = '<path d="M 230,764 C 230,336 770,336 770,764 Z" fill="' + hex + '"' + edge + '/>' + band
+          + '<path d="M 452,742 L 548,742 L 548,812 L 452,812 Z" fill="' + helpers.shade(0.5) + '"/>'
+          + '<path d="M 500,352 L 500,742" stroke="' + stitch + '" stroke-width="5" fill="none"/>';
+      } else {
+        g = '<path d="M 230,764 C 230,336 770,336 770,764 Z" fill="' + hex + '"' + edge + '/>'
+          + '<path d="M 196,760 C 300,904 700,904 804,760 C 700,812 300,812 196,760 Z" fill="' + dark + '"' + edge + '/>'
+          + '<circle cx="500" cy="356" r="22" fill="' + dark + '"/>'
+          + '<path d="M 500,378 L 500,760 M 330,420 C 300,560 296,680 300,760 M 670,420 C 700,560 704,680 700,760" stroke="' + stitch + '" stroke-width="5" fill="none"/>';
+      }
+    } else if (sleeveView) {
       // a single sleeve, laid flat and enlarged, so a sleeve print has somewhere real to sit
       const mirror = view === 'Left Side' ? ' transform="translate(1000,0) scale(-1,1)"' : '';
       g = '<g' + mirror + '>'
@@ -232,7 +259,7 @@
       // garment for this view instead. Front keeps the photo fallbacks — every
       // product has at least one real photo of its front. Caps and flat goods have
       // their own geometry and no drawing, so they keep the photo path.
-      if (area !== 'Front' && !this.isHeadwear && !this.isFlatAccessory) return this.garmentSvg(area, this.hexFor(c));
+      if (area !== 'Front' && !this.isFlatAccessory) return this.garmentSvg(area, this.hexFor(c));
       return this.mockupFor(c, area);
     },
     // true catalogue photo of the selected colour, for the product panel
@@ -246,7 +273,7 @@
       if (a && a.view === 'inside_label') return true;
       const n = area || this.activePrintArea;
       return !this.mockups[(this.previewColorName || this.activeColor) + '|' + n]
-        && n !== 'Front' && !this.isHeadwear && !this.isFlatAccessory;
+        && n !== 'Front' && !this.isFlatAccessory;
     },
     currentMockup() { return this.viewImage(this.previewColorName || this.activeColor, this.activePrintArea); },
 
@@ -717,9 +744,25 @@
         o._gplPlacement = 'free';
       });
     },
+    // The placement panel used to appear only once a layer was selected, so the
+    // Pocket/Left chest options were invisible to anyone who had just added art.
+    // Placing needs *a* layer, not a selected one: fall back to the topmost layer
+    // in this area and select it, so clicking a placement always does something.
+    ensureSelection() {
+      const fx = this.fx();
+      if (!fx.canvas) return null;
+      let o = fx.canvas.getActiveObject();
+      if (o && o.type !== 'activeSelection') return o;
+      const objs = fx.canvas.getObjects();
+      o = objs[objs.length - 1];
+      if (!o) return null;
+      fx.canvas.setActiveObject(o); fx.canvas.requestRenderAll(); this.syncSel();
+      return o;
+    },
     applyPlacement(id) {
       const pl = PLACEMENTS.find(p => p.id === id);
       if (!pl) return;
+      if (!this.ensureSelection()) return;
       if (pl.id === 'free') { this.withSel((o) => { o._gplPlacement = 'free'; }); return; }
       this.withSel((o, z) => {
         const cal = this.isCalibrated();

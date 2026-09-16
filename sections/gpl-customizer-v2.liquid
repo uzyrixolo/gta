@@ -84,6 +84,20 @@
 {%- if product.type == 'Headwear' -%}
   {%- assign is_headwear = true -%}
 {%- endif -%}
+{%- comment -%}
+  Headwear is not one shape. A cap has a front, a back and a side panel; a beanie
+  has no bill and no side panel worth printing; a visor has only its front band.
+  Offering a side on a beanie invites a design that cannot be produced.
+{%- endcomment -%}
+{%- assign head_kind = 'cap' -%}
+{%- if is_headwear -%}
+  {%- assign head_title = product.title | downcase -%}
+  {%- if head_title contains 'beanie' or head_title contains 'knit' or head_title contains 'toque' -%}
+    {%- assign head_kind = 'beanie' -%}
+  {%- elsif head_title contains 'visor' -%}
+    {%- assign head_kind = 'visor' -%}
+  {%- endif -%}
+{%- endif -%}
 
 {%- comment -%}
   Flat accessories (aprons/blankets/towels/bibs) have one printable face and no
@@ -103,7 +117,9 @@
 {%- endcomment -%}
 {%- assign gtype = product.type | append: ' ' | append: product.title -%}
 {%- assign garment = 'tee' -%}
-{%- if is_sleeveless -%}
+{%- if is_headwear -%}
+  {%- assign garment = head_kind -%}
+{%- elsif is_sleeveless -%}
   {%- assign garment = 'tank' -%}
 {%- elsif gtype contains 'Hood' or gtype contains 'hood' -%}
   {%- assign garment = 'hoodie' -%}
@@ -156,7 +172,7 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
-  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}[{"name":"Front","zone":{"x":0.32,"y":0.3,"w":0.36,"h":0.16}},{"name":"Side","zone":{"x":0.34,"y":0.34,"w":0.22,"h":0.14}}]{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% endif %},
+  "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}{% if head_kind == 'beanie' %}[{"name":"Front","zone":{"x":0.30,"y":0.40,"w":0.40,"h":0.18}},{"name":"Back","zone":{"x":0.30,"y":0.40,"w":0.40,"h":0.18}}]{% elsif head_kind == 'visor' %}[{"name":"Front","zone":{"x":0.32,"y":0.56,"w":0.36,"h":0.10}}]{% else %}[{"name":"Front","zone":{"x":0.32,"y":0.34,"w":0.36,"h":0.16}},{"name":"Back","zone":{"x":0.34,"y":0.36,"w":0.32,"h":0.14}},{"name":"Side","zone":{"x":0.30,"y":0.36,"w":0.22,"h":0.13}}]{% endif %}{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":0.44,"h":0.4}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":0.4,"h":0.46}},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":0.4,"h":0.5}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":0.24,"h":0.2}},{"name":"Inside Label","zone":{"x":0.35,"y":0.3,"w":0.3,"h":0.3},"w_in":3,"h_in":3,"view":"inside_label"}]{% endif %},
   "areasSource": "{% if use_override %}override{% elsif areas_meta %}metafield{% else %}fallback{% endif %}",
   "garment": {{ garment | json }},
   "isHeadwear": {{ is_headwear }},
@@ -572,6 +588,21 @@
     {%- comment -%} ============ PROPERTIES ============ {%- endcomment -%}
     <aside class="gpl-cz__props">
       <button type="button" class="gpl-cz__sheet-close" @click="sheet = false" aria-label="Close panel"><span></span></button>
+      {%- comment -%} Placements need a layer, not a selected layer — keep them visible
+           whenever this side has artwork so Pocket / Left chest are discoverable. {%- endcomment -%}
+      <div class="gpl-cz__group" x-show="objectsInArea().length && placementsFor(activePrintArea).length" x-cloak>
+        <p class="gpl-cz__group-title">Smart placements</p>
+        <div class="gpl-cz__placements">
+          <template x-for="p in placementsFor(activePrintArea)" :key="p.id">
+            <button type="button" class="gpl-cz__placement" :class="{'is-active': sel.has && sel.placement === p.id}" @click="applyPlacement(p.id)">
+              <i :class="'gpl-cz__placement-ico gpl-cz__placement-ico--' + p.id"></i>
+              <strong x-text="p.name"></strong>
+              <span x-text="placementDesc(p)"></span>
+            </button>
+          </template>
+        </div>
+      </div>
+
       <div class="gpl-cz__props-empty" x-show="!sel.has">
         <template x-if="isLabelArea(activePrintArea)">
         <div class="gpl-cz__guide">
@@ -613,19 +644,6 @@
       </div>
 
       <div class="gpl-cz__props-body" x-show="sel.has" x-cloak>
-        <div class="gpl-cz__group" x-show="placementsFor(activePrintArea).length">
-          <p class="gpl-cz__group-title">Smart placements</p>
-          <div class="gpl-cz__placements">
-            <template x-for="p in placementsFor(activePrintArea)" :key="p.id">
-              <button type="button" class="gpl-cz__placement" :class="{'is-active': sel.placement === p.id}" @click="applyPlacement(p.id)">
-                <i :class="'gpl-cz__placement-ico gpl-cz__placement-ico--' + p.id"></i>
-                <strong x-text="p.name"></strong>
-                <span x-text="placementDesc(p)"></span>
-              </button>
-            </template>
-          </div>
-        </div>
-
         <div class="gpl-cz__group">
           <p class="gpl-cz__group-title">Transforms <em x-text="(isCalibrated() ? '· inches' : '· % of print area') + (sel.locked ? ' · locked' : '')"></em></p>
           <div class="gpl-cz__row4">
@@ -1011,7 +1029,7 @@
 
   /* ---- props ---- */
   #gpl-cz-{{ section.id }} .gpl-cz__props { grid-area: props; border-left: 1px solid var(--cz-line); overflow-y: auto; max-height: 860px; background: #FFFFFF; }
-  #gpl-cz-{{ section.id }} .gpl-cz__props-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 22px; text-align: center; color: #666; font-size: 12px; line-height: 1.5; }
+  #gpl-cz-{{ section.id }} .gpl-cz__props-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 30px 22px; text-align: center; color: #666; font-size: 12px; line-height: 1.5; }
   #gpl-cz-{{ section.id }} .gpl-cz__props-empty svg { width: 30px; height: 30px; color: #BBB; }
   #gpl-cz-{{ section.id }} .gpl-cz__props-empty strong { color: #111; font-size: 14px; }
   #gpl-cz-{{ section.id }} .gpl-cz__props-facts { width: 100%; margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--cz-line); text-align: left; display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 11.5px; }
