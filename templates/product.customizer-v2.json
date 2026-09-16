@@ -43,7 +43,7 @@
         "upload_public_key": "6e122e88e1f265b83a7f",
         "color_accent": "#D71920",
         "upload_cdn_base": "2nfggcljwz.ucarecd.net",
-        "print_areas_force": true,
+        "print_areas_force": false,
         "print_areas_json": "[{\"name\":\"Front\",\"zone\":{\"x\":0.27,\"y\":0.22,\"w\":0.46,\"h\":0.55},\"w_in\":12,\"h_in\":16},{\"name\":\"Back\",\"zone\":{\"x\":0.27,\"y\":0.19,\"w\":0.46,\"h\":0.55},\"w_in\":12,\"h_in\":16},{\"name\":\"Left Side\",\"zone\":{\"x\":0.42,\"y\":0.22,\"w\":0.155,\"h\":0.125},\"w_in\":4,\"h_in\":4},{\"name\":\"Right Side\",\"zone\":{\"x\":0.42,\"y\":0.22,\"w\":0.155,\"h\":0.125},\"w_in\":4,\"h_in\":4},{\"name\":\"Inside Label\",\"zone\":{\"x\":0.35,\"y\":0.3,\"w\":0.3,\"h\":0.3},\"w_in\":3,\"h_in\":3,\"view\":\"inside_label\"}]"
       }
     }
