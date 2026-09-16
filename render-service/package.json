@@ -1,0 +1,17 @@
+{
+  "name": "gpl-render-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GTA Print Lab — turns a customizer design into a print-ready file at a real DPI",
+  "main": "server.js",
+  "type": "commonjs",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "selftest": "node selftest.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "puppeteer": "^23.6.0"
+  }
+}

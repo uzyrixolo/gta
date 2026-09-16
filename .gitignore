@@ -1,3 +1,10 @@
 .DS_Store
 .shopify/
 *.log
+render-service/node_modules/
+render-service/out/
+render-service/browser/fonts/
+render-service/browser/fonts.css
+render-service/browser/fabric.min.js
+render-service/browser/gpl-design-render.js
+render-service/.env

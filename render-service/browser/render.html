@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>GPL print renderer</title>
+<style>html,body{margin:0;background:#fff}</style>
+<!-- The two files below are the SAME ones the storefront loads. render.js copies
+     them out of ../../assets at boot, so a print file is produced by exactly the
+     code that drew the customer's proof. -->
+<script src="fabric.min.js"></script>
+<script src="gpl-design-render.js"></script>
+</head>
+<body>
+<script>
+// Fonts are served locally (see fonts.css, written at boot from the families the
+// customizer offers) so rendering never depends on Google being reachable.
+window.__gplReady = (async () => {
+  try { await document.fonts.ready; } catch (e) {}
+  return true;
+})();
+
+/**
+ * Render one design to a data URL.
+ * @param {object} payload
+ *   design   {objects:[...]}  stored design, zone units
+ *   widthPx  number           output width  (w_in * dpi)
+ *   heightPx number           output height (h_in * dpi)
+ *   player   object|null      team roster substitution
+ *   format   'png'|'jpeg'
+ */
+window.gplRenderPrintFile = async function (payload) {
+  await window.__gplReady;
+  const R = window.gplDesignRender;
+  const W = payload.widthPx, H = payload.heightPx;
+
+  // The print file IS the print area, so the zone fills the whole canvas.
+  const sc = await R.renderToCanvas(fabric, payload.design, {
+    width: W, height: H,
+    zone: { x: 0, y: 0, w: W, h: H },
+    background: null,             // transparent: this is artwork, not a mockup
+    player: payload.player || null
+  });
+
+  // Make absolutely sure webfonts had landed before the pixels were committed;
+  // fabric measures text on creation, so re-render once fonts are settled.
+  try { await document.fonts.ready; } catch (e) {}
+  sc.renderAll();
+
+  const url = sc.toDataURL({ format: payload.format || 'png', quality: 0.95, multiplier: 1 });
+  const stats = {
+    objects: sc.getObjects().length,
+    width: W, height: H,
+    fonts: R.fontsUsed((payload.design && payload.design.objects) || []).map(f => f.family + ' ' + f.weight)
+  };
+  sc.dispose();
+  return { dataUrl: url, stats };
+};
+</script>
+</body>
+</html>
