@@ -125,10 +125,10 @@
       // a single sleeve, laid flat and enlarged, so a sleeve print has somewhere real to sit
       const mirror = view === 'Left Side' ? ' transform="translate(1000,0) scale(-1,1)"' : '';
       g = '<g' + mirror + '>'
-        + '<path d="' + pts([[352, 150], [648, 150], [702, 1010], [298, 1010]]) + '" fill="' + hex + '"' + edge + '/>'
-        + '<path d="' + pts([[298, 1010], [702, 1010], [706, 1092], [294, 1092]]) + '" fill="' + darker + '"' + edge + '/>'
-        + '<path d="M 352,150 L 648,150" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
-        + '<path d="M 298,1010 L 702,1010" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
+        + '<path d="' + pts([[296, 214], [704, 214], [752, 980], [248, 980]]) + '" fill="' + hex + '"' + edge + '/>'
+        + '<path d="' + pts([[248, 980], [752, 980], [756, 1074], [244, 1074]]) + '" fill="' + darker + '"' + edge + '/>'
+        + '<path d="M 296,214 L 704,214" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
+        + '<path d="M 248,980 L 752,980" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
         + '</g>';
     } else {
       const hood = cfg.hood
