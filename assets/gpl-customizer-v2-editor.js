@@ -50,7 +50,6 @@
     { id: 'free', name: 'Free form', desc: 'Place anywhere', descf: 'Place anywhere' },
     { id: 'standard', name: 'Standard', desc: '10 in wide · 2 in down', descf: 'Large · high on the chest', w: 10, top: 2, wf: 0.83, topf: 0.125, x: 'center' },
     { id: 'left_chest', name: 'Left chest', desc: '4 in wide · pocket side', descf: 'Small · pocket side', w: 4, top: 1.5, wf: 0.33, topf: 0.09, x: 'left_chest' },
-    { id: 'pocket', name: 'Pocket', desc: '3.5 in · on the pocket', descf: 'Small · on the pocket', w: 3.5, top: 3, wf: 0.29, topf: 0.19, x: 'left_chest' },
     { id: 'center_chest', name: 'Center chest', desc: '7 in wide · 3 in down', descf: 'Medium · centred', w: 7, top: 3, wf: 0.58, topf: 0.19, x: 'center' },
     { id: 'oversized', name: 'Oversized', desc: 'Full print width', descf: 'Fills the print area', w: 'full', top: 0.5, wf: 1, topf: 0.03, x: 'center' },
   ];
@@ -252,6 +251,9 @@
       const c = color || this.activeColor;
       const a = this.areaDef(area);
       if (a && a.view === 'inside_label') return this.insideLabelSvg(this.hexFor(c));
+      // A pocket print is a detail of the garment front, not a separate side of the
+      // garment: show the front photograph so the customer sees where it lands.
+      if (a && a.view === 'front') return this.viewImage(c, 'Front');
       const real = this.mockups[c + '|' + area];
       if (real) return real;
       // No photo of this side in this colour. Showing the front again (the old
@@ -271,6 +273,7 @@
     isIllustrated(area) {
       const a = this.areaDef(area);
       if (a && a.view === 'inside_label') return true;
+      if (a && a.view === 'front') return this.isIllustrated('Front');
       const n = area || this.activePrintArea;
       return !this.mockups[(this.previewColorName || this.activeColor) + '|' + n]
         && n !== 'Front' && !this.isFlatAccessory;
