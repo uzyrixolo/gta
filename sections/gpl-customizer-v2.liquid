@@ -1000,7 +1000,10 @@
   #gpl-cz-{{ section.id }} .gpl-cz__fwrap { position: absolute; inset: 0; z-index: 3; }
   #gpl-cz-{{ section.id }} .gpl-cz__fwrap .canvas-container { position: absolute !important; inset: 0; }
   #gpl-cz-{{ section.id }} .gpl-cz__zone-cta { pointer-events: auto; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: min(78%, 220px); line-height: 1.25; }
+  /* Sized off the stage, not the zone: a pocket or sleeve zone is far narrower
+     than these three buttons, and 78% of it produced unreadable slivers. The CTA
+     overflows a small zone symmetrically, which reads fine because it is centred. */
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: max(150px, min(78%, 220px)); line-height: 1.25; }
   #gpl-cz-{{ section.id }} .gpl-cz__zone-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; line-height: 1.2;
     color: #111; background: rgba(255, 255, 255, 0.94); border: 1px dashed #B5B5B5;
@@ -1167,7 +1170,7 @@
     #gpl-cz-{{ section.id }} .gpl-cz__bar-ship { display: none; }
     #gpl-cz-{{ section.id }} .gpl-cz__submit { min-width: 0; flex: 1 0 160px; padding: 14px 18px; }
     #gpl-cz-{{ section.id }} .gpl-cz__bar-gate, #gpl-cz-{{ section.id }} .gpl-cz__error { width: 100%; order: 5; margin-top: -4px; }
-    #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { width: min(80%, 200px); gap: 6px; }
+    #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { width: max(132px, min(80%, 200px)); gap: 6px; }
     #gpl-cz-{{ section.id }} .gpl-cz__zone-btn { padding: 8px 10px; font-size: 10.5px; }
   }
   @media screen and (max-width: 549px) {
