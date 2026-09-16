@@ -936,7 +936,7 @@
   /* ---- canvas ---- */
   #gpl-cz-{{ section.id }} .gpl-cz__canvas { grid-area: canvas; display: flex; flex-direction: column; min-width: 0; background: var(--cz-bg); }
   #gpl-cz-{{ section.id }} .gpl-cz__viewport { --zoom: 1; --stage-h: 560px; position: relative; flex: 1; min-height: 0; display: flex; overflow: auto; padding: 16px; }
-  #gpl-cz-{{ section.id }} .gpl-cz__stage { position: relative; margin: auto; flex: 0 0 auto; line-height: 0; }
+  #gpl-cz-{{ section.id }} .gpl-cz__stage { position: relative; margin: auto; flex: 0 0 auto; line-height: 1.25; }
   #gpl-cz-{{ section.id }} .gpl-cz__mockup { display: block; height: calc(var(--stage-h) * var(--zoom)); width: auto; max-width: none; }
   #gpl-cz-{{ section.id }} .gpl-cz__zone {
     position: absolute; z-index: 2; pointer-events: none;
@@ -959,11 +959,11 @@
   #gpl-cz-{{ section.id }} .gpl-cz__fwrap { position: absolute; inset: 0; z-index: 3; }
   #gpl-cz-{{ section.id }} .gpl-cz__fwrap .canvas-container { position: absolute !important; inset: 0; }
   #gpl-cz-{{ section.id }} .gpl-cz__zone-cta { pointer-events: auto; }
-  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: min(78%, 220px); }
+  #gpl-cz-{{ section.id }} .gpl-cz__zone-cta--v2 { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: min(78%, 220px); line-height: 1.25; }
   #gpl-cz-{{ section.id }} .gpl-cz__zone-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; line-height: 1.2;
     color: #111; background: rgba(255, 255, 255, 0.94); border: 1px dashed #B5B5B5;
-    padding: 10px 12px; border-radius: 6px; font: inherit; font-weight: 800; font-size: 11.5px; text-transform: uppercase;
+    padding: 10px 12px; border-radius: 6px; font: inherit; font-weight: 800; font-size: 11.5px; text-transform: uppercase; text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   }
   #gpl-cz-{{ section.id }} .gpl-cz__zone-btn svg { width: 16px; height: 16px; color: var(--cz-red); }
