@@ -21,6 +21,7 @@ window.gplQuickOrderV2 = function (sectionId) {
     areas: config.areas,              // [{name, zone:{x,y,w,h}}]
     isHeadwear: !!config.isHeadwear,  // swaps the STEP 2 area icons from shirt shapes to cap shapes
     isFlatAccessory: !!config.isFlatAccessory,  // aprons/blankets/towels/bibs: one flat-panel icon
+    garment: config.garment || 'tee',  // which generic illustration to draw for views with no photo
     mockups: config.mockups,          // {"Color|Area": url}
     fallbackImage: config.fallbackImage,
     uploadKey: config.uploadKey || '',
@@ -222,14 +223,17 @@ window.gplQuickOrderV2 = function (sectionId) {
         if (!c.image) c.image = (this.variants.find(v => v.color === c.name && v.image) || {}).image || null;
       });
 
-      // Headwear catalogue images are named "{assetId}_f_fm.jpg" / "_b_fm.jpg" /
+      // Supplier catalogue images are named "{assetId}_f_fm.jpg" / "_b_fm.jpg" /
       // "_d_fm.jpg" (front/back/detail-side) per colour, with no colour name in the
       // filename at all — the text-matching above can never pair them to a colour.
       // But each colour's variant.image already points at its "_f" shot (Shopify
       // tracks that correctly), so the asset-id prefix from THAT one photo is enough
       // to find its front/back/side siblings directly, with no alt-text tagging needed.
-      if (this.isHeadwear) {
-        const bySrc = new Map(images.map(img => [img.src, img]));
+      // This is what makes switching to Back show that colour's real back photo
+      // instead of silently re-showing the front. "_d" is a detail close-up: it is a
+      // usable side view on a cap, but on apparel it is not a sleeve, so only
+      // headwear maps it.
+      {
         for (const c of this.colors) {
           const frontSrc = c.image || (this.variants.find(v => v.color === c.name && v.image) || {}).image;
           if (!frontSrc) continue;
@@ -241,7 +245,7 @@ window.gplQuickOrderV2 = function (sectionId) {
           if (!this.mockups[frontKey]) this.mockups[frontKey] = frontSrc;
           for (const img of images) {
             const iname = (img.src.split('/').pop() || '').split('?')[0];
-            if (iname.startsWith(prefix + '_d')) {
+            if (this.isHeadwear && iname.startsWith(prefix + '_d')) {
               const k = c.name + '|Side';
               if (!this.mockups[k]) this.mockups[k] = img.src;
             } else if (iname.startsWith(prefix + '_b')) {

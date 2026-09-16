@@ -63,6 +63,109 @@
     { id: 'slant', name: 'Slant' },
   ];
 
+  const GCACHE = {};
+  const GW = 1000, GH = 1250;                 // 4:5, matching the supplier photo frame
+  const GSHAPES = {
+    tee:        { sleeve: 'short' },
+    longsleeve: { sleeve: 'long' },
+    tank:       { sleeve: 'none' },
+    polo:       { sleeve: 'short', placket: true, collar: true },
+    crew:       { sleeve: 'long', rib: true },
+    hoodie:     { sleeve: 'long', rib: true, hood: true, pouch: true },
+  };
+  const pts = (a) => 'M ' + a.map(p => p[0] + ',' + p[1]).join(' L ') + ' Z';
+
+  function sleevePoly(cfg, right) {
+    const m = (x) => right ? x : GW - x;      // mirror for the left sleeve
+    if (cfg.sleeve === 'long') {
+      return pts([[m(745), 210], [m(952), 400], [m(938), 900], [m(830), 905], [m(758), 505]]);
+    }
+    return pts([[m(745), 210], [m(948), 352], [m(905), 486], [m(758), 505]]);
+  }
+  function tankPath(back) {
+    const dip = back ? 52 : 118;
+    // The armhole has to cut INWARD from the strap before sweeping out to the
+    // armpit; a purely outward curve reads as a sleeveless dress, not a tank.
+    return 'M 396,200 L 452,200 Q 500,' + (200 + dip) + ' 548,200 L 604,200'
+      + ' C 566,296 664,404 700,540 L 724,1150 L 276,1150 L 300,540'
+      + ' C 336,404 434,296 396,200 Z';
+  }
+  function bodyPath(cfg, back) {
+    if (cfg.sleeve === 'none') return tankPath(back);
+    const cx = GW / 2, sh = 210, hemY = 1150;
+    const shHalf = cfg.sleeve === 'none' ? 150 : 245;
+    const nHalf = cfg.hood ? 118 : (cfg.sleeve === 'none' ? 112 : 100);
+    const dip = back ? 36 : (cfg.placket ? 44 : (cfg.sleeve === 'none' ? 120 : 80));
+    const neck = 'Q ' + cx + ',' + (sh + dip) + ' ' + (cx + nHalf) + ',' + sh;
+    // sleeveless garments need a scooped armhole instead of a straight shoulder seam
+    const rightArm = cfg.sleeve === 'none'
+      ? 'C ' + (cx + shHalf + 60) + ',' + (sh + 90) + ' ' + (GW - 268) + ',' + 380 + ' ' + (GW - 248) + ',' + 560
+      : 'L ' + (GW - 242) + ',505';
+    const leftArm = cfg.sleeve === 'none'
+      ? 'C 268,380 ' + (cx - shHalf - 60) + ',' + (sh + 90) + ' ' + (cx - shHalf) + ',' + sh
+      : 'L ' + (cx - shHalf) + ',' + sh;
+    const rightLow = cfg.sleeve === 'none' ? (GW - 248) + ',560' : (GW - 242) + ',505';
+    const leftLow = cfg.sleeve === 'none' ? '248,560' : '242,505';
+    return 'M ' + (cx - nHalf) + ',' + sh + ' ' + neck +
+      ' L ' + (cx + shHalf) + ',' + sh + ' ' + rightArm +
+      ' L ' + (GW - 252) + ',' + hemY + ' L 252,' + hemY +
+      ' L ' + leftLow + ' ' + leftArm + ' Z';
+  }
+
+  function buildGarmentSvg(shape, view, hex, helpers) {
+    const cfg = GSHAPES[shape] || GSHAPES.tee;
+    const back = view === 'Back';
+    const sleeveView = view === 'Left Side' || view === 'Right Side';
+    const stitch = helpers.light ? 'rgba(0,0,0,0.30)' : 'rgba(255,255,255,0.40)';
+    // white and pastel garments would otherwise disappear into the light stage
+    const edge = ' stroke="rgba(0,0,0,0.16)" stroke-width="3"';
+    const dark = helpers.shade(0.80), darker = helpers.shade(0.66), light = helpers.shade(1.12);
+    let g = '';
+    if (sleeveView) {
+      // a single sleeve, laid flat and enlarged, so a sleeve print has somewhere real to sit
+      const mirror = view === 'Left Side' ? ' transform="translate(1000,0) scale(-1,1)"' : '';
+      g = '<g' + mirror + '>'
+        + '<path d="' + pts([[352, 150], [648, 150], [702, 1010], [298, 1010]]) + '" fill="' + hex + '"' + edge + '/>'
+        + '<path d="' + pts([[298, 1010], [702, 1010], [706, 1092], [294, 1092]]) + '" fill="' + darker + '"' + edge + '/>'
+        + '<path d="M 352,150 L 648,150" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
+        + '<path d="M 298,1010 L 702,1010" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
+        + '</g>';
+    } else {
+      const hood = cfg.hood
+        ? '<path d="M 300,300 C 300,86 700,86 700,300 Z" fill="' + (back ? hex : dark) + '"/>'
+          + (back ? '' : '<path d="M 386,286 C 392,168 608,168 614,286 Z" fill="' + helpers.shade(0.5) + '"/>')
+          + '<path d="M 300,300 C 300,86 700,86 700,300" stroke="' + stitch + '" stroke-width="6" fill="none"/>'
+        : '';
+      const sleeves = cfg.sleeve === 'none' ? ''
+        : '<path d="' + sleevePoly(cfg, true) + '" fill="' + dark + '"' + edge + '/><path d="' + sleevePoly(cfg, false) + '" fill="' + dark + '"' + edge + '/>';
+      const rib = cfg.rib
+        ? '<path d="' + pts([[252, 1078], [748, 1078], [748, 1150], [252, 1150]]) + '" fill="' + darker + '"/>'
+        : '';
+      const pouch = (cfg.pouch && !back)
+        ? '<path d="M 306,842 L 694,842 L 706,1012 L 294,1012 Z" fill="' + darker + '" opacity="0.55"/>'
+          + '<path d="M 306,842 L 694,842" stroke="' + stitch + '" stroke-width="5" fill="none" stroke-dasharray="16 12"/>'
+        : '';
+      const collar = (cfg.collar && !back)
+        ? '<path d="M 398,206 L 500,300 L 602,206 L 638,246 L 500,356 L 362,246 Z" fill="' + light + '"/>'
+          + '<path d="M 398,206 L 500,300 L 602,206" stroke="' + stitch + '" stroke-width="6" fill="none"/>'
+        : '';
+      const placket = (cfg.placket && !back)
+        ? '<path d="M 470,254 L 530,254 L 530,470 L 470,470 Z" fill="' + dark + '"/>'
+          + '<circle cx="500" cy="316" r="9" fill="' + stitch + '"/><circle cx="500" cy="404" r="9" fill="' + stitch + '"/>'
+        : '';
+      const nH = cfg.sleeve === 'none' ? 54 : (cfg.hood ? 118 : 100);
+      const nX = cfg.sleeve === 'none' ? 500 : 500;
+      const nD = cfg.sleeve === 'none' ? (back ? 46 : 118) : (back ? 36 : (cfg.placket ? 44 : 80));
+      const neckBand = '<path d="M ' + (nX - nH) + ',205 Q 500,' + (205 + nD) + ' ' + (nX + nH) + ',205" stroke="' + stitch + '" stroke-width="7" fill="none"/>';
+      g = hood + sleeves
+        + '<path d="' + bodyPath(cfg, back) + '" fill="' + hex + '"' + edge + '/>'
+        + rib + pouch + collar + placket + neckBand;
+    }
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + GW + ' ' + GH + '" width="' + GW + '" height="' + GH + '">'
+      + '<rect width="' + GW + '" height="' + GH + '" fill="#F4F4F4"/>' + g + '</svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
   const uid = () => 'o' + Math.random().toString(36).slice(2, 9);
   const clone = (o) => JSON.parse(JSON.stringify(o));
   const r2 = (n) => Math.round(n * 100) / 100;
@@ -119,11 +222,62 @@
     // Areas with an illustrated view (inside label) have no product photo: draw a
     // colour-tinted collar illustration instead. Data URLs draw on canvas untainted.
     viewImage(color, area) {
+      const c = color || this.activeColor;
       const a = this.areaDef(area);
-      if (a && a.view === 'inside_label') return this.insideLabelSvg(this.hexFor(color || this.activeColor));
-      return this.mockupFor(color, area);
+      if (a && a.view === 'inside_label') return this.insideLabelSvg(this.hexFor(c));
+      const real = this.mockups[c + '|' + area];
+      if (real) return real;
+      // No photo of this side in this colour. Showing the front again (the old
+      // behaviour) makes it look like the design is going on the front, so draw the
+      // garment for this view instead. Front keeps the photo fallbacks — every
+      // product has at least one real photo of its front. Caps and flat goods have
+      // their own geometry and no drawing, so they keep the photo path.
+      if (area !== 'Front' && !this.isHeadwear && !this.isFlatAccessory) return this.garmentSvg(area, this.hexFor(c));
+      return this.mockupFor(c, area);
+    },
+    // true catalogue photo of the selected colour, for the product panel
+    realPhotoFor(color) {
+      const c = color || this.activeColor;
+      return this.mockups[c + '|Front'] || (this.swatch(c) || {}).image || this.fallbackImage;
+    },
+    // is the stage showing a drawing rather than a photograph?
+    isIllustrated(area) {
+      const a = this.areaDef(area);
+      if (a && a.view === 'inside_label') return true;
+      const n = area || this.activePrintArea;
+      return !this.mockups[(this.previewColorName || this.activeColor) + '|' + n]
+        && n !== 'Front' && !this.isHeadwear && !this.isFlatAccessory;
     },
     currentMockup() { return this.viewImage(this.previewColorName || this.activeColor, this.activePrintArea); },
+
+    // ---- generic garment illustrations -------------------------------------
+    // Supplier photo sets give a front (and usually a back) per colour, but almost
+    // never a sleeve, and some products have no back at all. Re-showing the front
+    // photo while the customer decorates "Back" or "Left Side" is the confusing
+    // behaviour we had; instead draw the garment for that view. The illustration is
+    // framed like the catalogue photos (4:5, garment centred, torso about half the
+    // width) so one set of print-zone ratios lands in the same place on a photo and
+    // on a drawing.
+    rgbOf(hex) {
+      const h = String(hex || '#8a8a8a').replace('#', '');
+      return h.length === 3 ? h.split('').map(c => parseInt(c + c, 16)) : [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16));
+    },
+    shadeOf(hex, k) { return 'rgb(' + this.rgbOf(hex).map(v => Math.max(0, Math.min(255, Math.round(v * k)))).join(',') + ')'; },
+    isLightHex(hex) { const c = this.rgbOf(hex); return (c[0] * 299 + c[1] * 587 + c[2] * 114) / 1000 > 150; },
+    // which drawing to use for this product
+    garmentShape() {
+      const g = (this.garment || 'tee');
+      return GSHAPES[g] ? g : 'tee';
+    },
+    garmentSvg(view, hex) {
+      const shape = this.garmentShape();
+      const key = shape + '|' + view + '|' + hex;
+      GCACHE[key] = GCACHE[key] || buildGarmentSvg(shape, view, hex, {
+        shade: (k) => this.shadeOf(hex, k), light: this.isLightHex(hex),
+      });
+      return GCACHE[key];
+    },
+
     insideLabelSvg(hex) {
       const h = (hex || '#888888').replace('#', '');
       const rgb = h.length === 3 ? h.split('').map(c => parseInt(c + c, 16)) : [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16));
