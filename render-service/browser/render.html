@@ -32,6 +32,16 @@ window.gplRenderPrintFile = async function (payload) {
   await window.__gplReady;
   const R = window.gplDesignRender;
   const W = payload.widthPx, H = payload.heightPx;
+  const objects = (payload.design && payload.design.objects) || [];
+
+  // Load every face this design needs, then confirm it actually arrived. A canvas
+  // silently falls back to a serif when a webfont is missing, which would ship a
+  // print file in the wrong typeface — so this is reported, not assumed.
+  await R.ensureFonts(objects);
+  const missing = R.fontsUsed(objects).filter(function (f) {
+    try { return !document.fonts.check((f.style === 'italic' ? 'italic ' : '') + f.weight + ' 40px "' + f.family + '"'); }
+    catch (e) { return false; }
+  }).map(function (f) { return f.family + ' ' + f.weight; });
 
   // The print file IS the print area, so the zone fills the whole canvas.
   const sc = await R.renderToCanvas(fabric, payload.design, {
@@ -50,7 +60,8 @@ window.gplRenderPrintFile = async function (payload) {
   const stats = {
     objects: sc.getObjects().length,
     width: W, height: H,
-    fonts: R.fontsUsed((payload.design && payload.design.objects) || []).map(f => f.family + ' ' + f.weight)
+    fonts: R.fontsUsed(objects).map(f => f.family + ' ' + f.weight),
+    missingFonts: missing
   };
   sc.dispose();
   return { dataUrl: url, stats };

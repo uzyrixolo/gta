@@ -101,14 +101,6 @@ async function boot() {
     console.error('[boot] fonts unavailable, continuing without them:', e.message);
     bootState.error = 'fonts: ' + e.message;
   }
-  // link the stylesheet into the harness once the file exists
-  const htmlPath = path.join(BROWSER_DIR, 'render.html');
-  let html = fs.readFileSync(htmlPath, 'utf8');
-  if (!html.includes('fonts.css')) {
-    html = html.replace('<script src="fabric.min.js"></script>',
-      '<link rel="stylesheet" href="fonts.css">\n<script src="fabric.min.js"></script>');
-    fs.writeFileSync(htmlPath, html);
-  }
   bootState.ok = true;
 }
 
@@ -148,6 +140,11 @@ async function renderDesign(opts) {
   try {
     page.on('pageerror', (e) => { lastPageError = e; });
     await page.goto('file://' + path.join(BROWSER_DIR, 'render.html'), { waitUntil: 'load' });
+    // Inject the @font-face rules per page rather than editing the harness file on
+    // disk: rewriting a shipped file at boot is fragile and failed silently in the
+    // container, producing print files in a fallback serif.
+    const cssPath = path.join(BROWSER_DIR, 'fonts.css');
+    if (fs.existsSync(cssPath)) await page.addStyleTag({ path: cssPath });
     const result = await page.evaluate((payload) => window.gplRenderPrintFile(payload), {
       design: opts.design,
       widthPx: W,
@@ -156,6 +153,9 @@ async function renderDesign(opts) {
       format: 'png'
     });
     if (lastPageError) throw lastPageError;
+    if (result.stats.missingFonts && result.stats.missingFonts.length) {
+      console.error('[render] FONT FALLBACK — these did not load: ' + result.stats.missingFonts.join(', '));
+    }
     const b64 = result.dataUrl.split(',')[1];
     return {
       buffer: Buffer.from(b64, 'base64'),
