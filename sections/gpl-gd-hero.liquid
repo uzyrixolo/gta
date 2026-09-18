@@ -16,6 +16,12 @@
   75% and 90% render exactly as they did, while 0 now means no overlay at all.
 {%- endcomment -%}
 {%- assign k = scrim | divided_by: 0.75 | at_most: 1 -%}
+{%- comment -%}
+  In "fit" mode the hero takes its shape from the banner instead of filling a
+  fixed height, so finished artwork is shown whole rather than cropped to fill.
+{%- endcomment -%}
+{%- assign fit_img = s.background_image -%}
+{%- assign fit_img_mobile = s.background_image_mobile | default: s.background_image -%}
 {%- assign scrim_55 = 0.55 | times: k | round: 3 -%}
 {%- assign scrim_25 = 0.25 | times: k | round: 3 -%}
 {%- assign scrim_65 = 0.65 | times: k | round: 3 -%}
@@ -322,6 +328,26 @@
     #gpl-gd-hero-{{ section_id }} .gpl-gd-btn { flex: 1 1 100%; }
   }
 
+  {%- if s.height_mode == 'fit' %}
+  /* Height follows the banner. Last in the file so these beat the fixed
+     min-heights above, including the one inside the phone breakpoint. */
+  {%- if fit_img != blank %}
+  #gpl-gd-hero-{{ section_id }} {
+    min-height: 0;
+    aspect-ratio: {{ fit_img.width }} / {{ fit_img.height }};
+  }
+  {%- endif %}
+  #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__bg-img { object-fit: contain; }
+  {%- if fit_img_mobile != blank %}
+  @media screen and (max-width: 749px) {
+    #gpl-gd-hero-{{ section_id }} {
+      min-height: 0;
+      aspect-ratio: {{ fit_img_mobile.width }} / {{ fit_img_mobile.height }};
+    }
+  }
+  {%- endif %}
+  {%- endif %}
+
   @media (prefers-reduced-motion: reduce) {
     #gpl-gd-hero-{{ section_id }} .gpl-gd-btn { transition: none; }
     #gpl-gd-hero-{{ section_id }} .gpl-gd-btn--primary:hover { transform: none; }
@@ -334,39 +360,187 @@
   "tag": "section",
   "class": "gpl-section-gd-hero",
   "settings": [
-    { "type": "header", "content": "Background" },
-    { "type": "image_picker", "id": "background_image", "label": "Background image" },
-    { "type": "image_picker", "id": "background_image_mobile", "label": "Background image (mobile)", "info": "Optional. Falls back to the desktop image." },
-    { "type": "select", "id": "image_position", "label": "Image focal point", "default": "center right", "options": [
-      { "value": "center left", "label": "Left" },
-      { "value": "center center", "label": "Centre" },
-      { "value": "center right", "label": "Right" }
-    ] },
-    { "type": "text", "id": "image_position_mobile", "label": "Image focal point (mobile)", "info": "Optional CSS object-position for phones, e.g. \"44% center\". Leave blank to use the desktop focal point." },
-    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90, "info": "0 removes the overlay entirely — use it for finished artwork that carries its own text." },
-    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 620 },
-    { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile)", "min": 280, "max": 800, "step": 10, "unit": "px", "default": 480 },
-
-    { "type": "header", "content": "Content" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
-    { "type": "text", "id": "heading_line1", "label": "Heading line 1 (white)", "default": "Graphic" },
-    { "type": "text", "id": "heading_line2", "label": "Heading line 2 (red)", "default": "Design" },
-    { "type": "text", "id": "heading_line3", "label": "Heading line 3 (white)", "info": "Optional." },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Turn Your Idea Into Something People Want to Wear." },
-    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "default": "<p>From a simple idea to a complete brand identity, GTA Print Lab's graphic design team creates artwork that looks great on screen and prints beautifully on apparel, promotional products, signage, and marketing materials.</p>" },
-
-    { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "button_1_text", "label": "Button 1 text", "default": "Start Your Design" },
-    { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
-    { "type": "text", "id": "button_2_text", "label": "Button 2 text", "default": "Request a Quote" },
-    { "type": "url", "id": "button_2_link", "label": "Button 2 link" },
-
-    { "type": "header", "content": "Promise card" },
-    { "type": "text", "id": "promise_heading", "label": "Card heading", "default": "Our Promise", "info": "Shown only when promise blocks are added." },
-
-    { "type": "header", "content": "Colours" },
-    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
-    { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Optional. Falls back to the desktop image."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal point",
+      "default": "center right",
+      "options": [
+        {
+          "value": "center left",
+          "label": "Left"
+        },
+        {
+          "value": "center center",
+          "label": "Centre"
+        },
+        {
+          "value": "center right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "image_position_mobile",
+      "label": "Image focal point (mobile)",
+      "info": "Optional CSS object-position for phones, e.g. \"44% center\". Leave blank to use the desktop focal point."
+    },
+    {
+      "type": "range",
+      "id": "scrim_strength",
+      "label": "Dark overlay on text side",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 90,
+      "info": "0 removes the overlay entirely — use it for finished artwork that carries its own text."
+    },
+    {
+      "type": "select",
+      "id": "height_mode",
+      "label": "Height",
+      "default": "fixed",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed height (photo is cropped to fill)"
+        },
+        {
+          "value": "fit",
+          "label": "Fit the banner (whole image, never cropped)"
+        }
+      ],
+      "info": "Use \"Fit the banner\" for finished artwork that already carries its own headline."
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 320,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum height (mobile)",
+      "min": 280,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 480
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading line 1 (white)",
+      "default": "Graphic"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading line 2 (red)",
+      "default": "Design"
+    },
+    {
+      "type": "text",
+      "id": "heading_line3",
+      "label": "Heading line 3 (white)",
+      "info": "Optional."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Turn Your Idea Into Something People Want to Wear."
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph",
+      "default": "<p>From a simple idea to a complete brand identity, GTA Print Lab's graphic design team creates artwork that looks great on screen and prints beautifully on apparel, promotional products, signage, and marketing materials.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 text",
+      "default": "Start Your Design"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 text",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "header",
+      "content": "Promise card"
+    },
+    {
+      "type": "text",
+      "id": "promise_heading",
+      "label": "Card heading",
+      "default": "Our Promise",
+      "info": "Shown only when promise blocks are added."
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0A0A0A"
+    }
   ],
   "blocks": [
     {
@@ -374,13 +548,31 @@
       "name": "Promise item",
       "limit": 5,
       "settings": [
-        { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Premium Quality" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Every Time" }
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon (SVG code)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Quality"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Every Time"
+        }
       ]
     }
   ],
   "max_blocks": 5,
-  "presets": [{ "name": "GD Hero" }]
+  "presets": [
+    {
+      "name": "GD Hero"
+    }
+  ]
 }
 {% endschema %}
