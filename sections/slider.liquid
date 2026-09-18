@@ -1,42 +1,44 @@
 {%- comment -%}
-  GTA Print Lab — Hero Section (Rebuild v2 — pixel match to reference)
-  File: sections/gpl-hero.liquid
+  GTA Print Lab — Hero slider.
+
+  Banners are blocks: add a "Banner slide" in the theme editor and it becomes a
+  slide with its own photo, headings, paragraph and buttons. The badge, the
+  feature icon row and the bottom bar are section-level furniture and stay put
+  across slides, so the hero never reshuffles while it rotates.
+
+  A hero with no slide blocks still renders from the section's own settings —
+  that is how this section behaved before, so an older page keeps its banner.
 {%- endcomment -%}
 
 {%- liquid
   assign s = section.settings
   assign section_id = section.id
+  assign slides = section.blocks | where: 'type', 'slide'
+  assign features = section.blocks | where: 'type', 'feature'
+  assign bottom_blocks = section.blocks | where: 'type', 'bottom_item'
+  assign slide_count = slides.size
+  if slide_count == 0
+    assign slide_count = 1
+  endif
 -%}
 
-<section id="gpl-hero-{{ section_id }}" class="gpl-hero" aria-label="{{ s.heading_line1 | strip_html }} {{ s.heading_line2 | strip_html }}">
-  <div class="gpl-hero__bg">
-    {%- if s.bg_image_desktop != blank -%}
-      <img
-        class="gpl-hero__bg-img gpl-hero__bg-img--desktop"
-        src="{{ s.bg_image_desktop | image_url: width: 2400 }}"
-        srcset="{{ s.bg_image_desktop | image_url: width: 1200 }} 1200w, {{ s.bg_image_desktop | image_url: width: 1800 }} 1800w, {{ s.bg_image_desktop | image_url: width: 2400 }} 2400w"
-        sizes="100vw"
-        alt=""
-        width="{{ s.bg_image_desktop.width }}"
-        height="{{ s.bg_image_desktop.height }}"
-        loading="eager"
-        fetchpriority="high"
-      >
+<section id="gpl-hero-{{ section_id }}"
+  class="gpl-hero{% if slide_count > 1 %} gpl-hero--slider{% endif %}"
+  aria-label="{{ s.slider_label | default: 'Hero banners' | escape }}"
+  {% if slide_count > 1 %}
+    aria-roledescription="carousel"
+    data-gpl-hero
+    data-autoplay="{{ s.autoplay_seconds }}"
+  {% endif %}>
+
+  <div class="gpl-hero__bgs">
+    {%- if slides.size > 0 -%}
+      {%- for block in slides -%}
+        {% render 'gpl-hero-slide-bg', b: block.settings, index: forloop.index0, active: forloop.first, eager: forloop.first %}
+      {%- endfor -%}
+    {%- else -%}
+      {% render 'gpl-hero-slide-bg', b: s, index: 0, active: true, eager: true %}
     {%- endif -%}
-    {%- if s.bg_image_mobile != blank -%}
-      <img
-        class="gpl-hero__bg-img gpl-hero__bg-img--mobile"
-        src="{{ s.bg_image_mobile | image_url: width: 900 }}"
-        srcset="{{ s.bg_image_mobile | image_url: width: 600 }} 600w, {{ s.bg_image_mobile | image_url: width: 900 }} 900w"
-        sizes="100vw"
-        alt=""
-        width="{{ s.bg_image_mobile.width }}"
-        height="{{ s.bg_image_mobile.height }}"
-        loading="eager"
-        fetchpriority="high"
-      >
-    {%- endif -%}
-    <div class="gpl-hero__overlay"></div>
   </div>
 
   <div class="gpl-hero__inner">
@@ -67,61 +69,40 @@
       </div>
     {%- endif -%}
 
-    <div class="gpl-hero__content">
-      {%- if s.eyebrow != blank -%}
-        <p class="gpl-hero__eyebrow">{{ s.eyebrow }}</p>
+    <div class="gpl-hero__stage">
+      {%- if slides.size > 0 -%}
+        {%- for block in slides -%}
+          {% render 'gpl-hero-slide-content', b: block.settings, features: features, index: forloop.index0, active: forloop.first, attrs: block.shopify_attributes %}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'gpl-hero-slide-content', b: s, features: features, index: 0, active: true %}
       {%- endif -%}
-
-      <h1 class="gpl-hero__heading">
-        {%- if s.heading_line1 != blank -%}<span class="gpl-hero__heading-line">{{ s.heading_line1 }}</span>{%- endif -%}
-        {%- if s.heading_line2 != blank -%}<span class="gpl-hero__heading-line">{{ s.heading_line2 }}</span>{%- endif -%}
-      </h1>
-
-      {%- if s.subheading_normal != blank or s.subheading_highlight != blank -%}
-        <p class="gpl-hero__subheading">
-          {%- if s.subheading_normal != blank -%}{{ s.subheading_normal }}{%- endif -%}
-          {%- if s.subheading_highlight != blank -%} <span class="gpl-hero__subheading-highlight">{{ s.subheading_highlight }}</span>{%- endif -%}
-        </p>
-      {%- endif -%}
-
-      {%- if s.paragraph != blank -%}
-        <div class="gpl-hero__paragraph">{{ s.paragraph }}</div>
-      {%- endif -%}
-
-      {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
-      {%- if feature_blocks.size > 0 -%}
-        <ul class="gpl-hero__features">
-          {%- for block in feature_blocks -%}
-            <li class="gpl-hero__feature" {{ block.shopify_attributes }}>
-              <span class="gpl-hero__feature-icon">
-                {%- if block.settings.icon != blank -%}
-                  {{ block.settings.icon }}
-                {%- else -%}
-                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h7l-1 8 10-13h-7l0-7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-                {%- endif -%}
-              </span>
-              <span class="gpl-hero__feature-label">{{ block.settings.label }}</span>
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
-
-      <div class="gpl-hero__buttons">
-        {%- if s.button1_text != blank -%}
-          <a href="{{ s.button1_link | default: '#' }}" class="gpl-btn gpl-btn--primary">
-            {{ s.button1_text }}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if s.button2_text != blank -%}
-          <a href="{{ s.button2_link | default: '#' }}" class="gpl-btn gpl-btn--outline">
-            {{ s.button2_text }}
-          </a>
-        {%- endif -%}
-      </div>
     </div>
 
-    {%- assign bottom_blocks = section.blocks | where: 'type', 'bottom_item' -%}
+    {%- if slide_count > 1 -%}
+      <div class="gpl-hero__controls">
+        <button type="button" class="gpl-hero__arrow gpl-hero__arrow--prev" data-gpl-hero-prev aria-label="Previous banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>
+        </button>
+        <div class="gpl-hero__dots" role="tablist" aria-label="Choose a banner">
+          {%- for i in (1..slide_count) -%}
+            <button type="button" class="gpl-hero__dot{% if forloop.first %} is-active{% endif %}"
+              role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              data-gpl-hero-dot="{{ forloop.index0 }}" aria-label="Banner {{ forloop.index }} of {{ slide_count }}"></button>
+          {%- endfor -%}
+        </div>
+        <button type="button" class="gpl-hero__arrow gpl-hero__arrow--next" data-gpl-hero-next aria-label="Next banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        {%- if s.autoplay_seconds > 0 -%}
+          <button type="button" class="gpl-hero__playpause" data-gpl-hero-toggle aria-label="Pause the banners">
+            <svg class="gpl-hero__icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.4" height="14" rx="1"/><rect x="13.6" y="5" width="3.4" height="14" rx="1"/></svg>
+            <svg class="gpl-hero__icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12 8 5.2Z"/></svg>
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
     {%- if bottom_blocks.size > 0 -%}
       <ul class="gpl-hero__bottombar">
         {%- for block in bottom_blocks -%}
@@ -144,6 +125,110 @@
   </div>
 </section>
 
+
+{%- if slide_count > 1 -%}
+<script>
+  (function () {
+    var root = document.getElementById('gpl-hero-{{ section_id }}');
+    if (!root || root.dataset.gplHeroReady) return;
+    root.dataset.gplHeroReady = '1';
+
+    var slides = root.querySelectorAll('[data-gpl-hero-slide]');
+    var bgs    = root.querySelectorAll('[data-gpl-hero-bg]');
+    var dots   = root.querySelectorAll('[data-gpl-hero-dot]');
+    var toggle = root.querySelector('[data-gpl-hero-toggle]');
+    var count  = slides.length;
+    if (count < 2) return;
+
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var delay = (parseFloat(root.dataset.autoplay) || 0) * 1000;
+    var index = 0;
+    var timer = null;
+    var paused = calm || delay <= 0;
+
+    function show(next) {
+      index = (next + count) % count;
+      for (var i = 0; i < count; i++) {
+        var on = i === index;
+        slides[i].classList.toggle('is-active', on);
+        if (on) { slides[i].removeAttribute('aria-hidden'); } else { slides[i].setAttribute('aria-hidden', 'true'); }
+        // a hidden slide's buttons must not be tabbable
+        slides[i].querySelectorAll('a').forEach(function (a) {
+          if (on) { a.removeAttribute('tabindex'); } else { a.setAttribute('tabindex', '-1'); }
+        });
+        if (bgs[i]) bgs[i].classList.toggle('is-active', on);
+        if (dots[i]) { dots[i].classList.toggle('is-active', on); dots[i].setAttribute('aria-selected', on ? 'true' : 'false'); }
+      }
+    }
+
+    function start() {
+      stop();
+      if (paused || delay <= 0) return;
+      timer = setInterval(function () { show(index + 1); }, delay);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function go(next) { show(next); start(); }
+
+    var prev = root.querySelector('[data-gpl-hero-prev]');
+    var next = root.querySelector('[data-gpl-hero-next]');
+    if (prev) prev.addEventListener('click', function () { go(index - 1); });
+    if (next) next.addEventListener('click', function () { go(index + 1); });
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { go(parseInt(d.dataset.gplHeroDot, 10) || 0); });
+    });
+
+    if (toggle) {
+      toggle.classList.toggle('is-paused', paused);
+      toggle.addEventListener('click', function () {
+        paused = !paused;
+        toggle.classList.toggle('is-paused', paused);
+        toggle.setAttribute('aria-label', paused ? 'Play the banners' : 'Pause the banners');
+        if (paused) { stop(); } else { start(); }
+      });
+    }
+
+    // hovering or tabbing into the hero should not pull the banner out from under you
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', function () { if (!paused) start(); });
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', function (e) {
+      if (!root.contains(e.relatedTarget) && !paused) start();
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); } else if (!paused) { start(); }
+    });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
+    });
+
+    var x0 = null;
+    root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+    root.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 45) { go(dx < 0 ? index + 1 : index - 1); } else if (!paused) { start(); }
+    }, { passive: true });
+
+    // theme editor: selecting a slide block should bring that slide forward
+    document.addEventListener('shopify:block:select', function (e) {
+      if (!root.contains(e.target)) return;
+      var i = Array.prototype.indexOf.call(slides, e.target.closest('[data-gpl-hero-slide]'));
+      if (i > -1) { stop(); show(i); }
+    });
+    document.addEventListener('shopify:block:deselect', function (e) {
+      if (root.contains(e.target) && !paused) start();
+    });
+
+    show(0);
+    start();
+  })();
+</script>
+{%- endif -%}
+
 {% style %}
   #gpl-hero-{{ section_id }} {
     --gpl-accent: {{ s.accent_color }};
@@ -157,12 +242,17 @@
     overflow: hidden;
     background: #111111;
   }
-  #gpl-hero-{{ section_id }} .gpl-hero__bg { position: absolute; inset: 0; z-index: 0; }
-  #gpl-hero-{{ section_id }} .gpl-hero__bg-img { width: 100%; height: 100%; object-fit: cover; object-position: {{ s.image_position }}; display: none; }
+  #gpl-hero-{{ section_id }} .gpl-hero__bgs { position: absolute; inset: 0; z-index: 0; }
+  #gpl-hero-{{ section_id }} .gpl-hero__bg {
+    position: absolute; inset: 0; opacity: 0; visibility: hidden;
+    transition: opacity {{ s.fade_ms }}ms ease;
+  }
+  #gpl-hero-{{ section_id }} .gpl-hero__bg.is-active { opacity: 1; visibility: visible; }
+  #gpl-hero-{{ section_id }} .gpl-hero__bg-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--gpl-hero-pos, right); display: none; }
   #gpl-hero-{{ section_id }} .gpl-hero__bg-img--desktop { display: block; }
   #gpl-hero-{{ section_id }} .gpl-hero__overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(90deg, rgba(11,11,11,{{ s.overlay_strength }}) 0%, rgba(11,11,11,0.75) 40%, rgba(11,11,11,0.25) 72%, rgba(11,11,11,0.05) 100%);
+    background: linear-gradient(90deg, rgba(11,11,11,var(--gpl-hero-overlay, 0.9)) 0%, rgba(11,11,11,0.75) 40%, rgba(11,11,11,0.25) 72%, rgba(11,11,11,0.05) 100%);
   }
   #gpl-hero-{{ section_id }} .gpl-hero__inner {
     position: relative; z-index: 1; width: 100%; max-width: 1440px; margin: 0 auto;
@@ -188,7 +278,42 @@
   #gpl-hero-{{ section_id }} .gpl-hero__badge-leaf svg { width: 100%; height: 100%; }
 
   /* Content */
-  #gpl-hero-{{ section_id }} .gpl-hero__content { max-width: 640px; padding-top: 24px; }
+  /* Slides stack in one grid cell: the tallest sets the height, so switching
+     banners never makes the page jump. */
+  #gpl-hero-{{ section_id }} .gpl-hero__stage { display: grid; }
+  #gpl-hero-{{ section_id }} .gpl-hero__content {
+    grid-area: 1 / 1; max-width: 640px; padding-top: 24px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity {{ s.fade_ms }}ms ease, transform {{ s.fade_ms }}ms ease, visibility {{ s.fade_ms }}ms;
+  }
+  #gpl-hero-{{ section_id }} .gpl-hero__content.is-active {
+    opacity: 1; visibility: visible; pointer-events: auto; transform: none;
+  }
+
+  /* Controls */
+  #gpl-hero-{{ section_id }} .gpl-hero__controls { display: flex; align-items: center; gap: 12px; margin: 0 0 28px; }
+  #gpl-hero-{{ section_id }} .gpl-hero__arrow,
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause {
+    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.45); background: rgba(10,10,10,0.35);
+    color: #FFFFFF; display: flex; align-items: center; justify-content: center;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  #gpl-hero-{{ section_id }} .gpl-hero__arrow:hover,
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause:hover { background: var(--gpl-accent); border-color: var(--gpl-accent); }
+  #gpl-hero-{{ section_id }} .gpl-hero__arrow svg { width: 20px; height: 20px; }
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause svg { width: 16px; height: 16px; }
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause .gpl-hero__icon-play { display: none; }
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause.is-paused .gpl-hero__icon-play { display: block; }
+  #gpl-hero-{{ section_id }} .gpl-hero__playpause.is-paused .gpl-hero__icon-pause { display: none; }
+  #gpl-hero-{{ section_id }} .gpl-hero__dots { display: flex; align-items: center; gap: 8px; margin: 0 4px; }
+  #gpl-hero-{{ section_id }} .gpl-hero__dot {
+    width: 10px; height: 10px; padding: 0; border-radius: 50%; cursor: pointer;
+    border: none; background: rgba(255,255,255,0.4); transition: background-color .2s ease, width .2s ease;
+  }
+  #gpl-hero-{{ section_id }} .gpl-hero__dot.is-active { background: var(--gpl-accent); width: 26px; border-radius: 999px; }
+  #gpl-hero-{{ section_id }} .gpl-hero__dot:hover { background: rgba(255,255,255,0.75); }
   #gpl-hero-{{ section_id }} .gpl-hero__eyebrow { color: var(--gpl-accent); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: 14px; margin: 0 0 6px; }
   #gpl-hero-{{ section_id }} .gpl-hero__heading { color: var(--gpl-heading-color); font-family: var(--gpl-font-heading, inherit); font-weight: 800; line-height: .98; font-size: clamp(38px, 6vw, 72px); text-transform: uppercase; margin: 0 0 18px; letter-spacing: -0.01em; display: flex; flex-direction: column; }
   #gpl-hero-{{ section_id }} .gpl-hero__subheading { color: #FFFFFF; font-weight: 800; font-size: clamp(14px, 1.7vw, 18px); letter-spacing: .02em; text-transform: uppercase; margin: 0 0 16px; }
@@ -241,12 +366,16 @@
     #gpl-hero-{{ section_id }} .gpl-hero__buttons { flex-direction: column; align-items: stretch; }
     #gpl-hero-{{ section_id }} .gpl-btn { justify-content: center; }
     #gpl-hero-{{ section_id }} .gpl-hero__features { gap: 16px 20px; }
+    #gpl-hero-{{ section_id }} .gpl-hero__controls { margin-bottom: 20px; justify-content: center; }
+    #gpl-hero-{{ section_id }} .gpl-hero__arrow { width: 38px; height: 38px; }
     #gpl-hero-{{ section_id }} .gpl-hero__bottombar { flex-direction: column; gap: 16px; padding: 20px 0; }
     #gpl-hero-{{ section_id }} .gpl-hero__bottombar-item { border-left: none !important; padding: 0 !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     #gpl-hero-{{ section_id }} .gpl-btn { transition: none; }
+    #gpl-hero-{{ section_id }} .gpl-hero__bg,
+    #gpl-hero-{{ section_id }} .gpl-hero__content { transition: none; transform: none; }
   }
 {% endstyle %}
 
@@ -256,67 +385,392 @@
   "tag": "section",
   "class": "gpl-section-hero",
   "settings": [
-    { "type": "header", "content": "Background" },
-    { "type": "image_picker", "id": "bg_image_desktop", "label": "Background image (desktop)" },
-    { "type": "image_picker", "id": "bg_image_mobile", "label": "Background image (mobile)" },
     {
-      "type": "select", "id": "image_position", "label": "Desktop image focal point",
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add \"Banner slide\" blocks below to build the slider. The settings further down are used only when the hero has no slide blocks."
+    },
+    {
+      "type": "range",
+      "id": "autoplay_seconds",
+      "label": "Seconds per banner",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "default": 6,
+      "info": "0 turns autoplay off. Autoplay is also off for visitors who ask for reduced motion."
+    },
+    {
+      "type": "range",
+      "id": "fade_ms",
+      "label": "Cross-fade speed",
+      "min": 0,
+      "max": 1200,
+      "step": 50,
+      "unit": "ms",
+      "default": 600
+    },
+    {
+      "type": "text",
+      "id": "slider_label",
+      "label": "Accessible label",
+      "default": "Hero banners"
+    },
+    {
+      "type": "header",
+      "content": "Background (used when there are no slide blocks)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_desktop",
+      "label": "Background image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Desktop image focal point",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ],
       "default": "right"
     },
-    { "type": "range", "id": "overlay_strength", "label": "Overlay darkness", "min": 0, "max": 1, "step": 0.1, "default": 0.9 },
-
-    { "type": "header", "content": "Text" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "TORONTO'S" },
-    { "type": "text", "id": "heading_line1", "label": "Heading line 1", "default": "FASTEST" },
-    { "type": "text", "id": "heading_line2", "label": "Heading line 2", "default": "PRINT SHOP" },
-    { "type": "text", "id": "subheading_normal", "label": "Subheading (normal part)", "default": "SAME-DAY. NEXT-DAY." },
-    { "type": "text", "id": "subheading_highlight", "label": "Subheading (highlighted part)", "default": "YOUR WAY." },
-    { "type": "richtext", "id": "paragraph", "label": "Paragraph", "default": "<p>Premium custom apparel and promotional products printed fast and delivered when you need it.</p>" },
-
-    { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "button1_text", "label": "Button 1 text", "default": "Design Now" },
-    { "type": "url", "id": "button1_link", "label": "Button 1 link" },
-    { "type": "text", "id": "button2_text", "label": "Button 2 text", "default": "Get A Quote" },
-    { "type": "url", "id": "button2_link", "label": "Button 2 link" },
-
-    { "type": "header", "content": "Badge (top right)" },
-    { "type": "checkbox", "id": "badge_enabled", "label": "Show badge", "default": true },
-    { "type": "html", "id": "badge_icon", "label": "Badge top icon SVG (optional)" },
-    { "type": "text", "id": "badge_line1", "label": "Badge line 1", "default": "FAST PRINTING" },
-    { "type": "text", "id": "badge_line2", "label": "Badge line 2 (accent)", "default": "FAST DELIVERY" },
-    { "type": "text", "id": "badge_line3", "label": "Badge line 3", "default": "TORONTO BASED" },
-    { "type": "html", "id": "badge_bottom_icon", "label": "Badge small icon SVG (optional)" },
-
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#D71920" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
-    { "type": "color", "id": "body_color", "label": "Body text color", "default": "#CFCFCF" },
-
-    { "type": "header", "content": "Layout" },
-    { "type": "range", "id": "min_height_desktop", "label": "Minimum height (desktop, px)", "min": 400, "max": 900, "step": 10, "default": 700 },
-    { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile, px)", "min": 400, "max": 900, "step": 10, "default": 640 }
+    {
+      "type": "range",
+      "id": "overlay_strength",
+      "label": "Overlay darkness",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.9
+    },
+    {
+      "type": "header",
+      "content": "Text (used when there are no slide blocks)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "TORONTO'S"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading line 1",
+      "default": "FASTEST"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading line 2",
+      "default": "PRINT SHOP"
+    },
+    {
+      "type": "text",
+      "id": "subheading_normal",
+      "label": "Subheading (normal part)",
+      "default": "SAME-DAY. NEXT-DAY."
+    },
+    {
+      "type": "text",
+      "id": "subheading_highlight",
+      "label": "Subheading (highlighted part)",
+      "default": "YOUR WAY."
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph",
+      "default": "<p>Premium custom apparel and promotional products printed fast and delivered when you need it.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Buttons (used when there are no slide blocks)"
+    },
+    {
+      "type": "text",
+      "id": "button1_text",
+      "label": "Button 1 text",
+      "default": "Design Now"
+    },
+    {
+      "type": "url",
+      "id": "button1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button2_text",
+      "label": "Button 2 text",
+      "default": "Get A Quote"
+    },
+    {
+      "type": "url",
+      "id": "button2_link",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "header",
+      "content": "Badge (top right)"
+    },
+    {
+      "type": "checkbox",
+      "id": "badge_enabled",
+      "label": "Show badge",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "badge_icon",
+      "label": "Badge top icon SVG (optional)"
+    },
+    {
+      "type": "text",
+      "id": "badge_line1",
+      "label": "Badge line 1",
+      "default": "FAST PRINTING"
+    },
+    {
+      "type": "text",
+      "id": "badge_line2",
+      "label": "Badge line 2 (accent)",
+      "default": "FAST DELIVERY"
+    },
+    {
+      "type": "text",
+      "id": "badge_line3",
+      "label": "Badge line 3",
+      "default": "TORONTO BASED"
+    },
+    {
+      "type": "html",
+      "id": "badge_bottom_icon",
+      "label": "Badge small icon SVG (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#CFCFCF"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height_desktop",
+      "label": "Minimum height (desktop, px)",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum height (mobile, px)",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "default": 640
+    }
   ],
   "blocks": [
+    {
+      "type": "slide",
+      "name": "Banner slide",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Each banner is one slide. Add more to turn the hero into a slider; the badge, icon row and bottom bar stay the same across all of them."
+        },
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image_desktop",
+          "label": "Background image (desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image_mobile",
+          "label": "Background image (mobile)"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Desktop image focal point",
+          "default": "right",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "overlay_strength",
+          "label": "Overlay darkness",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "default": 0.9
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text",
+          "default": "TORONTO'S"
+        },
+        {
+          "type": "text",
+          "id": "heading_line1",
+          "label": "Heading line 1",
+          "default": "FASTEST"
+        },
+        {
+          "type": "text",
+          "id": "heading_line2",
+          "label": "Heading line 2",
+          "default": "PRINT SHOP"
+        },
+        {
+          "type": "text",
+          "id": "subheading_normal",
+          "label": "Subheading (normal part)",
+          "default": "SAME-DAY. NEXT-DAY."
+        },
+        {
+          "type": "text",
+          "id": "subheading_highlight",
+          "label": "Subheading (highlighted part)",
+          "default": "YOUR WAY."
+        },
+        {
+          "type": "richtext",
+          "id": "paragraph",
+          "label": "Paragraph",
+          "default": "<p>Premium custom apparel and promotional products printed fast and delivered when you need it.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "button1_text",
+          "label": "Button 1 text",
+          "default": "Design Now"
+        },
+        {
+          "type": "url",
+          "id": "button1_link",
+          "label": "Button 1 link"
+        },
+        {
+          "type": "text",
+          "id": "button2_text",
+          "label": "Button 2 text",
+          "default": "Get A Quote"
+        },
+        {
+          "type": "url",
+          "id": "button2_link",
+          "label": "Button 2 link"
+        }
+      ]
+    },
     {
       "type": "feature",
       "name": "Feature icon (top row)",
       "settings": [
-        { "type": "html", "id": "icon", "label": "SVG icon code" },
-        { "type": "text", "id": "label", "label": "Label", "default": "Same-Day Printing" }
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "SVG icon code"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Same-Day Printing"
+        }
       ]
     },
     {
       "type": "bottom_item",
       "name": "Bottom bar item",
       "settings": [
-        { "type": "html", "id": "icon", "label": "SVG icon code" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Proudly Toronto Based" },
-        { "type": "text", "id": "description", "label": "Description", "default": "Local production. Local delivery." }
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "SVG icon code"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Proudly Toronto Based"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Local production. Local delivery."
+        }
       ]
     }
   ],
@@ -324,13 +778,58 @@
     {
       "name": "GPL Hero",
       "blocks": [
-        { "type": "feature", "settings": { "label": "Fast Production" } },
-        { "type": "feature", "settings": { "label": "Premium Quality" } },
-        { "type": "feature", "settings": { "label": "GTA Delivery" } },
-        { "type": "feature", "settings": { "label": "Shipping Across Canada" } },
-        { "type": "bottom_item", "settings": { "title": "Proudly Toronto Based", "description": "Local production. Local delivery." } },
-        { "type": "bottom_item", "settings": { "title": "GTA Delivery", "description": "Fast, reliable delivery across the GTA." } },
-        { "type": "bottom_item", "settings": { "title": "Shipping Across Canada", "description": "Delivering quality from coast to coast." } }
+        {
+          "type": "slide",
+          "settings": {
+            "heading_line1": "FASTEST",
+            "heading_line2": "PRINT SHOP"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Fast Production"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Premium Quality"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "GTA Delivery"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Shipping Across Canada"
+          }
+        },
+        {
+          "type": "bottom_item",
+          "settings": {
+            "title": "Proudly Toronto Based",
+            "description": "Local production. Local delivery."
+          }
+        },
+        {
+          "type": "bottom_item",
+          "settings": {
+            "title": "GTA Delivery",
+            "description": "Fast, reliable delivery across the GTA."
+          }
+        },
+        {
+          "type": "bottom_item",
+          "settings": {
+            "title": "Shipping Across Canada",
+            "description": "Delivering quality from coast to coast."
+          }
+        }
       ]
     }
   ]

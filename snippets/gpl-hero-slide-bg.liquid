@@ -1,0 +1,41 @@
+{%- comment -%}
+  One hero slide's background layer. Rendered once per slide into the section's
+  background stack (not inside the slide's content) so the photo keeps covering
+  the whole hero, bottom bar included, exactly as the single-image hero did.
+
+  b      — settings object: a slide block's settings, or the section's own
+           settings when the hero has no slide blocks yet
+  index  — zero-based slide number
+  active — true for the slide shown first
+  eager  — true to load this image eagerly (first slide only; the rest are lazy
+           so a five-slide hero does not cost five full-size images up front)
+{%- endcomment -%}
+<div class="gpl-hero__bg{% if active %} is-active{% endif %}"
+  data-gpl-hero-bg="{{ index }}"
+  style="--gpl-hero-pos: {{ b.image_position | default: 'right' }}; --gpl-hero-overlay: {{ b.overlay_strength | default: 0.9 }};">
+  {%- if b.bg_image_desktop != blank -%}
+    <img
+      class="gpl-hero__bg-img gpl-hero__bg-img--desktop"
+      src="{{ b.bg_image_desktop | image_url: width: 2400 }}"
+      srcset="{{ b.bg_image_desktop | image_url: width: 1200 }} 1200w, {{ b.bg_image_desktop | image_url: width: 1800 }} 1800w, {{ b.bg_image_desktop | image_url: width: 2400 }} 2400w"
+      sizes="100vw"
+      alt=""
+      width="{{ b.bg_image_desktop.width }}"
+      height="{{ b.bg_image_desktop.height }}"
+      {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+    >
+  {%- endif -%}
+  {%- if b.bg_image_mobile != blank -%}
+    <img
+      class="gpl-hero__bg-img gpl-hero__bg-img--mobile"
+      src="{{ b.bg_image_mobile | image_url: width: 900 }}"
+      srcset="{{ b.bg_image_mobile | image_url: width: 600 }} 600w, {{ b.bg_image_mobile | image_url: width: 900 }} 900w"
+      sizes="100vw"
+      alt=""
+      width="{{ b.bg_image_mobile.width }}"
+      height="{{ b.bg_image_mobile.height }}"
+      {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+    >
+  {%- endif -%}
+  <div class="gpl-hero__overlay"></div>
+</div>
