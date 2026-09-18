@@ -12,6 +12,44 @@
     "slider_VP6qNY": {
       "type": "slider",
       "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/banner.webp",
+            "bg_image_mobile": "shopify://shop_images/banner.webp",
+            "image_position": "right",
+            "overlay_strength": 0.9,
+            "eyebrow": "TORONTO'S",
+            "heading_line1": "FASTEST",
+            "heading_line2": "PRINT SHOP",
+            "subheading_normal": "SAME-DAY. NEXT-DAY.",
+            "subheading_highlight": "YOUR WAY.",
+            "paragraph": "<p>We help businesses, sports teams, schools, organizations and fashion brands bring their ideas to life with premium custom apparel, embroidery and promotional products.</p>",
+            "button1_text": "Get A Quote",
+            "button1_link": "/pages/quote",
+            "button2_text": "Start Your Order",
+            "button2_link": "/collections/all"
+          }
+        },
+        "slide_nQQNqy": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
+            "bg_image_mobile": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_11_25_PM.png",
+            "image_position": "right",
+            "overlay_strength": 0.9,
+            "eyebrow": "TORONTO'S",
+            "heading_line1": "FASTEST",
+            "heading_line2": "PRINT SHOP",
+            "subheading_normal": "SAME-DAY. NEXT-DAY.",
+            "subheading_highlight": "YOUR WAY.",
+            "paragraph": "<p>We help businesses, sports teams, schools, organizations and fashion brands bring their ideas to life with premium custom apparel, embroidery and promotional products.</p>",
+            "button1_text": "Get A Quote",
+            "button1_link": "/pages/quote",
+            "button2_text": "Start Your Order",
+            "button2_link": "/collections/all"
+          }
+        },
         "feature_anFym9": {
           "type": "feature",
           "settings": {
@@ -39,29 +77,11 @@
             "icon": "",
             "label": "Fast GTA Delivery"
           }
-        },
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "bg_image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
-            "bg_image_mobile": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_11_25_PM.png",
-            "image_position": "right",
-            "overlay_strength": 0.9,
-            "eyebrow": "TORONTO'S",
-            "heading_line1": "FASTEST",
-            "heading_line2": "PRINT SHOP",
-            "subheading_normal": "SAME-DAY. NEXT-DAY.",
-            "subheading_highlight": "YOUR WAY.",
-            "paragraph": "<p>We help businesses, sports teams, schools, organizations and fashion brands bring their ideas to life with premium custom apparel, embroidery and promotional products.</p>",
-            "button1_text": "Get A Quote",
-            "button1_link": "/pages/quote",
-            "button2_text": "Start Your Order",
-            "button2_link": "/collections/all"
-          }
         }
       },
       "block_order": [
         "slide_1",
+        "slide_nQQNqy",
         "feature_anFym9",
         "feature_ExEJcU",
         "feature_qE9g4e",
@@ -69,6 +89,9 @@
       ],
       "name": "GPL Hero",
       "settings": {
+        "autoplay_seconds": 6,
+        "fade_ms": 600,
+        "slider_label": "Hero banners",
         "bg_image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
         "bg_image_mobile": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_11_25_PM.png",
         "image_position": "right",
@@ -93,10 +116,7 @@
         "heading_color": "#ffffff",
         "body_color": "#cfcfcf",
         "min_height_desktop": 680,
-        "min_height_mobile": 620,
-        "autoplay_seconds": 6,
-        "fade_ms": 600,
-        "slider_label": "Hero banners"
+        "min_height_mobile": 620
       }
     },
     "custom_content_GHUDep": {
@@ -271,6 +291,33 @@
         "card_gap": 16,
         "padding_top": 56,
         "padding_bottom": 0
+      }
+    },
+    "delivery_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/banner.webp",
+        "alt": "Free delivery in the GTA on orders of $150 or more, delivered in 48 hours. We print and ship right to your door. Toronto people wear great ideas.",
+        "link": "/collections/all",
+        "eager": false,
+        "heading": "Free delivery in the GTA on orders over $150",
+        "heading_level": "h2",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": "",
+        "button_3_text": "",
+        "button_3_link": "",
+        "button_align": "center",
+        "full_bleed": true,
+        "max_width": 1440,
+        "side_padding": 24,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0b0b0b",
+        "color_accent": "#d71920",
+        "color_button_text": "#ffffff"
       }
     },
     "image_with_text_2_pyKjiq": {
@@ -1105,25 +1152,6 @@
         "right_button_link": "/pages/quote",
         "padding_top": 56,
         "padding_bottom": 56
-      }
-    },
-    "delivery_banner": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/banner.webp",
-        "alt": "Free delivery in the GTA on orders of $150 or more, delivered in 48 hours. We print and ship right to your door. Toronto people wear great ideas.",
-        "heading": "Free delivery in the GTA on orders over $150",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center",
-        "link": "/collections/all"
       }
     }
   },
