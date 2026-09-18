@@ -162,7 +162,8 @@
         "heading_color": "#ffffff",
         "body_color": "#cfcfcf",
         "min_height_desktop": 680,
-        "min_height_mobile": 620
+        "min_height_mobile": 620,
+        "height_mode": "fit"
       }
     },
     "custom_content_GHUDep": {
