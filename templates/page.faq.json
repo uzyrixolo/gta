@@ -16,21 +16,24 @@
           "type": "tier",
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z\"/></svg>",
-            "title": "Toronto-Based"
+            "title": "Toronto-Based",
+            "subtitle": ""
           }
         },
         "t2": {
           "type": "tier",
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M13 2 4 14h6l-1 8 9-12h-6l1-8Z\"/></svg>",
-            "title": "Fast Turnarounds"
+            "title": "Fast Turnarounds",
+            "subtitle": ""
           }
         },
         "t3": {
           "type": "tier",
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6 3h12l4 6-10 12L2 9l4-6Zm.6 2L4.3 8.5h4.2L9.7 5H6.6Zm5.4 0-1.2 3.5h3.4L13 5h-1Zm3.4 0 1.2 3.5h4.1L18.4 5h-3ZM4.9 10.5 12 18.9l7.1-8.4H4.9Z\"/></svg>",
-            "title": "Premium Quality"
+            "title": "Premium Quality",
+            "subtitle": ""
           }
         },
         "t4": {
@@ -59,7 +62,16 @@
         "min_height": 520,
         "min_height_mobile": 460,
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_background": "#0B0B0B",
+        "badge_text": "",
+        "heading_line2": "",
+        "heading_line3_prefix": "",
+        "subheading": "",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": "",
+        "background_image": "shopify://shop_images/gta-about.webp"
       }
     },
     "faq": {
