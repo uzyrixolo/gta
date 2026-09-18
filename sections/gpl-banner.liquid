@@ -36,7 +36,8 @@
               wider than the file would advertise pixels it cannot deliver and the
               browser would upscale it. Only real widths are offered. {%- endcomment -%}
           {%- capture banner_srcset -%}
-            {%- for w in wide_steps -%}
+            {%- for step in wide_steps -%}
+              {%- assign w = step | plus: 0 -%}
               {%- if w < img.width -%}{{ img | image_url: width: w }} {{ w }}w, {% endif -%}
             {%- endfor -%}
             {{ img | image_url: width: img.width }} {{ img.width }}w
@@ -50,7 +51,8 @@
           <img class="gpl-banner__img gpl-banner__img--mobile"
             src="{{ s.image_mobile | image_url: width: s.image_mobile.width }}"
             {%- capture banner_srcset_m -%}
-              {%- for w in narrow_steps -%}
+              {%- for step in narrow_steps -%}
+                {%- assign w = step | plus: 0 -%}
                 {%- if w < s.image_mobile.width -%}{{ s.image_mobile | image_url: width: w }} {{ w }}w, {% endif -%}
               {%- endfor -%}
               {{ s.image_mobile | image_url: width: s.image_mobile.width }} {{ s.image_mobile.width }}w
