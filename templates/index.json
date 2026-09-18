@@ -39,9 +39,29 @@
             "icon": "",
             "label": "Fast GTA Delivery"
           }
+        },
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
+            "bg_image_mobile": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_11_25_PM.png",
+            "image_position": "right",
+            "overlay_strength": 0.9,
+            "eyebrow": "TORONTO'S",
+            "heading_line1": "FASTEST",
+            "heading_line2": "PRINT SHOP",
+            "subheading_normal": "SAME-DAY. NEXT-DAY.",
+            "subheading_highlight": "YOUR WAY.",
+            "paragraph": "<p>We help businesses, sports teams, schools, organizations and fashion brands bring their ideas to life with premium custom apparel, embroidery and promotional products.</p>",
+            "button1_text": "Get A Quote",
+            "button1_link": "/pages/quote",
+            "button2_text": "Start Your Order",
+            "button2_link": "/collections/all"
+          }
         }
       },
       "block_order": [
+        "slide_1",
         "feature_anFym9",
         "feature_ExEJcU",
         "feature_qE9g4e",
@@ -73,7 +93,10 @@
         "heading_color": "#ffffff",
         "body_color": "#cfcfcf",
         "min_height_desktop": 680,
-        "min_height_mobile": 620
+        "min_height_mobile": 620,
+        "autoplay_seconds": 6,
+        "fade_ms": 600,
+        "slider_label": "Hero banners"
       }
     },
     "custom_content_GHUDep": {
