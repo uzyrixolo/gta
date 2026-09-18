@@ -255,9 +255,16 @@
   #gpl-hero-{{ section_id }} .gpl-hero__bg.is-active { opacity: 1; visibility: visible; }
   #gpl-hero-{{ section_id }} .gpl-hero__bg-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--gpl-hero-pos, right); display: none; }
   #gpl-hero-{{ section_id }} .gpl-hero__bg-img--desktop { display: block; }
+  /* Every stop is scaled by the slide's own overlay setting, so 0 really is no
+     overlay. The multipliers keep the original shape: at the 0.9 default they
+     come out as 0.9 / 0.75 / 0.25 / 0.05, exactly as before. */
   #gpl-hero-{{ section_id }} .gpl-hero__overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(90deg, rgba(11,11,11,var(--gpl-hero-overlay, 0.9)) 0%, rgba(11,11,11,0.75) 40%, rgba(11,11,11,0.25) 72%, rgba(11,11,11,0.05) 100%);
+    background: linear-gradient(90deg,
+      rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 1)) 0%,
+      rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 0.83)) 40%,
+      rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 0.28)) 72%,
+      rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 0.06)) 100%);
   }
   #gpl-hero-{{ section_id }} .gpl-hero__inner {
     position: relative; z-index: 1; width: 100%; max-width: 1440px; margin: 0 auto;
@@ -364,7 +371,12 @@
     #gpl-hero-{{ section_id }} { min-height: {{ s.min_height_mobile }}px; align-items: flex-start; }
     #gpl-hero-{{ section_id }} .gpl-hero__bg-img--desktop { display: none; }
     #gpl-hero-{{ section_id }} .gpl-hero__bg-img--mobile { display: block; }
-    #gpl-hero-{{ section_id }} .gpl-hero__overlay { background: linear-gradient(180deg, rgba(11,11,11,0.5) 0%, rgba(11,11,11,0.88) 60%, rgba(11,11,11,0.98) 100%); }
+    #gpl-hero-{{ section_id }} .gpl-hero__overlay {
+      background: linear-gradient(180deg,
+        rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 0.56)) 0%,
+        rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 0.98)) 60%,
+        rgba(11,11,11,calc(var(--gpl-hero-overlay, 0.9) * 1.09)) 100%);
+    }
     #gpl-hero-{{ section_id }} .gpl-hero__inner { padding: 52px 18px 0; }
     #gpl-hero-{{ section_id }} .gpl-hero__badge { display: none; }
     #gpl-hero-{{ section_id }} .gpl-hero__content { max-width: 100%; padding-top: 0; }
