@@ -248,11 +248,18 @@
     background: #111111;
   }
   #gpl-hero-{{ section_id }} .gpl-hero__bgs { position: absolute; inset: 0; z-index: 0; }
+  /* visibility has to be held until the fade finishes, or the outgoing photo
+     disappears the instant the class is removed and the hero goes black for
+     the length of the cross-fade. Becoming active: flip it immediately.
+     Becoming inactive: flip it only after the opacity has finished. */
   #gpl-hero-{{ section_id }} .gpl-hero__bg {
     position: absolute; inset: 0; opacity: 0; visibility: hidden;
-    transition: opacity {{ s.fade_ms }}ms ease;
+    transition: opacity {{ s.fade_ms }}ms ease, visibility 0s linear {{ s.fade_ms }}ms;
   }
-  #gpl-hero-{{ section_id }} .gpl-hero__bg.is-active { opacity: 1; visibility: visible; }
+  #gpl-hero-{{ section_id }} .gpl-hero__bg.is-active {
+    opacity: 1; visibility: visible;
+    transition: opacity {{ s.fade_ms }}ms ease, visibility 0s linear 0s;
+  }
   #gpl-hero-{{ section_id }} .gpl-hero__bg-img { width: 100%; height: 100%; object-fit: cover; object-position: var(--gpl-hero-pos, right); display: none; }
   #gpl-hero-{{ section_id }} .gpl-hero__bg-img--desktop { display: block; }
   /* Every stop is scaled by the slide's own overlay setting, so 0 really is no
