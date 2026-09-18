@@ -15,6 +15,45 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "bg_image_desktop": "shopify://shop_images/Screenshot_2026-09-19_at_12.54.55_AM.jpg",
+            "bg_image_mobile": "shopify://shop_images/Screenshot_2026-09-19_at_12.54.55_AM.jpg",
+            "image_position": "right",
+            "overlay_strength": 0,
+            "eyebrow": "",
+            "heading_line1": "",
+            "heading_line2": "",
+            "subheading_normal": "",
+            "subheading_highlight": "",
+            "paragraph": "",
+            "button1_text": "",
+            "button1_link": "/pages/quote",
+            "button2_text": "",
+            "button2_link": ""
+          }
+        },
+        "slide_ycLf7F": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/banner.webp",
+            "bg_image_mobile": "shopify://shop_images/banner.webp",
+            "image_position": "right",
+            "overlay_strength": 0,
+            "eyebrow": "",
+            "heading_line1": "",
+            "heading_line2": "",
+            "subheading_normal": "",
+            "subheading_highlight": "",
+            "paragraph": "",
+            "button1_text": "",
+            "button1_link": "",
+            "button2_text": "",
+            "button2_link": "/collections/all"
+          }
+        },
+        "slide_AQMgA7": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
             "bg_image_desktop": "shopify://shop_images/banner.webp",
             "bg_image_mobile": "shopify://shop_images/banner.webp",
             "image_position": "right",
@@ -31,11 +70,12 @@
             "button2_link": "/collections/all"
           }
         },
-        "slide_nQQNqy": {
+        "slide_VqmCkM": {
           "type": "slide",
+          "disabled": true,
           "settings": {
-            "bg_image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_06_57_PM.png",
-            "bg_image_mobile": "shopify://shop_images/ChatGPT_Image_Jul_28_2026_08_11_25_PM.png",
+            "bg_image_desktop": "shopify://shop_images/banner.webp",
+            "bg_image_mobile": "shopify://shop_images/banner.webp",
             "image_position": "right",
             "overlay_strength": 0.9,
             "eyebrow": "TORONTO'S",
@@ -52,6 +92,7 @@
         },
         "feature_anFym9": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "icon": "",
             "label": "Same-Day Printing"
@@ -59,6 +100,7 @@
         },
         "feature_ExEJcU": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "icon": "",
             "label": "Premium Quality"
@@ -66,6 +108,7 @@
         },
         "feature_qE9g4e": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "icon": "",
             "label": "No Minimum Orders"
@@ -73,6 +116,7 @@
         },
         "feature_NWPche": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "icon": "",
             "label": "Fast GTA Delivery"
@@ -81,7 +125,9 @@
       },
       "block_order": [
         "slide_1",
-        "slide_nQQNqy",
+        "slide_ycLf7F",
+        "slide_AQMgA7",
+        "slide_VqmCkM",
         "feature_anFym9",
         "feature_ExEJcU",
         "feature_qE9g4e",
