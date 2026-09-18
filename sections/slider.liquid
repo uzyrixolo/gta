@@ -20,6 +20,21 @@
   if slide_count == 0
     assign slide_count = 1
   endif
+
+  comment
+    In "fit" mode the hero takes its shape from the first banner instead of a
+    fixed height, so finished artwork is shown whole. Later slides are drawn
+    with object-fit: contain, so a banner of a different shape is letterboxed
+    rather than cropped — nothing is ever cut off.
+  endcomment
+  if slides.size > 0
+    assign first_slide = slides | first
+    assign fit_img = first_slide.settings.bg_image_desktop
+    assign fit_img_mobile = first_slide.settings.bg_image_mobile | default: first_slide.settings.bg_image_desktop
+  else
+    assign fit_img = s.bg_image_desktop
+    assign fit_img_mobile = s.bg_image_mobile | default: s.bg_image_desktop
+  endif
 -%}
 
 <section id="gpl-hero-{{ section_id }}"
@@ -401,6 +416,26 @@
     #gpl-hero-{{ section_id }} .gpl-hero__bg,
     #gpl-hero-{{ section_id }} .gpl-hero__content { transition: none; transform: none; }
   }
+
+  {%- if s.height_mode == 'fit' %}
+  /* Height follows the banner. These come last so they beat the fixed
+     min-heights set above, including the one inside the phone breakpoint. */
+  {%- if fit_img != blank %}
+  #gpl-hero-{{ section_id }} {
+    min-height: 0;
+    aspect-ratio: {{ fit_img.width }} / {{ fit_img.height }};
+  }
+  {%- endif %}
+  #gpl-hero-{{ section_id }} .gpl-hero__bg-img { object-fit: contain; }
+  {%- if fit_img_mobile != blank %}
+  @media screen and (max-width: 749px) {
+    #gpl-hero-{{ section_id }} {
+      min-height: 0;
+      aspect-ratio: {{ fit_img_mobile.width }} / {{ fit_img_mobile.height }};
+    }
+  }
+  {%- endif %}
+  {%- endif %}
 {% endstyle %}
 
 {% schema %}
@@ -616,6 +651,23 @@
     {
       "type": "header",
       "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "height_mode",
+      "label": "Height",
+      "default": "fixed",
+      "options": [
+        {
+          "value": "fixed",
+          "label": "Fixed height (photo is cropped to fill)"
+        },
+        {
+          "value": "fit",
+          "label": "Fit the banner (whole image, never cropped)"
+        }
+      ],
+      "info": "Use \"Fit the banner\" for finished artwork that already has its own headline and buttons. The height follows the first slide's image."
     },
     {
       "type": "range",
