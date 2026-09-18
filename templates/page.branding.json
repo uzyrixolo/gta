@@ -10,25 +10,25 @@
 {
   "sections": {
     "brand_hero": {
-      "type": "gpl-gd-hero",
+      "type": "gpl-banner",
       "settings": {
-        "image_position": "center right",
-        "scrim_strength": 90,
-        "min_height": 620,
-        "min_height_mobile": 480,
-        "eyebrow": "",
-        "heading_line1": "Branding",
-        "heading_line2": "That Builds",
-        "heading_line3": "Recognition.",
-        "subheading": "We Brand It. You Own It.",
-        "paragraph": "<p>From your logo to your packaging, your store to your social media, we build a powerful brand that connects with your audience and grows your business.</p>",
-        "button_1_text": "Start Your Brand",
-        "button_1_link": "",
-        "button_2_text": "Request a Quote",
-        "button_2_link": "/pages/quote",
+        "image": "shopify://shop_images/branding-banner.webp",
+        "alt": "Branding — ideas, identity, content, connection, growth. Let's build a brand people remember: brand strategy, logo design and visual identity, photography and video content, social media graphics, custom packaging, marketing materials and brand consultation.",
+        "heading": "Branding That Builds Recognition.",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A",
-        "background_image": "shopify://shop_images/gpl-hero-branding.jpg"
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "Start Your Brand",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "/pages/quote"
       }
     },
     "brand_features": {

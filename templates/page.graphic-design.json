@@ -10,23 +10,25 @@
 {
   "sections": {
     "gd_hero": {
-      "type": "gpl-gd-hero",
+      "type": "gpl-banner",
       "settings": {
-        "image_position": "center right",
-        "scrim_strength": 90,
-        "min_height": 620,
-        "min_height_mobile": 480,
-        "eyebrow": "",
-        "heading_line1": "Graphic",
-        "heading_line2": "Design",
-        "subheading": "Turn Your Idea Into Something People Want to Wear.",
-        "paragraph": "<p>From a simple idea to a complete brand identity, GTA Print Lab's graphic design team creates artwork that looks great on screen and prints beautifully on apparel, promotional products, signage, and marketing materials.</p>",
-        "button_1_text": "Start Your Design",
-        "button_1_link": "",
-        "button_2_text": "Request a Quote",
-        "button_2_link": "/pages/quote",
+        "image": "shopify://shop_images/grapic-design-banner.webp",
+        "alt": "Graphic design — turn your ideas into something people wear. Logo design and branding, apparel design, promotional materials, social media graphics, packaging design and more.",
+        "heading": "Graphic Design",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "Start Your Design",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "/pages/quote"
       }
     },
     "gd_audience": {

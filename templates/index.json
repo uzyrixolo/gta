@@ -1106,12 +1106,32 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
+    },
+    "delivery_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/banner.webp",
+        "alt": "Free delivery in the GTA on orders of $150 or more, delivered in 48 hours. We print and ship right to your door. Toronto people wear great ideas.",
+        "heading": "Free delivery in the GTA on orders over $150",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "link": "/collections/all"
+      }
     }
   },
   "order": [
     "slider_VP6qNY",
     "custom_content_GHUDep",
     "collection_list_P6dnhC",
+    "delivery_banner",
     "image_with_text_2_pyKjiq",
     "featured_collection_fCmtxc",
     "image_with_text_UwCU9T",

@@ -10,25 +10,42 @@
 {
   "sections": {
     "web_hero": {
-      "type": "gpl-gd-hero",
+      "type": "gpl-banner",
       "settings": {
-        "image_position": "center right",
-        "scrim_strength": 90,
-        "min_height": 620,
-        "min_height_mobile": 480,
-        "eyebrow": "",
-        "heading_line1": "Website",
-        "heading_line2": "Development",
-        "subheading": "Powerful Websites. Seamless Shopping. Built to Sell. Built to Scale.",
-        "paragraph": "<p>We build high-converting, fast, and mobile-first websites designed for eCommerce, Print on Demand, and custom brands. From design to launch and beyond, we handle everything so you can focus on growing your business.</p>",
-        "button_1_text": "Start Your Project",
-        "button_1_link": "",
-        "button_2_text": "Request a Quote",
-        "button_2_link": "/pages/quote",
+        "image": "shopify://shop_images/website-banner.webp",
+        "alt": "Website development — design, develop, launch, grow. Powerful websites for a bigger tomorrow: custom design, responsive and mobile ready, e-commerce integration, SEO optimized, content management, fast turnaround and ongoing support.",
+        "heading": "Website Development",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A",
-        "background_image": "shopify://shop_images/gpl-hero-website.jpg"
-      }
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "Start Your Project",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "/pages/quote"
+      },
+      "blocks": {
+        "hot_1": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Let's build your website",
+            "link": "/pages/quote",
+            "x": 71,
+            "y": 86,
+            "w": 19,
+            "h": 9
+          }
+        }
+      },
+      "block_order": [
+        "hot_1"
+      ]
     },
     "web_features": {
       "type": "gpl-gd-audience",
