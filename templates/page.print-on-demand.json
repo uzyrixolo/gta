@@ -30,7 +30,8 @@
         "button_2_link": "/pages/quote",
         "promise_heading": "",
         "color_accent": "#d71920",
-        "color_background": "#0a0a0a"
+        "color_background": "#0a0a0a",
+        "height_mode": "fit"
       }
     },
     "pod_features": {
