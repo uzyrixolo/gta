@@ -152,7 +152,7 @@
         "button1_link": "/pages/quote",
         "button2_text": "Start Your Order",
         "button2_link": "/collections/all",
-        "badge_enabled": true,
+        "badge_enabled": false,
         "badge_icon": "",
         "badge_line1": "",
         "badge_line2": "FAST DELIVERY",
