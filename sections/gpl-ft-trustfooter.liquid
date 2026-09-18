@@ -41,7 +41,7 @@
   }
   #gpl-ft-tf-{{ section.id }} .gpl-ft-tf__points {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 6 }}, minmax(0, 1fr));
     padding: clamp(20px, 2.2vw, 32px) 0;
   }
   #gpl-ft-tf-{{ section.id }} .gpl-ft-tf-point {
@@ -94,7 +94,7 @@
     {
       "type": "point",
       "name": "Point",
-      "limit": 4,
+      "limit": 6,
       "settings": [
         { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
         { "type": "text", "id": "title", "label": "Title", "default": "Real People" },
