@@ -98,7 +98,7 @@
                     {%- assign a = block.settings[ak] -%}
                     {%- if q != blank -%}
                       {%- assign qid = 'faq-' | append: id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: i -%}
-                      <div class="gpl-faq__item" data-gpl-faq-item data-gpl-faq-text="{{ q | append: ' ' | append: a | strip_html | downcase | escape }}">
+                      <div class="gpl-faq__item" data-gpl-faq-item data-gpl-faq-text="{{ block.settings.title | append: ' ' | append: q | append: ' ' | append: a | strip_html | downcase | escape }}">
                         <h4 class="gpl-faq__q-wrap">
                           <button type="button" class="gpl-faq__q" aria-expanded="false" aria-controls="{{ qid }}">
                             <span class="gpl-faq__q-text">{{ q }}</span>
