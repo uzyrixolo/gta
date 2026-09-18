@@ -1,0 +1,450 @@
+{%- comment -%}
+  GTA Print Lab — FAQ browser.
+  Category tiles + search + a sticky category rail + accordions, all from one
+  section so the whole FAQ is editable in the theme editor.
+
+  Content model: one block per CATEGORY, each holding up to 8 question/answer
+  pairs. Shopify caps a section at 50 blocks, so a block-per-question would have
+  run out at ~50 answers; this way 18 categories carry up to 144.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign cats = section.blocks | where: 'type', 'category' -%}
+{%- assign id = section.id -%}
+
+<section id="gpl-faq-{{ id }}" class="gpl-faq" data-gpl-faq>
+
+  {%- comment -%} ---------- finder ---------- {%- endcomment -%}
+  {%- if s.show_finder -%}
+    <div class="gpl-faq__finder">
+      <div class="gpl-faq__wrap">
+        {%- if s.finder_heading != blank -%}<h2 class="gpl-faq__h2">{{ s.finder_heading }}</h2>{%- endif -%}
+        {%- if s.finder_sub != blank -%}<p class="gpl-faq__sub">{{ s.finder_sub }}</p>{%- endif -%}
+
+        <div class="gpl-faq__searchbar">
+          <span class="gpl-faq__search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+          </span>
+          <input type="search" class="gpl-faq__search" data-gpl-faq-search
+            placeholder="{{ s.search_placeholder | escape }}"
+            aria-label="{{ s.search_placeholder | escape }}"
+            autocomplete="off">
+          <button type="button" class="gpl-faq__search-btn" data-gpl-faq-search-btn>Search</button>
+        </div>
+
+        {%- if cats.size > 0 -%}
+          <div class="gpl-faq__tiles">
+            {%- for block in cats -%}
+              <button type="button" class="gpl-faq__tile" data-gpl-faq-cat="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                <span class="gpl-faq__tile-icon">{% render 'gpl-faq-icon', name: block.settings.icon %}</span>
+                <span class="gpl-faq__tile-label">{{ block.settings.title }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- questions ---------- {%- endcomment -%}
+  <div class="gpl-faq__main">
+    <div class="gpl-faq__wrap">
+      {%- if s.list_heading != blank -%}<h2 class="gpl-faq__h2">{{ s.list_heading }}</h2>{%- endif -%}
+      {%- if s.list_sub != blank -%}<p class="gpl-faq__sub">{{ s.list_sub }}</p>{%- endif -%}
+
+      {%- if cats.size == 0 -%}
+        <p class="gpl-faq__empty">Add a category block to start building the FAQ.</p>
+      {%- else -%}
+        <div class="gpl-faq__cols">
+
+          <nav class="gpl-faq__rail" aria-label="FAQ categories">
+            {%- for block in cats -%}
+              <button type="button" class="gpl-faq__rail-item" data-gpl-faq-cat="{{ forloop.index0 }}">
+                <span class="gpl-faq__rail-icon">{% render 'gpl-faq-icon', name: block.settings.icon %}</span>
+                <span class="gpl-faq__rail-label">{{ block.settings.title }}</span>
+                <span class="gpl-faq__rail-chev" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                </span>
+              </button>
+            {%- endfor -%}
+          </nav>
+
+          <div class="gpl-faq__panels">
+            <p class="gpl-faq__noresults" data-gpl-faq-noresults hidden>
+              No answers matched that search. Try a different word, or
+              <a href="{{ s.contact_link | default: '/pages/contact' }}">ask us directly</a>.
+            </p>
+
+            {%- for block in cats -%}
+              {%- assign qcount = 0 -%}
+              {%- for i in (1..8) -%}
+                {%- assign qk = 'question_' | append: i -%}
+                {%- if block.settings[qk] != blank -%}{%- assign qcount = qcount | plus: 1 -%}{%- endif -%}
+              {%- endfor -%}
+
+              <section class="gpl-faq__panel" data-gpl-faq-panel="{{ forloop.index0 }}"
+                aria-label="{{ block.settings.title | escape }}" {{ block.shopify_attributes }}>
+                <header class="gpl-faq__panel-head">
+                  <span class="gpl-faq__panel-icon">{% render 'gpl-faq-icon', name: block.settings.icon %}</span>
+                  <h3 class="gpl-faq__panel-title">{{ block.settings.title }}</h3>
+                  <span class="gpl-faq__panel-count">{{ qcount }} {% if qcount == 1 %}Question{% else %}Questions{% endif %}</span>
+                </header>
+
+                <div class="gpl-faq__items">
+                  {%- for i in (1..8) -%}
+                    {%- assign qk = 'question_' | append: i -%}
+                    {%- assign ak = 'answer_' | append: i -%}
+                    {%- assign q = block.settings[qk] -%}
+                    {%- assign a = block.settings[ak] -%}
+                    {%- if q != blank -%}
+                      {%- assign qid = 'faq-' | append: id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: i -%}
+                      <div class="gpl-faq__item" data-gpl-faq-item data-gpl-faq-text="{{ q | append: ' ' | append: a | strip_html | downcase | escape }}">
+                        <h4 class="gpl-faq__q-wrap">
+                          <button type="button" class="gpl-faq__q" aria-expanded="false" aria-controls="{{ qid }}">
+                            <span class="gpl-faq__q-text">{{ q }}</span>
+                            <span class="gpl-faq__q-sign" aria-hidden="true"></span>
+                          </button>
+                        </h4>
+                        <div class="gpl-faq__a" id="{{ qid }}" hidden>
+                          <div class="gpl-faq__a-inner">{{ a }}</div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </section>
+            {%- endfor -%}
+          </div>
+
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Structured data: a FAQ page is one of the few places Google still renders rich
+  results, and every answer is already plain text here.
+{%- endcomment -%}
+{%- capture faq_ld -%}
+{% assign first = true %}
+{%- for block in cats -%}
+  {%- for i in (1..8) -%}
+    {%- assign qk = 'question_' | append: i -%}
+    {%- assign ak = 'answer_' | append: i -%}
+    {%- assign q = block.settings[qk] -%}
+    {%- assign a = block.settings[ak] | strip_html | strip -%}
+    {%- if q != blank and a != blank -%}
+      {%- unless first %},{% endunless %}{% assign first = false %}
+      {"@type":"Question","name":{{ q | json }},"acceptedAnswer":{"@type":"Answer","text":{{ a | json }}}}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign faq_ld = faq_ld | strip -%}
+{%- if faq_ld != blank -%}
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_ld }}]}</script>
+{%- endif -%}
+
+{% style %}
+  #gpl-faq-{{ id }} {
+    --faq-accent: {{ s.color_accent | default: '#D71920' }};
+    --faq-line: #E6E6E6;
+    --faq-muted: #6B6B6B;
+    background: {{ s.color_background | default: '#FFFFFF' }};
+    color: #111111;
+  }
+  #gpl-faq-{{ id }} * { box-sizing: border-box; }
+  #gpl-faq-{{ id }} .gpl-faq__wrap { width: min(1280px, calc(100% - clamp(28px, 5vw, 64px))); margin: 0 auto; }
+  #gpl-faq-{{ id }} .gpl-faq__finder { padding: clamp(40px, 5vw, 72px) 0 clamp(28px, 3vw, 44px); }
+  #gpl-faq-{{ id }} .gpl-faq__main { padding: clamp(16px, 2vw, 28px) 0 clamp(48px, 6vw, 88px); }
+  #gpl-faq-{{ id }} .gpl-faq__h2 {
+    margin: 0 0 8px; text-align: center; font-family: var(--gpl-font-heading, inherit);
+    font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.05;
+    font-size: clamp(26px, 3.6vw, 44px);
+  }
+  #gpl-faq-{{ id }} .gpl-faq__sub { margin: 0 auto clamp(20px, 2.4vw, 32px); text-align: center; color: var(--faq-muted); font-size: clamp(14px, 1.2vw, 16px); max-width: 68ch; }
+  #gpl-faq-{{ id }} .gpl-faq__empty { text-align: center; color: var(--faq-muted); padding: 40px 0; }
+
+  /* search */
+  #gpl-faq-{{ id }} .gpl-faq__searchbar {
+    display: flex; align-items: center; gap: 10px; max-width: 880px; margin: 0 auto clamp(22px, 2.6vw, 34px);
+    border: 1px solid var(--faq-line); border-radius: 8px; background: #FFFFFF; padding: 6px 6px 6px 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  #gpl-faq-{{ id }} .gpl-faq__searchbar:focus-within { border-color: #111111; }
+  #gpl-faq-{{ id }} .gpl-faq__search-icon { display: flex; color: #8A8A8A; flex: 0 0 auto; }
+  #gpl-faq-{{ id }} .gpl-faq__search-icon svg { width: 20px; height: 20px; }
+  #gpl-faq-{{ id }} .gpl-faq__search {
+    flex: 1; min-width: 0; border: none; outline: none; background: none; padding: 12px 4px;
+    font: inherit; font-size: 15px; color: #111111;
+  }
+  #gpl-faq-{{ id }} .gpl-faq__search::-webkit-search-cancel-button { cursor: pointer; }
+  #gpl-faq-{{ id }} .gpl-faq__search-btn {
+    flex: 0 0 auto; cursor: pointer; border: none; border-radius: 6px; background: var(--faq-accent); color: #FFFFFF;
+    font: inherit; font-weight: 700; font-size: 14px; padding: 12px 22px;
+  }
+  #gpl-faq-{{ id }} .gpl-faq__search-btn:hover { background: #B5141A; }
+
+  /* category tiles */
+  #gpl-faq-{{ id }} .gpl-faq__tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+  #gpl-faq-{{ id }} .gpl-faq__tile {
+    display: flex; align-items: center; gap: 10px; cursor: pointer; text-align: left;
+    padding: 14px 14px; border: 1px solid transparent; border-radius: 8px;
+    background: #F4F4F4; color: #111111; font: inherit; font-size: 13px; font-weight: 500;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  #gpl-faq-{{ id }} .gpl-faq__tile:hover { background: #FFFFFF; border-color: var(--faq-accent); transform: translateY(-1px); }
+  #gpl-faq-{{ id }} .gpl-faq__tile.is-active { background: #FFFFFF; border-color: var(--faq-accent); box-shadow: 0 0 0 1px var(--faq-accent); }
+  #gpl-faq-{{ id }} .gpl-faq__tile-icon { display: flex; flex: 0 0 auto; }
+  #gpl-faq-{{ id }} .gpl-faq__tile-icon svg { width: 22px; height: 22px; }
+  #gpl-faq-{{ id }} .gpl-faq__tile-label { line-height: 1.25; }
+
+  /* two columns */
+  #gpl-faq-{{ id }} .gpl-faq__cols { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(24px, 3vw, 56px); align-items: start; }
+  #gpl-faq-{{ id }} .gpl-faq__rail { position: sticky; top: 96px; display: flex; flex-direction: column; background: #F4F4F4; border-radius: 8px; overflow: hidden; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-item {
+    display: flex; align-items: center; gap: 10px; width: 100%; cursor: pointer; text-align: left;
+    padding: 11px 14px; border: none; background: none; color: #333333; font: inherit; font-size: 13.5px;
+  }
+  #gpl-faq-{{ id }} .gpl-faq__rail-item:hover { background: #ECECEC; color: #111111; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-item.is-active { background: var(--faq-accent); color: #FFFFFF; font-weight: 700; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-icon { display: flex; flex: 0 0 auto; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-icon svg { width: 17px; height: 17px; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-label { flex: 1; min-width: 0; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-chev { display: none; flex: 0 0 auto; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-chev svg { width: 14px; height: 14px; }
+  #gpl-faq-{{ id }} .gpl-faq__rail-item.is-active .gpl-faq__rail-chev { display: flex; }
+
+  /* panels */
+  #gpl-faq-{{ id }} .gpl-faq__panel { display: none; }
+  #gpl-faq-{{ id }} .gpl-faq__panel.is-active { display: block; }
+  #gpl-faq-{{ id }} .gpl-faq__panel-head { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 3px solid var(--faq-accent); margin-bottom: 18px; }
+  #gpl-faq-{{ id }} .gpl-faq__panel-icon { display: flex; color: #111111; }
+  #gpl-faq-{{ id }} .gpl-faq__panel-icon svg { width: 26px; height: 26px; }
+  #gpl-faq-{{ id }} .gpl-faq__panel-title { margin: 0; font-family: var(--gpl-font-heading, inherit); font-weight: 800; text-transform: uppercase; font-size: clamp(18px, 2vw, 26px); }
+  #gpl-faq-{{ id }} .gpl-faq__panel-count { margin-left: auto; color: var(--faq-muted); font-size: 13px; white-space: nowrap; }
+
+  #gpl-faq-{{ id }} .gpl-faq__items { display: flex; flex-direction: column; gap: 10px; }
+  #gpl-faq-{{ id }} .gpl-faq__item { border: 1px solid var(--faq-line); border-radius: 6px; background: #FFFFFF; overflow: hidden; }
+  #gpl-faq-{{ id }} .gpl-faq__item.is-open { border-color: #D5D5D5; }
+  #gpl-faq-{{ id }} .gpl-faq__q-wrap { margin: 0; font-size: inherit; font-weight: inherit; }
+  #gpl-faq-{{ id }} .gpl-faq__q {
+    display: flex; align-items: center; gap: 16px; width: 100%; cursor: pointer; text-align: left;
+    padding: 18px 20px; border: none; background: none; color: #111111; font: inherit; font-size: 15.5px; font-weight: 600;
+  }
+  #gpl-faq-{{ id }} .gpl-faq__q:hover { color: var(--faq-accent); }
+  #gpl-faq-{{ id }} .gpl-faq__q-text { flex: 1; min-width: 0; }
+  #gpl-faq-{{ id }} .gpl-faq__q-sign { position: relative; flex: 0 0 auto; width: 16px; height: 16px; }
+  #gpl-faq-{{ id }} .gpl-faq__q-sign::before,
+  #gpl-faq-{{ id }} .gpl-faq__q-sign::after { content: ""; position: absolute; background: currentColor; border-radius: 1px; }
+  #gpl-faq-{{ id }} .gpl-faq__q-sign::before { left: 0; right: 0; top: 7px; height: 2px; }
+  #gpl-faq-{{ id }} .gpl-faq__q-sign::after { top: 0; bottom: 0; left: 7px; width: 2px; transition: transform .18s ease, opacity .18s ease; }
+  #gpl-faq-{{ id }} .gpl-faq__q[aria-expanded="true"] .gpl-faq__q-sign::after { transform: scaleY(0); opacity: 0; }
+  #gpl-faq-{{ id }} .gpl-faq__a { background: #F4F4F4; }
+  #gpl-faq-{{ id }} .gpl-faq__a-inner { padding: 16px 20px 20px; color: #444444; font-size: 14.5px; line-height: 1.65; }
+  #gpl-faq-{{ id }} .gpl-faq__a-inner > :first-child { margin-top: 0; }
+  #gpl-faq-{{ id }} .gpl-faq__a-inner > :last-child { margin-bottom: 0; }
+  #gpl-faq-{{ id }} .gpl-faq__a-inner a { color: var(--faq-accent); }
+  #gpl-faq-{{ id }} .gpl-faq__noresults { padding: 28px 4px; color: var(--faq-muted); }
+  #gpl-faq-{{ id }} .gpl-faq__noresults a { color: var(--faq-accent); }
+  #gpl-faq-{{ id }} .gpl-faq__item[hidden] { display: none; }
+
+  @media screen and (max-width: 1100px) {
+    #gpl-faq-{{ id }} .gpl-faq__tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media screen and (max-width: 860px) {
+    #gpl-faq-{{ id }} .gpl-faq__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* the rail turns into a horizontal chip strip so it never eats the page */
+    #gpl-faq-{{ id }} .gpl-faq__cols { grid-template-columns: minmax(0, 1fr); }
+    #gpl-faq-{{ id }} .gpl-faq__rail {
+      position: static; flex-direction: row; overflow-x: auto; gap: 8px; background: none; padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    #gpl-faq-{{ id }} .gpl-faq__rail::-webkit-scrollbar { display: none; }
+    #gpl-faq-{{ id }} .gpl-faq__rail-item { width: auto; flex: 0 0 auto; border-radius: 999px; background: #F4F4F4; padding: 9px 14px; }
+    #gpl-faq-{{ id }} .gpl-faq__rail-chev { display: none !important; }
+    #gpl-faq-{{ id }} .gpl-faq__panel-count { display: none; }
+  }
+  @media screen and (max-width: 480px) {
+    #gpl-faq-{{ id }} .gpl-faq__tiles { grid-template-columns: minmax(0, 1fr); }
+    #gpl-faq-{{ id }} .gpl-faq__search-btn { padding: 12px 16px; }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('gpl-faq-{{ id }}');
+    if (!root || root.dataset.gplFaqReady) return;
+    root.dataset.gplFaqReady = '1';
+
+    var tiles = root.querySelectorAll('[data-gpl-faq-cat]');
+    var panels = root.querySelectorAll('[data-gpl-faq-panel]');
+    var items = root.querySelectorAll('[data-gpl-faq-item]');
+    var search = root.querySelector('[data-gpl-faq-search]');
+    var searchBtn = root.querySelector('[data-gpl-faq-search-btn]');
+    var noResults = root.querySelector('[data-gpl-faq-noresults]');
+    var rail = root.querySelector('.gpl-faq__rail');
+
+    function setCategory(index, scroll) {
+      panels.forEach(function (p) { p.classList.toggle('is-active', p.dataset.gplFaqPanel === String(index)); });
+      tiles.forEach(function (t) { t.classList.toggle('is-active', t.dataset.gplFaqCat === String(index)); });
+      if (scroll) {
+        var main = root.querySelector('.gpl-faq__main');
+        if (main) main.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // keep the active chip in view on mobile, where the rail scrolls sideways
+      var active = root.querySelector('.gpl-faq__rail-item.is-active');
+      if (active && rail && rail.scrollWidth > rail.clientWidth) {
+        rail.scrollTo({ left: active.offsetLeft - 16, behavior: 'smooth' });
+      }
+    }
+
+    tiles.forEach(function (t) {
+      t.addEventListener('click', function () {
+        clearSearch();
+        setCategory(t.dataset.gplFaqCat, t.classList.contains('gpl-faq__tile'));
+      });
+    });
+
+    // accordion
+    root.querySelectorAll('.gpl-faq__q').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', String(!open));
+        if (panel) panel.hidden = open;
+        btn.closest('.gpl-faq__item').classList.toggle('is-open', !open);
+      });
+    });
+
+    function clearSearch() {
+      if (!search || !search.value) return;
+      search.value = '';
+      applySearch();
+    }
+
+    function applySearch() {
+      var q = (search && search.value || '').trim().toLowerCase();
+      if (!q) {
+        // back to browsing one category at a time
+        items.forEach(function (i) { i.hidden = false; });
+        panels.forEach(function (p) { p.classList.remove('is-search'); });
+        if (noResults) noResults.hidden = true;
+        var activeTile = root.querySelector('.gpl-faq__rail-item.is-active');
+        setCategory(activeTile ? activeTile.dataset.gplFaqCat : 0, false);
+        return;
+      }
+      var hits = 0;
+      panels.forEach(function (p) {
+        var shown = 0;
+        p.querySelectorAll('[data-gpl-faq-item]').forEach(function (i) {
+          var match = (i.dataset.gplFaqText || '').indexOf(q) !== -1;
+          i.hidden = !match;
+          if (match) { shown++; hits++; }
+        });
+        // while searching, every category with a hit is visible at once
+        p.classList.toggle('is-active', shown > 0);
+      });
+      if (noResults) noResults.hidden = hits > 0;
+    }
+
+    if (search) {
+      var t;
+      search.addEventListener('input', function () { clearTimeout(t); t = setTimeout(applySearch, 140); });
+      search.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); applySearch(); } });
+    }
+    if (searchBtn) searchBtn.addEventListener('click', applySearch);
+
+    // deep links: /pages/faq#printing-methods and ?q=turnaround
+    var params = new URLSearchParams(location.search);
+    var preset = params.get('q');
+    if (preset && search) { search.value = preset; applySearch(); }
+    else {
+      var hash = decodeURIComponent(location.hash.replace('#', '')).toLowerCase();
+      var matched = 0;
+      if (hash) {
+        root.querySelectorAll('.gpl-faq__rail-item').forEach(function (r) {
+          var label = (r.textContent || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          if (label === hash) matched = r.dataset.gplFaqCat;
+        });
+      }
+      setCategory(matched, false);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "GPL FAQ",
+  "tag": "section",
+  "class": "gpl-section-faq",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "header", "content": "Finder" },
+    { "type": "checkbox", "id": "show_finder", "label": "Show search and category tiles", "default": true },
+    { "type": "text", "id": "finder_heading", "label": "Heading", "default": "What can we help you with?" },
+    { "type": "text", "id": "finder_sub", "label": "Sub-heading", "default": "Click on a category below or use the search bar to find answers quickly." },
+    { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search FAQs… (e.g. printing, artwork, turnaround, delivery)" },
+
+    { "type": "header", "content": "Question list" },
+    { "type": "text", "id": "list_heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "text", "id": "list_sub", "label": "Sub-heading", "default": "Click on a question to view the answer. You can also use the search bar or category filters above." },
+    { "type": "url", "id": "contact_link", "label": "\"Ask us directly\" link" },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Category name", "default": "Getting Started" },
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "rocket",
+          "options": [
+            { "value": "rocket", "label": "Rocket" },
+            { "value": "cart", "label": "Cart" },
+            { "value": "tag", "label": "Price tag" },
+            { "value": "image", "label": "Artwork" },
+            { "value": "tshirt", "label": "T-shirt" },
+            { "value": "needle", "label": "Needle" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "shirt-folded", "label": "Folded apparel" },
+            { "value": "people", "label": "Team" },
+            { "value": "factory", "label": "Factory" },
+            { "value": "box", "label": "Box" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "washer", "label": "Care" },
+            { "value": "refresh", "label": "Reorder" },
+            { "value": "badge", "label": "Quality" },
+            { "value": "person", "label": "Account" },
+            { "value": "chart", "label": "Business" },
+            { "value": "chat", "label": "General" }
+          ]
+        },
+        { "type": "header", "content": "Questions" },
+        { "type": "text", "id": "question_1", "label": "Question 1" },
+        { "type": "richtext", "id": "answer_1", "label": "Answer 1" },
+        { "type": "text", "id": "question_2", "label": "Question 2" },
+        { "type": "richtext", "id": "answer_2", "label": "Answer 2" },
+        { "type": "text", "id": "question_3", "label": "Question 3" },
+        { "type": "richtext", "id": "answer_3", "label": "Answer 3" },
+        { "type": "text", "id": "question_4", "label": "Question 4" },
+        { "type": "richtext", "id": "answer_4", "label": "Answer 4" },
+        { "type": "text", "id": "question_5", "label": "Question 5" },
+        { "type": "richtext", "id": "answer_5", "label": "Answer 5" },
+        { "type": "text", "id": "question_6", "label": "Question 6" },
+        { "type": "richtext", "id": "answer_6", "label": "Answer 6" },
+        { "type": "text", "id": "question_7", "label": "Question 7" },
+        { "type": "richtext", "id": "answer_7", "label": "Answer 7" },
+        { "type": "text", "id": "question_8", "label": "Question 8" },
+        { "type": "richtext", "id": "answer_8", "label": "Answer 8" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "GPL FAQ" }]
+}
+{% endschema %}
