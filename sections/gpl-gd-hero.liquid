@@ -9,6 +9,18 @@
 {%- assign s = section.settings -%}
 {%- assign section_id = section.id -%}
 {%- assign scrim = s.scrim_strength | divided_by: 100.0 -%}
+{%- comment -%}
+  Only the first stops of the scrim followed the setting; the rest were fixed,
+  so turning the overlay down never took it away. Every stop is now scaled by
+  this factor, which is capped at 1 so the two pages already using a scrim of
+  75% and 90% render exactly as they did, while 0 now means no overlay at all.
+{%- endcomment -%}
+{%- assign k = scrim | divided_by: 0.75 | at_most: 1 -%}
+{%- assign scrim_55 = 0.55 | times: k | round: 3 -%}
+{%- assign scrim_25 = 0.25 | times: k | round: 3 -%}
+{%- assign scrim_65 = 0.65 | times: k | round: 3 -%}
+{%- assign scrim_72 = 0.72 | times: k | round: 3 -%}
+{%- assign scrim_70 = 0.70 | times: k | round: 3 -%}
 
 <section id="gpl-gd-hero-{{ section_id }}" class="gpl-gd-hero">
   <div class="gpl-gd-hero__bg">
@@ -135,8 +147,8 @@
     inset: 0;
     z-index: 1;
     background:
-      linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim }}) 32%, rgba(8,8,8,0.55) 58%, rgba(8,8,8,0.25) 100%),
-      linear-gradient(0deg, rgba(8,8,8,0.65) 0%, rgba(8,8,8,0) 45%);
+      linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim }}) 32%, rgba(8,8,8,{{ scrim_55 }}) 58%, rgba(8,8,8,{{ scrim_25 }}) 100%),
+      linear-gradient(0deg, rgba(8,8,8,{{ scrim_65 }}) 0%, rgba(8,8,8,0) 45%);
   }
   #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__inner {
     position: relative;
@@ -291,8 +303,8 @@
     #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__content { max-width: 100%; }
     #gpl-gd-hero-{{ section_id }} .gpl-gd-hero__scrim {
       background:
-        linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,0.72) 70%, rgba(8,8,8,0.55) 100%),
-        linear-gradient(0deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0) 50%);
+        linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim_72 }}) 70%, rgba(8,8,8,{{ scrim_55 }}) 100%),
+        linear-gradient(0deg, rgba(8,8,8,{{ scrim_70 }}) 0%, rgba(8,8,8,0) 50%);
     }
   }
 
@@ -331,7 +343,7 @@
       { "value": "center right", "label": "Right" }
     ] },
     { "type": "text", "id": "image_position_mobile", "label": "Image focal point (mobile)", "info": "Optional CSS object-position for phones, e.g. \"44% center\". Leave blank to use the desktop focal point." },
-    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90, "info": "0 removes the overlay entirely — use it for finished artwork that carries its own text." },
     { "type": "range", "id": "min_height", "label": "Minimum height", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 620 },
     { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile)", "min": 280, "max": 800, "step": 10, "unit": "px", "default": 480 },
 

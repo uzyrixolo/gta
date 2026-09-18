@@ -15,7 +15,7 @@
         "background_image": "shopify://shop_images/print-on-demand-banner.webp",
         "image_position": "center right",
         "image_position_mobile": "",
-        "scrim_strength": 90,
+        "scrim_strength": 0,
         "min_height": 620,
         "min_height_mobile": 480,
         "eyebrow": "",
