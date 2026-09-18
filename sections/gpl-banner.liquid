@@ -19,6 +19,8 @@
 {%- assign id = section.id -%}
 {%- assign img = s.image -%}
 {%- assign hotspots = section.blocks | where: 'type', 'hotspot' -%}
+{%- assign wide_steps = '600,900,1200,1400,1800,2400' | split: ',' -%}
+{%- assign narrow_steps = '400,600,900,1200' | split: ',' -%}
 
 {%- if img != blank -%}
   <section id="gpl-banner-{{ id }}" class="gpl-banner{% if s.full_bleed %} gpl-banner--bleed{% endif %}">
@@ -29,16 +31,31 @@
     <div class="gpl-banner__inner">
       {%- capture banner_media -%}
         <img class="gpl-banner__img{% if s.image_mobile != blank %} gpl-banner__img--desktop{% endif %}"
-          src="{{ img | image_url: width: 2400 }}"
-          srcset="{{ img | image_url: width: 900 }} 900w, {{ img | image_url: width: 1400 }} 1400w, {{ img | image_url: width: 1800 }} 1800w, {{ img | image_url: width: 2400 }} 2400w"
+          src="{{ img | image_url: width: img.width }}"
+          {%- comment -%} Shopify caps image_url at the source width, so a candidate
+              wider than the file would advertise pixels it cannot deliver and the
+              browser would upscale it. Only real widths are offered. {%- endcomment -%}
+          {%- capture banner_srcset -%}
+            {%- for w in wide_steps -%}
+              {%- if w < img.width -%}{{ img | image_url: width: w }} {{ w }}w, {% endif -%}
+            {%- endfor -%}
+            {{ img | image_url: width: img.width }} {{ img.width }}w
+          {%- endcapture -%}
+          srcset="{{ banner_srcset | strip }}"
           sizes="100vw"
           alt="{{ s.alt | default: s.heading | escape }}"
           width="{{ img.width }}" height="{{ img.height }}"
           {% if s.eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
         {%- if s.image_mobile != blank -%}
           <img class="gpl-banner__img gpl-banner__img--mobile"
-            src="{{ s.image_mobile | image_url: width: 1200 }}"
-            srcset="{{ s.image_mobile | image_url: width: 600 }} 600w, {{ s.image_mobile | image_url: width: 900 }} 900w, {{ s.image_mobile | image_url: width: 1200 }} 1200w"
+            src="{{ s.image_mobile | image_url: width: s.image_mobile.width }}"
+            {%- capture banner_srcset_m -%}
+              {%- for w in narrow_steps -%}
+                {%- if w < s.image_mobile.width -%}{{ s.image_mobile | image_url: width: w }} {{ w }}w, {% endif -%}
+              {%- endfor -%}
+              {{ s.image_mobile | image_url: width: s.image_mobile.width }} {{ s.image_mobile.width }}w
+            {%- endcapture -%}
+            srcset="{{ banner_srcset_m | strip }}"
             sizes="100vw"
             alt="{{ s.alt | default: s.heading | escape }}"
             width="{{ s.image_mobile.width }}" height="{{ s.image_mobile.height }}"
@@ -55,14 +72,19 @@
 
         {%- for block in hotspots -%}
           {%- assign h = block.settings -%}
+          {%- capture hotspot_box -%}left: {{ h.x }}%; top: {{ h.y }}%; width: {{ h.w }}%; height: {{ h.h }}%;{%- endcapture -%}
           {%- if h.link != blank -%}
             <a class="gpl-banner__hotspot{% if request.design_mode %} is-outlined{% endif %}"
               href="{{ h.link }}"
               aria-label="{{ h.label | escape }}"
-              style="left: {{ h.x }}%; top: {{ h.y }}%; width: {{ h.w }}%; height: {{ h.h }}%;"
+              style="{{ hotspot_box }}"
               {{ block.shopify_attributes }}>
               <span class="gpl-banner__sr-heading">{{ h.label }}</span>
             </a>
+          {%- elsif request.design_mode -%}
+            {%- comment -%} no link yet: still draw the box so it can be positioned,
+                and still carry the editor attributes so the block can be selected {%- endcomment -%}
+            <span class="gpl-banner__hotspot is-outlined" style="{{ hotspot_box }}" {{ block.shopify_attributes }}></span>
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -204,7 +226,8 @@
           "value": "h2",
           "label": "H2 — a section heading"
         }
-      ]
+      ],
+      "info": "Only one H1 belongs on a page. Use H2 when the page already has a heading above this banner."
     },
     {
       "type": "header",

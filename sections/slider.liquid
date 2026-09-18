@@ -72,10 +72,10 @@
     <div class="gpl-hero__stage">
       {%- if slides.size > 0 -%}
         {%- for block in slides -%}
-          {% render 'gpl-hero-slide-content', b: block.settings, features: features, index: forloop.index0, active: forloop.first, attrs: block.shopify_attributes %}
+          {% render 'gpl-hero-slide-content', b: block.settings, features: features, own_features: forloop.first, index: forloop.index0, active: forloop.first, attrs: block.shopify_attributes %}
         {%- endfor -%}
       {%- else -%}
-        {% render 'gpl-hero-slide-content', b: s, features: features, index: 0, active: true %}
+        {% render 'gpl-hero-slide-content', b: s, features: features, own_features: true, index: 0, active: true %}
       {%- endif -%}
     </div>
 
@@ -180,6 +180,8 @@
 
     if (toggle) {
       toggle.classList.toggle('is-paused', paused);
+      // reduced motion starts the hero paused, so the label has to start there too
+      toggle.setAttribute('aria-label', paused ? 'Play the banners' : 'Pause the banners');
       toggle.addEventListener('click', function () {
         paused = !paused;
         toggle.classList.toggle('is-paused', paused);
@@ -216,7 +218,10 @@
     // theme editor: selecting a slide block should bring that slide forward
     document.addEventListener('shopify:block:select', function (e) {
       if (!root.contains(e.target)) return;
-      var i = Array.prototype.indexOf.call(slides, e.target.closest('[data-gpl-hero-slide]'));
+      // only a slide block moves the slider; a feature or bottom-bar block sits
+      // inside a slide but is not one, and selecting it should leave the view alone
+      if (!e.target.matches('[data-gpl-hero-slide]')) return;
+      var i = Array.prototype.indexOf.call(slides, e.target);
       if (i > -1) { stop(); show(i); }
     });
     document.addEventListener('shopify:block:deselect', function (e) {

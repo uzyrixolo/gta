@@ -8,6 +8,10 @@
   index     — zero-based slide number
   active    — true for the slide shown first
   attrs     — block.shopify_attributes, so the theme editor can select the slide
+  own_features — true on one slide only. The icon row is repeated in every slide,
+              so only one copy may carry the feature blocks' editor attributes;
+              duplicating them would give the editor several elements with the
+              same block id and it would select the copy inside a hidden slide.
 {%- endcomment -%}
 <div class="gpl-hero__content{% if active %} is-active{% endif %}"
   data-gpl-hero-slide="{{ index }}"
@@ -39,7 +43,7 @@
   {%- if features != blank and features.size > 0 -%}
     <ul class="gpl-hero__features">
       {%- for block in features -%}
-        <li class="gpl-hero__feature" {{ block.shopify_attributes }}>
+        <li class="gpl-hero__feature" {% if own_features %}{{ block.shopify_attributes }}{% endif %}>
           <span class="gpl-hero__feature-icon">
             {%- if block.settings.icon != blank -%}
               {{ block.settings.icon }}
