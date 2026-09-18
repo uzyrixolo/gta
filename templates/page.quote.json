@@ -9,42 +9,182 @@
  */
 {
   "sections": {
-    "quote_form": {
-      "type": "gpl-quote-form",
+    "hero": {
+      "type": "gpl-ft-hero",
       "blocks": {
-        "pt_noobligation": {
-          "type": "point",
+        "t1": {
+          "type": "tier",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 12 2 2 4-4\"/><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>",
-            "text": "No obligation — quotes are always free"
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4.5\" y=\"10\" width=\"15\" height=\"10.5\" rx=\"2\"/><path d=\"M8 10V7.5a4 4 0 0 1 8 0V10\"/></svg>",
+            "title": "Account Required",
+            "subtitle": ""
           }
         },
-        "pt_response": {
-          "type": "point",
+        "t2": {
+          "type": "tier",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3.5 2\"/></svg>",
-            "text": "We reply within one business day"
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9Z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.4\"/></svg>",
+            "title": "Exclusive Pricing",
+            "subtitle": ""
           }
         },
-        "pt_minimums": {
-          "type": "point",
+        "t3": {
+          "type": "tier",
           "settings": {
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7 12 3 4 7v10l8 4 8-4V7Z\"/></svg>",
-            "text": "No minimum order size"
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13.5 2.5 5 13.5h5.5L10 21.5 19 10h-5.8Z\"/></svg>",
+            "title": "Fast Response",
+            "subtitle": ""
+          }
+        },
+        "t4": {
+          "type": "tier",
+          "settings": {
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m2.5 12 4-4 3.5 3 2-1.5 2 1.5 3.5-3 4 4-4 4-2.5-2\"/><path d=\"m9 15 2 2 2-2 2 2\"/></svg>",
+            "title": "Built for Business",
+            "subtitle": "teams & creators"
           }
         }
       },
-      "block_order": ["pt_noobligation", "pt_response", "pt_minimums"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
       "settings": {
-        "eyebrow": "Get a Quote",
-        "heading": "Let's Price Out Your Order",
-        "description": "<p>Tell us what you're looking for and we'll get back to you with pricing — usually within one business day.</p>",
-        "phone": "647-123-4567",
-        "email": "info@gtaprintlab.com",
+        "eyebrow": "Quotes for Account Holders",
+        "heading_line1": "GET A",
+        "heading_line2": "",
+        "heading_line3_prefix": "",
+        "heading_line3_accent": "QUOTE",
+        "subheading": "",
+        "paragraph": "<p>Create an account to request quotes and unlock exclusive pricing, faster service and a better experience.</p>",
+        "badge_text": "",
+        "button_1_text": "Request an Account",
+        "button_1_link": "#request",
+        "button_2_text": "Log In",
+        "button_2_link": "/account/login",
+        "background_image": "shopify://shop_images/gta-about.webp",
+        "image_position": "center right",
+        "image_position_mobile": "50% center",
+        "scrim_strength": 70,
+        "min_height": 560,
+        "min_height_mobile": 480,
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "color_background": "#0B0B0B"
+      }
+    },
+    "gateway": {
+      "type": "gpl-quote-gateway",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "icon": "user",
+            "title": "Request an Account",
+            "text": "Fill out the simple form with your name, email, phone number and company or organization."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "icon": "mail",
+            "title": "We Review Your Request",
+            "text": "Our team reviews your information and sends you an email to activate your account."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "icon": "click",
+            "title": "Activate Your Account",
+            "text": "Click the activation link in your email to set your password and log in."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "icon": "doc",
+            "title": "Log In & Request a Quote",
+            "text": "Once logged in, fill out the quote request form with your product details, quantities and any special instructions."
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "icon": "check",
+            "title": "Get Your Quote",
+            "text": "Our team reviews your request and sends you a detailed quote as soon as possible."
+          }
+        },
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "tag",
+            "title": "Request Quotes Anytime",
+            "text": "Get detailed quotes for all your custom apparel and products."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "coins",
+            "title": "Access Exclusive Pricing",
+            "text": "Receive special account pricing and volume discounts."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clock",
+            "title": "Save Time",
+            "text": "Quick and easy quote requests all in one place."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "gear",
+            "title": "Track Your Requests",
+            "text": "View past quotes and manage your projects."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "steps_heading": "How It Works",
+        "steps_sub": "Getting a quote is simple. Just create an account and you'll be ready in minutes.",
+        "current_step_signed_in": 4,
+        "form_heading": "Request an Account",
+        "form_sub": "Fill out the form below to get started.",
+        "form_button": "Request Account",
+        "form_success": "Request received. We'll review it and email you a link to activate your account.",
+        "note": "<p><strong>Please note:</strong> GTA Print Lab requires an active customer account before a quote can be requested. If you don't already have an account, complete the registration form above. Once your request is reviewed, we'll email you instructions to activate your account.</p>",
+        "quote_heading": "Request a Quote",
+        "quote_button": "Send My Quote Request",
+        "quote_success": "Thanks — your quote request is in. Our team will price it out and get back to you.",
+        "email": "info@gtaprintlab.com",
+        "why_heading": "Why Create an Account?",
+        "show_strip": true,
+        "strip_tagline": "Custom apparel. Branded solutions. Toronto proud.",
+        "strip_note": "Toronto-based, nationwide delivery",
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF"
       }
     }
   },
-  "order": ["quote_form"]
+  "order": [
+    "hero",
+    "gateway"
+  ]
 }

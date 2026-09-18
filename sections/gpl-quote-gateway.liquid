@@ -1,0 +1,744 @@
+{%- comment -%}
+  GTA Print Lab — Get a Quote gateway.
+
+  The page is a registration gateway, not a quote form: a quote is only given to
+  an account holder. So the section has two states driven by {{ customer }}:
+
+    guest     → "Request an Account" (name, email, phone, company). Posts through
+                Shopify's contact form, so the team receives the request and
+                replies with an account activation invite from Admin.
+    signed in → the real quote request form (product, quantity, method, artwork,
+                sizes, colours, deadline, pickup/delivery, notes), prefilled.
+
+  Both use {% form 'contact' %}: every contact[Field Name] input is included in
+  the notification email automatically, so there is no custom backend.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign steps = section.blocks | where: 'type', 'step' -%}
+{%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+{%- if customer -%}{%- assign signed_in = true -%}{%- else -%}{%- assign signed_in = false -%}{%- endif -%}
+
+<section id="gpl-qg-{{ id }}" class="gpl-qg">
+
+  {%- comment -%} ---------- how it works ---------- {%- endcomment -%}
+  {%- if steps.size > 0 -%}
+    <div class="gpl-qg__steps-band">
+      <div class="gpl-qg__wrap">
+        <div class="gpl-qg__ruled">
+          <span class="gpl-qg__rule" aria-hidden="true"></span>
+          <h2 class="gpl-qg__h2">{{ s.steps_heading }}</h2>
+          <span class="gpl-qg__rule" aria-hidden="true"></span>
+        </div>
+        {%- if s.steps_sub != blank -%}<p class="gpl-qg__sub">{{ s.steps_sub }}</p>{%- endif -%}
+
+        <ol class="gpl-qg__steps" style="--gpl-qg-steps: {{ steps.size }};">
+          {%- for block in steps -%}
+            {%- assign is_current = false -%}
+            {%- if signed_in and forloop.index == s.current_step_signed_in -%}{%- assign is_current = true -%}{%- endif -%}
+            <li class="gpl-qg__step{% if is_current %} is-current{% endif %}" {{ block.shopify_attributes }}>
+              <div class="gpl-qg__step-mark">
+                <span class="gpl-qg__step-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: block.settings.icon %}</span>
+                <span class="gpl-qg__step-num">{{ forloop.index }}</span>
+              </div>
+              <h3 class="gpl-qg__step-title">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}<p class="gpl-qg__step-text">{{ block.settings.text }}</p>{%- endif -%}
+              {%- if is_current -%}<p class="gpl-qg__step-flag">You are here</p>{%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- form + why ---------- {%- endcomment -%}
+  <div class="gpl-qg__main">
+    <div class="gpl-qg__wrap gpl-qg__cols">
+
+      <div class="gpl-qg__card gpl-qg__form-card" id="request">
+        {%- if signed_in -%}
+
+          <h2 class="gpl-qg__card-h">{{ s.quote_heading }}</h2>
+          <p class="gpl-qg__card-sub">
+            Signed in as <strong>{{ customer.email }}</strong>.
+            <a href="{{ routes.account_url }}">Your account</a>
+          </p>
+
+          {%- form 'contact', id: 'gpl-quote-request' -%}
+            <input type="hidden" name="contact[Form]" value="Quote request — account holder">
+            <input type="hidden" name="contact[Customer]" value="{{ customer.id }}">
+            {%- capture quote_success -%}{{ s.quote_success }}{%- endcapture -%}
+            {% render 'form__success', form: form, success_message: quote_success %}
+            {% render 'form__error', form: form %}
+
+            {%- unless form.posted_successfully? -%}
+              <input type="hidden" name="contact[name]" value="{{ customer.name }}">
+              <input type="hidden" name="contact[email]" value="{{ customer.email }}">
+
+              <div class="gpl-qg__grid">
+                <label class="gpl-qg__field">
+                  <span>Product<em>*</em></span>
+                  <input type="text" name="contact[Product]" required placeholder="e.g. Gildan 5000 tees, embroidered caps">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Quantity<em>*</em></span>
+                  <input type="text" name="contact[Quantity]" required placeholder="e.g. 120">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Decoration method</span>
+                  <select name="contact[Method]">
+                    <option value="">Not sure — recommend one</option>
+                    <option>Screen printing</option>
+                    <option>DTF transfer</option>
+                    <option>DTG</option>
+                    <option>Embroidery</option>
+                    <option>Heat press / vinyl</option>
+                    <option>Mixed — see notes</option>
+                  </select>
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Deadline</span>
+                  <input type="text" name="contact[Deadline]" placeholder="e.g. Oct 14, or “ASAP”">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Sizes</span>
+                  <input type="text" name="contact[Sizes]" placeholder="e.g. 10S / 30M / 40L / 20XL">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Colours</span>
+                  <input type="text" name="contact[Colours]" placeholder="Garment colours and ink colours">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Artwork link</span>
+                  <input type="url" name="contact[Artwork]" placeholder="Dropbox, Drive or WeTransfer link">
+                </label>
+                <label class="gpl-qg__field">
+                  <span>Pickup or delivery</span>
+                  <select name="contact[Fulfilment]">
+                    <option value="">Select one</option>
+                    <option>Pickup — Toronto</option>
+                    <option>Delivery — GTA</option>
+                    <option>Shipping — rest of Canada</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="gpl-qg__field gpl-qg__field--full">
+                <span>Special instructions</span>
+                <textarea name="contact[body]" rows="4" placeholder="Print placements, per-name numbering, packing, anything else we should price in.">{%- if form.body -%}{{ form.body }}{%- endif -%}</textarea>
+              </label>
+
+              <p class="gpl-qg__hint">No link for your artwork? Send the files to <a href="mailto:{{ s.email }}">{{ s.email }}</a> and quote your name — we will match them to this request.</p>
+              <button type="submit" class="gpl-qg__submit">{{ s.quote_button }}</button>
+            {%- endunless -%}
+          {%- endform -%}
+
+        {%- else -%}
+
+          <h2 class="gpl-qg__card-h">{{ s.form_heading }}</h2>
+          {%- if s.form_sub != blank -%}<p class="gpl-qg__card-sub">{{ s.form_sub }}</p>{%- endif -%}
+
+          {%- form 'contact', id: 'gpl-account-request' -%}
+            <input type="hidden" name="contact[Form]" value="Account request — Get a Quote">
+            {%- capture account_success -%}{{ s.form_success }}{%- endcapture -%}
+            {% render 'form__success', form: form, success_message: account_success %}
+            {% render 'form__error', form: form %}
+
+            {%- unless form.posted_successfully? -%}
+              <div class="gpl-qg__inputs">
+                <div class="gpl-qg__input">
+                  <span class="gpl-qg__input-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: 'user' %}</span>
+                  <input type="text" name="contact[name]" required autocomplete="name"
+                    placeholder="Full Name *" aria-label="Full name"
+                    value="{% if form.name %}{{ form.name }}{% endif %}">
+                </div>
+                <div class="gpl-qg__input">
+                  <span class="gpl-qg__input-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: 'mail' %}</span>
+                  <input type="email" name="contact[email]" required autocomplete="email" autocorrect="off" autocapitalize="off"
+                    placeholder="Email Address *" aria-label="Email address"
+                    value="{% if form.email %}{{ form.email }}{% endif %}">
+                </div>
+                <div class="gpl-qg__input">
+                  <span class="gpl-qg__input-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: 'phone' %}</span>
+                  <input type="tel" name="contact[phone]" required autocomplete="tel"
+                    placeholder="Phone Number *" aria-label="Phone number"
+                    value="{% if form.phone %}{{ form.phone }}{% endif %}">
+                </div>
+                <div class="gpl-qg__input">
+                  <span class="gpl-qg__input-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: 'building' %}</span>
+                  <input type="text" name="contact[Company or Organization]" required autocomplete="organization"
+                    placeholder="Company or Organization *" aria-label="Company or organization">
+                </div>
+              </div>
+
+              <button type="submit" class="gpl-qg__submit">{{ s.form_button }}</button>
+              <p class="gpl-qg__signin">Already have an account? <a href="{{ routes.account_login_url }}">Log In</a></p>
+            {%- endunless -%}
+          {%- endform -%}
+
+        {%- endif -%}
+      </div>
+
+      {%- if benefits.size > 0 -%}
+        <aside class="gpl-qg__card gpl-qg__why">
+          <h2 class="gpl-qg__why-h">{{ s.why_heading }}</h2>
+          <div class="gpl-qg__benefits">
+            {%- for block in benefits -%}
+              <div class="gpl-qg__benefit" {{ block.shopify_attributes }}>
+                <span class="gpl-qg__benefit-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: block.settings.icon %}</span>
+                <div>
+                  <h3 class="gpl-qg__benefit-title">{{ block.settings.title }}</h3>
+                  {%- if block.settings.text != blank -%}<p class="gpl-qg__benefit-text">{{ block.settings.text }}</p>{%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </aside>
+      {%- endif -%}
+    </div>
+
+    {%- if s.note != blank and signed_in == false -%}
+      <div class="gpl-qg__wrap">
+        <div class="gpl-qg__note">
+          <span class="gpl-qg__note-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: 'lock' %}</span>
+          <div class="gpl-qg__note-body">{{ s.note }}</div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ---------- brand strip ---------- {%- endcomment -%}
+  {%- if s.show_strip -%}
+    <div class="gpl-qg__strip">
+      <div class="gpl-qg__wrap gpl-qg__strip-inner">
+        {%- if s.strip_logo != blank -%}
+          <img class="gpl-qg__strip-logo" src="{{ s.strip_logo | image_url: width: 520 }}" alt="{{ shop.name | escape }}" width="260" height="{{ 260 | divided_by: s.strip_logo.aspect_ratio | round }}" loading="lazy">
+        {%- else -%}
+          <span class="gpl-qg__strip-word">GTA<strong>PRINT</strong><em>LAB</em></span>
+        {%- endif -%}
+        {%- if s.strip_tagline != blank -%}<p class="gpl-qg__strip-tag">{{ s.strip_tagline }}</p>{%- endif -%}
+        {%- if s.strip_note != blank -%}
+          <p class="gpl-qg__strip-note">
+            <span class="gpl-qg__strip-skyline" aria-hidden="true">
+              <svg viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M1 33h62"/><path d="M6 33V22h6v11M16 33V16h5v17M44 33V19h6v14M54 33V24h6v9"/><path d="M31 33V12h4v21M33 12l1.6-8L33 1l-1.6 3L33 12Z"/><path d="M30.2 15.5h5.6v4h-5.6z"/></svg>
+            </span>
+            {{ s.strip_note }}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% style %}
+  {%- assign accent = section.settings.color_accent | default: '#D71920' -%}
+  #gpl-qg-{{ id }} { background: {{ section.settings.color_background | default: '#FFFFFF' }}; color: #111; }
+  #gpl-qg-{{ id }} .gpl-qg__wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- how it works ---- */
+  #gpl-qg-{{ id }} .gpl-qg__steps-band { padding: clamp(44px, 5.5vw, 80px) 0 clamp(32px, 4vw, 56px); }
+  #gpl-qg-{{ id }} .gpl-qg__ruled { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 3vw, 28px); }
+  #gpl-qg-{{ id }} .gpl-qg__rule { flex: 0 1 clamp(40px, 14vw, 190px); height: 3px; background: {{ accent }}; }
+  #gpl-qg-{{ id }} .gpl-qg__h2 {
+    margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
+    font-size: clamp(26px, 3.6vw, 42px); line-height: 1.05; text-align: center; color: #111;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__sub { margin: 14px auto 0; max-width: 62ch; text-align: center; color: #5B5B5B; font-size: 15.5px; line-height: 1.6; }
+
+  #gpl-qg-{{ id }} .gpl-qg__steps {
+    list-style: none; margin: clamp(28px, 4vw, 48px) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(var(--gpl-qg-steps, 5), minmax(0, 1fr)); gap: clamp(8px, 1.6vw, 20px);
+  }
+  #gpl-qg-{{ id }} .gpl-qg__step { position: relative; text-align: center; padding: 0 clamp(4px, 0.8vw, 10px); }
+  /* the chevron between two steps, as in the layout — never after the last one */
+  #gpl-qg-{{ id }} .gpl-qg__step + .gpl-qg__step::before {
+    content: ""; position: absolute; left: clamp(-16px, -1.1vw, -6px); top: 52px;
+    width: 12px; height: 12px; border-right: 2.5px solid #C9C9C9; border-top: 2.5px solid #C9C9C9;
+    transform: rotate(45deg);
+  }
+  #gpl-qg-{{ id }} .gpl-qg__step-mark { position: relative; width: 92px; height: 92px; margin: 0 auto 18px; }
+  #gpl-qg-{{ id }} .gpl-qg__step-icon {
+    display: flex; align-items: center; justify-content: center; width: 92px; height: 92px;
+    border-radius: 50%; background: #F1F1F1; color: #111;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__step-icon svg { width: 40px; height: 40px; }
+  #gpl-qg-{{ id }} .gpl-qg__step-num {
+    position: absolute; top: -4px; left: -2px; width: 30px; height: 30px; border-radius: 50%;
+    background: {{ accent }}; color: #FFF; font-weight: 800; font-size: 15px;
+    display: flex; align-items: center; justify-content: center; border: 3px solid #FFF;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__step-title { margin: 0 0 8px; font-size: clamp(15px, 1.5vw, 18px); font-weight: 800; color: #111; line-height: 1.25; }
+  #gpl-qg-{{ id }} .gpl-qg__step-text { margin: 0; color: #5B5B5B; font-size: 14px; line-height: 1.55; }
+  #gpl-qg-{{ id }} .gpl-qg__step.is-current .gpl-qg__step-icon { background: {{ accent }}; color: #FFF; }
+  #gpl-qg-{{ id }} .gpl-qg__step-flag {
+    margin: 10px 0 0; font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: {{ accent }};
+  }
+
+  /* ---- form + why ---- */
+  #gpl-qg-{{ id }} .gpl-qg__main { padding: 0 0 clamp(40px, 5vw, 72px); }
+  #gpl-qg-{{ id }} .gpl-qg__cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(20px, 2.6vw, 36px); align-items: start; }
+  #gpl-qg-{{ id }} .gpl-qg__card { border-radius: 16px; padding: clamp(24px, 3vw, 40px); }
+  #gpl-qg-{{ id }} .gpl-qg__form-card { background: #F1F1F1; }
+  #gpl-qg-{{ id }} .gpl-qg__card-h { margin: 0 0 8px; font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; text-transform: uppercase; color: #111; line-height: 1.1; }
+  #gpl-qg-{{ id }} .gpl-qg__card-sub { margin: 0 0 24px; color: #5B5B5B; font-size: 15px; }
+  #gpl-qg-{{ id }} .gpl-qg__card-sub a { color: {{ accent }}; font-weight: 700; }
+
+  #gpl-qg-{{ id }} .gpl-qg__inputs { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+  #gpl-qg-{{ id }} .gpl-qg__input { position: relative; display: block; }
+  #gpl-qg-{{ id }} .gpl-qg__input-icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 20px; color: #111; pointer-events: none;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__input-icon svg { width: 20px; height: 20px; display: block; }
+  #gpl-qg-{{ id }} .gpl-qg__input input {
+    width: 100%; font: inherit; font-size: 15px; color: #111; background: #FFF;
+    border: 1px solid #DCDCDC; border-radius: 10px; padding: 15px 16px 15px 48px;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__input input::placeholder { color: #8C8C8C; }
+  #gpl-qg-{{ id }} .gpl-qg__input input:focus { outline: none; border-color: {{ accent }}; box-shadow: 0 0 0 3px rgba(215,25,32,0.12); }
+
+  #gpl-qg-{{ id }} .gpl-qg__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  #gpl-qg-{{ id }} .gpl-qg__field { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; font-weight: 700; color: #333; }
+  #gpl-qg-{{ id }} .gpl-qg__field--full { margin-bottom: 16px; }
+  #gpl-qg-{{ id }} .gpl-qg__field em { color: {{ accent }}; font-style: normal; }
+  #gpl-qg-{{ id }} .gpl-qg__field input,
+  #gpl-qg-{{ id }} .gpl-qg__field select,
+  #gpl-qg-{{ id }} .gpl-qg__field textarea {
+    font: inherit; font-weight: 400; font-size: 14px; color: #111; padding: 12px;
+    border: 1px solid #DCDCDC; border-radius: 8px; background: #FFF; resize: vertical;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__field input:focus,
+  #gpl-qg-{{ id }} .gpl-qg__field select:focus,
+  #gpl-qg-{{ id }} .gpl-qg__field textarea:focus { outline: none; border-color: {{ accent }}; }
+  #gpl-qg-{{ id }} .gpl-qg__hint { margin: 0 0 18px; font-size: 12.5px; line-height: 1.6; color: #6B6B6B; }
+  #gpl-qg-{{ id }} .gpl-qg__hint a { color: {{ accent }}; font-weight: 700; }
+
+  #gpl-qg-{{ id }} .gpl-qg__submit {
+    width: 100%; cursor: pointer; border: none; border-radius: 10px; padding: 17px;
+    background: {{ accent }}; color: #FFF; font: inherit; font-weight: 800; font-size: 16px;
+    transition: background-color .2s ease;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__submit:hover { background: #B4141A; }
+  #gpl-qg-{{ id }} .gpl-qg__signin { margin: 16px 0 0; text-align: center; font-size: 14px; color: #5B5B5B; }
+  #gpl-qg-{{ id }} .gpl-qg__signin a { color: {{ accent }}; font-weight: 700; text-decoration: underline; }
+
+  #gpl-qg-{{ id }} .gpl-qg__why { background: #FDECEC; }
+  #gpl-qg-{{ id }} .gpl-qg__why-h { margin: 0 0 clamp(20px, 2.4vw, 30px); font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; color: #111; line-height: 1.1; }
+  #gpl-qg-{{ id }} .gpl-qg__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.4vw, 32px); }
+  #gpl-qg-{{ id }} .gpl-qg__benefit { display: flex; gap: 14px; align-items: flex-start; }
+  #gpl-qg-{{ id }} .gpl-qg__benefit-icon { flex: 0 0 auto; color: {{ accent }}; }
+  #gpl-qg-{{ id }} .gpl-qg__benefit-icon svg { width: 34px; height: 34px; display: block; }
+  #gpl-qg-{{ id }} .gpl-qg__benefit-title { margin: 0 0 6px; font-size: 16px; font-weight: 800; color: #111; line-height: 1.25; }
+  #gpl-qg-{{ id }} .gpl-qg__benefit-text { margin: 0; font-size: 14px; line-height: 1.55; color: #5B5B5B; }
+
+  #gpl-qg-{{ id }} .gpl-qg__note {
+    display: flex; gap: 14px; align-items: flex-start; margin-top: clamp(20px, 2.6vw, 32px);
+    border: 1px solid #EFD3D4; border-left: 4px solid {{ accent }}; border-radius: 12px;
+    background: #FFF8F8; padding: 18px 20px;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__note-icon { flex: 0 0 auto; color: {{ accent }}; }
+  #gpl-qg-{{ id }} .gpl-qg__note-icon svg { width: 22px; height: 22px; display: block; }
+  #gpl-qg-{{ id }} .gpl-qg__note-body { font-size: 14px; line-height: 1.6; color: #444; }
+  #gpl-qg-{{ id }} .gpl-qg__note-body p { margin: 0; }
+  #gpl-qg-{{ id }} .gpl-qg__note-body strong { color: #111; }
+
+  /* ---- brand strip ---- */
+  #gpl-qg-{{ id }} .gpl-qg__strip { border-top: 1px solid #E4E4E4; padding: clamp(22px, 2.6vw, 34px) 0; }
+  #gpl-qg-{{ id }} .gpl-qg__strip-inner { display: flex; align-items: center; justify-content: space-between; gap: clamp(16px, 3vw, 40px); }
+  #gpl-qg-{{ id }} .gpl-qg__strip-logo { height: auto; width: clamp(140px, 16vw, 230px); }
+  #gpl-qg-{{ id }} .gpl-qg__strip-word { font-weight: 900; font-size: clamp(20px, 2.4vw, 30px); letter-spacing: -0.02em; color: #111; }
+  #gpl-qg-{{ id }} .gpl-qg__strip-word em { font-style: normal; color: {{ accent }}; }
+  #gpl-qg-{{ id }} .gpl-qg__strip-tag {
+    margin: 0; flex: 1 1 auto; text-align: center; color: #444; font-weight: 700;
+    font-size: clamp(11px, 1.15vw, 14px); letter-spacing: 0.12em; text-transform: uppercase;
+    border-left: 1px solid #E4E4E4; border-right: 1px solid #E4E4E4; padding: 6px clamp(14px, 2.6vw, 36px);
+  }
+  #gpl-qg-{{ id }} .gpl-qg__strip-note {
+    margin: 0; display: flex; align-items: center; gap: 12px; color: #444;
+    font-weight: 700; font-size: clamp(11px, 1.1vw, 13px); letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.4;
+  }
+  #gpl-qg-{{ id }} .gpl-qg__strip-skyline { color: #111; }
+  #gpl-qg-{{ id }} .gpl-qg__strip-skyline svg { width: 58px; height: 32px; display: block; }
+
+  #gpl-qg-{{ id }} .notification { border-radius: 10px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px; font-size: 14px; }
+  #gpl-qg-{{ id }} .notification svg { width: 20px; height: 20px; flex: 0 0 auto; }
+  #gpl-qg-{{ id }} .notification.success { background: #E9F7EF; color: #1E7E34; }
+  #gpl-qg-{{ id }} .notification.warning { background: #FDECEC; color: #B4141A; }
+
+  @media screen and (max-width: 1100px) {
+    #gpl-qg-{{ id }} .gpl-qg__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 34px; }
+    #gpl-qg-{{ id }} .gpl-qg__step + .gpl-qg__step::before { display: none; }
+  }
+  @media screen and (max-width: 900px) {
+    #gpl-qg-{{ id }} .gpl-qg__cols { grid-template-columns: minmax(0, 1fr); }
+    #gpl-qg-{{ id }} .gpl-qg__strip-inner { flex-direction: column; text-align: center; }
+    #gpl-qg-{{ id }} .gpl-qg__strip-tag { border: none; border-top: 1px solid #E4E4E4; border-bottom: 1px solid #E4E4E4; padding: 12px 0; width: 100%; }
+  }
+  @media screen and (max-width: 640px) {
+    #gpl-qg-{{ id }} .gpl-qg__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #gpl-qg-{{ id }} .gpl-qg__benefits { grid-template-columns: minmax(0, 1fr); }
+    #gpl-qg-{{ id }} .gpl-qg__grid { grid-template-columns: minmax(0, 1fr); }
+    #gpl-qg-{{ id }} .gpl-qg__step-mark, #gpl-qg-{{ id }} .gpl-qg__step-icon { width: 76px; height: 76px; }
+    #gpl-qg-{{ id }} .gpl-qg__step-icon svg { width: 34px; height: 34px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Quote gateway",
+  "tag": "section",
+  "class": "gpl-section-quote-gateway",
+  "settings": [
+    {
+      "type": "header",
+      "content": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Heading",
+      "default": "How It Works"
+    },
+    {
+      "type": "text",
+      "id": "steps_sub",
+      "label": "Subheading",
+      "default": "Getting a quote is simple. Just create an account and you'll be ready in minutes."
+    },
+    {
+      "type": "range",
+      "id": "current_step_signed_in",
+      "label": "Step to highlight for signed-in customers",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "info": "Customers who are already logged in see this step marked \"You are here\"."
+    },
+    {
+      "type": "header",
+      "content": "Request an account (signed-out visitors)"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Heading",
+      "default": "Request an Account"
+    },
+    {
+      "type": "text",
+      "id": "form_sub",
+      "label": "Subheading",
+      "default": "Fill out the form below to get started."
+    },
+    {
+      "type": "text",
+      "id": "form_button",
+      "label": "Button label",
+      "default": "Request Account"
+    },
+    {
+      "type": "text",
+      "id": "form_success",
+      "label": "Message after sending",
+      "default": "Request received. We'll review it and email you a link to activate your account."
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Please-note panel",
+      "default": "<p><strong>Please note:</strong> GTA Print Lab requires an active customer account before a quote can be requested. If you don't already have an account, complete the registration form above. Once your request is reviewed, we'll email you instructions to activate your account.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Request a quote (signed-in customers)"
+    },
+    {
+      "type": "text",
+      "id": "quote_heading",
+      "label": "Heading",
+      "default": "Request a Quote"
+    },
+    {
+      "type": "text",
+      "id": "quote_button",
+      "label": "Button label",
+      "default": "Send My Quote Request"
+    },
+    {
+      "type": "text",
+      "id": "quote_success",
+      "label": "Message after sending",
+      "default": "Thanks — your quote request is in. Our team will price it out and get back to you."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Artwork email address",
+      "default": "info@gtaprintlab.com"
+    },
+    {
+      "type": "header",
+      "content": "Why create an account"
+    },
+    {
+      "type": "text",
+      "id": "why_heading",
+      "label": "Heading",
+      "default": "Why Create an Account?"
+    },
+    {
+      "type": "header",
+      "content": "Brand strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_strip",
+      "label": "Show the brand strip",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "strip_logo",
+      "label": "Logo",
+      "info": "Optional. Falls back to a text lockup."
+    },
+    {
+      "type": "text",
+      "id": "strip_tagline",
+      "label": "Tagline",
+      "default": "Custom apparel. Branded solutions. Toronto proud."
+    },
+    {
+      "type": "text",
+      "id": "strip_note",
+      "label": "Delivery note",
+      "default": "Toronto-based, nationwide delivery"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "user",
+          "options": [
+            {
+              "value": "user",
+              "label": "Person"
+            },
+            {
+              "value": "mail",
+              "label": "Envelope"
+            },
+            {
+              "value": "click",
+              "label": "Click"
+            },
+            {
+              "value": "doc",
+              "label": "Document"
+            },
+            {
+              "value": "check",
+              "label": "Checkmark"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check in circle"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "coins",
+              "label": "Coins"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "handshake",
+              "label": "Handshake"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "shirt",
+              "label": "T-shirt"
+            },
+            {
+              "value": "building",
+              "label": "Building"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Request an Account"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Fill out the simple form with your name, email, phone number and company or organization."
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "tag",
+          "options": [
+            {
+              "value": "user",
+              "label": "Person"
+            },
+            {
+              "value": "mail",
+              "label": "Envelope"
+            },
+            {
+              "value": "click",
+              "label": "Click"
+            },
+            {
+              "value": "doc",
+              "label": "Document"
+            },
+            {
+              "value": "check",
+              "label": "Checkmark"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check in circle"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "coins",
+              "label": "Coins"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "handshake",
+              "label": "Handshake"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            },
+            {
+              "value": "shirt",
+              "label": "T-shirt"
+            },
+            {
+              "value": "building",
+              "label": "Building"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Request Quotes Anytime"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Get detailed quotes for all your custom apparel and products."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "GPL Quote gateway"
+    }
+  ]
+}
+{% endschema %}
