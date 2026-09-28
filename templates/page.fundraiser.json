@@ -1,0 +1,145 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-hero.png",
+        "alt": "Fundraise Bigger Together. Custom merch that brings people together and turns support into results. Any cause, any team, any community. High quality printing and embroidery, fast turnaround, no minimums, great profit margins, GTA local delivery.",
+        "heading": "Fundraise Bigger Together",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      }
+    },
+    "products": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-products.png",
+        "alt": "Fundraising merch: t-shirts for event and team supporter tees, hoodies in premium apparel for your cause, hats and headwear including caps, snapbacks and beanies, jackets and polos including varsity jackets and team jackets, and bags and accessories including totes, backpacks and drinkware.",
+        "heading": "Fundraising merch we print",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      }
+    },
+    "how_it_works": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-how-it-works.png",
+        "alt": "How it works, simple, fast, effective. One: share your idea — tell us about your fundraiser, team, school or event, and bring your logo or we can design it for you. Two: approve artwork — we create a professional design and mockup for your approval. Three: we print and produce, using high-quality printing and embroidery with fast turnaround times. Four: receive and start raising — get your merch delivered and start selling at your event, online or in your community.",
+        "heading": "How it works",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      }
+    },
+    "who_can": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-who-can-fundraise.png",
+        "alt": "Who can fundraise? Any organization, group or business can create a merch fundraiser: sports teams with team apparel and fan gear, schools with school spirit wear, churches for events, outreach and mission support, charities and non-profits for awareness and community support, community groups for local initiatives, businesses for staff apparel and promo gear, and events including concerts and tournaments.",
+        "heading": "Who can fundraise?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      }
+    },
+    "options": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-options.png",
+        "alt": "Fundraising options, flexible ways to raise money with custom merch. Sell at events: sell your merchandise at games, concerts, school events, church events and community gatherings. Online store: we can help you set up an online store so supporters can order directly. Pre-order campaign: take pre-orders and only produce what is sold, great for teams, schools and special events. Event uniforms: create matching shirts for your event so everyone looks unified and professional.",
+        "heading": "Fundraising options",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      }
+    },
+    "why_choose": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/fundraiser-why-choose.png",
+        "alt": "Why choose GTA Print Lab? Premium quality, high-quality prints and embroidery. Fastest turnaround, same-day and next-day options. No minimums, order what you need. Great profit margins, maximize your fundraising potential. GTA local delivery, convenient and reliable. Creative support, design help available. Let's make a bigger impact together — start your fundraiser.",
+        "heading": "Why choose GTA Print Lab?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center"
+      },
+      "blocks": {
+        "hot_1": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your fundraiser",
+            "link": "/pages/quote",
+            "x": 75,
+            "y": 50,
+            "w": 22,
+            "h": 10
+          }
+        }
+      },
+      "block_order": [
+        "hot_1"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "products",
+    "how_it_works",
+    "who_can",
+    "options",
+    "why_choose"
+  ]
+}
