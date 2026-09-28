@@ -18,7 +18,7 @@
       <h2 class="gpl-cards__heading">
         {%- if s.heading != blank -%}{{ s.heading }} {% endif -%}
         {%- if s.heading_accent != blank -%}<span>{{ s.heading_accent }}</span>{%- endif -%}
-        {%- if s.heading_tail != blank -%} {{ s.heading_tail }}{%- endif -%}
+        {% if s.heading_tail != blank %} {{ s.heading_tail }}{% endif %}
       </h2>
     {%- endif -%}
     {%- if s.subheading != blank -%}<p class="gpl-cards__sub">{{ s.subheading }}</p>{%- endif -%}
