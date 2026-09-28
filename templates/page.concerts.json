@@ -15,7 +15,7 @@
         "image_asset": "concert-hero-photo.jpg",
         "image_alt": "Two fans at a concert in custom-printed tees, one reading Good Music Better People",
         "image_position": "center right",
-        "scrim": 0.85,
+        "scrim": 0.9,
         "min_height": 660,
         "min_height_mobile": 620,
         "eyebrow": "",
@@ -101,7 +101,7 @@
         "color_card": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.12
+        "shadow": 0.1
       },
       "blocks": {
         "k1": {
@@ -406,7 +406,7 @@
         "color_card": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.12
+        "shadow": 0.1
       },
       "blocks": {
         "k1": {

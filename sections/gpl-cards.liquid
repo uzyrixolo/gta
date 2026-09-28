@@ -28,8 +28,9 @@
         {%- for block in cards -%}
           {%- assign b = block.settings -%}
           <li class="gpl-cards__card" {{ block.shopify_attributes }}>
+            {%- assign card_alt = b.image_alt | default: b.title -%}
             <div class="gpl-cards__frame">
-              {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-cards__img', alt: b.image_alt | default: b.title %}
+              {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-cards__img', alt: card_alt %}
               {%- if b.icon != blank and b.icon != 'none' -%}
                 <span class="gpl-cards__badge" aria-hidden="true">{% render 'gpl-quote-icon', name: b.icon %}</span>
               {%- endif -%}
@@ -228,8 +229,8 @@
       "label": "Card shadow",
       "min": 0,
       "max": 0.4,
-      "step": 0.02,
-      "default": 0.12
+      "step": 0.1,
+      "default": 0.1
     }
   ],
   "blocks": [
