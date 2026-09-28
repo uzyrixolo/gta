@@ -24,6 +24,8 @@
 
 {%- if img != blank -%}
   <section id="gpl-banner-{{ id }}" class="gpl-banner{% if s.full_bleed %} gpl-banner--bleed{% endif %}">
+    {%- comment -%} an in-page target, so a button drawn into one banner can jump to another {%- endcomment -%}
+    {%- if s.anchor_id != blank -%}<span class="gpl-banner__anchor" id="{{ s.anchor_id | handleize }}"></span>{%- endif -%}
     {%- if s.heading != blank -%}
       <{{ s.heading_level }} class="gpl-banner__sr-heading">{{ s.heading }}</{{ s.heading_level }}>
     {%- endif -%}
@@ -140,6 +142,8 @@
   #gpl-banner-{{ id }} .gpl-banner__hotspot:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
   #gpl-banner-{{ id }} .gpl-banner__hotspot.is-outlined { outline: 2px dashed rgba(255,255,255,0.85); background: rgba(215,25,32,0.2); }
 
+  /* the sticky header would otherwise sit on top of whatever we jump to */
+  #gpl-banner-{{ id }} .gpl-banner__anchor { display: block; height: 0; scroll-margin-top: 120px; }
   #gpl-banner-{{ id }} .gpl-banner__sr-heading {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -196,6 +200,12 @@
       "id": "link",
       "label": "Link for the whole banner",
       "info": "Ignored when the banner has clickable areas."
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor name",
+      "info": "Optional. Lets another banner's button link to this one, e.g. \"gallery\" makes it reachable at #gallery."
     },
     {
       "type": "checkbox",
