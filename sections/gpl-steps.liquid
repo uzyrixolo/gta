@@ -1,0 +1,226 @@
+{%- comment -%}
+  GTA Print Lab — numbered process row.
+
+  Photo per step with a red number and a chevron between steps on desktop.
+  The photos that ship with the theme already have the number drawn into them,
+  so "Number style: drawn into the photo" turns the CSS number off rather than
+  printing it twice.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign steps = section.blocks | where: 'type', 'step' -%}
+
+<section id="gpl-steps-{{ id }}" class="gpl-steps">
+  <div class="gpl-steps__inner">
+    {%- if s.heading != blank or s.heading_accent != blank -%}
+      <h2 class="gpl-steps__heading">
+        {%- if s.heading != blank -%}{{ s.heading }} {% endif -%}
+        {%- if s.heading_accent != blank -%}<span>{{ s.heading_accent }}</span>{%- endif -%}
+      </h2>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}<p class="gpl-steps__sub">{{ s.subheading }}</p>{%- endif -%}
+
+    {%- if steps.size > 0 -%}
+      <ol class="gpl-steps__grid" style="--n: {{ steps.size }};">
+        {%- for block in steps -%}
+          {%- assign b = block.settings -%}
+          <li class="gpl-steps__step" {{ block.shopify_attributes }}>
+            <div class="gpl-steps__frame">
+              {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-steps__img', alt: b.image_alt | default: b.title %}
+              {%- unless s.numbers_in_photo -%}
+                <span class="gpl-steps__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              {%- endunless -%}
+            </div>
+            <div class="gpl-steps__body">
+              {%- if b.title != blank -%}<h3 class="gpl-steps__title">{{ b.title }}</h3>{%- endif -%}
+              {%- if b.text != blank -%}<p class="gpl-steps__text">{{ b.text }}</p>{%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-steps-{{ id }} {
+    --a: {{ s.color_accent }};
+    background: {{ s.color_background }};
+    padding: clamp(40px, 5vw, 76px) 0 clamp(44px, 5.5vw, 82px);
+  }
+  #gpl-steps-{{ id }} .gpl-steps__inner { width: min(1440px, 100% - 48px); margin: 0 auto; }
+  #gpl-steps-{{ id }} .gpl-steps__heading {
+    margin: 0; text-align: center; color: {{ s.color_heading }};
+    font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+    font-size: clamp(26px, 4vw, 52px); line-height: 1.04;
+  }
+  #gpl-steps-{{ id }} .gpl-steps__heading span { color: var(--a); }
+  #gpl-steps-{{ id }} .gpl-steps__sub {
+    margin: 12px auto 0; text-align: center; color: {{ s.color_text }};
+    font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: clamp(12px, 1.1vw, 15px);
+  }
+  #gpl-steps-{{ id }} .gpl-steps__grid {
+    list-style: none; margin: clamp(26px, 3.4vw, 46px) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: clamp(14px, 2vw, 30px);
+  }
+  #gpl-steps-{{ id }} .gpl-steps__step { position: relative; }
+  /* the chevron between two steps — never after the last */
+  #gpl-steps-{{ id }} .gpl-steps__step + .gpl-steps__step::before {
+    content: ""; position: absolute; left: clamp(-20px, -1.3vw, -9px); top: 28%;
+    width: 13px; height: 13px; border-right: 3px solid var(--a); border-top: 3px solid var(--a);
+    transform: rotate(45deg);
+  }
+  #gpl-steps-{{ id }} .gpl-steps__frame {
+    position: relative; aspect-ratio: {{ s.image_ratio }}; border-radius: 12px; overflow: hidden; background: #111;
+  }
+  #gpl-steps-{{ id }} .gpl-steps__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gpl-steps-{{ id }} .gpl-steps__num {
+    position: absolute; top: 10px; left: 10px; min-width: 44px; height: 44px; padding: 0 8px;
+    border-radius: 999px; background: var(--a); color: #FFF; font-weight: 900; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #gpl-steps-{{ id }} .gpl-steps__body { padding: 16px 2px 0; }
+  #gpl-steps-{{ id }} .gpl-steps__title {
+    margin: 0 0 7px; color: {{ s.color_heading }}; font-weight: 900; text-transform: uppercase;
+    font-size: clamp(15px, 1.5vw, 21px); line-height: 1.15;
+  }
+  #gpl-steps-{{ id }} .gpl-steps__text { margin: 0; color: {{ s.color_text }}; font-size: 13.5px; line-height: 1.5; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-steps-{{ id }} .gpl-steps__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+    #gpl-steps-{{ id }} .gpl-steps__step + .gpl-steps__step::before { display: none; }
+  }
+  @media screen and (max-width: 639px) {
+    #gpl-steps-{{ id }} .gpl-steps__inner { width: min(1440px, 100% - 32px); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Steps",
+  "tag": "section",
+  "class": "gpl-section-steps",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading — first part",
+      "default": "From idea to"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — accent part (red)",
+      "default": "concert ready"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "A simple process from start to finish"
+    },
+    {
+      "type": "checkbox",
+      "id": "numbers_in_photo",
+      "label": "Numbers are drawn into the photos",
+      "default": false,
+      "info": "Turn on when the supplied photos already show 01, 02, 03 — otherwise the number appears twice."
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Photo shape",
+      "default": "3 / 2",
+      "options": [
+        {
+          "value": "3 / 2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0B0B0B"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Headings",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Body text",
+      "default": "#C9C9C9"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Theme photo filename",
+          "info": "A file in assets/, used when no photo is picked."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Photo description (alt text)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bring your idea"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "GPL Steps"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,339 @@
+{%- comment -%}
+  GTA Print Lab — photo card row.
+
+  A heading with an optional red second half, a subheading, and 2-6 cards that
+  each carry a photo, an optional icon badge, a title and a line of copy. Used
+  three times on the concerts page (the four "your design" cards, the six
+  apparel categories and the six style cards), so the layout is one section
+  with a column count rather than three near-identical ones.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign cards = section.blocks | where: 'type', 'card' -%}
+
+<section id="gpl-cards-{{ id }}" class="gpl-cards">
+  <div class="gpl-cards__inner">
+    {%- if s.heading != blank or s.heading_accent != blank -%}
+      <h2 class="gpl-cards__heading">
+        {%- if s.heading != blank -%}{{ s.heading }} {% endif -%}
+        {%- if s.heading_accent != blank -%}<span>{{ s.heading_accent }}</span>{%- endif -%}
+        {%- if s.heading_tail != blank -%} {{ s.heading_tail }}{%- endif -%}
+      </h2>
+    {%- endif -%}
+    {%- if s.subheading != blank -%}<p class="gpl-cards__sub">{{ s.subheading }}</p>{%- endif -%}
+
+    {%- if cards.size > 0 -%}
+      <ul class="gpl-cards__grid">
+        {%- for block in cards -%}
+          {%- assign b = block.settings -%}
+          <li class="gpl-cards__card" {{ block.shopify_attributes }}>
+            <div class="gpl-cards__frame">
+              {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-cards__img', alt: b.image_alt | default: b.title %}
+              {%- if b.icon != blank and b.icon != 'none' -%}
+                <span class="gpl-cards__badge" aria-hidden="true">{% render 'gpl-quote-icon', name: b.icon %}</span>
+              {%- endif -%}
+            </div>
+            <div class="gpl-cards__body">
+              {%- if b.title != blank -%}<h3 class="gpl-cards__title">{{ b.title }}</h3>{%- endif -%}
+              {%- if b.text != blank -%}<p class="gpl-cards__text">{{ b.text }}</p>{%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-cards-{{ id }} {
+    --a: {{ s.color_accent }};
+    background: {{ s.color_background }};
+    padding: clamp(40px, 5vw, 76px) 0 clamp(44px, 5.5vw, 84px);
+  }
+  #gpl-cards-{{ id }} .gpl-cards__inner { width: min(1440px, 100% - 48px); margin: 0 auto; }
+  #gpl-cards-{{ id }} .gpl-cards__heading {
+    margin: 0; text-align: center; color: {{ s.color_heading }};
+    font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em;
+    font-size: clamp(26px, 4vw, 52px); line-height: 1.04;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__heading span { color: var(--a); }
+  #gpl-cards-{{ id }} .gpl-cards__sub {
+    margin: 12px auto 0; max-width: 70ch; text-align: center;
+    color: {{ s.color_text }}; font-size: clamp(13.5px, 1.2vw, 16px); line-height: 1.5;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__grid {
+    list-style: none; margin: clamp(26px, 3.4vw, 46px) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat({{ s.columns }}, minmax(0, 1fr)); gap: clamp(12px, 1.5vw, 22px);
+  }
+  #gpl-cards-{{ id }} .gpl-cards__card {
+    background: {{ s.color_card }}; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,{{ s.shadow }});
+    display: flex; flex-direction: column;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__frame { position: relative; aspect-ratio: {{ s.image_ratio }}; background: #111; }
+  #gpl-cards-{{ id }} .gpl-cards__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gpl-cards-{{ id }} .gpl-cards__badge {
+    position: absolute; left: 50%; bottom: 0; transform: translate(-50%, 50%);
+    width: 46px; height: 46px; border-radius: 50%; background: var(--a); color: #FFF;
+    display: flex; align-items: center; justify-content: center; border: 3px solid {{ s.color_card }};
+  }
+  #gpl-cards-{{ id }} .gpl-cards__badge svg { width: 21px; height: 21px; }
+  #gpl-cards-{{ id }} .gpl-cards__body {
+    padding: {% if s.show_badges %}34px{% else %}18px{% endif %} 16px 20px; text-align: center; flex: 1 1 auto;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__title {
+    margin: 0 0 8px; color: {{ s.color_card_heading }}; font-weight: 800; text-transform: uppercase;
+    font-size: clamp(14px, 1.4vw, 18px); letter-spacing: .01em; line-height: 1.2;
+    position: relative; padding-bottom: 9px;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__title::after {
+    content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 34px; height: 3px; background: var(--a); border-radius: 2px;
+  }
+  #gpl-cards-{{ id }} .gpl-cards__text { margin: 0; color: {{ s.color_card_text }}; font-size: 13.5px; line-height: 1.5; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-cards-{{ id }} .gpl-cards__grid { grid-template-columns: repeat({% if s.columns > 3 %}3{% else %}2{% endif %}, minmax(0, 1fr)); }
+  }
+  @media screen and (max-width: 639px) {
+    #gpl-cards-{{ id }} .gpl-cards__inner { width: min(1440px, 100% - 32px); }
+    #gpl-cards-{{ id }} .gpl-cards__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    #gpl-cards-{{ id }} .gpl-cards__text { font-size: 12.5px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Cards",
+  "tag": "section",
+  "class": "gpl-section-cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading — first part",
+      "default": "Your concert."
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — accent part (red)",
+      "default": "Your design."
+    },
+    {
+      "type": "text",
+      "id": "heading_tail",
+      "label": "Heading — last part",
+      "default": "Your merch."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Cards per row",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Photo shape",
+      "default": "4 / 3",
+      "options": [
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "3 / 2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "16 / 11",
+          "label": "Wide (16:11)"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Cards have an icon badge",
+      "default": true,
+      "info": "Leaves room under the photo for the badge. Turn off when no card uses one."
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Subheading",
+      "default": "#5B5B5B"
+    },
+    {
+      "type": "color",
+      "id": "color_card",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_card_heading",
+      "label": "Card title",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "color_card_text",
+      "label": "Card text",
+      "default": "#5B5B5B"
+    },
+    {
+      "type": "range",
+      "id": "shadow",
+      "label": "Card shadow",
+      "min": 0,
+      "max": 0.4,
+      "step": 0.02,
+      "default": 0.12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Overrides the photo shipped with the theme."
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Theme photo filename",
+          "info": "A file in assets/, used when no photo is picked."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Photo description (alt text)"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon badge",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "No icon"
+            },
+            {
+              "value": "diamond",
+              "label": "Diamond"
+            },
+            {
+              "value": "pencil",
+              "label": "Pencil"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "shirt",
+              "label": "T-shirt"
+            },
+            {
+              "value": "palette",
+              "label": "Palette"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check in circle"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "coins",
+              "label": "Coins"
+            },
+            {
+              "value": "user",
+              "label": "Person"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "One-of-one"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "GPL Cards"
+    }
+  ]
+}
+{% endschema %}

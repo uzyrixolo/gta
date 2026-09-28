@@ -1,0 +1,23 @@
+{%- comment -%}
+  One image for the coded page sections, from either source:
+
+  img   — an image_picker value, so the merchant can swap the photo in the
+          theme editor. Wins whenever it is set.
+  asset — a filename in assets/, the photo shipped with the theme.
+
+  class / ratio are applied by the caller's CSS; sizes defaults to the card
+  width so phones do not download a desktop-sized photo.
+{%- endcomment -%}
+{%- assign sizes = sizes | default: '(max-width: 749px) 100vw, 33vw' -%}
+{%- if img != blank -%}
+  <img class="{{ class }}"
+    src="{{ img | image_url: width: 1200 }}"
+    srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1200 }} 1200w"
+    sizes="{{ sizes }}"
+    width="{{ img.width }}" height="{{ img.height }}"
+    alt="{{ alt | escape }}"
+    loading="{{ loading | default: 'lazy' }}">
+{%- elsif asset != blank -%}
+  <img class="{{ class }}" src="{{ asset | asset_url }}" alt="{{ alt | escape }}"
+    loading="{{ loading | default: 'lazy' }}" decoding="async">
+{%- endif -%}

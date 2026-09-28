@@ -1,0 +1,329 @@
+{%- comment -%}
+  GTA Print Lab — gallery band with an optional strip underneath.
+
+  Top: a wide photo with the heading, sub-copy and a button beside it.
+  Bottom (optional): the "going with your crew?" strip — its own heading, copy,
+  button and photo. The concert artwork carries both in one band, so keeping
+  them in one section keeps the page order honest.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign shots = section.blocks | where: 'type', 'shot' -%}
+
+<section id="gpl-gal-{{ id }}" class="gpl-gal">
+  {%- if s.anchor_id != blank -%}<span class="gpl-gal__anchor" id="{{ s.anchor_id | handleize }}"></span>{%- endif -%}
+
+  <div class="gpl-gal__inner">
+    <div class="gpl-gal__top">
+      <div class="gpl-gal__shots">
+        {%- for block in shots -%}
+          <figure class="gpl-gal__shot" {{ block.shopify_attributes }}>
+            {% render 'gpl-picture', img: block.settings.image, asset: block.settings.image_asset,
+               class: 'gpl-gal__img', alt: block.settings.image_alt, sizes: '(max-width: 989px) 100vw, 50vw' %}
+          </figure>
+        {%- endfor -%}
+      </div>
+
+      <div class="gpl-gal__copy">
+        <h2 class="gpl-gal__heading">
+          {%- if s.heading != blank -%}<span>{{ s.heading }}</span>{%- endif -%}
+          {%- if s.heading_accent != blank -%}<span class="is-accent">{{ s.heading_accent }}</span>{%- endif -%}
+        </h2>
+        {%- if s.subheading != blank -%}<p class="gpl-gal__sub">{{ s.subheading }}</p>{%- endif -%}
+        {%- if s.button_text != blank -%}
+          <a class="gpl-gal__btn" href="{{ s.button_link | default: '#' }}">
+            {{ s.button_text }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if s.strip_heading != blank or s.strip_image != blank or s.strip_image_asset != blank -%}
+      <div class="gpl-gal__strip">
+        <div class="gpl-gal__strip-copy">
+          {%- if s.strip_eyebrow != blank -%}<p class="gpl-gal__strip-eyebrow">{{ s.strip_eyebrow }}</p>{%- endif -%}
+          {%- if s.strip_heading != blank -%}<h3 class="gpl-gal__strip-heading">{{ s.strip_heading }}</h3>{%- endif -%}
+          {%- if s.strip_text != blank -%}<p class="gpl-gal__strip-text">{{ s.strip_text }}</p>{%- endif -%}
+          {%- if s.strip_button_text != blank -%}
+            <a class="gpl-gal__btn gpl-gal__btn--small" href="{{ s.strip_button_link | default: '#' }}">{{ s.strip_button_text }}</a>
+          {%- endif -%}
+        </div>
+        <div class="gpl-gal__strip-media">
+          {% render 'gpl-picture', img: s.strip_image, asset: s.strip_image_asset,
+             class: 'gpl-gal__img', alt: s.strip_image_alt, sizes: '(max-width: 989px) 100vw, 60vw' %}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-gal-{{ id }} {
+    --a: {{ s.color_accent }};
+    background: {{ s.color_background }};
+    padding: clamp(36px, 4.5vw, 70px) 0;
+  }
+  #gpl-gal-{{ id }} .gpl-gal__anchor { display: block; height: 0; scroll-margin-top: 120px; }
+  #gpl-gal-{{ id }} .gpl-gal__inner { width: min(1440px, 100% - 48px); margin: 0 auto; }
+  #gpl-gal-{{ id }} .gpl-gal__top {
+    display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 44px); align-items: center;
+  }
+  #gpl-gal-{{ id }} .gpl-gal__shots { display: grid; grid-template-columns: repeat({{ s.shot_columns }}, minmax(0, 1fr)); gap: 12px; }
+  #gpl-gal-{{ id }} .gpl-gal__shot { margin: 0; border-radius: 12px; overflow: hidden; aspect-ratio: {{ s.image_ratio }}; background: #111; }
+  #gpl-gal-{{ id }} .gpl-gal__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gpl-gal-{{ id }} .gpl-gal__heading {
+    margin: 0 0 12px; display: flex; flex-direction: column; color: #FFF;
+    font-weight: 900; text-transform: uppercase; line-height: .96;
+    font-size: clamp(28px, 4vw, 54px); letter-spacing: -0.015em;
+  }
+  #gpl-gal-{{ id }} .gpl-gal__heading .is-accent { color: var(--a); }
+  #gpl-gal-{{ id }} .gpl-gal__sub { margin: 0 0 20px; color: #C9C9C9; font-size: clamp(14px, 1.2vw, 16.5px); line-height: 1.5; max-width: 34ch; }
+  #gpl-gal-{{ id }} .gpl-gal__btn {
+    display: inline-flex; align-items: center; gap: 9px; padding: 14px 26px; border-radius: 8px;
+    background: var(--a); color: #FFF; font-weight: 800; font-size: 14px; text-transform: uppercase;
+    letter-spacing: .02em; text-decoration: none; transition: background-color .2s ease;
+  }
+  #gpl-gal-{{ id }} .gpl-gal__btn:hover { background: #B4141A; }
+  #gpl-gal-{{ id }} .gpl-gal__btn svg { width: 15px; height: 15px; }
+  #gpl-gal-{{ id }} .gpl-gal__btn--small { padding: 11px 20px; font-size: 13px; }
+
+  #gpl-gal-{{ id }} .gpl-gal__strip {
+    margin-top: clamp(18px, 2.4vw, 32px); display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(18px, 2.6vw, 38px);
+    align-items: center; border-top: 1px solid rgba(255,255,255,0.12); padding-top: clamp(20px, 2.6vw, 34px);
+  }
+  #gpl-gal-{{ id }} .gpl-gal__strip-eyebrow { margin: 0 0 6px; color: #FFF; font-weight: 800; text-transform: uppercase; font-size: clamp(15px, 1.7vw, 22px); line-height: 1.15; }
+  #gpl-gal-{{ id }} .gpl-gal__strip-heading { margin: 0 0 10px; color: var(--a); font-weight: 900; text-transform: uppercase; font-size: clamp(17px, 2vw, 26px); line-height: 1.1; }
+  #gpl-gal-{{ id }} .gpl-gal__strip-text { margin: 0 0 16px; color: #C4C4C4; font-size: 14px; line-height: 1.5; }
+  #gpl-gal-{{ id }} .gpl-gal__strip-media { border-radius: 12px; overflow: hidden; aspect-ratio: {{ s.strip_image_ratio }}; background: #111; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-gal-{{ id }} .gpl-gal__top,
+    #gpl-gal-{{ id }} .gpl-gal__strip { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 639px) {
+    #gpl-gal-{{ id }} .gpl-gal__inner { width: min(1440px, 100% - 32px); }
+    #gpl-gal-{{ id }} .gpl-gal__shots { grid-template-columns: minmax(0, 1fr); }
+    #gpl-gal-{{ id }} .gpl-gal__btn { width: 100%; justify-content: center; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Gallery",
+  "tag": "section",
+  "class": "gpl-section-gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Concert merch"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — accent line (red)",
+      "default": "Gallery"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real people. Real concerts. Real custom merch."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor name",
+      "info": "Optional. Lets a button elsewhere link here, e.g. \"gallery\" for #gallery."
+    },
+    {
+      "type": "range",
+      "id": "shot_columns",
+      "label": "Photos per row",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Photo shape",
+      "default": "21 / 9",
+      "options": [
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "3 / 2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "21 / 9",
+          "label": "Very wide (21:9)"
+        },
+        {
+          "value": "11 / 4",
+          "label": "Ultra wide (11:4)"
+        },
+        {
+          "value": "5 / 1",
+          "label": "Strip (5:1)"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Strip underneath (optional)"
+    },
+    {
+      "type": "text",
+      "id": "strip_eyebrow",
+      "label": "Strip line 1",
+      "default": "Going to a concert with your crew?"
+    },
+    {
+      "type": "text",
+      "id": "strip_heading",
+      "label": "Strip line 2 (red)",
+      "default": "Create the crew look."
+    },
+    {
+      "type": "textarea",
+      "id": "strip_text",
+      "label": "Strip text"
+    },
+    {
+      "type": "text",
+      "id": "strip_button_text",
+      "label": "Strip button text"
+    },
+    {
+      "type": "url",
+      "id": "strip_button_link",
+      "label": "Strip button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "strip_image",
+      "label": "Strip photo"
+    },
+    {
+      "type": "text",
+      "id": "strip_image_asset",
+      "label": "Strip theme photo filename"
+    },
+    {
+      "type": "text",
+      "id": "strip_image_alt",
+      "label": "Strip photo description (alt text)"
+    },
+    {
+      "type": "select",
+      "id": "strip_image_ratio",
+      "label": "Strip photo shape",
+      "default": "5 / 1",
+      "options": [
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "3 / 2",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "21 / 9",
+          "label": "Very wide (21:9)"
+        },
+        {
+          "value": "11 / 4",
+          "label": "Ultra wide (11:4)"
+        },
+        {
+          "value": "5 / 1",
+          "label": "Strip (5:1)"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0B0B0B"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shot",
+      "name": "Photo",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Theme photo filename"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Photo description (alt text)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "GPL Gallery"
+    }
+  ]
+}
+{% endschema %}

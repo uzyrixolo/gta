@@ -1,0 +1,405 @@
+{%- comment -%}
+  GTA Print Lab — concert-style hero.
+
+  Photo on the right, headline on the left, trust chips across the bottom.
+  Each of the three headline lines can be set red independently, which is how
+  the concert artwork reads: CUSTOM / CONCERT / APPAREL with the middle line
+  in the accent colour.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign chips = section.blocks | where: 'type', 'chip' -%}
+
+<section id="gpl-cch-{{ id }}" class="gpl-cch">
+  <div class="gpl-cch__media">
+    {% render 'gpl-picture', img: s.image, asset: s.image_asset, class: 'gpl-cch__photo',
+       alt: s.image_alt, loading: 'eager', sizes: '(max-width: 989px) 100vw, 60vw' %}
+    <span class="gpl-cch__scrim" aria-hidden="true"></span>
+  </div>
+
+  <div class="gpl-cch__inner">
+    <div class="gpl-cch__copy">
+      {%- if s.eyebrow != blank -%}<p class="gpl-cch__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+
+      <h1 class="gpl-cch__heading">
+        {%- if s.line1 != blank -%}
+          <span class="gpl-cch__line{% if s.line1_accent %} is-accent{% endif %}">{{ s.line1 }}</span>
+        {%- endif -%}
+        {%- if s.line2 != blank -%}
+          <span class="gpl-cch__line{% if s.line2_accent %} is-accent{% endif %}">{{ s.line2 }}</span>
+        {%- endif -%}
+        {%- if s.line3 != blank -%}
+          <span class="gpl-cch__line{% if s.line3_accent %} is-accent{% endif %}">{{ s.line3 }}</span>
+        {%- endif -%}
+      </h1>
+
+      {%- if s.subheading != blank -%}<p class="gpl-cch__sub">{{ s.subheading }}</p>{%- endif -%}
+      {%- if s.paragraph != blank -%}<div class="gpl-cch__para">{{ s.paragraph }}</div>{%- endif -%}
+
+      {%- if s.button_1_text != blank or s.button_2_text != blank -%}
+        <div class="gpl-cch__buttons">
+          {%- if s.button_1_text != blank -%}
+            <a class="gpl-cch__btn gpl-cch__btn--primary" href="{{ s.button_1_link | default: '#' }}">
+              {{ s.button_1_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if s.button_2_text != blank -%}
+            <a class="gpl-cch__btn gpl-cch__btn--outline" href="{{ s.button_2_link | default: '#' }}">{{ s.button_2_text }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if chips.size > 0 -%}
+      <ul class="gpl-cch__chips">
+        {%- for block in chips -%}
+          <li class="gpl-cch__chip" {{ block.shopify_attributes }}>
+            <span class="gpl-cch__chip-icon" aria-hidden="true">{% render 'gpl-quote-icon', name: block.settings.icon %}</span>
+            <span class="gpl-cch__chip-text">
+              <span>{{ block.settings.line1 }}</span>
+              {%- if block.settings.line2 != blank -%}<span>{{ block.settings.line2 }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-cch-{{ id }} {
+    --a: {{ s.color_accent }};
+    position: relative; isolation: isolate; overflow: hidden;
+    background: {{ s.color_background }};
+    min-height: {{ s.min_height }}px;
+    display: flex; align-items: stretch;
+  }
+  #gpl-cch-{{ id }} .gpl-cch__media { position: absolute; inset: 0; z-index: 0; }
+  #gpl-cch-{{ id }} .gpl-cch__photo { width: 100%; height: 100%; object-fit: cover; object-position: {{ s.image_position }}; display: block; }
+  /* the headline sits on the left, so the scrim is heaviest there and clears
+     the photo on the right */
+  #gpl-cch-{{ id }} .gpl-cch__scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(8,8,8,{{ s.scrim }}) 0%, rgba(8,8,8,{{ s.scrim }}) 30%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.15) 100%),
+      linear-gradient(0deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0) 38%);
+  }
+  #gpl-cch-{{ id }} .gpl-cch__inner {
+    position: relative; z-index: 1; width: min(1440px, 100% - 48px); margin: 0 auto;
+    padding: clamp(40px, 5vw, 76px) 0 0; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(28px, 4vw, 52px);
+  }
+  #gpl-cch-{{ id }} .gpl-cch__copy { max-width: 640px; }
+  #gpl-cch-{{ id }} .gpl-cch__eyebrow { margin: 0 0 10px; color: var(--a); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; font-size: 13px; }
+  #gpl-cch-{{ id }} .gpl-cch__heading {
+    margin: 0 0 18px; display: flex; flex-direction: column; color: #FFF;
+    font-weight: 900; text-transform: uppercase; line-height: .92;
+    font-size: clamp(42px, 6.6vw, 86px); letter-spacing: -0.015em;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.45);
+  }
+  #gpl-cch-{{ id }} .gpl-cch__line.is-accent { color: var(--a); }
+  #gpl-cch-{{ id }} .gpl-cch__sub { margin: 0 0 14px; color: #FFF; font-weight: 800; text-transform: uppercase; letter-spacing: .01em; font-size: clamp(16px, 2vw, 25px); }
+  #gpl-cch-{{ id }} .gpl-cch__para { color: #D9D9D9; font-size: clamp(14.5px, 1.3vw, 17px); line-height: 1.55; max-width: 44ch; margin: 0 0 26px; }
+  #gpl-cch-{{ id }} .gpl-cch__para p { margin: 0; }
+
+  #gpl-cch-{{ id }} .gpl-cch__buttons { display: flex; flex-wrap: wrap; gap: 14px; }
+  #gpl-cch-{{ id }} .gpl-cch__btn {
+    display: inline-flex; align-items: center; gap: 9px; padding: 15px 28px; border-radius: 8px;
+    font-weight: 800; font-size: 14.5px; letter-spacing: .02em; text-transform: uppercase;
+    text-decoration: none; border: 2px solid transparent; transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+  #gpl-cch-{{ id }} .gpl-cch__btn svg { width: 16px; height: 16px; }
+  #gpl-cch-{{ id }} .gpl-cch__btn--primary { background: var(--a); color: #FFF; }
+  #gpl-cch-{{ id }} .gpl-cch__btn--primary:hover { background: #B4141A; }
+  #gpl-cch-{{ id }} .gpl-cch__btn--outline { color: #FFF; border-color: rgba(255,255,255,0.8); }
+  #gpl-cch-{{ id }} .gpl-cch__btn--outline:hover { background: rgba(255,255,255,0.12); }
+
+  #gpl-cch-{{ id }} .gpl-cch__chips {
+    list-style: none; margin: 0; padding: 18px 0 20px; display: flex; flex-wrap: wrap;
+    gap: clamp(14px, 3vw, 46px); border-top: 1px solid rgba(255,255,255,0.16);
+  }
+  #gpl-cch-{{ id }} .gpl-cch__chip { display: flex; align-items: center; gap: 11px; }
+  #gpl-cch-{{ id }} .gpl-cch__chip-icon { color: var(--a); display: flex; }
+  #gpl-cch-{{ id }} .gpl-cch__chip-icon svg { width: 26px; height: 26px; }
+  #gpl-cch-{{ id }} .gpl-cch__chip-text { display: flex; flex-direction: column; color: #FFF; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .04em; line-height: 1.25; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-cch-{{ id }} { min-height: {{ s.min_height_mobile }}px; }
+    #gpl-cch-{{ id }} .gpl-cch__scrim {
+      background:
+        linear-gradient(180deg, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.82) 55%, rgba(8,8,8,0.95) 100%);
+    }
+    #gpl-cch-{{ id }} .gpl-cch__inner { width: min(1440px, 100% - 32px); }
+    #gpl-cch-{{ id }} .gpl-cch__copy { max-width: 100%; }
+    #gpl-cch-{{ id }} .gpl-cch__btn { flex: 1 1 100%; justify-content: center; }
+    #gpl-cch-{{ id }} .gpl-cch__chips { gap: 16px 22px; }
+    #gpl-cch-{{ id }} .gpl-cch__chip-text { font-size: 11px; }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL CC Hero",
+  "tag": "section",
+  "class": "gpl-section-cc-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background photo",
+      "info": "Overrides the photo shipped with the theme."
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Theme photo filename",
+      "info": "A file in assets/, used when no photo is picked above."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Photo description (alt text)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Focal point",
+      "default": "center right",
+      "options": [
+        {
+          "value": "center left",
+          "label": "Left"
+        },
+        {
+          "value": "center center",
+          "label": "Centre"
+        },
+        {
+          "value": "center right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "scrim",
+      "label": "Dark overlay on the text side",
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.85
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 420,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum height (mobile)",
+      "min": 380,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "Line 1",
+      "default": "Custom"
+    },
+    {
+      "type": "checkbox",
+      "id": "line1_accent",
+      "label": "Line 1 in the accent colour",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "Line 2",
+      "default": "Concert"
+    },
+    {
+      "type": "checkbox",
+      "id": "line2_accent",
+      "label": "Line 2 in the accent colour",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "line3",
+      "label": "Line 3",
+      "default": "Apparel"
+    },
+    {
+      "type": "checkbox",
+      "id": "line3_accent",
+      "label": "Line 3 in the accent colour",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 text"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 text"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0B0B0B"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Trust chip",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "diamond",
+          "options": [
+            {
+              "value": "diamond",
+              "label": "Diamond"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "shirt",
+              "label": "T-shirt"
+            },
+            {
+              "value": "coins",
+              "label": "Coins"
+            },
+            {
+              "value": "leaf",
+              "label": "Maple leaf"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check in circle"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "pencil",
+              "label": "Pencil"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "user",
+              "label": "Person"
+            },
+            {
+              "value": "gear",
+              "label": "Gear"
+            },
+            {
+              "value": "chat",
+              "label": "Chat"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "line1",
+          "label": "Line 1",
+          "default": "Premium"
+        },
+        {
+          "type": "text",
+          "id": "line2",
+          "label": "Line 2",
+          "default": "Quality"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "GPL CC Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,221 @@
+{%- comment -%}
+  GTA Print Lab — "why buy generic?" comparison.
+
+  Pitch on the left, two stacked columns on the right: what you get elsewhere
+  (crosses) against what you get here (ticks). Pure text and CSS — the mockup
+  band has no photography in it, so nothing needs to be an image.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign theirs = section.blocks | where: 'type', 'theirs' -%}
+{%- assign ours = section.blocks | where: 'type', 'ours' -%}
+
+<section id="gpl-cmp-{{ id }}" class="gpl-cmp">
+  <div class="gpl-cmp__inner">
+    <div class="gpl-cmp__pitch">
+      <h2 class="gpl-cmp__heading">
+        {%- if s.line1 != blank -%}<span>{{ s.line1 }}</span>{%- endif -%}
+        {%- if s.line2 != blank -%}<span>{{ s.line2 }}</span>{%- endif -%}
+        {%- if s.line3 != blank -%}<span class="is-accent">{{ s.line3 }}</span>{%- endif -%}
+      </h2>
+      {%- if s.paragraph != blank -%}<div class="gpl-cmp__para">{{ s.paragraph }}</div>{%- endif -%}
+      {%- if s.button_text != blank -%}
+        <a class="gpl-cmp__btn" href="{{ s.button_link | default: '#' }}">{{ s.button_text }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="gpl-cmp__table">
+      <div class="gpl-cmp__col gpl-cmp__col--theirs">
+        <p class="gpl-cmp__col-head">{{ s.theirs_title }}</p>
+        <ul>
+          {%- for block in theirs -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="gpl-cmp__mark gpl-cmp__mark--no" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7 7 17"/></svg>
+              </span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+      <div class="gpl-cmp__col gpl-cmp__col--ours">
+        <p class="gpl-cmp__col-head">{{ s.ours_title }}</p>
+        <ul>
+          {%- for block in ours -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="gpl-cmp__mark gpl-cmp__mark--yes" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 12.5 4 4 8-9"/></svg>
+              </span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-cmp-{{ id }} {
+    --a: {{ s.color_accent }};
+    background: {{ s.color_background }};
+    padding: clamp(40px, 5vw, 78px) 0;
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__inner {
+    width: min(1440px, 100% - 48px); margin: 0 auto;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(26px, 4vw, 64px); align-items: center;
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__heading {
+    margin: 0 0 18px; display: flex; flex-direction: column; color: #FFF;
+    font-weight: 900; text-transform: uppercase; line-height: .98;
+    font-size: clamp(28px, 4.2vw, 56px); letter-spacing: -0.015em;
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__heading .is-accent { color: var(--a); }
+  #gpl-cmp-{{ id }} .gpl-cmp__para { color: #C9C9C9; font-size: clamp(14px, 1.2vw, 16px); line-height: 1.6; max-width: 46ch; }
+  #gpl-cmp-{{ id }} .gpl-cmp__para p { margin: 0; }
+  #gpl-cmp-{{ id }} .gpl-cmp__btn {
+    display: inline-flex; margin-top: 22px; padding: 14px 26px; border-radius: 8px;
+    background: var(--a); color: #FFF; font-weight: 800; font-size: 14px;
+    text-transform: uppercase; letter-spacing: .02em; text-decoration: none;
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__btn:hover { background: #B4141A; }
+
+  #gpl-cmp-{{ id }} .gpl-cmp__table {
+    display: grid; grid-template-columns: 1fr 1fr; border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__col { background: #141414; }
+  #gpl-cmp-{{ id }} .gpl-cmp__col--ours { background: #1A1113; }
+  #gpl-cmp-{{ id }} .gpl-cmp__col-head {
+    margin: 0; padding: 14px 16px; text-align: center; font-weight: 800; font-size: 13.5px;
+    text-transform: uppercase; letter-spacing: .06em; color: #FFF; background: #2A2A2A;
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__col--ours .gpl-cmp__col-head { background: var(--a); }
+  #gpl-cmp-{{ id }} .gpl-cmp__col ul { list-style: none; margin: 0; padding: 6px 0; }
+  #gpl-cmp-{{ id }} .gpl-cmp__col li {
+    display: flex; align-items: flex-start; gap: 10px; padding: 11px 16px;
+    color: #E4E4E4; font-size: 13.5px; line-height: 1.35;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  #gpl-cmp-{{ id }} .gpl-cmp__col li:first-child { border-top: none; }
+  #gpl-cmp-{{ id }} .gpl-cmp__mark { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 1px; }
+  #gpl-cmp-{{ id }} .gpl-cmp__mark svg { width: 100%; height: 100%; }
+  #gpl-cmp-{{ id }} .gpl-cmp__mark--no { color: var(--a); }
+  #gpl-cmp-{{ id }} .gpl-cmp__mark--yes { color: #35C46A; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-cmp-{{ id }} .gpl-cmp__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media screen and (max-width: 639px) {
+    #gpl-cmp-{{ id }} .gpl-cmp__inner { width: min(1440px, 100% - 32px); }
+    #gpl-cmp-{{ id }} .gpl-cmp__table { grid-template-columns: minmax(0, 1fr); }
+    #gpl-cmp-{{ id }} .gpl-cmp__col--theirs { border-bottom: 1px solid rgba(255,255,255,0.14); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Compare",
+  "tag": "section",
+  "class": "gpl-section-compare",
+  "settings": [
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "Heading line 1",
+      "default": "Why buy"
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "Heading line 2",
+      "default": "generic merch?"
+    },
+    {
+      "type": "text",
+      "id": "line3",
+      "label": "Heading line 3 (red)",
+      "default": "Create your own."
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "theirs_title",
+      "label": "Left column title",
+      "default": "Concert merch"
+    },
+    {
+      "type": "text",
+      "id": "ours_title",
+      "label": "Right column title",
+      "default": "GTA Print Lab"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0B0B0B"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "theirs",
+      "name": "Left column row",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Limited designs"
+        }
+      ]
+    },
+    {
+      "type": "ours",
+      "name": "Right column row",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Your custom design"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "GPL Compare"
+    }
+  ]
+}
+{% endschema %}

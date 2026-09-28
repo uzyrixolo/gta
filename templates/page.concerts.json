@@ -10,159 +10,509 @@
 {
   "sections": {
     "hero": {
-      "type": "gpl-banner",
+      "type": "gpl-cc-hero",
       "settings": {
-        "image": "shopify://shop_images/concert-hero.png",
-        "alt": "Custom concert apparel. Your concert, your design, your merch. Don't wear the same merch as everyone else — create a one-of-one look that's uniquely yours. Premium quality, fast turnaround, no minimums, better value than concert merch, Toronto based.",
-        "heading": "Custom Concert Apparel",
-        "heading_level": "h1",
-        "eager": true,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "image_asset": "concert-hero-photo.jpg",
+        "image_alt": "Two fans at a concert in custom-printed tees, one reading Good Music Better People",
+        "image_position": "center right",
+        "scrim": 0.85,
+        "min_height": 660,
+        "min_height_mobile": 620,
+        "eyebrow": "",
+        "line1": "Custom",
+        "line1_accent": false,
+        "line2": "Concert",
+        "line2_accent": true,
+        "line3": "Apparel",
+        "line3_accent": false,
+        "subheading": "Your concert. Your design. Your merch.",
+        "paragraph": "<p>Don't wear the same merch as everyone else. Create a one-of-one look that's uniquely yours.</p>",
+        "button_1_text": "Design Your Concert Shirt",
+        "button_1_link": "/collections/all",
+        "button_2_text": "View Gallery",
+        "button_2_link": "#concert-gallery",
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
+        "color_background": "#0B0B0B"
       },
       "blocks": {
-        "hot_1": {
-          "type": "hotspot",
+        "c1": {
+          "type": "chip",
           "settings": {
-            "label": "Design your concert shirt",
-            "link": "/collections/all",
-            "x": 4,
-            "y": 71,
-            "w": 25,
-            "h": 8
+            "icon": "diamond",
+            "line1": "Premium",
+            "line2": "Quality"
           }
         },
-        "hot_2": {
-          "type": "hotspot",
+        "c2": {
+          "type": "chip",
           "settings": {
-            "label": "View gallery",
-            "link": "#concert-gallery",
-            "x": 30,
-            "y": 71,
-            "w": 15,
-            "h": 8
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "Turnaround"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "shirt",
+            "line1": "No",
+            "line2": "Minimums"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "coins",
+            "line1": "Better value",
+            "line2": "than concert merch"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "icon": "leaf",
+            "line1": "Toronto",
+            "line2": "Based"
           }
         }
       },
       "block_order": [
-        "hot_1",
-        "hot_2"
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
       ]
     },
     "your_design": {
-      "type": "gpl-banner",
+      "type": "gpl-cards",
       "settings": {
-        "image": "shopify://shop_images/concert-your-design.png",
-        "alt": "Your concert, your design, your merch. Create a custom design for your next concert, festival or event — be different, be original. One-of-one: create something nobody else in the crowd has. Your vision: bring us your idea, artwork, photo, lyrics or concept. Your style: vintage, streetwear, graphic, minimal — whatever fits your vibe. Your apparel: t-shirts, hoodies, hats, jackets, tanks and more.",
-        "heading": "Your concert. Your design. Your merch.",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "heading": "Your concert.",
+        "heading_accent": "Your design.",
+        "heading_tail": "Your merch.",
+        "subheading": "Create a custom design for your next concert, festival or event. Be different. Be original.",
+        "columns": 4,
+        "image_ratio": "3 / 2",
+        "show_badges": true,
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.12
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-cyd-one-of-one.jpg",
+            "icon": "diamond",
+            "title": "One-of-one",
+            "text": "Create something nobody else in the crowd has.",
+            "image_alt": "Fan wearing a custom concert tee in the street"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-cyd-your-vision.jpg",
+            "icon": "pencil",
+            "title": "Your vision",
+            "text": "Bring us your idea, artwork, photo, lyrics or concept.",
+            "image_alt": "Designer laying out a concert tee on screen"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-cyd-your-style.jpg",
+            "icon": "star",
+            "title": "Your style",
+            "text": "Vintage. Streetwear. Graphic. Minimal. Whatever fits your vibe.",
+            "image_alt": "Three friends in matching custom concert tees"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-cyd-your-apparel.jpg",
+            "icon": "shirt",
+            "title": "Your apparel",
+            "text": "T-shirts, hoodies, hats, jackets, tanks and more.",
+            "image_alt": "Custom printed hoodie, cap and tee"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4"
+      ]
     },
     "why_generic": {
-      "type": "gpl-banner",
+      "type": "gpl-compare",
       "settings": {
-        "image": "shopify://shop_images/concert-why-generic.png",
-        "alt": "Why buy generic merch? Create your own. Concert merch tables have limited designs and high prices. With GTA Print Lab you get custom designs, better quality, and a unique look for less. Concert merch means limited designs, limited styles, everyone wears the same thing, higher prices and no customization. GTA Print Lab means your custom design, your choice of apparel, a unique one-of-one look, better value, and custom artwork and placement.",
-        "heading": "Why buy generic merch? Create your own.",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "line1": "Why buy",
+        "line2": "generic merch?",
+        "line3": "Create your own.",
+        "paragraph": "<p>Concert merch tables have limited designs and high prices. With GTA Print Lab you get custom designs, better quality, and a unique look for less.</p>",
+        "button_text": "Design Your Own",
+        "button_link": "/collections/all",
+        "theirs_title": "Concert merch",
+        "ours_title": "GTA Print Lab",
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "t1": {
+          "type": "theirs",
+          "settings": {
+            "text": "Limited designs"
+          }
+        },
+        "t2": {
+          "type": "theirs",
+          "settings": {
+            "text": "Limited styles"
+          }
+        },
+        "t3": {
+          "type": "theirs",
+          "settings": {
+            "text": "Everyone wears the same thing"
+          }
+        },
+        "t4": {
+          "type": "theirs",
+          "settings": {
+            "text": "Higher prices"
+          }
+        },
+        "t5": {
+          "type": "theirs",
+          "settings": {
+            "text": "No customization"
+          }
+        },
+        "o1": {
+          "type": "ours",
+          "settings": {
+            "text": "Your custom design"
+          }
+        },
+        "o2": {
+          "type": "ours",
+          "settings": {
+            "text": "Your choice of apparel"
+          }
+        },
+        "o3": {
+          "type": "ours",
+          "settings": {
+            "text": "Unique one-of-one look"
+          }
+        },
+        "o4": {
+          "type": "ours",
+          "settings": {
+            "text": "Better value"
+          }
+        },
+        "o5": {
+          "type": "ours",
+          "settings": {
+            "text": "Custom artwork & placement"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "o1",
+        "o2",
+        "o3",
+        "o4",
+        "o5"
+      ]
     },
     "concert_look": {
-      "type": "gpl-banner",
+      "type": "gpl-cards",
       "settings": {
-        "image": "shopify://shop_images/concert-look.png",
-        "alt": "Create your concert look — custom designs on a wide range of apparel: t-shirts with front, back and sleeve full-colour graphics; hoodies in oversized graphics and premium streetwear; hats with embroidered logos and graphics; jackets including varsity, denim and bomber; long sleeves perfect for fall and winter shows and festivals; and accessories including totes, bags and drinkware.",
-        "heading": "Create your concert look",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "heading": "Create your",
+        "heading_accent": "concert look",
+        "heading_tail": "",
+        "subheading": "Custom designs on a wide range of apparel",
+        "columns": 6,
+        "image_ratio": "16 / 11",
+        "show_badges": false,
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-tshirts.jpg",
+            "icon": "none",
+            "title": "T-Shirts",
+            "text": "Front, back, sleeves — full-colour graphics.",
+            "image_alt": "Custom printed concert t-shirt"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-hoodies.jpg",
+            "icon": "none",
+            "title": "Hoodies",
+            "text": "Oversized graphics, premium streetwear.",
+            "image_alt": "Red custom printed hoodie"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-hats.jpg",
+            "icon": "none",
+            "title": "Hats",
+            "text": "Embroidered logos, graphics and more.",
+            "image_alt": "Embroidered GTA Print Lab cap"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-jackets.jpg",
+            "icon": "none",
+            "title": "Jackets",
+            "text": "Varsity, denim, bomber and more.",
+            "image_alt": "Custom varsity jacket"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-long-sleeves.jpg",
+            "icon": "none",
+            "title": "Long Sleeves",
+            "text": "Perfect for fall and winter shows and festivals.",
+            "image_alt": "Custom printed long sleeve shirt"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-look-accessories.jpg",
+            "icon": "none",
+            "title": "Accessories",
+            "text": "Totes, bags, drinkware and more.",
+            "image_alt": "Custom tote bag, backpack and bottle"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6"
+      ]
     },
     "process": {
-      "type": "gpl-banner",
+      "type": "gpl-steps",
       "settings": {
-        "image": "shopify://shop_images/concert-process.png",
-        "alt": "From idea to concert ready — a simple process from start to finish. One: bring your idea, upload your artwork or tell us what you're imagining. Two: we create — our design team turns it into professional artwork. Three: approve — see your design and approve it before production begins. Four: we print — your finished apparel is produced and ready for pickup or delivery.",
-        "heading": "From idea to concert ready",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "heading": "From idea to",
+        "heading_accent": "concert ready",
+        "subheading": "A simple process from start to finish",
+        "numbers_in_photo": true,
+        "image_ratio": "3 / 2",
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#C9C9C9"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-idea.jpg",
+            "title": "Bring your idea",
+            "text": "Upload your artwork or tell us what you're imagining.",
+            "image_alt": "Customer choosing a design on a laptop"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-create.jpg",
+            "title": "We create",
+            "text": "Our design team turns your concept into professional artwork.",
+            "image_alt": "Designer working up the artwork on screen"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-approve.jpg",
+            "title": "Approve",
+            "text": "See your design and approve it before production begins.",
+            "image_alt": "Printed proof of the concert tee for approval"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-print.jpg",
+            "title": "We print",
+            "text": "Your finished apparel is produced and ready for pickup or delivery.",
+            "image_alt": "Garments coming off the printer"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
     "styles": {
-      "type": "gpl-banner",
+      "type": "gpl-cards",
       "settings": {
-        "image": "shopify://shop_images/concert-styles.png",
-        "alt": "Choose your style — different looks, endless possibilities: vintage distressed graphics in retro tour style, streetwear with bold graphics and modern fashion, photo graphic using artist photography and custom imagery, minimal for a clean and understated look, graphic art with illustrations and original concepts, and bootleg-inspired vintage collectible styles.",
-        "heading": "Choose your style",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "heading": "Choose your",
+        "heading_accent": "style",
+        "heading_tail": "",
+        "subheading": "Different looks. Endless possibilities.",
+        "columns": 6,
+        "image_ratio": "1 / 1",
+        "show_badges": false,
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.12
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-vintage.jpg",
+            "icon": "none",
+            "title": "Vintage",
+            "text": "Distressed graphics, retro tour style.",
+            "image_alt": "Vintage style world tour concert tee"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-streetwear.jpg",
+            "icon": "none",
+            "title": "Streetwear",
+            "text": "Bold graphics, modern fashion.",
+            "image_alt": "Streetwear style graphic tee"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-photo.jpg",
+            "icon": "none",
+            "title": "Photo Graphic",
+            "text": "Artist photography, custom imagery.",
+            "image_alt": "Photo graphic concert tee"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-minimal.jpg",
+            "icon": "none",
+            "title": "Minimal",
+            "text": "Clean design, understated look.",
+            "image_alt": "Minimal text concert tee"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-graphic-art.jpg",
+            "icon": "none",
+            "title": "Graphic Art",
+            "text": "Illustrations, original concepts.",
+            "image_alt": "Illustrated graphic art tee"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "concert-style-bootleg.jpg",
+            "icon": "none",
+            "title": "Bootleg-Inspired",
+            "text": "Vintage-inspired, collectible styles.",
+            "image_alt": "Bootleg style tour tee"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6"
+      ]
     },
     "gallery": {
-      "type": "gpl-banner",
+      "type": "gpl-gallery",
       "settings": {
-        "image": "shopify://shop_images/concert-gallery.png",
-        "alt": "Concert merch gallery — real people, real concerts, real custom merch. Going to a concert with your crew? Create the crew look: matching doesn't have to be identical, make it your style.",
-        "heading": "Concert merch gallery",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "heading": "Concert merch",
+        "heading_accent": "Gallery",
+        "subheading": "Real people. Real concerts. Real custom merch.",
+        "button_text": "",
+        "button_link": "",
+        "anchor_id": "concert-gallery",
+        "shot_columns": 1,
+        "image_ratio": "11 / 4",
+        "strip_eyebrow": "Going to a concert with your crew?",
+        "strip_heading": "Create the crew look.",
+        "strip_text": "Matching doesn't have to be identical. Make it your style.",
+        "strip_button_text": "Get Crew Shirts",
+        "strip_button_link": "/collections/all",
+        "strip_image_asset": "concert-gallery-crew.jpg",
+        "strip_image_alt": "A crew at a show in matching Concert Crew shirts and caps",
+        "strip_image_ratio": "5 / 1",
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center",
-        "anchor_id": "concert-gallery"
-      }
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "g1": {
+          "type": "shot",
+          "settings": {
+            "image_asset": "concert-gallery-crowd.jpg",
+            "image_alt": "A group of friends at a Toronto show in their own custom concert merch"
+          }
+        }
+      },
+      "block_order": [
+        "g1"
+      ]
     }
   },
   "order": [
