@@ -27,8 +27,9 @@
       <ul class="gpl-cards__grid">
         {%- for block in cards -%}
           {%- assign b = block.settings -%}
-          <li class="gpl-cards__card" {{ block.shopify_attributes }}>
-            {%- assign card_alt = b.image_alt | default: b.title -%}
+          {%- assign card_alt = b.image_alt | default: b.title -%}
+          <li class="gpl-cards__card{% if b.link != blank %} is-link{% endif %}" {{ block.shopify_attributes }}>
+            {%- if b.link != blank -%}<a class="gpl-cards__hit" href="{{ b.link }}" aria-label="{{ b.title | escape }}"></a>{%- endif -%}
             <div class="gpl-cards__frame">
               {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-cards__img', alt: card_alt %}
               {%- if b.icon != blank and b.icon != 'none' -%}
@@ -72,8 +73,18 @@
     box-shadow: 0 10px 30px rgba(0,0,0,{{ s.shadow }});
     display: flex; flex-direction: column;
   }
-  #gpl-cards-{{ id }} .gpl-cards__frame { position: relative; aspect-ratio: {{ s.image_ratio }}; background: #111; }
-  #gpl-cards-{{ id }} .gpl-cards__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gpl-cards-{{ id }} .gpl-cards__frame { position: relative; aspect-ratio: {{ s.image_ratio }}; background: {{ s.color_frame }}; }
+  /* "contain" is for product shots: the whole garment shows, letterboxed on the
+     card colour, rather than being cropped to fill the frame. */
+  #gpl-cards-{{ id }} .gpl-cards__img { width: 100%; height: 100%; object-fit: {{ s.image_fit }}; display: block; }
+
+  /* the whole card is the hit area when the block has a link */
+  #gpl-cards-{{ id }} .gpl-cards__card.is-link { position: relative; transition: transform .18s ease, box-shadow .18s ease; }
+  #gpl-cards-{{ id }} .gpl-cards__card.is-link:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,{{ s.shadow | plus: 0.1 }}); }
+  #gpl-cards-{{ id }} .gpl-cards__hit { position: absolute; inset: 0; z-index: 2; border-radius: 14px; }
+  #gpl-cards-{{ id }} .gpl-cards__hit:focus-visible { outline: 3px solid {{ s.color_accent }}; outline-offset: 2px; }
+  #gpl-cards-{{ id }} .gpl-cards__card.is-link .gpl-cards__title { transition: color .18s ease; }
+  #gpl-cards-{{ id }} .gpl-cards__card.is-link:hover .gpl-cards__title { color: {{ s.color_accent }}; }
   #gpl-cards-{{ id }} .gpl-cards__badge {
     position: absolute; left: 50%; bottom: 0; transform: translate(-50%, 50%);
     width: 46px; height: 46px; border-radius: 50%; background: var(--a); color: #FFF;
@@ -171,6 +182,23 @@
       ]
     },
     {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Photo fit",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill the frame (crops)"
+        },
+        {
+          "value": "contain",
+          "label": "Show the whole photo (no crop)"
+        }
+      ],
+      "info": "Use \"show the whole photo\" for product shots so a garment is never cut off."
+    },
+    {
       "type": "checkbox",
       "id": "show_badges",
       "label": "Cards have an icon badge",
@@ -209,6 +237,12 @@
       "type": "color",
       "id": "color_card",
       "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_frame",
+      "label": "Photo area background",
       "default": "#FFFFFF"
     },
     {
@@ -326,6 +360,12 @@
           "type": "textarea",
           "id": "text",
           "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. Makes the whole card clickable."
         }
       ]
     }

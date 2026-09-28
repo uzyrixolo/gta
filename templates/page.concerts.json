@@ -101,7 +101,9 @@
         "color_card": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.1,
+        "image_fit": "cover",
+        "color_frame": "#111111"
       },
       "blocks": {
         "k1": {
@@ -249,7 +251,7 @@
         "heading_tail": "",
         "subheading": "Custom designs on a wide range of apparel",
         "columns": 6,
-        "image_ratio": "16 / 11",
+        "image_ratio": "1 / 1",
         "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#F4F4F4",
@@ -258,7 +260,9 @@
         "color_card": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.1,
+        "image_fit": "contain",
+        "color_frame": "#FFFFFF"
       },
       "blocks": {
         "k1": {
@@ -406,7 +410,9 @@
         "color_card": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.1,
+        "image_fit": "contain",
+        "color_frame": "#FFFFFF"
       },
       "blocks": {
         "k1": {
