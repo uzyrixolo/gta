@@ -28,12 +28,17 @@
           {%- assign b = block.settings -%}
           <li class="gpl-steps__step" {{ block.shopify_attributes }}>
             {%- assign step_alt = b.image_alt | default: b.title -%}
-            <div class="gpl-steps__frame">
-              {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-steps__img', alt: step_alt %}
-              {%- unless s.numbers_in_photo -%}
-                <span class="gpl-steps__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-              {%- endunless -%}
-            </div>
+            {%- if b.image != blank or b.image_asset != blank -%}
+              <div class="gpl-steps__frame">
+                {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-steps__img', alt: step_alt %}
+                {%- unless s.numbers_in_photo -%}
+                  <span class="gpl-steps__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                {%- endunless -%}
+              </div>
+            {%- else -%}
+              {%- comment -%} no photo: the number carries the step on its own {%- endcomment -%}
+              <span class="gpl-steps__num gpl-steps__num--solo" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            {%- endif -%}
             <div class="gpl-steps__body">
               {%- if b.title != blank -%}<h3 class="gpl-steps__title">{{ b.title }}</h3>{%- endif -%}
               {%- if b.text != blank -%}<p class="gpl-steps__text">{{ b.text }}</p>{%- endif -%}
@@ -82,6 +87,9 @@
     position: absolute; top: 10px; left: 10px; min-width: 44px; height: 44px; padding: 0 8px;
     border-radius: 999px; background: var(--a); color: #FFF; font-weight: 900; font-size: 18px;
     display: flex; align-items: center; justify-content: center;
+  }
+  #gpl-steps-{{ id }} .gpl-steps__num--solo {
+    position: static; width: 58px; height: 58px; min-width: 58px; font-size: 22px; margin-bottom: 4px;
   }
   #gpl-steps-{{ id }} .gpl-steps__body { padding: 16px 2px 0; }
   #gpl-steps-{{ id }} .gpl-steps__title {

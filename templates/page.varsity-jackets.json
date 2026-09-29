@@ -1,0 +1,764 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "vj-hero-photo.jpg",
+        "image_alt": "Two people in custom varsity jackets on a Toronto street",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 660,
+        "min_height_mobile": 620,
+        "heading_level": "h1",
+        "eyebrow": "",
+        "line1": "Custom",
+        "line1_accent": false,
+        "line2": "Varsity",
+        "line2_accent": true,
+        "line3": "Jackets",
+        "line3_accent": false,
+        "subheading": "Your jacket. Your story. Built your way.",
+        "paragraph": "<p>From one custom jacket to a full team, school, company or organization — built exactly the way it represents who you are.</p>",
+        "button_1_text": "Get Started",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "See the Materials",
+        "button_2_link": "#materials",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "c1": {
+          "type": "chip",
+          "settings": {
+            "icon": "gear",
+            "line1": "Fully",
+            "line2": "customizable"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "icon": "diamond",
+            "line1": "Premium",
+            "line2": "materials"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "user",
+            "line1": "Individual &",
+            "line2": "group orders"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "2-3 week turnaround"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ]
+    },
+    "built_for": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Built for",
+        "heading_accent": "more than the game.",
+        "heading_tail": "",
+        "subheading": "Custom varsity jackets for every team, organization and occasion.",
+        "columns": 7,
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-sports.jpg",
+            "icon": "none",
+            "title": "Sports Teams",
+            "text": "Team identity, player names, numbers, logos, championships and more.",
+            "image_alt": "Basketball player in a team varsity jacket"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-schools.jpg",
+            "icon": "none",
+            "title": "Schools & Universities",
+            "text": "School colours, mascots, graduation years, alumni and more.",
+            "image_alt": "Students in school varsity jackets"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-commercial.jpg",
+            "icon": "none",
+            "title": "Commercial & Workplaces",
+            "text": "Branded employee apparel, company logos and corporate identity.",
+            "image_alt": "Branded company varsity jacket"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-womens.jpg",
+            "icon": "none",
+            "title": "Women's Varsity",
+            "text": "Trendy fits, tailored cuts and stylish designs.",
+            "image_alt": "Women's varsity jacket in pink and cream"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-mens.jpg",
+            "icon": "none",
+            "title": "Men's Varsity",
+            "text": "Classic and modern silhouettes.",
+            "image_alt": "Men's varsity jacket with number 23"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-clubs.jpg",
+            "icon": "none",
+            "title": "Clubs, Organizations & Groups",
+            "text": "Custom group identity, events and milestones.",
+            "image_alt": "Community group in matching varsity jackets"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-for-individuals.jpg",
+            "icon": "none",
+            "title": "Individuals & Special Occasions",
+            "text": "One-off jackets, personal style, birthdays, awards, achievements and more.",
+            "image_alt": "Individual custom varsity jacket in gold and black"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7"
+      ]
+    },
+    "materials": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Choose",
+        "heading_accent": "your materials.",
+        "heading_tail": "",
+        "subheading": "Premium materials and finishes. Choose the combination that fits your style, performance needs and budget.",
+        "columns": 5,
+        "image_ratio": "4 / 3",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-mat-melton.jpg",
+            "icon": "none",
+            "title": "Melton Wool",
+            "text": "Classic, durable and structured varsity body. Warm, comfortable and built to last.",
+            "image_alt": "Melton wool fabric"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-mat-cowhide.jpg",
+            "icon": "none",
+            "title": "Cowhide Leather",
+            "text": "Durable genuine leather with a premium look and feel. Perfect for sleeves and detailing.",
+            "image_alt": "Cowhide leather"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-mat-sheepskin.jpg",
+            "icon": "none",
+            "title": "Sheepskin / Lambskin Leather",
+            "text": "Softer, lighter and ultra-premium leather option for a luxurious feel.",
+            "image_alt": "Lambskin leather"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-mat-fullwool.jpg",
+            "icon": "none",
+            "title": "Full Wool",
+            "text": "Traditional wool construction in a wide variety of colours. Warm, breathable and high quality.",
+            "image_alt": "Wool fabric in several colours"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-mat-lightweight.jpg",
+            "icon": "none",
+            "title": "Lightweight / Modern Fabrics",
+            "text": "Contemporary options where appropriate. Ideal for lighter jackets and modern styles.",
+            "image_alt": "Lightweight modern fabric"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ]
+    },
+    "program": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "One jacket or",
+        "heading_accent": "a whole program.",
+        "heading_tail": "",
+        "subheading": "No need to be a large organization to create something custom.",
+        "columns": 3,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-prog-individual.jpg",
+            "icon": "user",
+            "title": "Individual",
+            "text": "Order one custom jacket for yourself.",
+            "image_alt": "One custom varsity jacket"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-prog-small.jpg",
+            "icon": "handshake",
+            "title": "Small Group",
+            "text": "Perfect for clubs, families, staff, teams and special groups.",
+            "image_alt": "Small group in matching varsity jackets"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-prog-large.jpg",
+            "icon": "building",
+            "title": "Large Group",
+            "text": "Ideal for schools, teams, leagues, companies and organizations.",
+            "image_alt": "A full team in matching varsity jackets"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ]
+    },
+    "quality": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Quality",
+        "heading_accent": "you can see.",
+        "heading_tail": "",
+        "subheading": "Premium materials. Expert craftsmanship. Built to last.",
+        "columns": 5,
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-qual-materials.jpg",
+            "icon": "diamond",
+            "title": "Premium Materials",
+            "text": "High-quality wool and leather options.",
+            "image_alt": "Chenille letter on wool"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-qual-construction.jpg",
+            "icon": "pencil",
+            "title": "Expert Construction",
+            "text": "Attention to detail and clean, durable stitching.",
+            "image_alt": "Stitching detail on a leather sleeve"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-qual-hardware.jpg",
+            "icon": "gear",
+            "title": "Quality Hardware",
+            "text": "Durable snaps, zippers and premium finishes.",
+            "image_alt": "Snap fastener detail"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-qual-lining.jpg",
+            "icon": "star",
+            "title": "Custom Lining",
+            "text": "Add a premium lining for a high-end look.",
+            "image_alt": "Quilted red lining"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-qual-inspection.jpg",
+            "icon": "check-circle",
+            "title": "Final Inspection",
+            "text": "Every jacket is checked for quality before delivery.",
+            "image_alt": "Knit rib trim detail"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ]
+    },
+    "capability": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Toronto accountability.",
+        "heading_accent": "Global manufacturing capability.",
+        "heading_tail": "",
+        "subheading": "",
+        "columns": 2,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-cap-toronto.jpg",
+            "icon": "leaf",
+            "title": "Toronto-Based Communication & Support",
+            "text": "Work with GTA Print Lab in Toronto. We manage communication, design, approvals and quality expectations.",
+            "image_alt": "Toronto skyline at dusk"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-cap-overseas.jpg",
+            "icon": "building",
+            "title": "Overseas Manufacturing Capability",
+            "text": "For larger programs and specialized production, we utilize our dedicated manufacturing operation in Pakistan.",
+            "image_alt": "The manufacturing floor"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2"
+      ]
+    },
+    "turnaround": {
+      "type": "gpl-steps",
+      "settings": {
+        "heading": "Fast turnaround.",
+        "heading_accent": "Built around your deadline.",
+        "subheading": "2–3 weeks is the typical target for many custom varsity jacket orders, depending on materials, customization, quantity, production route and final approval.",
+        "anchor_id": "turnaround",
+        "numbers_in_photo": false,
+        "image_ratio": "3 / 2",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#C9C9C9"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Design",
+            "text": "Share your ideas and requirements.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Approval",
+            "text": "Review and approve your design.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Production",
+            "text": "Your jackets are manufactured with care.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Quality check",
+            "text": "Final inspection for quality assurance.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "title": "Delivery",
+            "text": "Delivered to you or your team.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    "who": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Who we",
+        "heading_accent": "make them for.",
+        "heading_tail": "",
+        "subheading": "Custom apparel for every team, organization and occasion.",
+        "columns": 6,
+        "image_ratio": "3 / 4",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-sports.jpg",
+            "icon": "none",
+            "title": "Sports Teams",
+            "text": "",
+            "image_alt": "Sports team varsity jacket"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-schools.jpg",
+            "icon": "none",
+            "title": "Schools",
+            "text": "",
+            "image_alt": "School varsity jacket"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-universities.jpg",
+            "icon": "none",
+            "title": "Universities",
+            "text": "",
+            "image_alt": "University varsity jacket"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-businesses.jpg",
+            "icon": "none",
+            "title": "Businesses",
+            "text": "",
+            "image_alt": "Business varsity jacket"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-corporate.jpg",
+            "icon": "none",
+            "title": "Corporate Teams",
+            "text": "",
+            "image_alt": "Corporate team jackets"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-clubs.jpg",
+            "icon": "none",
+            "title": "Clubs & Organizations",
+            "text": "",
+            "image_alt": "Club jackets"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-community.jpg",
+            "icon": "none",
+            "title": "Community Groups",
+            "text": "",
+            "image_alt": "Community group jackets"
+          }
+        },
+        "k8": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-fashion.jpg",
+            "icon": "none",
+            "title": "Fashion Brands",
+            "text": "",
+            "image_alt": "Fashion brand jacket"
+          }
+        },
+        "k9": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-alumni.jpg",
+            "icon": "none",
+            "title": "Alumni Groups",
+            "text": "",
+            "image_alt": "Alumni group jackets"
+          }
+        },
+        "k10": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-coaches.jpg",
+            "icon": "none",
+            "title": "Coaches & Staff",
+            "text": "",
+            "image_alt": "Coaches and staff jackets"
+          }
+        },
+        "k11": {
+          "type": "card",
+          "settings": {
+            "image_asset": "vj-who-individual.jpg",
+            "icon": "none",
+            "title": "Individual Customers",
+            "text": "",
+            "image_alt": "Individual customer jacket"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7",
+        "k8",
+        "k9",
+        "k10",
+        "k11"
+      ]
+    },
+    "why": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "",
+        "image_alt": "",
+        "image_position": "center center",
+        "scrim": 0.9,
+        "min_height": 430,
+        "min_height_mobile": 560,
+        "heading_level": "h2",
+        "eyebrow": "Your jacket. Your colours. Your story.",
+        "line1": "Why",
+        "line1_accent": false,
+        "line2": "GTA Print Lab?",
+        "line2_accent": true,
+        "line3": "",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "",
+        "button_1_text": "Get Started",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "w1": {
+          "type": "chip",
+          "settings": {
+            "icon": "chat",
+            "line1": "Toronto-based",
+            "line2": "communication and support"
+          }
+        },
+        "w2": {
+          "type": "chip",
+          "settings": {
+            "icon": "handshake",
+            "line1": "One partner",
+            "line2": "concept to finished jacket"
+          }
+        },
+        "w3": {
+          "type": "chip",
+          "settings": {
+            "icon": "pencil",
+            "line1": "Fully custom",
+            "line2": "design support"
+          }
+        },
+        "w4": {
+          "type": "chip",
+          "settings": {
+            "icon": "user",
+            "line1": "Individual &",
+            "line2": "group orders"
+          }
+        },
+        "w5": {
+          "type": "chip",
+          "settings": {
+            "icon": "diamond",
+            "line1": "Premium",
+            "line2": "material choices"
+          }
+        },
+        "w6": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast turnaround",
+            "line2": "targets"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5",
+        "w6"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "built_for",
+    "materials",
+    "program",
+    "quality",
+    "capability",
+    "turnaround",
+    "who",
+    "why"
+  ]
+}
