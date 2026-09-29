@@ -11,6 +11,30 @@
   "sections": {
     "hero": {
       "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "concert-hero-photo.jpg",
+        "image_alt": "Two fans at a concert in custom-printed tees, one reading Good Music Better People",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 660,
+        "min_height_mobile": 620,
+        "eyebrow": "",
+        "line1": "Custom",
+        "line1_accent": false,
+        "line2": "Concert",
+        "line2_accent": true,
+        "line3": "Apparel",
+        "line3_accent": false,
+        "subheading": "Your concert. Your design. Your merch.",
+        "paragraph": "<p>Don't wear the same merch as everyone else. Create a one-of-one look that's uniquely yours.</p>",
+        "button_1_text": "Design Your Concert Shirt",
+        "button_1_link": "/collections/all",
+        "button_2_text": "View Gallery",
+        "button_2_link": "#concert-gallery",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "heading_level": "h1"
+      },
       "blocks": {
         "c1": {
           "type": "chip",
@@ -59,72 +83,68 @@
         "c3",
         "c4",
         "c5"
-      ],
-      "settings": {
-        "image_asset": "concert-hero-photo.jpg",
-        "image_alt": "Two fans at a concert in custom-printed tees, one reading Good Music Better People",
-        "image_position": "center right",
-        "scrim": 0.9,
-        "min_height": 660,
-        "min_height_mobile": 620,
-        "eyebrow": "",
-        "line1": "Custom",
-        "line1_accent": false,
-        "line2": "Concert",
-        "line2_accent": true,
-        "line3": "Apparel",
-        "line3_accent": false,
-        "subheading": "Your concert. Your design. Your merch.",
-        "paragraph": "<p>Don't wear the same merch as everyone else. Create a one-of-one look that's uniquely yours.</p>",
-        "button_1_text": "Design Your Concert Shirt",
-        "button_1_link": "/collections/all",
-        "button_2_text": "View Gallery",
-        "button_2_link": "#concert-gallery",
-        "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
-      }
+      ]
     },
     "your_design": {
       "type": "gpl-cards",
+      "settings": {
+        "heading": "Your concert.",
+        "heading_accent": "Your design.",
+        "heading_tail": "Your merch.",
+        "subheading": "Create a custom design for your next concert, festival or event. Be different. Be original.",
+        "columns": 4,
+        "image_ratio": "3 / 2",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1,
+        "image_fit": "cover",
+        "color_frame": "#111111"
+      },
       "blocks": {
         "k1": {
           "type": "card",
           "settings": {
             "image_asset": "concert-cyd-one-of-one.jpg",
-            "image_alt": "Fan wearing a custom concert tee in the street",
             "icon": "diamond",
             "title": "One-of-one",
-            "text": "Create something nobody else in the crowd has."
+            "text": "Create something nobody else in the crowd has.",
+            "image_alt": "Fan wearing a custom concert tee in the street"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "concert-cyd-your-vision.jpg",
-            "image_alt": "Designer laying out a concert tee on screen",
             "icon": "pencil",
             "title": "Your vision",
-            "text": "Bring us your idea, artwork, photo, lyrics or concept."
+            "text": "Bring us your idea, artwork, photo, lyrics or concept.",
+            "image_alt": "Designer laying out a concert tee on screen"
           }
         },
         "k3": {
           "type": "card",
           "settings": {
             "image_asset": "concert-cyd-your-style.jpg",
-            "image_alt": "Three friends in matching custom concert tees",
             "icon": "star",
             "title": "Your style",
-            "text": "Vintage. Streetwear. Graphic. Minimal. Whatever fits your vibe."
+            "text": "Vintage. Streetwear. Graphic. Minimal. Whatever fits your vibe.",
+            "image_alt": "Three friends in matching custom concert tees"
           }
         },
         "k4": {
           "type": "card",
           "settings": {
             "image_asset": "concert-cyd-your-apparel.jpg",
-            "image_alt": "Custom printed hoodie, cap and tee",
             "icon": "shirt",
             "title": "Your apparel",
-            "text": "T-shirts, hoodies, hats, jackets, tanks and more."
+            "text": "T-shirts, hoodies, hats, jackets, tanks and more.",
+            "image_alt": "Custom printed hoodie, cap and tee"
           }
         }
       },
@@ -133,29 +153,22 @@
         "k2",
         "k3",
         "k4"
-      ],
-      "settings": {
-        "heading": "Your concert.",
-        "heading_accent": "Your design.",
-        "heading_tail": "Your merch.",
-        "subheading": "Create a custom design for your next concert, festival or event. Be different. Be original.",
-        "columns": 4,
-        "image_ratio": "3 / 2",
-        "image_fit": "cover",
-        "show_badges": true,
-        "color_accent": "#D71920",
-        "color_background": "#FFFFFF",
-        "color_heading": "#111111",
-        "color_text": "#5B5B5B",
-        "color_card": "#FFFFFF",
-        "color_frame": "#111111",
-        "color_card_heading": "#111111",
-        "color_card_text": "#5B5B5B",
-        "shadow": 0.1
-      }
+      ]
     },
     "why_generic": {
       "type": "gpl-compare",
+      "settings": {
+        "line1": "Why buy",
+        "line2": "generic merch?",
+        "line3": "Create your own.",
+        "paragraph": "<p>Concert merch tables have limited designs and high prices. With GTA Print Lab you get custom designs, better quality, and a unique look for less.</p>",
+        "button_text": "Design Your Own",
+        "button_link": "/collections/all",
+        "theirs_title": "Concert merch",
+        "ours_title": "GTA Print Lab",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
       "blocks": {
         "t1": {
           "type": "theirs",
@@ -229,81 +242,88 @@
         "o3",
         "o4",
         "o5"
-      ],
-      "settings": {
-        "line1": "Why buy",
-        "line2": "generic merch?",
-        "line3": "Create your own.",
-        "paragraph": "<p>Concert merch tables have limited designs and high prices. With GTA Print Lab you get custom designs, better quality, and a unique look for less.</p>",
-        "button_text": "Design Your Own",
-        "button_link": "/collections/all",
-        "theirs_title": "Concert merch",
-        "ours_title": "GTA Print Lab",
-        "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
-      }
+      ]
     },
     "concert_look": {
       "type": "gpl-cards",
+      "settings": {
+        "heading": "Create your",
+        "heading_accent": "concert look",
+        "heading_tail": "",
+        "subheading": "Custom designs on a wide range of apparel",
+        "columns": 6,
+        "image_ratio": "1 / 1",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1,
+        "image_fit": "contain",
+        "color_frame": "#FFFFFF"
+      },
       "blocks": {
         "k1": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-tshirts.jpg",
-            "image_alt": "Custom printed concert t-shirt",
             "icon": "none",
             "title": "T-Shirts",
-            "text": "Front, back, sleeves — full-colour graphics."
+            "text": "Front, back, sleeves — full-colour graphics.",
+            "image_alt": "Custom printed concert t-shirt"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-hoodies.jpg",
-            "image_alt": "Red custom printed hoodie",
             "icon": "none",
             "title": "Hoodies",
-            "text": "Oversized graphics, premium streetwear."
+            "text": "Oversized graphics, premium streetwear.",
+            "image_alt": "Red custom printed hoodie"
           }
         },
         "k3": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-hats.jpg",
-            "image_alt": "Embroidered GTA Print Lab cap",
             "icon": "none",
             "title": "Hats",
-            "text": "Embroidered logos, graphics and more."
+            "text": "Embroidered logos, graphics and more.",
+            "image_alt": "Embroidered GTA Print Lab cap"
           }
         },
         "k4": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-jackets.jpg",
-            "image_alt": "Custom varsity jacket",
             "icon": "none",
             "title": "Jackets",
-            "text": "Varsity, denim, bomber and more."
+            "text": "Varsity, denim, bomber and more.",
+            "image_alt": "Custom varsity jacket"
           }
         },
         "k5": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-long-sleeves.jpg",
-            "image_alt": "Custom printed long sleeve shirt",
             "icon": "none",
             "title": "Long Sleeves",
-            "text": "Perfect for fall and winter shows and festivals."
+            "text": "Perfect for fall and winter shows and festivals.",
+            "image_alt": "Custom printed long sleeve shirt"
           }
         },
         "k6": {
           "type": "card",
           "settings": {
             "image_asset": "concert-look-accessories.jpg",
-            "image_alt": "Custom tote bag, backpack and bottle",
             "icon": "none",
             "title": "Accessories",
-            "text": "Totes, bags, drinkware and more."
+            "text": "Totes, bags, drinkware and more.",
+            "image_alt": "Custom tote bag, backpack and bottle"
           }
         }
       },
@@ -314,73 +334,10 @@
         "k4",
         "k5",
         "k6"
-      ],
-      "settings": {
-        "heading": "Create your",
-        "heading_accent": "concert look",
-        "heading_tail": "",
-        "subheading": "Custom designs on a wide range of apparel",
-        "columns": 6,
-        "image_ratio": "1 / 1",
-        "image_fit": "contain",
-        "show_badges": false,
-        "color_accent": "#D71920",
-        "color_background": "#F4F4F4",
-        "color_heading": "#111111",
-        "color_text": "#5B5B5B",
-        "color_card": "#FFFFFF",
-        "color_frame": "#FFFFFF",
-        "color_card_heading": "#111111",
-        "color_card_text": "#5B5B5B",
-        "shadow": 0.1
-      }
+      ]
     },
     "process": {
       "type": "gpl-steps",
-      "blocks": {
-        "s1": {
-          "type": "step",
-          "settings": {
-            "image_asset": "concert-step-idea.jpg",
-            "image_alt": "Customer choosing a design on a laptop",
-            "title": "Bring your idea",
-            "text": "Upload your artwork or tell us what you're imagining."
-          }
-        },
-        "s2": {
-          "type": "step",
-          "settings": {
-            "image_asset": "concert-step-create.jpg",
-            "image_alt": "Designer working up the artwork on screen",
-            "title": "We create",
-            "text": "Our design team turns your concept into professional artwork."
-          }
-        },
-        "s3": {
-          "type": "step",
-          "settings": {
-            "image_asset": "concert-step-approve.jpg",
-            "image_alt": "Printed proof of the concert tee for approval",
-            "title": "Approve",
-            "text": "See your design and approve it before production begins."
-          }
-        },
-        "s4": {
-          "type": "step",
-          "settings": {
-            "image_asset": "concert-step-print.jpg",
-            "image_alt": "Garments coming off the printer",
-            "title": "We print",
-            "text": "Your finished apparel is produced and ready for pickup or delivery."
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
-      ],
       "settings": {
         "heading": "From idea to",
         "heading_accent": "concert ready",
@@ -391,69 +348,132 @@
         "color_background": "#0B0B0B",
         "color_heading": "#FFFFFF",
         "color_text": "#C9C9C9"
-      }
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-idea.jpg",
+            "title": "Bring your idea",
+            "text": "Upload your artwork or tell us what you're imagining.",
+            "image_alt": "Customer choosing a design on a laptop"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-create.jpg",
+            "title": "We create",
+            "text": "Our design team turns your concept into professional artwork.",
+            "image_alt": "Designer working up the artwork on screen"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-approve.jpg",
+            "title": "Approve",
+            "text": "See your design and approve it before production begins.",
+            "image_alt": "Printed proof of the concert tee for approval"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "image_asset": "concert-step-print.jpg",
+            "title": "We print",
+            "text": "Your finished apparel is produced and ready for pickup or delivery.",
+            "image_alt": "Garments coming off the printer"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
     "styles": {
       "type": "gpl-cards",
+      "settings": {
+        "heading": "Choose your",
+        "heading_accent": "style",
+        "heading_tail": "",
+        "subheading": "Different looks. Endless possibilities.",
+        "columns": 6,
+        "image_ratio": "1 / 1",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1,
+        "image_fit": "contain",
+        "color_frame": "#FFFFFF"
+      },
       "blocks": {
         "k1": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-vintage.jpg",
-            "image_alt": "Vintage style world tour concert tee",
             "icon": "none",
             "title": "Vintage",
-            "text": "Distressed graphics, retro tour style."
+            "text": "Distressed graphics, retro tour style.",
+            "image_alt": "Vintage style world tour concert tee"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-streetwear.jpg",
-            "image_alt": "Streetwear style graphic tee",
             "icon": "none",
             "title": "Streetwear",
-            "text": "Bold graphics, modern fashion."
+            "text": "Bold graphics, modern fashion.",
+            "image_alt": "Streetwear style graphic tee"
           }
         },
         "k3": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-photo.jpg",
-            "image_alt": "Photo graphic concert tee",
             "icon": "none",
             "title": "Photo Graphic",
-            "text": "Artist photography, custom imagery."
+            "text": "Artist photography, custom imagery.",
+            "image_alt": "Photo graphic concert tee"
           }
         },
         "k4": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-minimal.jpg",
-            "image_alt": "Minimal text concert tee",
             "icon": "none",
             "title": "Minimal",
-            "text": "Clean design, understated look."
+            "text": "Clean design, understated look.",
+            "image_alt": "Minimal text concert tee"
           }
         },
         "k5": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-graphic-art.jpg",
-            "image_alt": "Illustrated graphic art tee",
             "icon": "none",
             "title": "Graphic Art",
-            "text": "Illustrations, original concepts."
+            "text": "Illustrations, original concepts.",
+            "image_alt": "Illustrated graphic art tee"
           }
         },
         "k6": {
           "type": "card",
           "settings": {
             "image_asset": "concert-style-bootleg.jpg",
-            "image_alt": "Bootleg style tour tee",
             "icon": "none",
             "title": "Bootleg-Inspired",
-            "text": "Vintage-inspired, collectible styles."
+            "text": "Vintage-inspired, collectible styles.",
+            "image_alt": "Bootleg style tour tee"
           }
         }
       },
@@ -464,41 +484,10 @@
         "k4",
         "k5",
         "k6"
-      ],
-      "settings": {
-        "heading": "Choose your",
-        "heading_accent": "style",
-        "heading_tail": "",
-        "subheading": "Different looks. Endless possibilities.",
-        "columns": 6,
-        "image_ratio": "1 / 1",
-        "image_fit": "contain",
-        "show_badges": false,
-        "color_accent": "#D71920",
-        "color_background": "#FFFFFF",
-        "color_heading": "#111111",
-        "color_text": "#5B5B5B",
-        "color_card": "#FFFFFF",
-        "color_frame": "#FFFFFF",
-        "color_card_heading": "#111111",
-        "color_card_text": "#5B5B5B",
-        "shadow": 0.1
-      }
+      ]
     },
     "gallery": {
       "type": "gpl-gallery",
-      "blocks": {
-        "g1": {
-          "type": "shot",
-          "settings": {
-            "image_asset": "concert-gallery-crowd.jpg",
-            "image_alt": "A group of friends at a Toronto show in their own custom concert merch"
-          }
-        }
-      },
-      "block_order": [
-        "g1"
-      ],
       "settings": {
         "heading": "Concert merch",
         "heading_accent": "Gallery",
@@ -518,7 +507,19 @@
         "strip_image_ratio": "5 / 1",
         "color_accent": "#D71920",
         "color_background": "#0B0B0B"
-      }
+      },
+      "blocks": {
+        "g1": {
+          "type": "shot",
+          "settings": {
+            "image_asset": "concert-gallery-crowd.jpg",
+            "image_alt": "A group of friends at a Toronto show in their own custom concert merch"
+          }
+        }
+      },
+      "block_order": [
+        "g1"
+      ]
     }
   },
   "order": [
