@@ -22,7 +22,7 @@
     <div class="gpl-cch__copy">
       {%- if s.eyebrow != blank -%}<p class="gpl-cch__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
 
-      <h1 class="gpl-cch__heading">
+      <{{ s.heading_level }} class="gpl-cch__heading">
         {%- if s.line1 != blank -%}
           <span class="gpl-cch__line{% if s.line1_accent %} is-accent{% endif %}">{{ s.line1 }} </span>
         {%- endif -%}
@@ -32,7 +32,7 @@
         {%- if s.line3 != blank -%}
           <span class="gpl-cch__line{% if s.line3_accent %} is-accent{% endif %}">{{ s.line3 }} </span>
         {%- endif -%}
-      </h1>
+      </{{ s.heading_level }}>
 
       {%- if s.subheading != blank -%}<p class="gpl-cch__sub">{{ s.subheading }}</p>{%- endif -%}
       {%- if s.paragraph != blank -%}<div class="gpl-cch__para">{{ s.paragraph }}</div>{%- endif -%}
@@ -222,6 +222,23 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow"
+    },
+    {
+      "type": "select",
+      "id": "heading_level",
+      "label": "Heading level",
+      "default": "h1",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1 — the page's main heading"
+        },
+        {
+          "value": "h2",
+          "label": "H2 — a section heading"
+        }
+      ],
+      "info": "Use H2 when the section is not the top of the page, so the page keeps a single H1."
     },
     {
       "type": "text",

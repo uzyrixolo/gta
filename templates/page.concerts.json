@@ -32,7 +32,8 @@
         "button_2_text": "View Gallery",
         "button_2_link": "#concert-gallery",
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_background": "#0B0B0B",
+        "heading_level": "h1"
       },
       "blocks": {
         "c1": {

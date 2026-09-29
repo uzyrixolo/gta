@@ -32,7 +32,8 @@
         "button_2_text": "See How It Works",
         "button_2_link": "#how-it-works",
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_background": "#0B0B0B",
+        "heading_level": "h1"
       },
       "blocks": {
         "c1": {
@@ -420,7 +421,8 @@
         "button_2_text": "",
         "button_2_link": "",
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_background": "#0B0B0B",
+        "heading_level": "h2"
       },
       "blocks": {
         "w1": {
