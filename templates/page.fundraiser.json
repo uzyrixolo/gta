@@ -11,30 +11,6 @@
   "sections": {
     "hero": {
       "type": "gpl-cc-hero",
-      "settings": {
-        "image_asset": "fr-hero-photo.jpg",
-        "image_alt": "Supporters in custom fundraiser tees and hoodies in front of the Toronto skyline",
-        "image_position": "center right",
-        "scrim": 0.9,
-        "min_height": 640,
-        "min_height_mobile": 600,
-        "eyebrow": "Any cause. Any team. Any community.",
-        "line1": "Fundraise",
-        "line1_accent": false,
-        "line2": "Bigger",
-        "line2_accent": true,
-        "line3": "Together",
-        "line3_accent": false,
-        "subheading": "",
-        "paragraph": "<p>Custom merch that brings people together and turns support into results.</p>",
-        "button_1_text": "Start Your Fundraiser",
-        "button_1_link": "/pages/quote",
-        "button_2_text": "See How It Works",
-        "button_2_link": "#how-it-works",
-        "color_accent": "#D71920",
-        "color_background": "#0B0B0B",
-        "heading_level": "h1"
-      },
       "blocks": {
         "c1": {
           "type": "chip",
@@ -83,10 +59,92 @@
         "c3",
         "c4",
         "c5"
-      ]
+      ],
+      "settings": {
+        "image_asset": "fr-hero-photo.jpg",
+        "image_alt": "Supporters in custom fundraiser tees and hoodies in front of the Toronto skyline",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 640,
+        "min_height_mobile": 600,
+        "eyebrow": "Any cause. Any team. Any community.",
+        "line1": "Fundraise",
+        "line1_accent": false,
+        "line2": "Bigger",
+        "line2_accent": true,
+        "line3": "Together",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "<p>Custom merch that brings people together and turns support into results.</p>",
+        "button_1_text": "Start Your Fundraiser",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "See How It Works",
+        "button_2_link": "#how-it-works",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      }
     },
     "products": {
       "type": "gpl-cards",
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-tshirts.jpg",
+            "image_alt": "Custom fundraiser t-shirts",
+            "icon": "none",
+            "title": "T-Shirts",
+            "text": "Event shirts, team shirts, supporter tees."
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-hoodies.jpg",
+            "image_alt": "Custom fundraiser hoodie",
+            "icon": "none",
+            "title": "Hoodies",
+            "text": "Premium apparel for your cause."
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-hats.jpg",
+            "image_alt": "Custom fundraiser caps",
+            "icon": "none",
+            "title": "Hats & Headwear",
+            "text": "Caps, snapbacks, beanies."
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-jackets.jpg",
+            "image_alt": "Custom varsity jacket and polo",
+            "icon": "none",
+            "title": "Jackets & Polos",
+            "text": "Varsity jackets, polos, team jackets."
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-bags.jpg",
+            "image_alt": "Custom backpack and water bottle",
+            "icon": "none",
+            "title": "Bags & Accessories",
+            "text": "Totes, backpacks, drinkware and more."
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ],
       "settings": {
         "heading": "Fundraising",
         "heading_accent": "merch",
@@ -105,69 +163,54 @@
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
         "shadow": 0.1
-      },
+      }
+    },
+    "how_it_works": {
+      "type": "gpl-steps",
       "blocks": {
-        "k1": {
-          "type": "card",
+        "s1": {
+          "type": "step",
           "settings": {
-            "image_asset": "fr-prod-tshirts.jpg",
-            "icon": "none",
-            "title": "T-Shirts",
-            "text": "Event shirts, team shirts, supporter tees.",
-            "image_alt": "Custom fundraiser t-shirts"
+            "image_asset": "fr-step-idea.jpg",
+            "image_alt": "Choosing a fundraiser design on screen",
+            "title": "Share your idea",
+            "text": "Tell us about your fundraiser, team, school or event. Bring your logo or we can design it for you."
           }
         },
-        "k2": {
-          "type": "card",
+        "s2": {
+          "type": "step",
           "settings": {
-            "image_asset": "fr-prod-hoodies.jpg",
-            "icon": "none",
-            "title": "Hoodies",
-            "text": "Premium apparel for your cause.",
-            "image_alt": "Custom fundraiser hoodie"
+            "image_asset": "fr-step-approve.jpg",
+            "image_alt": "Approving the artwork mockup",
+            "title": "Approve artwork",
+            "text": "We create a professional design and mockup for your approval."
           }
         },
-        "k3": {
-          "type": "card",
+        "s3": {
+          "type": "step",
           "settings": {
-            "image_asset": "fr-prod-hats.jpg",
-            "icon": "none",
-            "title": "Hats & Headwear",
-            "text": "Caps, snapbacks, beanies.",
-            "image_alt": "Custom fundraiser caps"
+            "image_asset": "fr-step-print.jpg",
+            "image_alt": "Printing the fundraiser garments",
+            "title": "We print & produce",
+            "text": "Using high-quality printing and embroidery with fast turnaround times."
           }
         },
-        "k4": {
-          "type": "card",
+        "s4": {
+          "type": "step",
           "settings": {
-            "image_asset": "fr-prod-jackets.jpg",
-            "icon": "none",
-            "title": "Jackets & Polos",
-            "text": "Varsity jackets, polos, team jackets.",
-            "image_alt": "Custom varsity jacket and polo"
-          }
-        },
-        "k5": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-prod-bags.jpg",
-            "icon": "none",
-            "title": "Bags & Accessories",
-            "text": "Totes, backpacks, drinkware and more.",
-            "image_alt": "Custom backpack and water bottle"
+            "image_asset": "fr-step-raise.jpg",
+            "image_alt": "Supporter receiving the finished merch",
+            "title": "Receive & start raising",
+            "text": "Get your merch delivered and start selling at your event, online or in your community."
           }
         }
       },
       "block_order": [
-        "k1",
-        "k2",
-        "k3",
-        "k4",
-        "k5"
-      ]
-    },
-    "how_it_works": {
-      "type": "gpl-steps",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {
         "heading": "How it",
         "heading_accent": "works",
@@ -179,54 +222,91 @@
         "color_background": "#0B0B0B",
         "color_heading": "#FFFFFF",
         "color_text": "#C9C9C9"
-      },
+      }
+    },
+    "who_can": {
+      "type": "gpl-cards",
       "blocks": {
-        "s1": {
-          "type": "step",
+        "k1": {
+          "type": "card",
           "settings": {
-            "image_asset": "fr-step-idea.jpg",
-            "title": "Share your idea",
-            "text": "Tell us about your fundraiser, team, school or event. Bring your logo or we can design it for you.",
-            "image_alt": "Choosing a fundraiser design on screen"
+            "image_asset": "fr-who-sports.jpg",
+            "image_alt": "Youth football player in team kit",
+            "icon": "none",
+            "title": "Sports Teams",
+            "text": "Team apparel, fan gear, fundraisers."
           }
         },
-        "s2": {
-          "type": "step",
+        "k2": {
+          "type": "card",
           "settings": {
-            "image_asset": "fr-step-approve.jpg",
-            "title": "Approve artwork",
-            "text": "We create a professional design and mockup for your approval.",
-            "image_alt": "Approving the artwork mockup"
+            "image_asset": "fr-who-schools.jpg",
+            "image_alt": "Students in school spirit shirts",
+            "icon": "none",
+            "title": "Schools",
+            "text": "School spirit wear fundraisers."
           }
         },
-        "s3": {
-          "type": "step",
+        "k3": {
+          "type": "card",
           "settings": {
-            "image_asset": "fr-step-print.jpg",
-            "title": "We print & produce",
-            "text": "Using high-quality printing and embroidery with fast turnaround times.",
-            "image_alt": "Printing the fundraiser garments"
+            "image_asset": "fr-who-churches.jpg",
+            "image_alt": "Church group in Faith Family Community hoodies",
+            "icon": "none",
+            "title": "Churches",
+            "text": "Events, outreach, mission support."
           }
         },
-        "s4": {
-          "type": "step",
+        "k4": {
+          "type": "card",
           "settings": {
-            "image_asset": "fr-step-raise.jpg",
-            "title": "Receive & start raising",
-            "text": "Get your merch delivered and start selling at your event, online or in your community.",
-            "image_alt": "Supporter receiving the finished merch"
+            "image_asset": "fr-who-charities.jpg",
+            "image_alt": "Volunteers in matching volunteer shirts",
+            "icon": "none",
+            "title": "Charities & Non-Profits",
+            "text": "Awareness, fundraisers, community support."
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-community.jpg",
+            "image_alt": "Community group in Community Stronger Together tees",
+            "icon": "none",
+            "title": "Community Groups",
+            "text": "Local initiatives, community events."
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-businesses.jpg",
+            "image_alt": "Staff team in branded polos and caps",
+            "icon": "none",
+            "title": "Businesses",
+            "text": "Staff apparel, promo gear, fundraisers."
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-events.jpg",
+            "image_alt": "Event crew at a concert in crew shirts",
+            "icon": "none",
+            "title": "Events",
+            "text": "Concerts, tournaments, special events."
           }
         }
       },
       "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
-      ]
-    },
-    "who_can": {
-      "type": "gpl-cards",
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7"
+      ],
       "settings": {
         "heading": "Who can",
         "heading_accent": "fundraise?",
@@ -245,76 +325,49 @@
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
         "shadow": 0.1
-      },
+      }
+    },
+    "options": {
+      "type": "gpl-cards",
       "blocks": {
         "k1": {
           "type": "card",
           "settings": {
-            "image_asset": "fr-who-sports.jpg",
-            "icon": "none",
-            "title": "Sports Teams",
-            "text": "Team apparel, fan gear, fundraisers.",
-            "image_alt": "Youth football player in team kit"
+            "image_asset": "fr-opt-events.jpg",
+            "image_alt": "Selling merch at a community event",
+            "icon": "tag",
+            "title": "Sell at events",
+            "text": "Sell your merchandise at games, concerts, school events, church events and community gatherings."
           }
         },
         "k2": {
           "type": "card",
           "settings": {
-            "image_asset": "fr-who-schools.jpg",
-            "icon": "none",
-            "title": "Schools",
-            "text": "School spirit wear fundraisers.",
-            "image_alt": "Students in school spirit shirts"
+            "image_asset": "fr-opt-online.jpg",
+            "image_alt": "Online fundraiser store on a laptop and phone",
+            "icon": "click",
+            "title": "Online store",
+            "text": "We can help you set up an online store so supporters can order directly."
           }
         },
         "k3": {
           "type": "card",
           "settings": {
-            "image_asset": "fr-who-churches.jpg",
-            "icon": "none",
-            "title": "Churches",
-            "text": "Events, outreach, mission support.",
-            "image_alt": "Church group in Faith Family Community hoodies"
+            "image_asset": "fr-opt-preorder.jpg",
+            "image_alt": "Pre-order hoodie design",
+            "icon": "doc",
+            "title": "Pre-order campaign",
+            "text": "Take pre-orders and only produce what is sold. Great for teams, schools and special events."
           }
         },
         "k4": {
           "type": "card",
           "settings": {
-            "image_asset": "fr-who-charities.jpg",
-            "icon": "none",
-            "title": "Charities & Non-Profits",
-            "text": "Awareness, fundraisers, community support.",
-            "image_alt": "Volunteers in matching volunteer shirts"
-          }
-        },
-        "k5": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-who-community.jpg",
-            "icon": "none",
-            "title": "Community Groups",
-            "text": "Local initiatives, community events.",
-            "image_alt": "Community group in Community Stronger Together tees"
-          }
-        },
-        "k6": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-who-businesses.jpg",
-            "icon": "none",
-            "title": "Businesses",
-            "text": "Staff apparel, promo gear, fundraisers.",
-            "image_alt": "Staff team in branded polos and caps"
-          }
-        },
-        "k7": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-who-events.jpg",
-            "icon": "none",
-            "title": "Events",
-            "text": "Concerts, tournaments, special events.",
-            "image_alt": "Event crew at a concert in crew shirts"
+            "image_asset": "fr-opt-uniforms.jpg",
+            "image_alt": "Event team in matching staff and crew shirts",
+            "icon": "shirt",
+            "title": "Event uniforms",
+            "text": "Create matching shirts for your event, so everyone looks unified and professional."
           }
         }
       },
@@ -322,14 +375,8 @@
         "k1",
         "k2",
         "k3",
-        "k4",
-        "k5",
-        "k6",
-        "k7"
-      ]
-    },
-    "options": {
-      "type": "gpl-cards",
+        "k4"
+      ],
       "settings": {
         "heading": "Fundraising",
         "heading_accent": "options",
@@ -348,82 +395,10 @@
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
         "shadow": 0.1
-      },
-      "blocks": {
-        "k1": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-opt-events.jpg",
-            "icon": "tag",
-            "title": "Sell at events",
-            "text": "Sell your merchandise at games, concerts, school events, church events and community gatherings.",
-            "image_alt": "Selling merch at a community event"
-          }
-        },
-        "k2": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-opt-online.jpg",
-            "icon": "click",
-            "title": "Online store",
-            "text": "We can help you set up an online store so supporters can order directly.",
-            "image_alt": "Online fundraiser store on a laptop and phone"
-          }
-        },
-        "k3": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-opt-preorder.jpg",
-            "icon": "doc",
-            "title": "Pre-order campaign",
-            "text": "Take pre-orders and only produce what is sold. Great for teams, schools and special events.",
-            "image_alt": "Pre-order hoodie design"
-          }
-        },
-        "k4": {
-          "type": "card",
-          "settings": {
-            "image_asset": "fr-opt-uniforms.jpg",
-            "icon": "shirt",
-            "title": "Event uniforms",
-            "text": "Create matching shirts for your event, so everyone looks unified and professional.",
-            "image_alt": "Event team in matching staff and crew shirts"
-          }
-        }
-      },
-      "block_order": [
-        "k1",
-        "k2",
-        "k3",
-        "k4"
-      ]
+      }
     },
     "why_choose": {
       "type": "gpl-cc-hero",
-      "settings": {
-        "image_asset": "",
-        "image_alt": "",
-        "image_position": "center center",
-        "scrim": 0.9,
-        "min_height": 430,
-        "min_height_mobile": 520,
-        "eyebrow": "Let's make a bigger impact together",
-        "line1": "Why choose",
-        "line1_accent": false,
-        "line2": "GTA Print Lab?",
-        "line2_accent": true,
-        "line3": "",
-        "line3_accent": false,
-        "subheading": "",
-        "paragraph": "",
-        "button_1_text": "Start Your Fundraiser",
-        "button_1_link": "/pages/quote",
-        "button_2_text": "",
-        "button_2_link": "",
-        "color_accent": "#D71920",
-        "color_background": "#0B0B0B",
-        "heading_level": "h2"
-      },
       "blocks": {
         "w1": {
           "type": "chip",
@@ -481,7 +456,30 @@
         "w4",
         "w5",
         "w6"
-      ]
+      ],
+      "settings": {
+        "image_asset": "",
+        "image_alt": "",
+        "image_position": "center center",
+        "scrim": 0.9,
+        "min_height": 430,
+        "min_height_mobile": 520,
+        "eyebrow": "Let's make a bigger impact together",
+        "line1": "Why choose",
+        "line1_accent": false,
+        "line2": "GTA Print Lab?",
+        "line2_accent": true,
+        "line3": "",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "",
+        "button_1_text": "Start Your Fundraiser",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      }
     }
   },
   "order": [
