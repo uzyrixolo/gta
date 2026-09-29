@@ -12,6 +12,7 @@
 {%- assign steps = section.blocks | where: 'type', 'step' -%}
 
 <section id="gpl-steps-{{ id }}" class="gpl-steps">
+  {%- if s.anchor_id != blank -%}<span class="gpl-steps__anchor" id="{{ s.anchor_id | handleize }}"></span>{%- endif -%}
   <div class="gpl-steps__inner">
     {%- if s.heading != blank or s.heading_accent != blank -%}
       <h2 class="gpl-steps__heading">
@@ -50,6 +51,7 @@
     background: {{ s.color_background }};
     padding: clamp(40px, 5vw, 76px) 0 clamp(44px, 5.5vw, 82px);
   }
+  #gpl-steps-{{ id }} .gpl-steps__anchor { display: block; height: 0; scroll-margin-top: 120px; }
   #gpl-steps-{{ id }} .gpl-steps__inner { width: min(1440px, 100% - 48px); margin: 0 auto; }
   #gpl-steps-{{ id }} .gpl-steps__heading {
     margin: 0; text-align: center; color: {{ s.color_heading }};
@@ -120,6 +122,12 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "A simple process from start to finish"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor name",
+      "info": "Optional. Lets a button elsewhere link here, e.g. \"how-it-works\" for #how-it-works."
     },
     {
       "type": "checkbox",

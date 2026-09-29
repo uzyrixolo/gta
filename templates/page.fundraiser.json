@@ -10,127 +10,475 @@
 {
   "sections": {
     "hero": {
-      "type": "gpl-banner",
+      "type": "gpl-cc-hero",
       "settings": {
-        "image": "shopify://shop_images/fundraiser-hero.png",
-        "alt": "Fundraise Bigger Together. Custom merch that brings people together and turns support into results. Any cause, any team, any community. High quality printing and embroidery, fast turnaround, no minimums, great profit margins, GTA local delivery.",
-        "heading": "Fundraise Bigger Together",
-        "heading_level": "h1",
-        "eager": true,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
+        "image_asset": "fr-hero-photo.jpg",
+        "image_alt": "Supporters in custom fundraiser tees and hoodies in front of the Toronto skyline",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 640,
+        "min_height_mobile": 600,
+        "eyebrow": "Any cause. Any team. Any community.",
+        "line1": "Fundraise",
+        "line1_accent": false,
+        "line2": "Bigger",
+        "line2_accent": true,
+        "line3": "Together",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "<p>Custom merch that brings people together and turns support into results.</p>",
+        "button_1_text": "Start Your Fundraiser",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "See How It Works",
+        "button_2_link": "#how-it-works",
         "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
-    },
-    "products": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/fundraiser-products.png",
-        "alt": "Fundraising merch: t-shirts for event and team supporter tees, hoodies in premium apparel for your cause, hats and headwear including caps, snapbacks and beanies, jackets and polos including varsity jackets and team jackets, and bags and accessories including totes, backpacks and drinkware.",
-        "heading": "Fundraising merch we print",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
-    },
-    "how_it_works": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/fundraiser-how-it-works.png",
-        "alt": "How it works, simple, fast, effective. One: share your idea — tell us about your fundraiser, team, school or event, and bring your logo or we can design it for you. Two: approve artwork — we create a professional design and mockup for your approval. Three: we print and produce, using high-quality printing and embroidery with fast turnaround times. Four: receive and start raising — get your merch delivered and start selling at your event, online or in your community.",
-        "heading": "How it works",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
-    },
-    "who_can": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/fundraiser-who-can-fundraise.png",
-        "alt": "Who can fundraise? Any organization, group or business can create a merch fundraiser: sports teams with team apparel and fan gear, schools with school spirit wear, churches for events, outreach and mission support, charities and non-profits for awareness and community support, community groups for local initiatives, businesses for staff apparel and promo gear, and events including concerts and tournaments.",
-        "heading": "Who can fundraise?",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
-    },
-    "options": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/fundraiser-options.png",
-        "alt": "Fundraising options, flexible ways to raise money with custom merch. Sell at events: sell your merchandise at games, concerts, school events, church events and community gatherings. Online store: we can help you set up an online store so supporters can order directly. Pre-order campaign: take pre-orders and only produce what is sold, great for teams, schools and special events. Event uniforms: create matching shirts for your event so everyone looks unified and professional.",
-        "heading": "Fundraising options",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
-      }
-    },
-    "why_choose": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/fundraiser-why-choose.png",
-        "alt": "Why choose GTA Print Lab? Premium quality, high-quality prints and embroidery. Fastest turnaround, same-day and next-day options. No minimums, order what you need. Great profit margins, maximize your fundraising potential. GTA local delivery, convenient and reliable. Creative support, design help available. Let's make a bigger impact together — start your fundraiser.",
-        "heading": "Why choose GTA Print Lab?",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "corner_radius": 0,
-        "color_background": "#0B0B0B",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center"
+        "color_background": "#0B0B0B"
       },
       "blocks": {
-        "hot_1": {
-          "type": "hotspot",
+        "c1": {
+          "type": "chip",
           "settings": {
-            "label": "Start your fundraiser",
-            "link": "/pages/quote",
-            "x": 75,
-            "y": 50,
-            "w": 22,
-            "h": 10
+            "icon": "diamond",
+            "line1": "High quality",
+            "line2": "printing & embroidery"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "turnaround"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "shirt",
+            "line1": "No",
+            "line2": "minimums"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "coins",
+            "line1": "Great profit",
+            "line2": "margins"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "icon": "truck",
+            "line1": "GTA",
+            "line2": "local delivery"
           }
         }
       },
       "block_order": [
-        "hot_1"
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ]
+    },
+    "products": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Fundraising",
+        "heading_accent": "merch",
+        "heading_tail": "we print",
+        "subheading": "One catalogue, every way your supporters like to wear it.",
+        "columns": 5,
+        "image_ratio": "1 / 1",
+        "image_fit": "contain",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-tshirts.jpg",
+            "icon": "none",
+            "title": "T-Shirts",
+            "text": "Event shirts, team shirts, supporter tees.",
+            "image_alt": "Custom fundraiser t-shirts"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-hoodies.jpg",
+            "icon": "none",
+            "title": "Hoodies",
+            "text": "Premium apparel for your cause.",
+            "image_alt": "Custom fundraiser hoodie"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-hats.jpg",
+            "icon": "none",
+            "title": "Hats & Headwear",
+            "text": "Caps, snapbacks, beanies.",
+            "image_alt": "Custom fundraiser caps"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-jackets.jpg",
+            "icon": "none",
+            "title": "Jackets & Polos",
+            "text": "Varsity jackets, polos, team jackets.",
+            "image_alt": "Custom varsity jacket and polo"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-prod-bags.jpg",
+            "icon": "none",
+            "title": "Bags & Accessories",
+            "text": "Totes, backpacks, drinkware and more.",
+            "image_alt": "Custom backpack and water bottle"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ]
+    },
+    "how_it_works": {
+      "type": "gpl-steps",
+      "settings": {
+        "heading": "How it",
+        "heading_accent": "works",
+        "subheading": "Simple. Fast. Effective.",
+        "anchor_id": "how-it-works",
+        "numbers_in_photo": true,
+        "image_ratio": "3 / 2",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#C9C9C9"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "image_asset": "fr-step-idea.jpg",
+            "title": "Share your idea",
+            "text": "Tell us about your fundraiser, team, school or event. Bring your logo or we can design it for you.",
+            "image_alt": "Choosing a fundraiser design on screen"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "image_asset": "fr-step-approve.jpg",
+            "title": "Approve artwork",
+            "text": "We create a professional design and mockup for your approval.",
+            "image_alt": "Approving the artwork mockup"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "image_asset": "fr-step-print.jpg",
+            "title": "We print & produce",
+            "text": "Using high-quality printing and embroidery with fast turnaround times.",
+            "image_alt": "Printing the fundraiser garments"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "image_asset": "fr-step-raise.jpg",
+            "title": "Receive & start raising",
+            "text": "Get your merch delivered and start selling at your event, online or in your community.",
+            "image_alt": "Supporter receiving the finished merch"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    "who_can": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Who can",
+        "heading_accent": "fundraise?",
+        "heading_tail": "",
+        "subheading": "Any organization, group or business can create a merch fundraiser.",
+        "columns": 7,
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-sports.jpg",
+            "icon": "none",
+            "title": "Sports Teams",
+            "text": "Team apparel, fan gear, fundraisers.",
+            "image_alt": "Youth football player in team kit"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-schools.jpg",
+            "icon": "none",
+            "title": "Schools",
+            "text": "School spirit wear fundraisers.",
+            "image_alt": "Students in school spirit shirts"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-churches.jpg",
+            "icon": "none",
+            "title": "Churches",
+            "text": "Events, outreach, mission support.",
+            "image_alt": "Church group in Faith Family Community hoodies"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-charities.jpg",
+            "icon": "none",
+            "title": "Charities & Non-Profits",
+            "text": "Awareness, fundraisers, community support.",
+            "image_alt": "Volunteers in matching volunteer shirts"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-community.jpg",
+            "icon": "none",
+            "title": "Community Groups",
+            "text": "Local initiatives, community events.",
+            "image_alt": "Community group in Community Stronger Together tees"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-businesses.jpg",
+            "icon": "none",
+            "title": "Businesses",
+            "text": "Staff apparel, promo gear, fundraisers.",
+            "image_alt": "Staff team in branded polos and caps"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-who-events.jpg",
+            "icon": "none",
+            "title": "Events",
+            "text": "Concerts, tournaments, special events.",
+            "image_alt": "Event crew at a concert in crew shirts"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7"
+      ]
+    },
+    "options": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Fundraising",
+        "heading_accent": "options",
+        "heading_tail": "",
+        "subheading": "Flexible ways to raise money with custom merch.",
+        "columns": 4,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-opt-events.jpg",
+            "icon": "tag",
+            "title": "Sell at events",
+            "text": "Sell your merchandise at games, concerts, school events, church events and community gatherings.",
+            "image_alt": "Selling merch at a community event"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-opt-online.jpg",
+            "icon": "click",
+            "title": "Online store",
+            "text": "We can help you set up an online store so supporters can order directly.",
+            "image_alt": "Online fundraiser store on a laptop and phone"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-opt-preorder.jpg",
+            "icon": "doc",
+            "title": "Pre-order campaign",
+            "text": "Take pre-orders and only produce what is sold. Great for teams, schools and special events.",
+            "image_alt": "Pre-order hoodie design"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "fr-opt-uniforms.jpg",
+            "icon": "shirt",
+            "title": "Event uniforms",
+            "text": "Create matching shirts for your event, so everyone looks unified and professional.",
+            "image_alt": "Event team in matching staff and crew shirts"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4"
+      ]
+    },
+    "why_choose": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "",
+        "image_alt": "",
+        "image_position": "center center",
+        "scrim": 0.9,
+        "min_height": 430,
+        "min_height_mobile": 520,
+        "eyebrow": "Let's make a bigger impact together",
+        "line1": "Why choose",
+        "line1_accent": false,
+        "line2": "GTA Print Lab?",
+        "line2_accent": true,
+        "line3": "",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "",
+        "button_1_text": "Start Your Fundraiser",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "w1": {
+          "type": "chip",
+          "settings": {
+            "icon": "diamond",
+            "line1": "Premium quality",
+            "line2": "High-quality prints & embroidery"
+          }
+        },
+        "w2": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fastest turnaround",
+            "line2": "Same-day & next-day options"
+          }
+        },
+        "w3": {
+          "type": "chip",
+          "settings": {
+            "icon": "shirt",
+            "line1": "No minimums",
+            "line2": "Order what you need"
+          }
+        },
+        "w4": {
+          "type": "chip",
+          "settings": {
+            "icon": "coins",
+            "line1": "Great profit margins",
+            "line2": "Maximize your fundraising potential"
+          }
+        },
+        "w5": {
+          "type": "chip",
+          "settings": {
+            "icon": "truck",
+            "line1": "GTA local delivery",
+            "line2": "Convenient & reliable"
+          }
+        },
+        "w6": {
+          "type": "chip",
+          "settings": {
+            "icon": "palette",
+            "line1": "Creative support",
+            "line2": "Design help available"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5",
+        "w6"
       ]
     }
   },
