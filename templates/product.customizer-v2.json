@@ -9,51 +9,178 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "container": "container",
+        "text_alignment": "center",
+        "hide_current": false,
+        "hide_on_mb": false,
+        "animations": "inherit"
+      }
+    },
     "main": {
-      "type": "gpl-customizer-v2",
+      "type": "main-product",
       "blocks": {
-        "method_dtf": {
-          "type": "method",
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
           "settings": {
-            "name": "DTF",
-            "description": "Best for bold, colourful logos or graphics on any fabric.",
-            "details": "<p>Direct to Film. Your artwork is printed onto a special film, coated with adhesive powder, then heat-pressed onto the garment. The design sits as a thin layer on top of the fabric.</p><p>Because it does not rely on the ink soaking into cotton, it prints the same bright colours on polyester, blends, nylon and dark garments — and it holds fine lines and solid blocks of colour well.</p>",
-            "best_for": "Bold logos, bright colours, dark or synthetic fabrics, small runs"
+            "show_saving": false,
+            "sale_badge_type": "percentage"
           }
         },
-        "method_dtg": {
-          "type": "method",
+        "variant_picker": {
+          "type": "variant_picker",
           "settings": {
-            "name": "DTG",
-            "description": "Best for detailed, photo-quality prints on cotton garments.",
-            "details": "<p>Direct to Garment. The printer sprays water-based ink straight into the fibres of the shirt, the way an inkjet prints onto paper. The ink becomes part of the fabric rather than sitting on it.</p><p>That makes it the softest finish — you can barely feel the print — and the best choice for photographs and fine gradients. It needs cotton, and it prints richest on lighter garments.</p>",
-            "best_for": "Photographs, fine detail and gradients, soft hand feel, 100% cotton"
+            "size_title": "Size"
           }
         },
-        "method_emb": {
-          "type": "method",
+        "buy_buttons": {
+          "type": "buy_buttons",
           "settings": {
-            "name": "Embroidery",
-            "description": "Best for a premium, textured look on hats, polos and jackets.",
-            "details": "<p>Your design is stitched into the garment with thread rather than printed. The artwork is first digitised into a stitch file, then sewn by machine.</p><p>It gives a raised, textured, permanent finish that reads as premium, and it outlasts any print. Fine detail and small text do not stitch well, so simpler, bolder artwork works best.</p>",
-            "best_for": "Caps, polos, jackets and bags; logos and lettering; a premium finish"
+            "show_quantity_selector": true,
+            "show_atc_button": true,
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "addons": {
+          "type": "addons",
+          "settings": {
+            "show_atcp": false,
+            "show_ask_a_question": true,
+            "show_social": true
+          }
+        },
+        "604ff2e1-bc35-4464-8a80-40a006613f4d": {
+          "type": "description",
+          "settings": {}
+        },
+        "start_customizing": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- comment -%}\n  The product page is the shop window: colours, sizes, price. Designing happens\n  one step later, in the customizer, which is this product on its alternate\n  template — so the button just adds ?view=design to the same product.\n{%- endcomment -%}\n<a class=\"gpl-startcz\" href=\"{{ product.url }}?view=design\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m4 20 3-1 10-10a2.1 2.1 0 0 0-3-3L4 16Z\"/><path d=\"m13.5 6.5 3 3\"/></svg>\n  <span>Start Customizing</span>\n</a>\n<p class=\"gpl-startcz__note\">Add your logo, artwork or text — see it on the shirt before you order.</p>\n<style>\n  .gpl-startcz {\n    display: flex; align-items: center; justify-content: center; gap: 10px;\n    width: 100%; margin: 18px 0 6px; padding: 16px 22px; border-radius: 8px;\n    background: #D71920; color: #FFF; font-weight: 800; font-size: 15px;\n    letter-spacing: .02em; text-transform: uppercase; text-decoration: none;\n    transition: background-color .2s ease;\n  }\n  .gpl-startcz:hover { background: #B4141A; color: #FFF; }\n  .gpl-startcz svg { width: 18px; height: 18px; }\n  .gpl-startcz__note { margin: 0 0 14px; text-align: center; font-size: 12.5px; color: #6B6B6B; }\n</style>"
           }
         }
       },
       "block_order": [
-        "method_dtf",
-        "method_dtg",
-        "method_emb"
+        "title",
+        "price",
+        "variant_picker",
+        "start_customizing",
+        "buy_buttons",
+        "addons",
+        "604ff2e1-bc35-4464-8a80-40a006613f4d"
       ],
       "settings": {
-        "upload_public_key": "6e122e88e1f265b83a7f",
-        "color_accent": "#D71920",
-        "upload_cdn_base": "2nfggcljwz.ucarecd.net",
-        "print_areas_force": false
+        "container": "container",
+        "layout": "layout-6",
+        "show_atwl": false,
+        "enable_history_state": true,
+        "enable_variant_group_images": false,
+        "show_featured_media": true,
+        "show_zoom_button": true,
+        "enable_video_autoplay": false,
+        "show_nav_media_mobile": false,
+        "show_pagination_mobile": true,
+        "use_sticky_atc": true,
+        "use_sticky_atc_on_mobile": true,
+        "enable_dynamic_checkout": false,
+        "sticky_atc_wishtlist": false,
+        "sticky_atc_compare": false
+      }
+    },
+    "product-details-tabs": {
+      "type": "product-details-tabs",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {
+            "header": "Product description"
+          }
+        },
+        "tab": {
+          "type": "tab",
+          "settings": {
+            "header": "Shipping",
+            "content": "<p>Shipping cost is based on weight. Just add products to your cart and use the Shipping Calculator to see the shipping price.</p>",
+            "content_page": ""
+          }
+        }
+      },
+      "block_order": [
+        "description",
+        "tab"
+      ],
+      "disabled": true,
+      "settings": {
+        "container": "container",
+        "bg_color": "",
+        "default_open": true,
+        "animations": "inherit"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "custom_css": [
+        ".m-button.m-button--white,.m-button--white.shopify-payment-button__button.shopify-payment-button__button--unbranded,.m-button--white.spr-button.spr-button-primary {background-color: black; color: white;}",
+        ".m-button.m-button--white:hover,.m-button--white.shopify-payment-button__button.shopify-payment-button__button--unbranded:hover,.m-button--white.spr-button.spr-button-primary:hover {background-color: #000; color: var(--color-btn-text-hover, #fff); border-color: #0000;}"
+      ],
+      "settings": {
+        "container": "container",
+        "heading": "You Might Also Like",
+        "heading_size": "h3",
+        "text_align": "left",
+        "limit": 8,
+        "columns": 4,
+        "column_gap": 30,
+        "enable_slider": true,
+        "use_scroll_mobile": true,
+        "animations": "inherit"
+      }
+    },
+    "recent-viewed-products": {
+      "type": "recent-viewed-products",
+      "custom_css": [
+        ".m-button.m-button--white,.m-button--white.shopify-payment-button__button.shopify-payment-button__button--unbranded,.m-button--white.spr-button.spr-button-primary {background-color: black; color: white;}",
+        ".m-button.m-button--white:hover,.m-button--white.shopify-payment-button__button.shopify-payment-button__button--unbranded:hover,.m-button--white.spr-button.spr-button-primary:hover {background-color: #000; color: var(--color-btn-text-hover, #fff); border-color: #0000;}"
+      ],
+      "settings": {
+        "container": "container",
+        "heading": "Recently Viewed Products",
+        "heading_size": "h3",
+        "text_align": "left",
+        "limit": 8,
+        "columns": 4,
+        "column_gap": 30,
+        "enable_slider": true
+      }
+    },
+    "1699706310cda98460": {
+      "type": "apps",
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "subheading": "",
+        "header_alignment": "center",
+        "container": "container",
+        "background_color": "",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "custom_class": ""
       }
     }
   },
   "order": [
-    "main"
+    "breadcrumb",
+    "main",
+    "product-details-tabs",
+    "product-recommendations",
+    "recent-viewed-products",
+    "1699706310cda98460"
   ]
 }
