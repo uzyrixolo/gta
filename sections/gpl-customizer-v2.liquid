@@ -279,7 +279,15 @@
   "variantMap": {% if product.metafields.custom.variant_map %}{{ product.metafields.custom.variant_map.value | json }}{% else %}null{% endif %},
   "storefrontToken": {{ s.storefront_token | default: '' | json }},
   "productHandle": {{ product.handle | json }},
+{%- comment -%}
+  Areas listed in "Hidden print areas" are dropped in the browser, so the filter
+  applies whatever the source is: the product metafield, the override box, or the
+  built-in zones below. Clearing the setting brings an area straight back.
+{%- endcomment -%}
+{%- assign hidden_areas = section.settings.hidden_areas | default: '' | split: ',' -%}
   "areas": {% if use_override %}{{ areas_override_raw }}{% elsif areas_meta %}{{ areas_meta.areas | json }}{% elsif is_headwear %}{% if head_kind == 'beanie' %}[{"name":"Front","zone":{"x":0.30,"y":0.40,"w":{{ bea_zw }},"h":{{ bea_zh }}},"w_in":{{ beanie_w }},"h_in":{{ beanie_h }}},{"name":"Back","zone":{"x":0.30,"y":0.40,"w":{{ bea_zw }},"h":{{ bea_zh }}},"w_in":{{ beanie_w }},"h_in":{{ beanie_h }}}]{% elsif head_kind == 'visor' %}[{"name":"Front","zone":{"x":0.32,"y":0.56,"w":{{ vis_zw }},"h":{{ vis_zh }}},"w_in":{{ visor_w }},"h_in":{{ visor_h }}}]{% else %}[{"name":"Front","zone":{"x":0.32,"y":0.34,"w":{{ cap_f_zw }},"h":{{ cap_f_zh }}},"w_in":{{ cap_f_w }},"h_in":{{ cap_f_h }}},{"name":"Back","zone":{"x":0.34,"y":0.36,"w":{{ cap_b_zw }},"h":{{ cap_b_zh }}},"w_in":{{ cap_b_w }},"h_in":{{ cap_b_h }}},{"name":"Side","zone":{"x":0.30,"y":0.36,"w":{{ cap_s_zw }},"h":{{ cap_s_zh }}},"w_in":{{ cap_s_w }},"h_in":{{ cap_s_h }}}]{% endif %}{% elsif is_flat_accessory %}[{"name":"Front","zone":{"x":0.28,"y":0.28,"w":{{ flat_zw }},"h":{{ flat_zh }}},"w_in":{{ flat_w }},"h_in":{{ flat_h }}}]{% elsif is_sleeveless %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":{{ front_zw }},"h":{{ front_zh }}},"w_in":{{ front_w }},"h_in":{{ front_h }}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":{{ pocket_zw }},"h":{{ pocket_zh }}},"w_in":{{ pocket_in }},"h_in":{{ pocket_in }},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":{{ back_zw }},"h":{{ back_zh }}},"w_in":{{ back_w }},"h_in":{{ back_h }}},{"name":"Inside Label",{{ label_zone }}}]{% else %}[{"name":"Front","zone":{"x":0.3,"y":0.24,"w":{{ front_zw }},"h":{{ front_zh }}},"w_in":{{ front_w }},"h_in":{{ front_h }}},{"name":"Pocket","zone":{"x":0.533,"y":0.312,"w":{{ pocket_zw }},"h":{{ pocket_zh }}},"w_in":{{ pocket_in }},"h_in":{{ pocket_in }},"view":"front"},{"name":"Back","zone":{"x":0.3,"y":0.2,"w":{{ back_zw }},"h":{{ back_zh }}},"w_in":{{ back_w }},"h_in":{{ back_h }}},{"name":"Left Side","zone":{"x":0.38,"y":0.3,"w":{{ sleeve_zw }},"h":{{ sleeve_zh }}},"w_in":{{ sleeve_in }},"h_in":{{ sleeve_in }}},{"name":"Right Side","zone":{"x":0.38,"y":0.3,"w":{{ sleeve_zw }},"h":{{ sleeve_zh }}},"w_in":{{ sleeve_in }},"h_in":{{ sleeve_in }}},{"name":"Inside Label",{{ label_zone }}}]{% endif %},
+  "showAlignTools": {% if section.settings.show_align_tools %}true{% else %}false{% endif %},
+  "hiddenAreas": [{% for h in hidden_areas %}{{ h | strip | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
   "areasSource": "{% if use_override %}override{% elsif areas_meta %}metafield{% else %}fallback{% endif %}",
   "garment": {{ garment | json }},
   "isHeadwear": {{ is_headwear }},
@@ -364,6 +372,9 @@
           <strong x-text="(previewColorName || activeColor)"></strong> · <span x-text="activePrintArea"></span>
           <em class="gpl-cz__illus" x-show="isIllustrated(activePrintArea)" x-cloak>illustration — no photo of this side</em>
         </span>
+        <button type="button" class="gpl-cz__ico" title="Undo (⌘Z)" aria-label="Undo" :disabled="!canUndo()" @click="undo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-2"/></svg></button>
+        <button type="button" class="gpl-cz__ico" title="Redo (⇧⌘Z)" aria-label="Redo" :disabled="!canRedo()" @click="redo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h2"/></svg></button>
+        <span class="gpl-cz__zoomsep" aria-hidden="true"></span>
         <button type="button" class="gpl-cz__ico" title="Zoom out" @click="zoomOut()" :disabled="zoom <= 1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
         <button type="button" class="gpl-cz__zoomval" title="Reset zoom" @click="zoomReset()" x-text="Math.round(zoom * 100) + '%'"></button>
         <button type="button" class="gpl-cz__ico" title="Zoom in" @click="zoomIn()" :disabled="zoom >= 3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -501,10 +512,16 @@
             </div>
             <p class="gpl-cz__card-warn" x-show="!hasArtworkFor(colorName)" x-cloak>No design yet — add artwork or text on the stage.</p>
             {%- if section.blocks.size > 0 -%}
-              <div class="gpl-cz__seg">
-                <template x-for="m in methods" :key="m.name">
-                  <button type="button" class="gpl-cz__seg-btn" :class="{'is-active': methodFor(colorName) === m.name}" :title="m.description" @click="setMethod(colorName, m.name)" x-text="m.name"></button>
-                </template>
+              <div class="gpl-cz__segwrap">
+                <div class="gpl-cz__seg">
+                  <template x-for="m in methods" :key="m.name">
+                    <button type="button" class="gpl-cz__seg-btn" :class="{'is-active': methodFor(colorName) === m.name}" :title="m.description" @click="setMethod(colorName, m.name)" x-text="m.name"></button>
+                  </template>
+                </div>
+                <button type="button" class="gpl-cz__info" @click="methodInfo = true"
+                  aria-label="What do these printing methods mean?" title="What do these printing methods mean?">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+                </button>
               </div>
             {%- endif -%}
           </div>
@@ -551,8 +568,6 @@
           <span class="gpl-cz__pill" x-text="methodFor(activeColor)"></span>
         </div>
         <div class="gpl-cz__hist">
-          <button type="button" class="gpl-cz__ico" title="Undo (⌘Z)" :disabled="!canUndo()" @click="undo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-2"/></svg></button>
-          <button type="button" class="gpl-cz__ico" title="Redo (⇧⌘Z)" :disabled="!canRedo()" @click="redo()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h2"/></svg></button>
           <button type="button" class="gpl-cz__link gpl-cz__link--danger" x-show="objectsInArea().length" @click="clearArea(activeColor, activePrintArea)">Delete all</button>
         </div>
         <div class="gpl-cz__addrow">
@@ -574,6 +589,10 @@
             <svg class="gpl-cz__spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9"/></svg> Uploading…
           </span>
         </div>
+        <p class="gpl-cz__arthint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16v-5"/><path d="M12 8h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>{{ s.artwork_hint }}</span>
+        </p>
         <div class="gpl-cz__layers">
           <template x-if="isLabelArea(activePrintArea) && !objectsInArea().length">
             <div class="gpl-cz__guide gpl-cz__guide--mobile">
@@ -765,6 +784,8 @@
             <button type="button" class="gpl-cz__ico" title="Flip horizontal" :class="{'is-active': sel.flipX}" :disabled="sel.locked" @click="flip('x')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7 3 12l5 5"/><path d="m16 7 5 5-5 5"/></svg></button>
             <button type="button" class="gpl-cz__ico" title="Flip vertical" :class="{'is-active': sel.flipY}" :disabled="sel.locked" @click="flip('y')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="m7 8 5-5 5 5"/><path d="m7 16 5 5 5-5"/></svg></button>
           </div>
+          <template x-if="showAlignTools">
+            <div>
           <p class="gpl-cz__label">Align to print area</p>
           <div class="gpl-cz__row6">
             <button type="button" class="gpl-cz__ico" title="Align left" :disabled="sel.locked" @click="align('left')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3v18"/><rect x="7" y="7" width="12" height="4" rx="1"/><rect x="7" y="13" width="8" height="4" rx="1"/></svg></button>
@@ -774,6 +795,8 @@
             <button type="button" class="gpl-cz__ico" title="Center vertically" :disabled="sel.locked" @click="align('vcenter')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><rect x="7" y="5" width="4" height="14" rx="1"/><rect x="13" y="8" width="4" height="8" rx="1"/></svg></button>
             <button type="button" class="gpl-cz__ico" title="Align bottom" :disabled="sel.locked" @click="align('bottom')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><rect x="7" y="5" width="4" height="12" rx="1"/><rect x="13" y="9" width="4" height="8" rx="1"/></svg></button>
           </div>
+            </div>
+          </template>
           <p class="gpl-cz__label">Arrange</p>
           <div class="gpl-cz__row6">
             <button type="button" class="gpl-cz__ico" title="Bring forward" @click="arrange('forward')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="4" width="11" height="11" rx="1"/><path d="M4 9v11h11"/></svg></button>
@@ -907,7 +930,50 @@
       <p class="gpl-cz__admin-warn">⚠ Admin: set the Uploadcare public key in the customizer section settings — uploads are disabled until then.</p>
     {%- endif -%}
   </div>
-   </div>
+   {%- comment -%} ============ PRINTING METHOD EXPLAINER ============ {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="gpl-cz__scrim" x-show="methodInfo" x-cloak @click="methodInfo = false"
+      @keydown.escape.window="methodInfo = false">
+      <div class="gpl-cz__dlg" role="dialog" aria-modal="true" aria-labelledby="gpl-cz-mi-{{ section.id }}" @click.stop>
+        <div class="gpl-cz__dlg-head">
+          <h2 id="gpl-cz-mi-{{ section.id }}">{{ s.method_info_title | default: 'How we print your design' }}</h2>
+          <button type="button" class="gpl-cz__dlg-x" @click="methodInfo = false" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        {%- if s.method_info_intro != blank -%}<p class="gpl-cz__dlg-intro">{{ s.method_info_intro }}</p>{%- endif -%}
+        <div class="gpl-cz__dlg-body">
+          {%- for block in section.blocks -%}
+            <article class="gpl-cz__method" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img class="gpl-cz__method-img"
+                  src="{{ block.settings.image | image_url: width: 640 }}"
+                  srcset="{{ block.settings.image | image_url: width: 320 }} 320w, {{ block.settings.image | image_url: width: 640 }} 640w"
+                  sizes="(max-width: 749px) 100vw, 260px"
+                  width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}"
+                  alt="{{ block.settings.name | escape }} printing" loading="lazy">
+              {%- endif -%}
+              <div class="gpl-cz__method-copy">
+                <h3>{{ block.settings.name }}</h3>
+                {%- if block.settings.description != blank -%}<p class="gpl-cz__method-lead">{{ block.settings.description }}</p>{%- endif -%}
+                {%- if block.settings.details != blank -%}<div class="gpl-cz__method-detail">{{ block.settings.details }}</div>{%- endif -%}
+                {%- if block.settings.best_for != blank -%}
+                  <p class="gpl-cz__method-best"><span>Best for</span>{{ block.settings.best_for }}</p>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+        <div class="gpl-cz__dlg-foot">
+          {%- if s.learn_more_link != blank -%}
+            <a class="gpl-cz__link" href="{{ s.learn_more_link }}">Read more about printing techniques</a>
+          {%- endif -%}
+          <button type="button" class="gpl-cz__dlg-done" @click="methodInfo = false">Got it</button>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+  </div>
   </div>
 </section>
 
@@ -1124,6 +1190,70 @@
     padding: 5px 8px; border-radius: 4px; background: #111; color: #FFF; font-size: 10.5px; font-weight: 700;
   }
   #gpl-cz-{{ section.id }} .gpl-cz__zoombar { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-top: 1px solid var(--cz-line); background: #FFFFFF; }
+  #gpl-cz-{{ section.id }} .gpl-cz__zoomsep { width: 1px; height: 20px; background: var(--cz-line); margin: 0 2px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__segwrap { display: flex; align-items: center; gap: 8px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__segwrap .gpl-cz__seg { flex: 1 1 auto; }
+  #gpl-cz-{{ section.id }} .gpl-cz__info {
+    flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    border: 1px solid var(--cz-line); background: #FFF; color: #6B6B6B;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__info svg { width: 15px; height: 15px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__info:hover { border-color: var(--cz-red); color: var(--cz-red); }
+
+  #gpl-cz-{{ section.id }} .gpl-cz__arthint {
+    display: flex; align-items: flex-start; gap: 7px; margin: 8px 0 0;
+    font-size: 11.5px; line-height: 1.45; color: #6B6B6B;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__arthint svg { flex: 0 0 auto; width: 13px; height: 13px; margin-top: 1px; color: var(--cz-red); }
+
+  #gpl-cz-{{ section.id }} .gpl-cz__scrim {
+    position: fixed; inset: 0; z-index: 60; background: rgba(10,10,10,0.6);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg {
+    width: min(860px, 100%); max-height: 86vh; overflow: auto; background: #FFF;
+    border-radius: 14px; box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 18px 20px 10px; position: sticky; top: 0; background: #FFF; z-index: 1;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-head h2 { margin: 0; font-size: 19px; font-weight: 800; color: #111; }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-x {
+    flex: 0 0 auto; width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+    border: 1px solid var(--cz-line); background: #FFF; color: #444;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-x svg { width: 16px; height: 16px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-intro { margin: 0 20px 6px; color: #5B5B5B; font-size: 13.5px; line-height: 1.55; }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-body { padding: 10px 20px 4px; display: flex; flex-direction: column; gap: 14px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method {
+    display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px;
+    border: 1px solid var(--cz-line); border-radius: 12px; padding: 14px; align-items: start;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-img { width: 100%; height: auto; border-radius: 8px; display: block; background: #F4F4F4; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-copy h3 { margin: 0 0 6px; font-size: 16px; font-weight: 800; color: #111; text-transform: uppercase; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-lead { margin: 0 0 8px; font-size: 13.5px; line-height: 1.5; color: #333; font-weight: 600; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-detail { font-size: 13px; line-height: 1.6; color: #5B5B5B; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-detail p { margin: 0 0 7px; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-best { margin: 9px 0 0; font-size: 12.5px; color: #333; }
+  #gpl-cz-{{ section.id }} .gpl-cz__method-best span {
+    display: inline-block; margin-right: 7px; padding: 2px 7px; border-radius: 4px;
+    background: rgba(215,25,32,0.1); color: var(--cz-red); font-weight: 800; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 20px 18px; position: sticky; bottom: 0; background: #FFF;
+  }
+  #gpl-cz-{{ section.id }} .gpl-cz__dlg-done {
+    margin-left: auto; padding: 11px 22px; border: none; border-radius: 8px; cursor: pointer;
+    background: var(--cz-red); color: #FFF; font-weight: 800; font-size: 13.5px;
+  }
+  @media screen and (max-width: 749px) {
+    #gpl-cz-{{ section.id }} .gpl-cz__method { grid-template-columns: minmax(0, 1fr); }
+    #gpl-cz-{{ section.id }} .gpl-cz__dlg { max-height: 92vh; }
+  }
   #gpl-cz-{{ section.id }} .gpl-cz__stage-hint { margin-right: auto; color: #666; font-size: 12px; }
   #gpl-cz-{{ section.id }} .gpl-cz__stage-hint strong { color: #111; }
   #gpl-cz-{{ section.id }} .gpl-cz__illus { font-style: normal; margin-left: 8px; padding: 2px 7px; border-radius: 999px; background: #F0F0F0; color: #777; font-size: 11px; }
@@ -1293,15 +1423,98 @@
   "tag": "section",
   "class": "gpl-section-customizer-v2",
   "settings": [
-    { "type": "text", "id": "upload_public_key", "label": "Uploadcare public key", "info": "From uploadcare.com dashboard (free tier). Uploads and add-to-cart stay disabled until set." },
-    { "type": "text", "id": "storefront_token", "label": "Storefront API token (optional)", "info": "Only needed for products with more than 250 variants. Admin → Settings → Apps and sales channels → Develop apps → create app → Storefront API access token (scope: unauthenticated_read_product_listings)." },
-    { "type": "text", "id": "upload_cdn_base", "label": "Uploadcare CDN base", "default": "ucarecdn.com", "info": "From Uploadcare dashboard → Settings → Delivery (e.g. abc12345.ucarecd.net). Newer accounts don't serve from ucarecdn.com." },
-    { "type": "textarea", "id": "print_areas_json", "label": "Print areas override (JSON array)", "info": "Used only when the product has no custom.print_areas metafield. Same shape as the metafield's areas array. w_in/h_in = physical print size in inches." },
-    { "type": "checkbox", "id": "print_areas_force", "label": "Override product metafield zones", "default": false, "info": "Tick while calibrating: the JSON above wins even if the product has a custom.print_areas metafield." },
-    { "type": "url", "id": "learn_more_link", "label": "\"Learn more\" link (printing techniques)" },
-    { "type": "range", "id": "ship_min_days", "label": "Ship estimate — min days", "min": 1, "max": 30, "step": 1, "default": 8 },
-    { "type": "range", "id": "ship_max_days", "label": "Ship estimate — max days", "min": 1, "max": 60, "step": 1, "default": 14 },
-    { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" }
+    {
+      "type": "text",
+      "id": "upload_public_key",
+      "label": "Uploadcare public key",
+      "info": "From uploadcare.com dashboard (free tier). Uploads and add-to-cart stay disabled until set."
+    },
+    {
+      "type": "text",
+      "id": "storefront_token",
+      "label": "Storefront API token (optional)",
+      "info": "Only needed for products with more than 250 variants. Admin → Settings → Apps and sales channels → Develop apps → create app → Storefront API access token (scope: unauthenticated_read_product_listings)."
+    },
+    {
+      "type": "text",
+      "id": "upload_cdn_base",
+      "label": "Uploadcare CDN base",
+      "default": "ucarecdn.com",
+      "info": "From Uploadcare dashboard → Settings → Delivery (e.g. abc12345.ucarecd.net). Newer accounts don't serve from ucarecdn.com."
+    },
+    {
+      "type": "textarea",
+      "id": "print_areas_json",
+      "label": "Print areas override (JSON array)",
+      "info": "Used only when the product has no custom.print_areas metafield. Same shape as the metafield's areas array. w_in/h_in = physical print size in inches."
+    },
+    {
+      "type": "checkbox",
+      "id": "print_areas_force",
+      "label": "Override product metafield zones",
+      "default": false,
+      "info": "Tick while calibrating: the JSON above wins even if the product has a custom.print_areas metafield."
+    },
+    {
+      "type": "url",
+      "id": "learn_more_link",
+      "label": "\"Learn more\" link (printing techniques)"
+    },
+    {
+      "type": "range",
+      "id": "ship_min_days",
+      "label": "Ship estimate — min days",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "ship_max_days",
+      "label": "Ship estimate — max days",
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "text",
+      "id": "hidden_areas",
+      "label": "Hidden print areas",
+      "default": "Inside Label",
+      "info": "Comma-separated area names to hide from the designer, whatever the product's zones say. Clear this to show them again."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_align_tools",
+      "label": "Show \"Align to print area\" tools",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "method_info_title",
+      "label": "Printing method popup — title",
+      "default": "How we print your design"
+    },
+    {
+      "type": "textarea",
+      "id": "method_info_intro",
+      "label": "Printing method popup — intro",
+      "default": "Not sure which to pick? Here is what each method is and when it works best."
+    },
+    {
+      "type": "textarea",
+      "id": "artwork_hint",
+      "label": "Artwork upload hint",
+      "default": "PNG with a transparent background prints best. Upload the highest resolution you have — aim for 300 DPI at the size it will print (a 12 in wide print wants about 3600 px wide). Small or blurry files print small or blurry."
+    }
   ],
   "blocks": [
     {
@@ -1309,13 +1522,42 @@
       "name": "Printing technique",
       "limit": 5,
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Thumbnail" },
-        { "type": "text", "id": "name", "label": "Name", "default": "DTF" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "Best for bold, colourful logos or graphics on any fabric." }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "DTF"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Best for bold, colourful logos or graphics on any fabric."
+        },
+        {
+          "type": "richtext",
+          "id": "details",
+          "label": "Full explanation (popup)",
+          "info": "Shown in the (i) popup beside the method selector."
+        },
+        {
+          "type": "text",
+          "id": "best_for",
+          "label": "Best for (popup)"
+        }
       ]
     }
   ],
   "max_blocks": 5,
-  "presets": [{ "name": "GPL Customizer v2" }]
+  "presets": [
+    {
+      "name": "GPL Customizer v2"
+    }
+  ]
 }
 {% endschema %}

@@ -18,7 +18,11 @@ window.gplQuickOrderV2 = function (sectionId) {
     variants: config.variants,        // [{id, color, size, tier, price, available, image}]
     sizes: config.sizes,              // ordered unique sizes
     colors: config.colors,            // [{name, hex, image}]
-    areas: config.areas,              // [{name, zone:{x,y,w,h}}]
+    // Areas named in the section's "Hidden print areas" setting are dropped here,
+    // so one filter covers every source of zones: metafield, override or built-in.
+    areas: (config.areas || []).filter(a => !(config.hiddenAreas || []).includes(a.name)),
+    showAlignTools: !!config.showAlignTools,
+    methodInfo: false,                // (i) beside the print-method selector
     isHeadwear: !!config.isHeadwear,  // swaps the STEP 2 area icons from shirt shapes to cap shapes
     isFlatAccessory: !!config.isFlatAccessory,  // aprons/blankets/towels/bibs: one flat-panel icon
     garment: config.garment || 'tee',  // which generic illustration to draw for views with no photo
