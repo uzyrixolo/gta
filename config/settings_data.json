@@ -133,7 +133,9 @@
     "use_theme_currencies": true,
     "theme_currencies": "USD | EUR | GBP | VND",
     "bg_cart_count": "#da3f3f",
-    "content_for_index": []
+    "content_for_index": [],
+    "show_quickview_button": false,
+    "show_cart_button": false
   },
   "presets": {
     "Default": {
