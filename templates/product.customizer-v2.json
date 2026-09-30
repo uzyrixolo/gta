@@ -16,21 +16,27 @@
           "type": "method",
           "settings": {
             "name": "DTF",
-            "description": "Best for bold, colourful logos or graphics on any fabric."
+            "description": "Best for bold, colourful logos or graphics on any fabric.",
+            "details": "<p>Direct to Film. Your artwork is printed onto a special film, coated with adhesive powder, then heat-pressed onto the garment. The design sits as a thin layer on top of the fabric.</p><p>Because it does not rely on the ink soaking into cotton, it prints the same bright colours on polyester, blends, nylon and dark garments — and it holds fine lines and solid blocks of colour well.</p>",
+            "best_for": "Bold logos, bright colours, dark or synthetic fabrics, small runs"
           }
         },
         "method_dtg": {
           "type": "method",
           "settings": {
             "name": "DTG",
-            "description": "Best for detailed, photo-quality prints on cotton garments."
+            "description": "Best for detailed, photo-quality prints on cotton garments.",
+            "details": "<p>Direct to Garment. The printer sprays water-based ink straight into the fibres of the shirt, the way an inkjet prints onto paper. The ink becomes part of the fabric rather than sitting on it.</p><p>That makes it the softest finish — you can barely feel the print — and the best choice for photographs and fine gradients. It needs cotton, and it prints richest on lighter garments.</p>",
+            "best_for": "Photographs, fine detail and gradients, soft hand feel, 100% cotton"
           }
         },
         "method_emb": {
           "type": "method",
           "settings": {
             "name": "Embroidery",
-            "description": "Best for a premium, textured look on hats, polos and jackets."
+            "description": "Best for a premium, textured look on hats, polos and jackets.",
+            "details": "<p>Your design is stitched into the garment with thread rather than printed. The artwork is first digitised into a stitch file, then sewn by machine.</p><p>It gives a raised, textured, permanent finish that reads as premium, and it outlasts any print. Fine detail and small text do not stitch well, so simpler, bolder artwork works best.</p>",
+            "best_for": "Caps, polos, jackets and bags; logos and lettering; a premium finish"
           }
         }
       },
