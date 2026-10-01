@@ -47,8 +47,17 @@
       {%- for block in section.blocks -%}
         {%- if block.type == 'featured_collection' -%}
           {%- assign col = block.settings.collection -%}
+          {%- comment -%}
+            A solutions card usually fronts a collection, but it can point at the
+            page that explains the solution instead — the link and the caption
+            below the title both override the collection's own.
+          {%- endcomment -%}
+          {%- assign card_url = block.settings.link -%}
+          {%- if card_url == blank -%}
+            {%- if col != blank -%}{%- assign card_url = col.url -%}{%- else -%}{%- assign card_url = routes.collections_url -%}{%- endif -%}
+          {%- endif -%}
           <a
-            href="{% if col != blank %}{{ col.url }}{% else %}{{ routes.collections_url }}{% endif %}"
+            href="{{ card_url }}"
             class="fps-card"
             {{ block.shopify_attributes }}
           >
@@ -70,8 +79,10 @@
               {%- endif -%}
             </div>
             <div class="fps-card__body">
-              <h3 class="fps-card__title">{{ col.title | default: 'Collection' }}</h3>
-              {%- if col != blank -%}
+              <h3 class="fps-card__title">{{ block.settings.title | default: col.title | default: 'Collection' }}</h3>
+              {%- if block.settings.caption != blank -%}
+                <span class="fps-card__count">{{ block.settings.caption }}</span>
+              {%- elsif col != blank and block.settings.show_count -%}
                 <span class="fps-card__count">{{ col.products_count | default: 0 }} products</span>
               {%- endif -%}
             </div>
@@ -171,48 +182,155 @@
   "class": "section-favorite-product-slider",
   "max_blocks": 15,
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Collection" },
-    { "type": "text", "id": "subtitle", "label": "Subheading" },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading"
+    },
     {
       "type": "select",
       "id": "image_ratio",
       "label": "Image ratio",
       "options": [
-        { "value": "adapt", "label": "Adapt to image" },
-        { "value": "portrait", "label": "Portrait" },
-        { "value": "square", "label": "Square" }
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
       ],
       "default": "square"
     },
-    { "type": "range", "id": "columns_desktop", "label": "Columns on desktop", "min": 1, "max": 6, "step": 1, "default": 3 },
-    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#111111" },
-    { "type": "checkbox", "id": "show_view_all", "label": "Show 'View all' button", "default": false },
-    { "type": "header", "content": "Mobile layout" },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#111111"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
     {
       "type": "select",
       "id": "columns_mobile",
       "label": "Columns on mobile",
       "options": [
-        { "value": "1", "label": "1 column" },
-        { "value": "2", "label": "2 columns" }
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
       ],
       "default": "1"
     },
-    { "type": "checkbox", "id": "swipe_on_mobile", "label": "Enable swipe/scroll on mobile", "default": true },
-    { "type": "header", "content": "Section padding" },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "label": "Enable swipe/scroll on mobile",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
   ],
   "blocks": [
     {
       "type": "featured_collection",
       "name": "Collection",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. Overrides the collection — point it at a page instead."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Optional. Overrides the collection's title."
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "info": "Optional. Replaces the product count, e.g. \"See how it works\"."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_count",
+          "label": "Show the product count",
+          "default": true
+        }
       ]
     }
   ],
@@ -220,9 +338,15 @@
     {
       "name": "Favorite Collections",
       "blocks": [
-        { "type": "featured_collection" },
-        { "type": "featured_collection" },
-        { "type": "featured_collection" }
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        }
       ]
     }
   ]

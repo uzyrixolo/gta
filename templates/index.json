@@ -830,19 +830,31 @@
         "featured_collection_fmRQYJ": {
           "type": "featured_collection",
           "settings": {
-            "collection": "fundraising"
+            "collection": "fundraising",
+            "link": "/pages/fundraiser",
+            "title": "Fundraisers",
+            "caption": "How a merch fundraiser works",
+            "show_count": false
           }
         },
         "featured_collection_LnAhLc": {
           "type": "featured_collection",
           "settings": {
-            "collection": "concerts"
+            "collection": "concerts",
+            "link": "/pages/concerts",
+            "title": "Concerts",
+            "caption": "Custom concert apparel",
+            "show_count": false
           }
         },
         "featured_collection_bijdtx": {
           "type": "featured_collection",
           "settings": {
-            "collection": "group-order"
+            "collection": "group-order",
+            "link": "/pages/varsity-jackets",
+            "title": "Varsity Jackets",
+            "caption": "One jacket or a whole program",
+            "show_count": false
           }
         }
       },
