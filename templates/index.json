@@ -877,7 +877,7 @@
       "settings": {
         "title": "SOLUTIONS",
         "subtitle": "",
-        "image_ratio": "square",
+        "image_ratio": "landscape",
         "columns_desktop": 3,
         "bg_color": "#111111",
         "text_color": "#ffffff",

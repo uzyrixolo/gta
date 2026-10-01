@@ -72,7 +72,7 @@
               {%- if card_img != blank -%}
                 <img
                   src="{{ card_img | image_url: width: 700 }}"
-                  srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 700 }} 700w, {{ card_img | image_url: width: 1000 }} 1000w"
+                  srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 700 }} 700w, {{ card_img | image_url: width: 1000 }} 1000w, {{ card_img | image_url: width: 1400 }} 1400w"
                   sizes="(min-width: 990px) 25vw, 80vw"
                   alt="{{ block.settings.image_alt | default: card_img.alt | default: block.settings.title | default: col.title | escape }}"
                   width="{{ card_img.width }}"
@@ -146,6 +146,8 @@
   }
   .fps-{{ section.id }} .fps-card__media--square { aspect-ratio: 1 / 1; }
   .fps-{{ section.id }} .fps-card__media--portrait { aspect-ratio: 4 / 5; }
+  .fps-{{ section.id }} .fps-card__media--landscape { aspect-ratio: 3 / 2; }
+  .fps-{{ section.id }} .fps-card__media--wide { aspect-ratio: 16 / 9; }
   .fps-{{ section.id }} .fps-card__media--adapt { aspect-ratio: auto; }
   .fps-{{ section.id }} .fps-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .fps-{{ section.id }} .fps-card__placeholder { color: rgba(128,128,128,0.6); }
@@ -222,6 +224,14 @@
         {
           "value": "square",
           "label": "Square"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (3:2)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
         }
       ],
       "default": "square"
