@@ -50,6 +50,25 @@
             "button2_link": "/collections/all"
           }
         },
+        "slide_PiRpbm": {
+          "type": "slide",
+          "settings": {
+            "bg_image_desktop": "shopify://shop_images/d798ed06-1eee-4586-b6a9-780ca8194b13.webp",
+            "bg_image_mobile": "shopify://shop_images/d798ed06-1eee-4586-b6a9-780ca8194b13.webp",
+            "image_position": "right",
+            "overlay_strength": 0,
+            "eyebrow": "",
+            "heading_line1": "",
+            "heading_line2": "",
+            "subheading_normal": "",
+            "subheading_highlight": "",
+            "paragraph": "",
+            "button1_text": "",
+            "button1_link": "",
+            "button2_text": "",
+            "button2_link": "/collections/all"
+          }
+        },
         "slide_AQMgA7": {
           "type": "slide",
           "disabled": true,
@@ -126,6 +145,7 @@
       "block_order": [
         "slide_1",
         "slide_ycLf7F",
+        "slide_PiRpbm",
         "slide_AQMgA7",
         "slide_VqmCkM",
         "feature_anFym9",
@@ -161,9 +181,9 @@
         "accent_color": "#d71920",
         "heading_color": "#ffffff",
         "body_color": "#cfcfcf",
+        "height_mode": "fit",
         "min_height_desktop": 680,
-        "min_height_mobile": 620,
-        "height_mode": "fit"
+        "min_height_mobile": 620
       }
     },
     "custom_content_GHUDep": {
@@ -342,10 +362,12 @@
     },
     "delivery_banner": {
       "type": "gpl-banner",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/banner.webp",
         "alt": "Free delivery in the GTA on orders of $150 or more, delivered in 48 hours. We print and ship right to your door. Toronto people wear great ideas.",
         "link": "/collections/all",
+        "anchor_id": "",
         "eager": false,
         "heading": "Free delivery in the GTA on orders over $150",
         "heading_level": "h2",
