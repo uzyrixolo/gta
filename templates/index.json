@@ -830,6 +830,8 @@
         "featured_collection_fmRQYJ": {
           "type": "featured_collection",
           "settings": {
+            "image": "shopify://shop_images/fund.webp",
+            "image_alt": "",
             "collection": "fundraising",
             "link": "/pages/fundraiser",
             "title": "Fundraisers",
@@ -840,6 +842,8 @@
         "featured_collection_LnAhLc": {
           "type": "featured_collection",
           "settings": {
+            "image": "shopify://shop_images/concert.webp",
+            "image_alt": "",
             "collection": "concerts",
             "link": "/pages/concerts",
             "title": "Concerts",
@@ -850,6 +854,8 @@
         "featured_collection_bijdtx": {
           "type": "featured_collection",
           "settings": {
+            "image": "shopify://shop_images/grouo.webp",
+            "image_alt": "",
             "collection": "group-order",
             "link": "/pages/group-order",
             "title": "GROUP ORDER",
