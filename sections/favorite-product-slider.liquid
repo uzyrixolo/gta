@@ -61,15 +61,22 @@
             class="fps-card"
             {{ block.shopify_attributes }}
           >
+            {%- comment -%}
+              A card picture comes from the block when one is chosen, otherwise
+              from the collection it fronts — so a card pointing at a page can
+              still carry its own image.
+            {%- endcomment -%}
+            {%- assign card_img = block.settings.image -%}
+            {%- if card_img == blank and col != blank -%}{%- assign card_img = col.featured_image -%}{%- endif -%}
             <div class="fps-card__media fps-card__media--{{ section.settings.image_ratio }}">
-              {%- if col != blank and col.featured_image != blank -%}
+              {%- if card_img != blank -%}
                 <img
-                  src="{{ col.featured_image | image_url: width: 700 }}"
-                  srcset="{{ col.featured_image | image_url: width: 400 }} 400w, {{ col.featured_image | image_url: width: 700 }} 700w, {{ col.featured_image | image_url: width: 1000 }} 1000w"
+                  src="{{ card_img | image_url: width: 700 }}"
+                  srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 700 }} 700w, {{ card_img | image_url: width: 1000 }} 1000w"
                   sizes="(min-width: 990px) 25vw, 80vw"
-                  alt="{{ col.featured_image.alt | default: col.title | escape }}"
-                  width="{{ col.featured_image.width }}"
-                  height="{{ col.featured_image.height }}"
+                  alt="{{ block.settings.image_alt | default: card_img.alt | default: block.settings.title | default: col.title | escape }}"
+                  width="{{ card_img.width }}"
+                  height="{{ card_img.height }}"
                   loading="lazy"
                 >
               {%- else -%}
@@ -302,6 +309,17 @@
       "type": "featured_collection",
       "name": "Collection",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Optional. Overrides the collection's image — use it when the card points at a page."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image description (alt text)"
+        },
         {
           "type": "collection",
           "id": "collection",
