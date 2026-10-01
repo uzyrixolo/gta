@@ -73,7 +73,7 @@
                 <img
                   src="{{ card_img | image_url: width: 700 }}"
                   srcset="{{ card_img | image_url: width: 400 }} 400w, {{ card_img | image_url: width: 700 }} 700w, {{ card_img | image_url: width: 1000 }} 1000w, {{ card_img | image_url: width: 1400 }} 1400w"
-                  sizes="(min-width: 990px) 25vw, 80vw"
+                  sizes="(min-width: 990px) calc((100vw - 48px) / {{ section.settings.columns_desktop }}), 92vw"
                   alt="{{ block.settings.image_alt | default: card_img.alt | default: block.settings.title | default: col.title | escape }}"
                   width="{{ card_img.width }}"
                   height="{{ card_img.height }}"
