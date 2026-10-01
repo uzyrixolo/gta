@@ -851,9 +851,9 @@
           "type": "featured_collection",
           "settings": {
             "collection": "group-order",
-            "link": "/pages/varsity-jackets",
-            "title": "Varsity Jackets",
-            "caption": "One jacket or a whole program",
+            "link": "/pages/group-order",
+            "title": "GROUP ORDER",
+            "caption": "One group. One design.",
             "show_count": false
           }
         }

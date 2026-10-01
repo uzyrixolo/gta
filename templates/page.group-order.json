@@ -1,0 +1,636 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "go-hero.jpg",
+        "image_alt": "A group in matching GTA Print Lab apparel in front of the Toronto skyline",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 640,
+        "min_height_mobile": 620,
+        "heading_level": "h1",
+        "eyebrow": "Custom apparel for every crew",
+        "line1": "Group orders.",
+        "line1_accent": false,
+        "line2": "Bigger savings.",
+        "line2_accent": true,
+        "line3": "Less hassle.",
+        "line3_accent": false,
+        "subheading": "One group. One design. Everyone gets exactly what they need.",
+        "paragraph": "",
+        "button_1_text": "Start a Group Order",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "Create a Group Store",
+        "button_2_link": "#group-store",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "c1": {
+          "type": "chip",
+          "settings": {
+            "icon": "truck",
+            "line1": "Toronto",
+            "line2": "based"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "turnaround"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "check-circle",
+            "line1": "Premium",
+            "line2": "quality"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "user",
+            "line1": "No",
+            "line2": "minimums"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "icon": "tag",
+            "line1": "Volume",
+            "line2": "discounts"
+          }
+        },
+        "c6": {
+          "type": "chip",
+          "settings": {
+            "icon": "building",
+            "line1": "Delivery",
+            "line2": "options"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ]
+    },
+    "why": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Why order as a",
+        "heading_accent": "group?",
+        "heading_tail": "",
+        "subheading": "One order, one design, and nobody chasing anybody for sizes or money.",
+        "columns": 6,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-savings.jpg",
+            "icon": "coins",
+            "title": "Volume savings",
+            "text": "Larger quantities can unlock better per-piece pricing.",
+            "image_alt": "Stacks of printed shirts"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-design.jpg",
+            "icon": "shirt",
+            "title": "One design, everyone's style",
+            "text": "Mix sizes, colours and approved products.",
+            "image_alt": "A hoodie and tee in the same design"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-spreadsheets.jpg",
+            "icon": "doc",
+            "title": "No spreadsheets",
+            "text": "Members can order their own sizes and quantities online.",
+            "image_alt": "The ordering screen on a laptop"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-payments.jpg",
+            "icon": "click",
+            "title": "Easy payments",
+            "text": "Members can pay individually, or one organizer can manage the order.",
+            "image_alt": "Paying on a phone"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-organized.jpg",
+            "icon": "bolt",
+            "title": "Fast & organized",
+            "text": "Consolidated production and order management.",
+            "image_alt": "Boxes being packed"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-why-custom.jpg",
+            "icon": "user",
+            "title": "Custom for your group",
+            "text": "Teams, schools, businesses, families, events, organizations and concert crews.",
+            "image_alt": "A group in matching apparel"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6"
+      ]
+    },
+    "how": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Choose how your",
+        "heading_accent": "group orders",
+        "heading_tail": "",
+        "subheading": "Three ways to run it — pick the one that suits your group.",
+        "columns": 3,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-how-oneperson.jpg",
+            "icon": "user",
+            "title": "One person orders for everyone",
+            "text": "The host collects the order and payment, we ship the complete group order to one address, and you distribute to everyone.",
+            "image_alt": "One organizer receiving the group order"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-how-shipeach.jpg",
+            "icon": "truck",
+            "title": "Ship to each person",
+            "text": "Each member enters their own shipping address and pays individual shipping. Orders are produced together and delivered directly to each member.",
+            "image_alt": "A member receiving their parcel"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-how-store.jpg",
+            "icon": "click",
+            "title": "Your own group store",
+            "text": "We create a dedicated, shareable URL. Members choose approved products, colours, sizes and quantities, and pay online. Choose direct-to-member or group shipping.",
+            "image_alt": "The group store on screen"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ]
+    },
+    "store": {
+      "type": "gpl-steps",
+      "settings": {
+        "heading": "Your group store.",
+        "heading_accent": "One simple link.",
+        "subheading": "A fast, easy way for your team, event or organization to order.",
+        "anchor_id": "group-store",
+        "numbers_in_photo": false,
+        "image_ratio": "16 / 9",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#C9C9C9"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "image_asset": "go-step-pick.jpg",
+            "title": "Pick your products",
+            "text": "Choose from T-shirts, hoodies, hats, jackets and more.",
+            "image_alt": "Choosing products on screen"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "image_asset": "go-step-share.jpg",
+            "title": "Share your link",
+            "text": "We create your unique URL to share with your group.",
+            "image_alt": "Sharing the store link"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "image_asset": "go-step-order.jpg",
+            "title": "Everyone orders",
+            "text": "Each member selects their size, colour and quantity, and pays online.",
+            "image_alt": "Members ordering on their phones"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "image_asset": "go-step-deliver.jpg",
+            "title": "We produce & deliver",
+            "text": "Orders are produced and shipped to each person or one location.",
+            "image_alt": "Boxes loaded for delivery"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    "products": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "What your group can",
+        "heading_accent": "order",
+        "heading_tail": "",
+        "subheading": "Choose the products, we handle the rest.",
+        "columns": 5,
+        "image_ratio": "1 / 1",
+        "image_fit": "contain",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-prod-tshirts.jpg",
+            "icon": "none",
+            "title": "T-Shirts",
+            "text": "",
+            "image_alt": "Custom group t-shirts"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-prod-hoodies.jpg",
+            "icon": "none",
+            "title": "Hoodies",
+            "text": "",
+            "image_alt": "Custom group hoodies"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-prod-hats.jpg",
+            "icon": "none",
+            "title": "Hats",
+            "text": "",
+            "image_alt": "Custom caps"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-prod-jackets.jpg",
+            "icon": "none",
+            "title": "Jackets",
+            "text": "",
+            "image_alt": "Custom jackets"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-prod-accessories.jpg",
+            "icon": "none",
+            "title": "Accessories",
+            "text": "",
+            "image_alt": "Bags and drinkware"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5"
+      ]
+    },
+    "perfect": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Perfect",
+        "heading_accent": "for",
+        "heading_tail": "",
+        "subheading": "Any group that needs to look like one group.",
+        "columns": 8,
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-sports.jpg",
+            "icon": "none",
+            "title": "Sports Teams & Leagues",
+            "text": "",
+            "image_alt": "A sports team"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-schools.jpg",
+            "icon": "none",
+            "title": "Schools & Universities",
+            "text": "",
+            "image_alt": "Students"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-businesses.jpg",
+            "icon": "none",
+            "title": "Businesses & Employees",
+            "text": "",
+            "image_alt": "A staff team"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-churches.jpg",
+            "icon": "none",
+            "title": "Churches & Community Groups",
+            "text": "",
+            "image_alt": "A church group"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-concert.jpg",
+            "icon": "none",
+            "title": "Concert Crews & Events",
+            "text": "",
+            "image_alt": "A concert crew"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-families.jpg",
+            "icon": "none",
+            "title": "Families & Reunions",
+            "text": "",
+            "image_alt": "A family reunion"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-fundraisers.jpg",
+            "icon": "none",
+            "title": "Fundraisers",
+            "text": "",
+            "image_alt": "A fundraiser group"
+          }
+        },
+        "k8": {
+          "type": "card",
+          "settings": {
+            "image_asset": "go-for-clubs.jpg",
+            "icon": "none",
+            "title": "Clubs & Organizations",
+            "text": "",
+            "image_alt": "A club"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7",
+        "k8"
+      ]
+    },
+    "compare": {
+      "type": "gpl-compare",
+      "settings": {
+        "line1": "The old way",
+        "line2": "versus",
+        "line3": "the GTA Print Lab way.",
+        "paragraph": "<p>More pieces can mean better per-piece pricing — 12+, 25+, 50+ or 100+. Ask about volume pricing for your group.</p>",
+        "button_text": "Ask About Volume Pricing",
+        "button_link": "/pages/quote",
+        "theirs_title": "The old way",
+        "ours_title": "The GTA Print Lab way",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "t1": {
+          "type": "theirs",
+          "settings": {
+            "text": "Collecting sizes by text or email"
+          }
+        },
+        "t2": {
+          "type": "theirs",
+          "settings": {
+            "text": "Chasing payments"
+          }
+        },
+        "t3": {
+          "type": "theirs",
+          "settings": {
+            "text": "Managing spreadsheets"
+          }
+        },
+        "t4": {
+          "type": "theirs",
+          "settings": {
+            "text": "Confusing and time consuming"
+          }
+        },
+        "t5": {
+          "type": "theirs",
+          "settings": {
+            "text": "Sorting and distributing boxes"
+          }
+        },
+        "o1": {
+          "type": "ours",
+          "settings": {
+            "text": "Share one simple link"
+          }
+        },
+        "o2": {
+          "type": "ours",
+          "settings": {
+            "text": "Members choose their own sizes"
+          }
+        },
+        "o3": {
+          "type": "ours",
+          "settings": {
+            "text": "Individual payment options"
+          }
+        },
+        "o4": {
+          "type": "ours",
+          "settings": {
+            "text": "Organized fulfillment"
+          }
+        },
+        "o5": {
+          "type": "ours",
+          "settings": {
+            "text": "Ship to each person or one location"
+          }
+        },
+        "o6": {
+          "type": "ours",
+          "settings": {
+            "text": "Less work for the organizer"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "o1",
+        "o2",
+        "o3",
+        "o4",
+        "o5",
+        "o6"
+      ]
+    },
+    "cta": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "go-cta.jpg",
+        "image_alt": "A crew in matching Toronto Crew shirts at an event",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 430,
+        "min_height_mobile": 520,
+        "heading_level": "h2",
+        "eyebrow": "",
+        "line1": "Get your",
+        "line1_accent": false,
+        "line2": "group look",
+        "line2_accent": true,
+        "line3": "together.",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "<p>Choose your products. Set your design. Share the link. We'll handle the rest.</p>",
+        "button_1_text": "Start a Group Order",
+        "button_1_link": "/pages/quote",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "/pages/quote",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "why",
+    "how",
+    "store",
+    "products",
+    "perfect",
+    "compare",
+    "cta"
+  ]
+}
