@@ -1,0 +1,290 @@
+{%- comment -%}
+  GTA Print Lab — quick team consultation.
+
+  A uniform programme never starts with a cart: it starts with a conversation
+  about sport, squad size, season dates and deadline. The form posts through
+  Shopify's contact form, so every contact[Field] lands in the store's
+  notification email with no custom backend.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+
+<section id="gpl-tc-{{ id }}" class="gpl-tc">
+  {%- if s.anchor_id != blank -%}<span class="gpl-tc__anchor" id="{{ s.anchor_id | handleize }}"></span>{%- endif -%}
+  <div class="gpl-tc__media" aria-hidden="true">
+    {% render 'gpl-picture', img: s.image, asset: s.image_asset, class: 'gpl-tc__photo', alt: '', sizes: '100vw' %}
+    <span class="gpl-tc__scrim"></span>
+  </div>
+
+  <div class="gpl-tc__inner">
+    <div class="gpl-tc__copy">
+      {%- if s.eyebrow != blank -%}<p class="gpl-tc__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+      <h2 class="gpl-tc__heading">
+        {%- if s.heading != blank -%}<span>{{ s.heading }} </span>{%- endif -%}
+        {%- if s.heading_accent != blank -%}<span class="is-accent">{{ s.heading_accent }}</span>{%- endif -%}
+      </h2>
+      {%- if s.paragraph != blank -%}<div class="gpl-tc__para">{{ s.paragraph }}</div>{%- endif -%}
+    </div>
+
+    <div class="gpl-tc__card">
+      <h3 class="gpl-tc__card-h">{{ s.form_title }}</h3>
+      {%- form 'contact', id: 'gpl-team-consult' -%}
+        <input type="hidden" name="contact[Form]" value="Team consultation">
+        {%- capture ok -%}{{ s.success_message }}{%- endcapture -%}
+        {% render 'form__success', form: form, success_message: ok %}
+        {% render 'form__error', form: form %}
+
+        {%- unless form.posted_successfully? -%}
+          <div class="gpl-tc__grid">
+            <label class="gpl-tc__field">
+              <span>Organization / Team name<em>*</em></span>
+              <input type="text" name="contact[Organization]" required placeholder="Enter organization name">
+            </label>
+            <label class="gpl-tc__field">
+              <span>Sport<em>*</em></span>
+              <select name="contact[Sport]" required>
+                <option value="">Select sport</option>
+                {%- assign sports = s.sports | split: ',' -%}
+                {%- for sp in sports -%}<option>{{ sp | strip }}</option>{%- endfor -%}
+              </select>
+            </label>
+            <label class="gpl-tc__field">
+              <span>Contact name<em>*</em></span>
+              <input type="text" name="contact[name]" required autocomplete="name" placeholder="Your name">
+            </label>
+            <label class="gpl-tc__field">
+              <span>Number of players<em>*</em></span>
+              <input type="text" name="contact[Number of players]" required placeholder="e.g. 15">
+            </label>
+            <label class="gpl-tc__field">
+              <span>Position / Role<em>*</em></span>
+              <select name="contact[Role]" required>
+                <option value="">Select position</option>
+                {%- assign roles = s.roles | split: ',' -%}
+                {%- for r in roles -%}<option>{{ r | strip }}</option>{%- endfor -%}
+              </select>
+            </label>
+            <label class="gpl-tc__field">
+              <span>Season / Playing dates<em>*</em></span>
+              <input type="text" name="contact[Season]" required placeholder="e.g. September – November">
+            </label>
+            <label class="gpl-tc__field">
+              <span>Phone number<em>*</em></span>
+              <input type="tel" name="contact[phone]" required autocomplete="tel" placeholder="(416) 555-0123">
+            </label>
+            <label class="gpl-tc__field">
+              <span>When do you need your uniforms?<em>*</em></span>
+              <select name="contact[Needed by]" required>
+                <option value="">Select timeline</option>
+                {%- assign timelines = s.timelines | split: ',' -%}
+                {%- for t in timelines -%}<option>{{ t | strip }}</option>{%- endfor -%}
+              </select>
+            </label>
+            <label class="gpl-tc__field gpl-tc__field--full">
+              <span>Email address<em>*</em></span>
+              <input type="email" name="contact[email]" required autocomplete="email" autocorrect="off" autocapitalize="off" placeholder="you@domain.com">
+            </label>
+            <label class="gpl-tc__field gpl-tc__field--full">
+              <span>Additional information <em class="gpl-tc__opt">(optional)</em></span>
+              <textarea name="contact[body]" rows="3" placeholder="Tell us about your team, what you're looking for, or any special requirements."></textarea>
+            </label>
+          </div>
+          <button type="submit" class="gpl-tc__submit">
+            {{ s.button_text }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          {%- if s.footnote != blank -%}<p class="gpl-tc__foot">{{ s.footnote }}</p>{%- endif -%}
+        {%- endunless -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #gpl-tc-{{ id }} {
+    --a: {{ s.color_accent }};
+    position: relative; isolation: isolate; overflow: hidden;
+    background: {{ s.color_background }};
+    padding: clamp(40px, 5vw, 76px) 0;
+  }
+  #gpl-tc-{{ id }} .gpl-tc__anchor { display: block; height: 0; scroll-margin-top: 120px; }
+  #gpl-tc-{{ id }} .gpl-tc__media { position: absolute; inset: 0; z-index: 0; }
+  #gpl-tc-{{ id }} .gpl-tc__photo { width: 100%; height: 100%; object-fit: cover; object-position: center left; display: block; }
+  #gpl-tc-{{ id }} .gpl-tc__scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.78) 42%, rgba(8,8,8,0.55) 100%);
+  }
+  #gpl-tc-{{ id }} .gpl-tc__inner {
+    position: relative; z-index: 1; width: min(1440px, 100% - 48px); margin: 0 auto;
+    display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(24px, 3.4vw, 54px); align-items: center;
+  }
+  #gpl-tc-{{ id }} .gpl-tc__eyebrow { margin: 0 0 8px; color: #D7D7D7; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: 12.5px; }
+  #gpl-tc-{{ id }} .gpl-tc__heading {
+    margin: 0 0 14px; display: flex; flex-direction: column; color: #FFF;
+    font-weight: 900; text-transform: uppercase; line-height: .96;
+    font-size: clamp(30px, 4.4vw, 58px); letter-spacing: -0.015em;
+  }
+  #gpl-tc-{{ id }} .gpl-tc__heading .is-accent { color: var(--a); }
+  #gpl-tc-{{ id }} .gpl-tc__para { color: #C9C9C9; font-size: clamp(14px, 1.2vw, 16px); line-height: 1.6; max-width: 42ch; }
+  #gpl-tc-{{ id }} .gpl-tc__para p { margin: 0; }
+
+  #gpl-tc-{{ id }} .gpl-tc__card { background: #FFF; border-radius: 14px; padding: clamp(20px, 2.4vw, 32px); }
+  #gpl-tc-{{ id }} .gpl-tc__card-h { margin: 0 0 16px; font-size: clamp(16px, 1.7vw, 21px); font-weight: 800; text-transform: uppercase; color: #111; }
+  #gpl-tc-{{ id }} .gpl-tc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+  #gpl-tc-{{ id }} .gpl-tc__field { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; font-weight: 700; color: #333; }
+  #gpl-tc-{{ id }} .gpl-tc__field--full { grid-column: 1 / -1; }
+  #gpl-tc-{{ id }} .gpl-tc__field em { color: var(--a); font-style: normal; }
+  #gpl-tc-{{ id }} .gpl-tc__field em.gpl-tc__opt { color: #999; font-weight: 500; }
+  #gpl-tc-{{ id }} .gpl-tc__field input,
+  #gpl-tc-{{ id }} .gpl-tc__field select,
+  #gpl-tc-{{ id }} .gpl-tc__field textarea {
+    font: inherit; font-weight: 400; font-size: 13.5px; color: #111; padding: 10px 11px;
+    border: 1px solid #DCDCDC; border-radius: 7px; background: #FFF; resize: vertical;
+  }
+  #gpl-tc-{{ id }} .gpl-tc__field input:focus,
+  #gpl-tc-{{ id }} .gpl-tc__field select:focus,
+  #gpl-tc-{{ id }} .gpl-tc__field textarea:focus { outline: none; border-color: var(--a); box-shadow: 0 0 0 3px rgba(215,25,32,0.12); }
+  #gpl-tc-{{ id }} .gpl-tc__submit {
+    margin-top: 16px; width: 100%; cursor: pointer; border: none; border-radius: 8px; padding: 15px;
+    background: var(--a); color: #FFF; font: inherit; font-weight: 800; font-size: 14.5px;
+    text-transform: uppercase; letter-spacing: .02em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    transition: background-color .2s ease;
+  }
+  #gpl-tc-{{ id }} .gpl-tc__submit:hover { background: #B4141A; }
+  #gpl-tc-{{ id }} .gpl-tc__submit svg { width: 15px; height: 15px; }
+  #gpl-tc-{{ id }} .gpl-tc__foot { margin: 11px 0 0; text-align: center; font-size: 11.5px; line-height: 1.5; color: #777; }
+  #gpl-tc-{{ id }} .notification { border-radius: 8px; padding: 13px 15px; display: flex; gap: 10px; margin-bottom: 14px; font-size: 13.5px; }
+  #gpl-tc-{{ id }} .notification svg { width: 20px; height: 20px; flex: 0 0 auto; }
+  #gpl-tc-{{ id }} .notification.success { background: #E9F7EF; color: #1E7E34; }
+  #gpl-tc-{{ id }} .notification.warning { background: #FDECEC; color: #B4141A; }
+
+  @media screen and (max-width: 989px) {
+    #gpl-tc-{{ id }} .gpl-tc__inner { grid-template-columns: minmax(0, 1fr); }
+    #gpl-tc-{{ id }} .gpl-tc__scrim { background: linear-gradient(180deg, rgba(8,8,8,0.8) 0%, rgba(8,8,8,0.92) 60%); }
+  }
+  @media screen and (max-width: 639px) {
+    #gpl-tc-{{ id }} .gpl-tc__inner { width: min(1440px, 100% - 32px); }
+    #gpl-tc-{{ id }} .gpl-tc__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Team consult",
+  "tag": "section",
+  "class": "gpl-section-team-consult",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Let's get started"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let's build"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — accent (red)",
+      "default": "your uniforms."
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Paragraph",
+      "default": "<p>Start with a conversation. Tell us a little about your team, and a member of our team will contact you to discuss your uniforms, teamwear, swag and available options.</p>"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor name",
+      "default": "consultation"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background photo"
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Theme photo filename",
+      "info": "A file in assets/, used when no photo is picked."
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Quick team consultation"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Request a consultation"
+    },
+    {
+      "type": "textarea",
+      "id": "sports",
+      "label": "Sport options (comma separated)",
+      "default": "Basketball, Football, Flag football, Soccer, Rugby, Baseball, Softball, Hockey, Volleyball, Track and field, Cheer, Other"
+    },
+    {
+      "type": "textarea",
+      "id": "roles",
+      "label": "Position / role options (comma separated)",
+      "default": "Coach, Team manager, Athletic director, Player, Parent, Team parent, Administrator, Other"
+    },
+    {
+      "type": "textarea",
+      "id": "timelines",
+      "label": "Timeline options (comma separated)",
+      "default": "As soon as possible, Within 2-3 weeks, Within a month, 1-2 months, Just planning ahead"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Message after sending",
+      "default": "Thanks — we have your details. A member of our team will be in touch within 24 hours."
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "We'll review your information and generally contact you within 24 hours to discuss your team and how GTA Print Lab can help."
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent",
+      "default": "#D71920"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0B0B0B"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GPL Team consult"
+    }
+  ]
+}
+{% endschema %}

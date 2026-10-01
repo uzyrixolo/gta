@@ -1,0 +1,800 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "tu-hero.jpg",
+        "image_alt": "Athletes from several sports in custom Toronto team uniforms",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 660,
+        "min_height_mobile": 620,
+        "heading_level": "h1",
+        "eyebrow": "Custom uniforms · teamwear · fanwear · and more",
+        "line1": "Built for your team.",
+        "line1_accent": false,
+        "line2": "Designed to",
+        "line2_accent": false,
+        "line3": "represent you.",
+        "line3_accent": true,
+        "subheading": "",
+        "paragraph": "<p>Custom uniforms, teamwear, fanwear and team merchandise for every sport. From the first sketch to game day, GTA Print Lab helps teams create a complete apparel program — locally in Toronto or through our dedicated overseas manufacturing operation.</p>",
+        "button_1_text": "Design Your Uniforms",
+        "button_1_link": "/collections/all",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "#consultation",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "c1": {
+          "type": "chip",
+          "settings": {
+            "icon": "leaf",
+            "line1": "Toronto",
+            "line2": "based"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "icon": "pencil",
+            "line1": "Custom",
+            "line2": "designs"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "turnaround"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "building",
+            "line1": "Local + overseas",
+            "line2": "manufacturing"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "icon": "tag",
+            "line1": "Team",
+            "line2": "stores"
+          }
+        },
+        "c6": {
+          "type": "chip",
+          "settings": {
+            "icon": "coins",
+            "line1": "Fund",
+            "line2": "raising"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ]
+    },
+    "more": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "More than",
+        "heading_accent": "just uniforms.",
+        "heading_tail": "",
+        "subheading": "Your team needs more than a jersey. GTA Print Lab can help you build a complete team apparel program — from game uniforms and practice gear to coach apparel, fan merchandise and fundraising products.",
+        "columns": 6,
+        "image_ratio": "1 / 1",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-gameday.jpg",
+            "icon": "none",
+            "title": "Game Day",
+            "text": "Uniforms built for competition.",
+            "image_alt": "Players in game-day uniforms"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-teamwear.jpg",
+            "icon": "none",
+            "title": "Teamwear",
+            "text": "Hoodies, warm-ups, sweats, jackets and training apparel.",
+            "image_alt": "Team in warm-up apparel"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-coaches.jpg",
+            "icon": "none",
+            "title": "Coaches",
+            "text": "Polos, jackets, hats and sideline gear.",
+            "image_alt": "Coach in sideline gear"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-fanwear.jpg",
+            "icon": "none",
+            "title": "Fanwear",
+            "text": "Give supporters apparel they actually want to wear.",
+            "image_alt": "Fans in team apparel"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-swag.jpg",
+            "icon": "none",
+            "title": "Team Swag",
+            "text": "Hats, bags, accessories, drinkware and more.",
+            "image_alt": "Team bags and accessories"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-more-fundraising.jpg",
+            "icon": "none",
+            "title": "Fundraising",
+            "text": "Turn your team apparel into a revenue opportunity.",
+            "image_alt": "Supporters in fundraiser shirts"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6"
+      ]
+    },
+    "sports": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Custom uniforms for",
+        "heading_accent": "every game",
+        "heading_tail": "",
+        "subheading": "High performance. Custom designs. Any sport.",
+        "columns": 8,
+        "image_ratio": "3 / 4",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-basketball.jpg",
+            "icon": "none",
+            "title": "Basketball",
+            "text": "Jerseys, shorts, shooting shirts, warmups and more.",
+            "image_alt": "Basketball uniform"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-football.jpg",
+            "icon": "none",
+            "title": "Football",
+            "text": "Game jerseys, pants, practice gear, sideline apparel and accessories.",
+            "image_alt": "Football uniform"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-flagfootball.jpg",
+            "icon": "none",
+            "title": "Flag Football",
+            "text": "Lightweight jerseys, shorts, team apparel, coach gear and more.",
+            "image_alt": "Flag football uniform"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-soccer.jpg",
+            "icon": "none",
+            "title": "Soccer",
+            "text": "Jerseys, shorts, goalkeeper kits, training apparel and more.",
+            "image_alt": "Soccer uniform"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-rugby.jpg",
+            "icon": "none",
+            "title": "Rugby",
+            "text": "Jerseys, shorts, training apparel, supporter gear and more.",
+            "image_alt": "Rugby uniform"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-baseball.jpg",
+            "icon": "none",
+            "title": "Baseball",
+            "text": "Jerseys, pants, caps, batting apparel, hoodies and more.",
+            "image_alt": "Baseball uniform"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-softball.jpg",
+            "icon": "none",
+            "title": "Softball",
+            "text": "Jerseys, pants, shorts, warmups, hats and more.",
+            "image_alt": "Softball uniform"
+          }
+        },
+        "k8": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-sport-more.jpg",
+            "icon": "none",
+            "title": "And More",
+            "text": "If your sport isn't listed, we can create a custom apparel program for your team.",
+            "image_alt": "Equipment from many sports"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7",
+        "k8"
+      ]
+    },
+    "program": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "The complete",
+        "heading_accent": "team program",
+        "heading_tail": "",
+        "subheading": "Don't stop at the jersey. We provide everything your team needs, on and off the field.",
+        "columns": 8,
+        "image_ratio": "3 / 4",
+        "image_fit": "contain",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#FFFFFF",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-uniforms.jpg",
+            "icon": "none",
+            "title": "Game Uniforms",
+            "text": "",
+            "image_alt": "Custom game jersey"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-practice.jpg",
+            "icon": "none",
+            "title": "Practice Gear",
+            "text": "",
+            "image_alt": "Practice gear"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-swag.jpg",
+            "icon": "none",
+            "title": "Team Swag",
+            "text": "",
+            "image_alt": "Team hoodie"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-coaching.jpg",
+            "icon": "none",
+            "title": "Coaching Swag",
+            "text": "",
+            "image_alt": "Coaching jacket"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-fan.jpg",
+            "icon": "none",
+            "title": "Fan Swag",
+            "text": "",
+            "image_alt": "Fan hoodie"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-travel.jpg",
+            "icon": "none",
+            "title": "Travel Gear",
+            "text": "",
+            "image_alt": "Team travel bag"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-jackets.jpg",
+            "icon": "none",
+            "title": "Team Jackets",
+            "text": "",
+            "image_alt": "Team jacket"
+          }
+        },
+        "k8": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-prog-accessories.jpg",
+            "icon": "none",
+            "title": "Accessories",
+            "text": "",
+            "image_alt": "Team accessories"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7",
+        "k8"
+      ]
+    },
+    "store": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Your team.",
+        "heading_accent": "Your brand.",
+        "heading_tail": "Your merch.",
+        "subheading": "Players, coaches, parents, fans, alumni, volunteers and sponsors — one programme covers them all.",
+        "columns": 2,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#F4F4F4",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-merch.jpg",
+            "icon": "shirt",
+            "title": "One kit, everyone covered",
+            "text": "Game uniforms, teamwear, fan swag and accessories, all designed together so your team looks like one team.",
+            "image_alt": "Team merchandise laid out together"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-store.jpg",
+            "icon": "click",
+            "title": "Turn your team into a store",
+            "text": "One link, everyone orders. We create a dedicated online team store, players and fans choose approved products, members pay online, and you choose direct-to-member shipping or group shipping.",
+            "image_alt": "The team store on a laptop and phone"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2"
+      ]
+    },
+    "how": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Team fundraising,",
+        "heading_accent": "made local",
+        "heading_tail": "",
+        "subheading": "Let your teamwear help pay for the season — and choose the production route that fits the job.",
+        "columns": 3,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": true,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-fundraising.jpg",
+            "icon": "coins",
+            "title": "Team fundraising",
+            "text": "Build your collection, set your retail price, we create your online store, share the link with your community, and we produce and fulfill the orders.",
+            "image_alt": "Team taking a selfie in fundraiser shirts"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-local.jpg",
+            "icon": "leaf",
+            "title": "Made locally",
+            "text": "For projects that need local production, fast turnaround and GTA service, we manufacture through our Toronto-area operations.",
+            "image_alt": "The Toronto skyline"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-overseas.jpg",
+            "icon": "building",
+            "title": "Dedicated overseas operation",
+            "text": "For larger custom uniform programs and specialized manufacturing, we use our dedicated manufacturing operation in Pakistan.",
+            "image_alt": "Our manufacturing floor"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ]
+    },
+    "why": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "",
+        "image_alt": "",
+        "image_position": "center center",
+        "scrim": 0.9,
+        "min_height": 430,
+        "min_height_mobile": 620,
+        "heading_level": "h2",
+        "eyebrow": "",
+        "line1": "Why teams choose",
+        "line1_accent": false,
+        "line2": "GTA Print Lab",
+        "line2_accent": true,
+        "line3": "",
+        "line3_accent": false,
+        "subheading": "",
+        "paragraph": "",
+        "button_1_text": "Start Your Team Program",
+        "button_1_link": "#consultation",
+        "button_2_text": "",
+        "button_2_link": "",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "w1": {
+          "type": "chip",
+          "settings": {
+            "icon": "handshake",
+            "line1": "One partner",
+            "line2": "uniforms, teamwear, fanwear, coaches, accessories"
+          }
+        },
+        "w2": {
+          "type": "chip",
+          "settings": {
+            "icon": "leaf",
+            "line1": "Local accountability",
+            "line2": "deal with a Toronto based company"
+          }
+        },
+        "w3": {
+          "type": "chip",
+          "settings": {
+            "icon": "gear",
+            "line1": "Custom manufacturing",
+            "line2": "not limited to what's on a shelf"
+          }
+        },
+        "w4": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast turnaround",
+            "line2": "most orders 2-3 weeks"
+          }
+        },
+        "w5": {
+          "type": "chip",
+          "settings": {
+            "icon": "tag",
+            "line1": "Team stores",
+            "line2": "simple ordering for your entire team"
+          }
+        },
+        "w6": {
+          "type": "chip",
+          "settings": {
+            "icon": "check-circle",
+            "line1": "One-stop team apparel",
+            "line2": "everything your team needs in one place"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5",
+        "w6"
+      ]
+    },
+    "built": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "Built for",
+        "heading_accent": "every team",
+        "heading_tail": "",
+        "subheading": "From youth clubs to corporate leagues.",
+        "columns": 8,
+        "image_ratio": "16 / 11",
+        "image_fit": "cover",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#FFFFFF",
+        "color_heading": "#111111",
+        "color_text": "#5B5B5B",
+        "color_card": "#FFFFFF",
+        "color_frame": "#111111",
+        "color_card_heading": "#111111",
+        "color_card_text": "#5B5B5B",
+        "shadow": 0.1
+      },
+      "blocks": {
+        "k1": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-sports.jpg",
+            "icon": "none",
+            "title": "Sports Teams",
+            "text": "Youth to competitive clubs.",
+            "image_alt": "A basketball team"
+          }
+        },
+        "k2": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-schools.jpg",
+            "icon": "none",
+            "title": "Schools",
+            "text": "Athletic programs.",
+            "image_alt": "A school team"
+          }
+        },
+        "k3": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-leagues.jpg",
+            "icon": "none",
+            "title": "Leagues",
+            "text": "Multiple divisions.",
+            "image_alt": "A league team"
+          }
+        },
+        "k4": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-tournaments.jpg",
+            "icon": "none",
+            "title": "Tournaments",
+            "text": "Tournament apparel.",
+            "image_alt": "A tournament squad"
+          }
+        },
+        "k5": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-academies.jpg",
+            "icon": "none",
+            "title": "Academies",
+            "text": "Training programs.",
+            "image_alt": "An academy session"
+          }
+        },
+        "k6": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-colleges.jpg",
+            "icon": "none",
+            "title": "Colleges & Universities",
+            "text": "Athletic and alumni wear.",
+            "image_alt": "A college team"
+          }
+        },
+        "k7": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-community.jpg",
+            "icon": "none",
+            "title": "Community Organizations",
+            "text": "Recreational programs.",
+            "image_alt": "A community team"
+          }
+        },
+        "k8": {
+          "type": "card",
+          "settings": {
+            "image_asset": "tu-team-corporate.jpg",
+            "icon": "none",
+            "title": "Corporate Sports",
+            "text": "Employee teams.",
+            "image_alt": "A corporate team"
+          }
+        }
+      },
+      "block_order": [
+        "k1",
+        "k2",
+        "k3",
+        "k4",
+        "k5",
+        "k6",
+        "k7",
+        "k8"
+      ]
+    },
+    "season": {
+      "type": "gpl-steps",
+      "settings": {
+        "heading": "Your season",
+        "heading_accent": "doesn't wait.",
+        "subheading": "Most custom uniform orders: 2–3 weeks, depending on product, quantity, customization and production requirements.",
+        "anchor_id": "turnaround",
+        "numbers_in_photo": false,
+        "image_ratio": "3 / 2",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#C9C9C9"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Local production",
+            "text": "For fast turnaround and GTA service.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Custom manufacturing",
+            "text": "For specialized or larger programs.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Rush options",
+            "text": "Ask us about accelerated production when available.",
+            "image_asset": "",
+            "image_alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "consult": {
+      "type": "gpl-team-consult",
+      "settings": {
+        "eyebrow": "Let's get started",
+        "heading": "Let's build",
+        "heading_accent": "your uniforms.",
+        "paragraph": "<p>Start with a conversation. Tell us a little about your team, and a member of our team will contact you to discuss your uniforms, teamwear, swag and available options.</p>",
+        "anchor_id": "consultation",
+        "image_asset": "tu-hero.jpg",
+        "form_title": "Quick team consultation",
+        "button_text": "Request a consultation",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "more",
+    "sports",
+    "program",
+    "store",
+    "how",
+    "why",
+    "built",
+    "season",
+    "consult"
+  ]
+}
