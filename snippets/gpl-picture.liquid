@@ -11,8 +11,8 @@
 {%- assign sizes = sizes | default: '(max-width: 749px) 100vw, 33vw' -%}
 {%- if img != blank -%}
   <img class="{{ class }}"
-    src="{{ img | image_url: width: 1200 }}"
-    srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1200 }} 1200w"
+    src="{{ img | image_url: width: 1600 }}"
+    srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 700 }} 700w, {{ img | image_url: width: 1200 }} 1200w, {{ img | image_url: width: 1800 }} 1800w, {{ img | image_url: width: 2400 }} 2400w"
     sizes="{{ sizes }}"
     width="{{ img.width }}" height="{{ img.height }}"
     alt="{{ alt | escape }}"
