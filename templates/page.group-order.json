@@ -13,8 +13,8 @@
       "type": "gpl-cc-hero",
       "settings": {
         "image_asset": "go-hero.jpg",
-        "image_alt": "A group in matching GTA Print Lab apparel in front of the Toronto skyline",
-        "image_position": "center right",
+        "image_alt": "The Johnsons family reunion in matching custom shirts",
+        "image_position": "center center",
         "scrim": 0.9,
         "min_height": 640,
         "min_height_mobile": 620,
@@ -33,7 +33,8 @@
         "button_2_text": "Create a Group Store",
         "button_2_link": "#group-store",
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_background": "#0B0B0B",
+        "image": "shopify://shop_images/grouo.webp"
       },
       "blocks": {
         "c1": {
