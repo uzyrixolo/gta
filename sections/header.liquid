@@ -216,7 +216,7 @@
     gap: 24px;
   }
   .gpl-header-{{ section.id }} .gpl-header__logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-  .gpl-header-{{ section.id }} .gpl-header__logo img { max-height: 38px; width: auto; display: block; }
+  .gpl-header-{{ section.id }} .gpl-header__logo img { max-height: {{ section.settings.logo_height | default: 38 }}px; width: auto; display: block; }
   .gpl-header-{{ section.id }} .gpl-header__logo-text {
     color: #FFFFFF; font-weight: 800; text-transform: uppercase; font-size: 20px; letter-spacing: 0.01em; line-height: 1;
   }
@@ -424,33 +424,116 @@
   "tag": "header",
   "class": "gpl-section-header",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo image (optional, falls back to text logo)" },
-    { "type": "text", "id": "logo_text_1", "label": "Logo text part 1", "default": "GTA " },
-    { "type": "text", "id": "logo_text_2", "label": "Logo text part 2 (accent colour)", "default": "PRINT LAB" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
-    { "type": "text", "id": "button_text", "label": "Button text", "default": "Get A Quote" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" }
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image (optional, falls back to text logo)"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "text",
+      "id": "logo_text_1",
+      "label": "Logo text part 1",
+      "default": "GTA "
+    },
+    {
+      "type": "text",
+      "id": "logo_text_2",
+      "label": "Logo text part 2 (accent colour)",
+      "default": "PRINT LAB"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Get A Quote"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background colour",
+      "default": "#111111"
+    }
   ],
   "blocks": [
     {
       "type": "category_tile",
       "name": "Category tile",
       "settings": [
-        { "type": "text", "id": "menu_item", "label": "Menu item title", "info": "Must exactly match a top-level menu title (e.g. PRODUCTS) to attach this tile's dropdown to it.", "default": "PRODUCTS" },
-        { "type": "select", "id": "group", "label": "Group", "info": "Which sub-heading this tile appears under in the dropdown.", "default": "category", "options": [
-          { "value": "category", "label": "Shop by Category" },
-          { "value": "quality", "label": "Shop by Quality" }
-        ] },
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
-        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." },
-        { "type": "url", "id": "link", "label": "Link override", "info": "Optional — falls back to the collection's own page." }
+        {
+          "type": "text",
+          "id": "menu_item",
+          "label": "Menu item title",
+          "info": "Must exactly match a top-level menu title (e.g. PRODUCTS) to attach this tile's dropdown to it.",
+          "default": "PRODUCTS"
+        },
+        {
+          "type": "select",
+          "id": "group",
+          "label": "Group",
+          "info": "Which sub-heading this tile appears under in the dropdown.",
+          "default": "category",
+          "options": [
+            {
+              "value": "category",
+              "label": "Shop by Category"
+            },
+            {
+              "value": "quality",
+              "label": "Shop by Quality"
+            }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override",
+          "info": "Optional — falls back to the collection's own image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label override",
+          "info": "Optional — falls back to the collection's title."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link override",
+          "info": "Optional — falls back to the collection's own page."
+        }
       ]
     }
   ],
   "presets": [
-    { "name": "GPL Header" }
+    {
+      "name": "GPL Header"
+    }
   ]
 }
 {% endschema %}
