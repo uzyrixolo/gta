@@ -166,9 +166,15 @@
             {% for block in section.blocks %}
               {% if block.type == 'category_tab' %}
                 {% assign tab_collection = collections[block.settings.collection] %}
-                {% if tab_collection != blank %}
+                {%- comment -%}
+                  A tab normally fronts a collection. When there is no collection
+                  for it — a varsity jackets programme lives on a page, not in a
+                  catalogue — a link and a label stand in for one.
+                {%- endcomment -%}
+                {% assign tab_url = tab_collection.url | default: block.settings.link %}
+                {% if tab_url != blank %}
                   {% assign tab_image = block.settings.image | default: tab_collection.image %}
-                  <a href="{{ tab_collection.url }}" class="m-collection-page-header__category-tab" {{ block.shopify_attributes }}>
+                  <a href="{{ tab_url }}" class="m-collection-page-header__category-tab" {{ block.shopify_attributes }}>
                     <span class="m-collection-page-header__category-tab-image">
                       {%- if tab_image != blank -%}
                         {{ tab_image | image_url: width: 320 | image_tag: loading: 'lazy', sizes: '160px', widths: '160, 240, 320', alt: block.settings.label | default: tab_collection.title | escape }}
@@ -406,9 +412,29 @@
       "type": "category_tab",
       "name": "Category tab",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "image_picker", "id": "image", "label": "Image override", "info": "Optional — falls back to the collection's own image." },
-        { "type": "text", "id": "label", "label": "Label override", "info": "Optional — falls back to the collection's title." }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override",
+          "info": "Optional — falls back to the collection's own image."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label override",
+          "info": "Optional — falls back to the collection's title."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Use when the tab has no collection — e.g. a page."
+        }
       ]
     }
   ]
