@@ -514,7 +514,7 @@
         "reason_minimums": {
           "type": "reason",
           "settings": {
-            "image": "shopify://shop_images/how_ac75b10c-98f3-420d-8374-6ca755df59c6.png",
+            "image": "shopify://shop_images/how_b7df65ed-27c3-431a-a64d-c18e3db9b0af.png",
             "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15.5 3.5 12 5.5 8.5 3.5 5 5.2v3.6h2.2V20h9.6V8.8H19V5.2z\"></path></svg>",
             "title_accent": "No",
             "title_dark": "Minimums",
