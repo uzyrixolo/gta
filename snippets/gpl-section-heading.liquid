@@ -19,13 +19,13 @@
   {%- if eyebrow != blank -%}<p class="gpl-sh__eyebrow">{{ eyebrow }}</p>{%- endif -%}
   <{{ level }} class="gpl-sh__heading">
     {%- if light != blank -%}<span class="gpl-sh__light">{{ light }}</span>{%- endif -%}
-    {%- if accent != blank -%}<span class="gpl-sh__accent">{{ accent }}</span>{%- endif -%}
+    {% if accent != blank %} <span class="gpl-sh__accent">{{ accent }}</span>{% endif %}
   </{{ level }}>
   <span class="gpl-sh__rule" aria-hidden="true"></span>
   {%- if tagline != blank or tagline_accent != blank -%}
     <p class="gpl-sh__tagline">
       {%- if tagline != blank -%}{{ tagline }}{%- endif -%}
-      {%- if tagline_accent != blank -%} <span>{{ tagline_accent }}</span>{%- endif -%}
+      {% if tagline_accent != blank %} <span>{{ tagline_accent }}</span>{% endif %}
     </p>
   {%- endif -%}
 </div>
@@ -38,7 +38,7 @@
     font-size: clamp(12px, 1.6vw, 20px); line-height: 1; margin: 0 0 clamp(2px, 0.4vw, 6px);
   }
   .gpl-sh__heading {
-    margin: 0; font-family: var(--gpl-font-heading, inherit); font-weight: 800; text-transform: uppercase;
+    margin: 0; font-family: var(--gpl-font-heading, 'Roboto Condensed', 'Arial Narrow', sans-serif); font-weight: 800; text-transform: uppercase;
     line-height: 0.98; letter-spacing: -0.01em; font-size: clamp(26px, 4.8vw, 64px);
     display: flex; flex-wrap: wrap; justify-content: center; gap: 0 0.28em; color: var(--sh-ink);
   }
