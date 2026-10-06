@@ -24,14 +24,9 @@
   style="--gplc-bg: {{ section.settings.bg_color }}; --gplc-text: {{ section.settings.text_color }};"
 >
   <div class="gplc__inner">
-    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+    {%- if section.settings.heading != blank or section.settings.heading_accent != blank or section.settings.subheading != blank -%}
       <div class="gplc__head">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="gplc__heading gplc__heading--{{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="gplc__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
+        {% render 'gpl-section-heading', eyebrow: section.settings.eyebrow, light: section.settings.heading, accent: section.settings.heading_accent, tagline: section.settings.subheading, tagline_accent: section.settings.subheading_accent %}
       </div>
     {%- endif -%}
 
@@ -160,33 +155,94 @@
   "tag": "section",
   "class": "section-gpl-collage",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
-    { "type": "inline_richtext", "id": "heading", "default": "Multimedia collage", "label": "Heading" },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Multimedia collage",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_accent",
+      "label": "Heading — accent (red)"
+    },
     {
       "type": "select",
       "id": "heading_size",
       "options": [
-        { "value": "h2", "label": "Small" },
-        { "value": "h1", "label": "Medium" },
-        { "value": "h0", "label": "Large" },
-        { "value": "hxl", "label": "Extra large" },
-        { "value": "hxxl", "label": "Extra extra large" }
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra large"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra extra large"
+        }
       ],
       "default": "h1",
       "label": "Heading size"
     },
-    { "type": "inline_richtext", "id": "subheading", "label": "Subheading" },
-    { "type": "color", "id": "bg_color", "label": "Background colour", "default": "#111111" },
-    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
-    { "type": "header", "content": "Layout" },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading_accent",
+      "label": "Subheading — accent (red)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background colour",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text colour",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "select",
       "id": "desktop_layout",
       "options": [
-        { "value": "left", "label": "Large image left" },
-        { "value": "right", "label": "Large image right" }
+        {
+          "value": "left",
+          "label": "Large image left"
+        },
+        {
+          "value": "right",
+          "label": "Large image right"
+        }
       ],
       "default": "left",
       "label": "Desktop layout"
@@ -195,8 +251,14 @@
       "type": "select",
       "id": "mobile_layout",
       "options": [
-        { "value": "collage", "label": "Collage" },
-        { "value": "column", "label": "Column" }
+        {
+          "value": "collage",
+          "label": "Collage"
+        },
+        {
+          "value": "column",
+          "label": "Column"
+        }
       ],
       "default": "column",
       "label": "Mobile layout"
@@ -207,7 +269,11 @@
       "type": "image",
       "name": "Image",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
       ]
     }
   ],
@@ -216,9 +282,15 @@
     {
       "name": "Collage",
       "blocks": [
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" }
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
       ]
     }
   ]

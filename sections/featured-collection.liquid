@@ -30,28 +30,8 @@
     {%- endif -%}
 
     <div class="gpl-why__hero-inner">
-      {%- if s.eyebrow != blank -%}
-        <p class="gpl-why__eyebrow">{{ s.eyebrow }}</p>
-      {%- endif -%}
-
-      <h2 class="gpl-why__heading">
-        {%- if s.heading_light != blank -%}
-          <span class="gpl-why__heading-light">{{ s.heading_light }}</span>
-        {%- endif -%}
-        {%- if s.heading_accent != blank -%}
-          <span class="gpl-why__heading-accent">{{ s.heading_accent }}</span>
-        {%- endif -%}
-      </h2>
-
-      {%- if s.tagline != blank or s.tagline_accent != blank -%}
-        <p class="gpl-why__tagline">
-          {%- if s.tagline != blank -%}{{ s.tagline }} {% endif -%}
-          {%- if s.tagline_accent != blank -%}
-            <span>{{ s.tagline_accent }}</span>
-          {%- endif -%}
-        </p>
-      {%- endif -%}
-    </div>
+        {% render 'gpl-section-heading', eyebrow: s.eyebrow, light: s.heading_light, accent: s.heading_accent, tagline: s.tagline, tagline_accent: s.tagline_accent %}
+      </div>
   </div>
 
   {%- assign reason_blocks = section.blocks | where: 'type', 'reason' -%}

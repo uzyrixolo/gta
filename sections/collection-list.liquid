@@ -98,8 +98,10 @@
   "
 >
   <div class="gpl-turnaround__inner">
-    {%- if s.heading != blank -%}
-      <h2 class="gpl-turnaround__heading">{{ s.heading }}</h2>
+    {%- if s.heading != blank or s.heading_accent != blank -%}
+      <div class="gpl-turnaround__head">
+        {% render 'gpl-section-heading', eyebrow: s.eyebrow, light: s.heading, accent: s.heading_accent, tagline: s.tagline, tagline_accent: s.tagline_accent %}
+      </div>
     {%- endif -%}
 
     <div class="gpl-turnaround__track" data-gpl-turnaround-track>
@@ -201,14 +203,90 @@
   "tag": "section",
   "class": "gpl-section-turnaround",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose Your Delivery Speed" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
-    { "type": "color", "id": "section_bg_color", "label": "Section background color", "default": "#0C0C0C" },
-    { "type": "color", "id": "arrow_color", "label": "Accent color (arrows / bottom bar icons)", "default": "#D71920" },
-    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 4 },
-    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 16 },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 }
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Delivery Speed"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — accent (red)"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "text",
+      "id": "tagline_accent",
+      "label": "Tagline — accent (red)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background color",
+      "default": "#0C0C0C"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Accent color (arrows / bottom bar icons)",
+      "default": "#D71920"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
   ],
   "blocks": [
     {
@@ -216,30 +294,118 @@
       "name": "Delivery Card",
       "settings": [
         {
-          "type": "select", "id": "icon_preset", "label": "Icon",
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon",
           "options": [
-            { "value": "stopwatch", "label": "Stopwatch" },
-            { "value": "truck", "label": "Truck" },
-            { "value": "calendar", "label": "Calendar" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "stopwatch",
+              "label": "Stopwatch"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "stopwatch"
         },
-        { "type": "textarea", "id": "custom_icon_svg", "label": "Custom icon SVG (optional)", "info": "Overrides the preset icon above." },
-        { "type": "text", "id": "title", "label": "Title", "default": "Same-Day Delivery" },
-        { "type": "text", "id": "description", "label": "Short description", "default": "Order today, get it today." },
-        { "type": "text", "id": "tag_text", "label": "Pill tag text", "default": "PERFECT FOR LAST MINUTE NEEDS" },
-        { "type": "text", "id": "pill_text", "label": "Bottom pill text", "default": "DELIVERED TODAY" },
-        { "type": "textarea", "id": "pill_icon_svg", "label": "Bottom pill icon SVG (optional)" },
-        { "type": "color", "id": "background_color", "label": "Card background color", "default": "#C21A1E" },
-        { "type": "color", "id": "text_color", "label": "Card text color", "default": "#FFFFFF" },
-        { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#FFFFFF" },
-        { "type": "color", "id": "tag_bg_color", "label": "Tag background color", "default": "rgba(0,0,0,0.28)" },
-        { "type": "color", "id": "tag_text_color", "label": "Tag text color", "default": "#FFFFFF" },
-        { "type": "color", "id": "pill_bg_color", "label": "Bottom pill background", "default": "#FFFFFF" },
-        { "type": "color", "id": "pill_text_color", "label": "Bottom pill text color", "default": "#C21A1E" },
-        { "type": "color", "id": "pill_icon_color", "label": "Bottom pill icon color", "default": "#C21A1E" },
-        { "type": "color", "id": "pill_border_color", "label": "Bottom pill border color", "default": "#C21A1E" }
+        {
+          "type": "textarea",
+          "id": "custom_icon_svg",
+          "label": "Custom icon SVG (optional)",
+          "info": "Overrides the preset icon above."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Same-Day Delivery"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Short description",
+          "default": "Order today, get it today."
+        },
+        {
+          "type": "text",
+          "id": "tag_text",
+          "label": "Pill tag text",
+          "default": "PERFECT FOR LAST MINUTE NEEDS"
+        },
+        {
+          "type": "text",
+          "id": "pill_text",
+          "label": "Bottom pill text",
+          "default": "DELIVERED TODAY"
+        },
+        {
+          "type": "textarea",
+          "id": "pill_icon_svg",
+          "label": "Bottom pill icon SVG (optional)"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Card background color",
+          "default": "#C21A1E"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Card text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "tag_bg_color",
+          "label": "Tag background color",
+          "default": "rgba(0,0,0,0.28)"
+        },
+        {
+          "type": "color",
+          "id": "tag_text_color",
+          "label": "Tag text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "pill_bg_color",
+          "label": "Bottom pill background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "pill_text_color",
+          "label": "Bottom pill text color",
+          "default": "#C21A1E"
+        },
+        {
+          "type": "color",
+          "id": "pill_icon_color",
+          "label": "Bottom pill icon color",
+          "default": "#C21A1E"
+        },
+        {
+          "type": "color",
+          "id": "pill_border_color",
+          "label": "Bottom pill border color",
+          "default": "#C21A1E"
+        }
       ]
     },
     {
@@ -247,18 +413,46 @@
       "name": "Bottom bar item",
       "settings": [
         {
-          "type": "select", "id": "icon_preset", "label": "Icon",
+          "type": "select",
+          "id": "icon_preset",
+          "label": "Icon",
           "options": [
-            { "value": "pin", "label": "Location pin" },
-            { "value": "truck", "label": "Truck" },
-            { "value": "box", "label": "Box" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "pin",
+              "label": "Location pin"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "box",
+              "label": "Box"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "pin"
         },
-        { "type": "html", "id": "icon", "label": "Custom icon SVG (optional)" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Proudly Toronto Based" },
-        { "type": "text", "id": "description", "label": "Description", "default": "Local production. Local delivery." }
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Custom icon SVG (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Proudly Toronto Based"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Local production. Local delivery."
+        }
       ]
     }
   ],
@@ -269,36 +463,84 @@
         {
           "type": "turnaround_card",
           "settings": {
-            "icon_preset": "stopwatch", "title": "Same-Day Delivery", "description": "Order today, get it today.",
-            "tag_text": "PERFECT FOR LAST MINUTE NEEDS", "pill_text": "DELIVERED TODAY",
-            "background_color": "#C21A1E", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
-            "tag_bg_color": "rgba(0,0,0,0.28)", "tag_text_color": "#FFFFFF",
-            "pill_bg_color": "#FFFFFF", "pill_text_color": "#C21A1E", "pill_icon_color": "#C21A1E", "pill_border_color": "#C21A1E"
+            "icon_preset": "stopwatch",
+            "title": "Same-Day Delivery",
+            "description": "Order today, get it today.",
+            "tag_text": "PERFECT FOR LAST MINUTE NEEDS",
+            "pill_text": "DELIVERED TODAY",
+            "background_color": "#C21A1E",
+            "text_color": "#FFFFFF",
+            "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(0,0,0,0.28)",
+            "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#FFFFFF",
+            "pill_text_color": "#C21A1E",
+            "pill_icon_color": "#C21A1E",
+            "pill_border_color": "#C21A1E"
           }
         },
         {
           "type": "turnaround_card",
           "settings": {
-            "icon_preset": "truck", "title": "Next-Day Delivery", "description": "Order today, get it tomorrow.",
-            "tag_text": "FAST. RELIABLE. ON TIME.", "pill_text": "DELIVERED TOMORROW",
-            "background_color": "#1A1A1A", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
-            "tag_bg_color": "rgba(255,255,255,0.1)", "tag_text_color": "#FFFFFF",
-            "pill_bg_color": "#FFFFFF", "pill_text_color": "#111111", "pill_icon_color": "#111111", "pill_border_color": "#FFFFFF"
+            "icon_preset": "truck",
+            "title": "Next-Day Delivery",
+            "description": "Order today, get it tomorrow.",
+            "tag_text": "FAST. RELIABLE. ON TIME.",
+            "pill_text": "DELIVERED TOMORROW",
+            "background_color": "#1A1A1A",
+            "text_color": "#FFFFFF",
+            "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(255,255,255,0.1)",
+            "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#FFFFFF",
+            "pill_text_color": "#111111",
+            "pill_icon_color": "#111111",
+            "pill_border_color": "#FFFFFF"
           }
         },
         {
           "type": "turnaround_card",
           "settings": {
-            "icon_preset": "calendar", "title": "Standard Delivery", "description": "3–5 Business Days.",
-            "tag_text": "GREAT FOR PLANNED ORDERS", "pill_text": "DELIVERED IN 3–5 DAYS",
-            "background_color": "#2A2A2A", "text_color": "#FFFFFF", "icon_color": "#FFFFFF",
-            "tag_bg_color": "rgba(0,0,0,0.28)", "tag_text_color": "#FFFFFF",
-            "pill_bg_color": "#E8E8E8", "pill_text_color": "#111111", "pill_icon_color": "#111111", "pill_border_color": "#E8E8E8"
+            "icon_preset": "calendar",
+            "title": "Standard Delivery",
+            "description": "3–5 Business Days.",
+            "tag_text": "GREAT FOR PLANNED ORDERS",
+            "pill_text": "DELIVERED IN 3–5 DAYS",
+            "background_color": "#2A2A2A",
+            "text_color": "#FFFFFF",
+            "icon_color": "#FFFFFF",
+            "tag_bg_color": "rgba(0,0,0,0.28)",
+            "tag_text_color": "#FFFFFF",
+            "pill_bg_color": "#E8E8E8",
+            "pill_text_color": "#111111",
+            "pill_icon_color": "#111111",
+            "pill_border_color": "#E8E8E8"
           }
         },
-        { "type": "bottom_item", "settings": { "icon_preset": "pin", "title": "Proudly Toronto Based", "description": "Local production. Local delivery." } },
-        { "type": "bottom_item", "settings": { "icon_preset": "truck", "title": "GTA Delivery", "description": "Fast, reliable delivery across the GTA." } },
-        { "type": "bottom_item", "settings": { "icon_preset": "box", "title": "Shipping Across Canada", "description": "Delivering quality from coast to coast." } }
+        {
+          "type": "bottom_item",
+          "settings": {
+            "icon_preset": "pin",
+            "title": "Proudly Toronto Based",
+            "description": "Local production. Local delivery."
+          }
+        },
+        {
+          "type": "bottom_item",
+          "settings": {
+            "icon_preset": "truck",
+            "title": "GTA Delivery",
+            "description": "Fast, reliable delivery across the GTA."
+          }
+        },
+        {
+          "type": "bottom_item",
+          "settings": {
+            "icon_preset": "box",
+            "title": "Shipping Across Canada",
+            "description": "Delivering quality from coast to coast."
+          }
+        }
       ]
     }
   ]

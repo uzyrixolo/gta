@@ -1,0 +1,54 @@
+{%- comment -%}
+  GTA Print Lab — the homepage section heading.
+
+  One recipe for every section title so they cannot drift apart: a red
+  uppercase eyebrow, a heavy uppercase heading whose closing words are red, a
+  short red rule, and a bold uppercase tagline with a red accent. Taken from the
+  "Why choose GTA Print Lab?" band, which is the look the client signed off on.
+
+  eyebrow         — small red line above (optional)
+  light / accent  — the heading: white words, then red words
+  tagline         — bold line under the rule (optional; the rule shows either way)
+  tagline_accent  — red tail of the tagline (optional)
+  tone            — 'dark' (default: white text, for dark bands) or 'light'
+  level           — heading tag, default h2
+{%- endcomment -%}
+{%- assign level = level | default: 'h2' -%}
+{%- assign tone = tone | default: 'dark' -%}
+<div class="gpl-sh gpl-sh--{{ tone }}">
+  {%- if eyebrow != blank -%}<p class="gpl-sh__eyebrow">{{ eyebrow }}</p>{%- endif -%}
+  <{{ level }} class="gpl-sh__heading">
+    {%- if light != blank -%}<span class="gpl-sh__light">{{ light }}</span>{%- endif -%}
+    {%- if accent != blank -%}<span class="gpl-sh__accent">{{ accent }}</span>{%- endif -%}
+  </{{ level }}>
+  <span class="gpl-sh__rule" aria-hidden="true"></span>
+  {%- if tagline != blank or tagline_accent != blank -%}
+    <p class="gpl-sh__tagline">
+      {%- if tagline != blank -%}{{ tagline }}{%- endif -%}
+      {%- if tagline_accent != blank -%} <span>{{ tagline_accent }}</span>{%- endif -%}
+    </p>
+  {%- endif -%}
+</div>
+<style>
+  .gpl-sh { --sh-red: var(--gpl-red, #D71920); text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .gpl-sh--dark { --sh-ink: #FFFFFF; }
+  .gpl-sh--light { --sh-ink: #111111; }
+  .gpl-sh__eyebrow {
+    color: var(--sh-red); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
+    font-size: clamp(12px, 1.6vw, 20px); line-height: 1; margin: 0 0 clamp(2px, 0.4vw, 6px);
+  }
+  .gpl-sh__heading {
+    margin: 0; font-family: var(--gpl-font-heading, inherit); font-weight: 800; text-transform: uppercase;
+    line-height: 0.98; letter-spacing: -0.01em; font-size: clamp(26px, 4.8vw, 64px);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0 0.28em; color: var(--sh-ink);
+  }
+  .gpl-sh__light { color: var(--sh-ink); }
+  .gpl-sh__accent { color: var(--sh-red); }
+  .gpl-sh__rule { display: block; width: clamp(180px, 34vw, 460px); height: 2px; background: var(--sh-red); margin-top: clamp(12px, 1.4vw, 20px); }
+  .gpl-sh__tagline {
+    color: var(--sh-ink); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
+    font-size: clamp(10px, 1.05vw, 14px); line-height: 1.35; max-width: 40ch;
+    margin: 0; padding-top: clamp(10px, 1.2vw, 16px);
+  }
+  .gpl-sh__tagline span { color: var(--sh-red); }
+</style>

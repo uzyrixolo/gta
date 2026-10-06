@@ -25,14 +25,9 @@
 
 <div class="fps-{{ section.id }} fps" style="--fps-bg: {{ section.settings.bg_color }}; --fps-text: {{ section.settings.text_color }};">
   <div class="fps__inner">
-    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+    {%- if section.settings.title != blank or section.settings.title_accent != blank or section.settings.subtitle != blank -%}
       <div class="fps__head">
-        {%- if section.settings.title != blank -%}
-          <h2 class="fps__title">{{ section.settings.title }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subtitle != blank -%}
-          <p class="fps__subtitle">{{ section.settings.subtitle }}</p>
-        {%- endif -%}
+        {% render 'gpl-section-heading', eyebrow: section.settings.eyebrow, light: section.settings.title, accent: section.settings.title_accent, tagline: section.settings.subtitle, tagline_accent: section.settings.subtitle_accent %}
       </div>
     {%- endif -%}
 
@@ -205,8 +200,23 @@
     },
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Title — accent (red)"
+    },
+    {
+      "type": "text",
       "id": "subtitle",
       "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_accent",
+      "label": "Subtitle — accent (red)"
     },
     {
       "type": "select",

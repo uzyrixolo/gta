@@ -30,18 +30,7 @@
     {%- endif -%}
 
     <div class="gpl-how__hero-inner">
-      {%- if s.eyebrow != blank -%}
-        <p class="gpl-how__eyebrow">{{ s.eyebrow }}</p>
-      {%- endif -%}
-
-      <h2 class="gpl-how__heading">
-        {%- if s.heading_light != blank -%}
-          <span class="gpl-how__heading-light">{{ s.heading_light }}</span>
-        {%- endif -%}
-        {%- if s.heading_accent != blank -%}
-          <span class="gpl-how__heading-accent">{{ s.heading_accent }}</span>
-        {%- endif -%}
-      </h2>
+      {% render 'gpl-section-heading', eyebrow: s.eyebrow, light: s.heading_light, accent: s.heading_accent %}
 
       {%- if s.intro != blank -%}
         <p class="gpl-how__intro">{{ s.intro }}</p>
