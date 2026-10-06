@@ -6,6 +6,11 @@
 <style>
   .gpl-turnaround { width: 100%; box-sizing: border-box; font-family: var(--gpl-t-font, 'Helvetica Neue', Helvetica, Arial, sans-serif); background-color: var(--gpl-t-bg, #0C0C0C); padding-top: var(--gpl-t-section-pad-top, 56px); padding-bottom: var(--gpl-t-section-pad-bottom, 56px); }
   .gpl-turnaround, .gpl-turnaround * { box-sizing: border-box; font-family: var(--gpl-t-font, 'Helvetica Neue', Helvetica, Arial, sans-serif) !important; text-shadow: none !important; filter: none !important; background-image: none !important; -webkit-background-clip: initial !important; background-clip: initial !important; -webkit-text-fill-color: currentColor !important; text-decoration: none !important; white-space: normal !important; }
+  /* That rule pins Helvetica on every descendant with !important, through
+     --gpl-t-font. Redefining the variable on the heading wrapper is the one
+     thing that outranks it, so the shared section heading keeps its own face
+     here while the cards stay as they are. */
+  .gpl-turnaround .gpl-turnaround__head { --gpl-t-font: var(--gpl-font-heading, 'Roboto Condensed', 'Arial Narrow', sans-serif); margin-bottom: clamp(24px, 3vw, 44px); }
 
   .gpl-turnaround__inner { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 
