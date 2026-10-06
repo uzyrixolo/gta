@@ -1,0 +1,17 @@
+{%- comment -%}
+  GTA Print Lab — variant lookup for high-variant products.
+
+  Fetched by the variant picker, never placed on a page:
+    /products/<handle>?section_id=gpl-variant-lookup&option_values=<id>,<id>
+  Shopify resolves product.selected_variant from the option value ids on the
+  server, which works past the 250-variant cap that product.variants and the
+  .js endpoint stop at. Returns the variant and the per-value availability.
+{%- endcomment -%}
+<script type="application/json" data-gpl-variant>{{ product.selected_variant | json }}</script>
+<script type="application/json" data-gpl-options>{% render 'gpl-option-values-json', product: product %}</script>
+{% schema %}
+{
+  "name": "GPL variant lookup",
+  "settings": []
+}
+{% endschema %}

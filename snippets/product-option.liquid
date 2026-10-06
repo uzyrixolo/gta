@@ -43,7 +43,7 @@
   endif
 %}
 
-<div data-variant-picker data-product-id="{{ product.id }}" data-enable-variant-group-images="{{ enableVariantGroupImg }}" data-section="{{ section.id }}" data-product-handle="{{ product.handle }}" data-product-url="{{ product.url }}" data-max-options="{{ product.options_with_values.size }}">
+<div data-variant-picker data-product-id="{{ product.id }}" data-enable-variant-group-images="{{ enableVariantGroupImg }}" data-section="{{ section.id }}" data-product-handle="{{ product.handle }}" data-product-url="{{ product.url }}" data-max-options="{{ product.options_with_values.size }}" data-variants-count="{{ product.variants_count }}">
   <variant-picker data-update-url="{{ update_browser_history }}" data-show-featured-media="{{ section.settings.show_featured_media }}">
     {%- unless product.has_only_default_variant -%}
     {%- for option in product.options_with_values -%}
@@ -79,7 +79,7 @@
                     name="options[{{ option.name | escape }}]"
                     form="{{ product_form_id }}">
                     {%- for value in option.values -%}
-                      <option value="{{ value | escape }}" class="m-product-option--node" data-value="{{- value | escape -}}" data-option-position="{{ option.position }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                      <option value="{{ value | escape }}" class="m-product-option--node" data-value="{{- value | escape -}}" data-option-value-id="{{ value.id }}" data-option-position="{{ option.position }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
                           {{- value -}}
                       </option>
                     {%- endfor -%}
@@ -107,7 +107,7 @@
                         class="m-product-option--node m-tooltip m-tooltip--top"
                         data-option-position="{{ option.position }}"
                         data-option-type="{{ picker_type }}"
-                        data-value="{{- value | escape -}}"
+                        data-value="{{- value | escape -}}" data-option-value-id="{{ value.id }}"
                     >
                       <div class="m-product-option--swatch">
                         <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
@@ -146,7 +146,7 @@
                     class="m-product-option--node m-tooltip m-tooltip--top"
                     data-option-position="{{ option.position }}"
                     data-option-type="{{ picker_type }}"
-                    data-value="{{- value | escape -}}"
+                    data-value="{{- value | escape -}}" data-option-value-id="{{ value.id }}"
                     style="--option-aspect-ratio: {{ product.featured_image.aspect_ratio | default: '1' }}"
                   >
                     <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
@@ -183,7 +183,7 @@
                     class="m-product-option--node"
                     data-option-position="{{ option.position }}"
                     data-option-type="{{ picker_type }}"
-                    data-value="{{- value | escape -}}"
+                    data-value="{{- value | escape -}}" data-option-value-id="{{ value.id }}"
                   >
                     <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
                         name="{{ option.name }}"
@@ -218,7 +218,7 @@
                       class="m-product-option--node m-tooltip m-tooltip--top"
                       data-option-position="{{ option.position }}"
                       data-option-type="color"
-                      data-value="{{- value | escape -}}"
+                      data-value="{{- value | escape -}}" data-option-value-id="{{ value.id }}"
                   >
                     <div class="m-product-option--swatch">
                       <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
@@ -245,6 +245,10 @@
   <script id="productVariants" type="application/json">
     {{ product.variants | json }}
   </script>
+  {%- if product.variants_count > 250 -%}
+    {%- comment -%} Past Liquid's 250-variant cap: availability comes from Shopify, not the list above {%- endcomment -%}
+    <script id="gplOptionValues" type="application/json">{% render 'gpl-option-values-json', product: product %}</script>
+  {%- endif -%}
   {%- if section.settings.enable_variant_group_images -%}
     <script id="variantGroup" type="application/json">
       {{ product.metafields.foxecom-bs-kit.variant-images.value | json }}
