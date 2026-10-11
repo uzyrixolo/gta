@@ -10,6 +10,9 @@
 {%- assign s = section.settings -%}
 {%- assign id = section.id -%}
 {%- assign chips = section.blocks | where: 'type', 'chip' -%}
+{%- comment -%} 'fit' sizes the band to the picked image so nothing is cropped {%- endcomment -%}
+{%- assign fit = false -%}
+{%- if s.height_mode == 'fit' and s.image != blank -%}{%- assign fit = true -%}{%- endif -%}
 
 <section id="gpl-cch-{{ id }}" class="gpl-cch">
   <div class="gpl-cch__media">
@@ -73,7 +76,11 @@
     --a: {{ s.color_accent }};
     position: relative; isolation: isolate; overflow: hidden;
     background: {{ s.color_background }};
+    {%- if fit %}
+    min-height: 0; aspect-ratio: {{ s.image.width }} / {{ s.image.height }};
+    {%- else %}
     min-height: {{ s.min_height }}px;
+    {%- endif %}
     display: flex; align-items: stretch;
   }
   #gpl-cch-{{ id }} .gpl-cch__media { position: absolute; inset: 0; z-index: 0; }
@@ -125,7 +132,7 @@
   #gpl-cch-{{ id }} .gpl-cch__chip-text { display: flex; flex-direction: column; color: #FFF; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: .04em; line-height: 1.25; }
 
   @media screen and (max-width: 989px) {
-    #gpl-cch-{{ id }} { min-height: {{ s.min_height_mobile }}px; }
+    {%- unless fit %}#gpl-cch-{{ id }} { min-height: {{ s.min_height_mobile }}px; }{%- endunless %}
     #gpl-cch-{{ id }} .gpl-cch__scrim {
       background:
         linear-gradient(180deg, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.82) 55%, rgba(8,8,8,0.95) 100%);
@@ -193,6 +200,16 @@
       "max": 1,
       "step": 0.1,
       "default": 0.9
+    },
+    {
+      "type": "select",
+      "id": "height_mode",
+      "label": "Height",
+      "options": [
+        { "value": "fixed", "label": "Minimum height below" },
+        { "value": "fit", "label": "Fit the image (no cropping)" }
+      ],
+      "default": "fixed"
     },
     {
       "type": "range",

@@ -89,7 +89,8 @@
         "button_2_text": "",
         "button_2_link": "#how-it-works",
         "color_accent": "#d71920",
-        "color_background": "#0b0b0b"
+        "color_background": "#0b0b0b",
+        "height_mode": "fit"
       }
     },
     "gpl_cc_hero_HrkY3Q": {
@@ -316,7 +317,7 @@
         "heading_accent": "works",
         "subheading": "Simple. Fast. Effective.",
         "anchor_id": "how-it-works",
-        "numbers_in_photo": true,
+        "numbers_in_photo": false,
         "image_ratio": "3 / 2",
         "color_accent": "#d71920",
         "color_background": "#0b0b0b",
@@ -608,88 +609,33 @@
     },
     "gpl_cc_hero_9hPdPR": {
       "type": "gpl-cc-hero",
-      "blocks": {
-        "chip_A9Nq6w": {
-          "type": "chip",
-          "settings": {
-            "icon": "diamond",
-            "line1": "Premium quality",
-            "line2": "High-quality prints & embroidery"
-          }
-        },
-        "chip_3qyjhh": {
-          "type": "chip",
-          "settings": {
-            "icon": "bolt",
-            "line1": "Fastest turnaround",
-            "line2": "Same-day & next-day options"
-          }
-        },
-        "chip_mtBEFG": {
-          "type": "chip",
-          "settings": {
-            "icon": "shirt",
-            "line1": "No minimums",
-            "line2": "Order what you need"
-          }
-        },
-        "chip_eKkgkA": {
-          "type": "chip",
-          "settings": {
-            "icon": "coins",
-            "line1": "Great profit margins",
-            "line2": "Maximize your fundraising potential"
-          }
-        },
-        "chip_HmgqhG": {
-          "type": "chip",
-          "settings": {
-            "icon": "truck",
-            "line1": "GTA local delivery",
-            "line2": "Convenient & reliable"
-          }
-        },
-        "chip_dbBdzQ": {
-          "type": "chip",
-          "settings": {
-            "icon": "palette",
-            "line1": "Creative support",
-            "line2": "Design help available"
-          }
-        }
-      },
-      "block_order": [
-        "chip_A9Nq6w",
-        "chip_3qyjhh",
-        "chip_mtBEFG",
-        "chip_eKkgkA",
-        "chip_HmgqhG",
-        "chip_dbBdzQ"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "image": "shopify://shop_images/GTA_Print_Lab__Make_a_Bigger_Impact.webp",
         "image_asset": "",
         "image_alt": "",
         "image_position": "center center",
-        "scrim": 0.9,
+        "scrim": 0,
         "min_height": 430,
         "min_height_mobile": 520,
-        "eyebrow": "Let's make a bigger impact together",
+        "eyebrow": "",
         "heading_level": "h2",
-        "line1": "Why choose",
+        "line1": "",
         "line1_accent": false,
-        "line2": "GTA Print Lab?",
+        "line2": "",
         "line2_accent": true,
         "line3": "",
         "line3_accent": false,
         "subheading": "",
         "paragraph": "",
-        "button_1_text": "Start Your Fundraiser",
-        "button_1_link": "/pages/quote",
+        "button_1_text": "",
+        "button_1_link": "",
         "button_2_text": "",
         "button_2_link": "",
         "color_accent": "#d71920",
-        "color_background": "#0b0b0b"
+        "color_background": "#0b0b0b",
+        "height_mode": "fit"
       }
     }
   },
