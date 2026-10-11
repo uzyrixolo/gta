@@ -65,6 +65,7 @@
         "c4",
         "c5"
       ],
+      "name": "GPL CC Hero Copy",
       "settings": {
         "image": "shopify://shop_images/Fundraise_Bigger_Together_in_Toronto.webp",
         "image_asset": "",
@@ -175,6 +176,7 @@
         "k1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Unity_Builds_Stronger__Fundraiser_Shirt_Duo.webp",
             "image_asset": "fr-prod-tshirts.jpg",
             "image_alt": "Custom fundraiser t-shirts",
             "icon": "none",
@@ -186,6 +188,7 @@
         "k2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Red_Hoodie_with_Motivational_Basketball_Typography.webp",
             "image_asset": "fr-prod-hoodies.jpg",
             "image_alt": "Custom fundraiser hoodie",
             "icon": "none",
@@ -197,6 +200,7 @@
         "k3": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Four_Custom_Caps_on_White_Background.webp",
             "image_asset": "fr-prod-hats.jpg",
             "image_alt": "Custom fundraiser caps",
             "icon": "none",
@@ -208,6 +212,7 @@
         "k4": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Varsity_Jacket_and_Custom_Logo_Polo_Mockup.webp",
             "image_asset": "fr-prod-jackets.jpg",
             "image_alt": "Custom varsity jacket and polo",
             "icon": "none",
@@ -219,6 +224,7 @@
         "k5": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Branded_Backpack_and_Support_Bottle_Set.webp",
             "image_asset": "fr-prod-bags.jpg",
             "image_alt": "Custom backpack and water bottle",
             "icon": "none",
@@ -261,6 +267,7 @@
         "s1": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/Creative_Studio_T-Shirt_Mockup_Workspace.webp",
             "image_asset": "fr-step-idea.jpg",
             "image_alt": "Choosing a fundraiser design on screen",
             "title": "Share your idea",
@@ -270,6 +277,7 @@
         "s2": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/Approve_Artwork_Hoodie_Design_Studio.webp",
             "image_asset": "fr-step-approve.jpg",
             "image_alt": "Approving the artwork mockup",
             "title": "Approve artwork",
@@ -279,6 +287,7 @@
         "s3": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/GTA_Print_Lab_Machine_in_Action.webp",
             "image_asset": "fr-step-print.jpg",
             "image_alt": "Printing the fundraiser garments",
             "title": "We print & produce",
@@ -288,6 +297,7 @@
         "s4": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/Joyful_Urban_Package_Delivery.webp",
             "image_asset": "fr-step-raise.jpg",
             "image_alt": "Supporter receiving the finished merch",
             "title": "Receive & start raising",
