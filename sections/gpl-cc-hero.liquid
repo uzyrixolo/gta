@@ -13,6 +13,8 @@
 {%- comment -%} 'fit' sizes the band to the picked image so nothing is cropped {%- endcomment -%}
 {%- assign fit = false -%}
 {%- if s.height_mode == 'fit' and s.image != blank -%}{%- assign fit = true -%}{%- endif -%}
+{%- comment -%} every scrim stop scales with the setting: 0.9 is the designed look, 0 is no overlay {%- endcomment -%}
+{%- assign k = s.scrim | divided_by: 0.9 | at_most: 1.0 -%}
 
 <section id="gpl-cch-{{ id }}" class="gpl-cch">
   <div class="gpl-cch__media">
@@ -90,8 +92,8 @@
   #gpl-cch-{{ id }} .gpl-cch__scrim {
     position: absolute; inset: 0;
     background:
-      linear-gradient(90deg, rgba(8,8,8,{{ s.scrim }}) 0%, rgba(8,8,8,{{ s.scrim }}) 30%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.15) 100%),
-      linear-gradient(0deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0) 38%);
+      linear-gradient(90deg, rgba(8,8,8,{{ s.scrim }}) 0%, rgba(8,8,8,{{ s.scrim }}) 30%, rgba(8,8,8,{{ 0.55 | times: k }}) 55%, rgba(8,8,8,{{ 0.15 | times: k }}) 100%),
+      linear-gradient(0deg, rgba(8,8,8,{{ 0.85 | times: k }}) 0%, rgba(8,8,8,0) 38%);
   }
   #gpl-cch-{{ id }} .gpl-cch__inner {
     position: relative; z-index: 1; width: min(1440px, 100% - 48px); margin: 0 auto;
@@ -135,7 +137,7 @@
     {%- unless fit %}#gpl-cch-{{ id }} { min-height: {{ s.min_height_mobile }}px; }{%- endunless %}
     #gpl-cch-{{ id }} .gpl-cch__scrim {
       background:
-        linear-gradient(180deg, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.82) 55%, rgba(8,8,8,0.95) 100%);
+        linear-gradient(180deg, rgba(8,8,8,{{ 0.45 | times: k }}) 0%, rgba(8,8,8,{{ 0.82 | times: k }}) 55%, rgba(8,8,8,{{ 0.95 | times: k }}) 100%);
     }
     #gpl-cch-{{ id }} .gpl-cch__inner { width: min(1440px, 100% - 32px); }
     #gpl-cch-{{ id }} .gpl-cch__copy { max-width: 100%; }
