@@ -72,6 +72,7 @@
         "image_alt": "",
         "image_position": "center left",
         "scrim": 0,
+        "height_mode": "fit",
         "min_height": 640,
         "min_height_mobile": 630,
         "eyebrow": "",
@@ -89,8 +90,7 @@
         "button_2_text": "",
         "button_2_link": "#how-it-works",
         "color_accent": "#d71920",
-        "color_background": "#0b0b0b",
-        "height_mode": "fit"
+        "color_background": "#0b0b0b"
       }
     },
     "gpl_cc_hero_HrkY3Q": {
@@ -609,14 +609,13 @@
     },
     "gpl_cc_hero_9hPdPR": {
       "type": "gpl-cc-hero",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "image": "shopify://shop_images/GTA_Print_Lab__Make_a_Bigger_Impact.webp",
         "image_asset": "",
         "image_alt": "",
         "image_position": "center center",
         "scrim": 0,
+        "height_mode": "fit",
         "min_height": 430,
         "min_height_mobile": 520,
         "eyebrow": "",
@@ -634,8 +633,7 @@
         "button_2_text": "",
         "button_2_link": "",
         "color_accent": "#d71920",
-        "color_background": "#0b0b0b",
-        "height_mode": "fit"
+        "color_background": "#0b0b0b"
       }
     }
   },
