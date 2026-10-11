@@ -210,13 +210,18 @@ h6, .h6 {
 
 /* Custom gpl-* landing pages that close on a full-bleed dark CTA/trust/form
    section (About, Graphic Design, Branding, Manufacturing, Website
-   Development, Print On Demand, Fast Track Headwear, Get a Quote): the
-   theme's global #MainContent bottom padding otherwise leaves a band of
-   white page background between that dark section and the dark footer. */
+   Development, Print On Demand, Fast Track Headwear, Get a Quote), or on a
+   full-bleed hero / banner / consultation band (Fundraisers, Concerts,
+   Varsity, Team Uniforms, Group Order): the theme's global #MainContent
+   bottom padding otherwise leaves a band of white page background between
+   that dark section and the dark footer. */
 #MainContent:has(> .shopify-section:last-child.gpl-section-gd-cta),
 #MainContent:has(> .shopify-section:last-child.gpl-section-pod-cta),
 #MainContent:has(> .shopify-section:last-child.gpl-section-ft-tf),
-#MainContent:has(> .shopify-section:last-child.gpl-section-quote-form) {
+#MainContent:has(> .shopify-section:last-child.gpl-section-quote-form),
+#MainContent:has(> .shopify-section:last-child.gpl-section-cc-hero),
+#MainContent:has(> .shopify-section:last-child.gpl-section-banner),
+#MainContent:has(> .shopify-section:last-child.gpl-section-team-consult) {
   padding-bottom: 0;
 }
 
