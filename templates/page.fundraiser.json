@@ -330,6 +330,7 @@
         "k1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Toronto_Football_Team_Apparel.webp",
             "image_asset": "fr-who-sports.jpg",
             "image_alt": "Youth football player in team kit",
             "icon": "none",
@@ -341,6 +342,7 @@
         "k2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/School_Spirit_Wear_Poster.webp",
             "image_asset": "fr-who-schools.jpg",
             "image_alt": "Students in school spirit shirts",
             "icon": "none",
@@ -352,6 +354,7 @@
         "k3": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Faith_Family_Community_Churches.webp",
             "image_asset": "fr-who-churches.jpg",
             "image_alt": "Church group in Faith Family Community hoodies",
             "icon": "none",
@@ -363,6 +366,7 @@
         "k4": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Charities_and_Non-Profits_Volunteer_Poster.webp",
             "image_asset": "fr-who-charities.jpg",
             "image_alt": "Volunteers in matching volunteer shirts",
             "icon": "none",
@@ -374,6 +378,7 @@
         "k5": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Community_Stronger_Together.webp",
             "image_asset": "fr-who-community.jpg",
             "image_alt": "Community group in Community Stronger Together tees",
             "icon": "none",
@@ -385,6 +390,7 @@
         "k6": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/GTA_Printlab_Team_Business_Apparel_Poster.webp",
             "image_asset": "fr-who-businesses.jpg",
             "image_alt": "Staff team in branded polos and caps",
             "icon": "none",
@@ -396,6 +402,7 @@
         "k7": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Neon_Concert_Event_Crew_Poster.webp",
             "image_asset": "fr-who-events.jpg",
             "image_alt": "Event crew at a concert in crew shirts",
             "icon": "none",
@@ -440,6 +447,7 @@
         "k1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/GTA_Print_Lab_Event_Booth_Poster.webp",
             "image_asset": "fr-opt-events.jpg",
             "image_alt": "Selling merch at a community event",
             "icon": "tag",
@@ -451,6 +459,7 @@
         "k2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/GTA_Print_Lab_Online_Store_Ad.webp",
             "image_asset": "fr-opt-online.jpg",
             "image_alt": "Online fundraiser store on a laptop and phone",
             "icon": "click",
@@ -462,6 +471,7 @@
         "k3": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Pre-Order_Campaign_Apparel_Showcase.webp",
             "image_asset": "fr-opt-preorder.jpg",
             "image_alt": "Pre-order hoodie design",
             "icon": "doc",
@@ -473,6 +483,7 @@
         "k4": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Event_Uniforms_at_a_Vibrant_Festival.webp",
             "image_asset": "fr-opt-uniforms.jpg",
             "image_alt": "Event team in matching staff and crew shirts",
             "icon": "shirt",
