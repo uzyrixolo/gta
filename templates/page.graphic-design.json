@@ -673,6 +673,28 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "gd_redrawn_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "full_bleed": true,
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "image": "shopify://shop_images/gd-need-something-redrawn.webp",
+        "alt": "Need something redrawn? We can recreate your artwork: vectorization, background removal, image cleanup, logo recreation, resolution enhancement, colour separation, print file preparation, transparent PNG creation, vector artwork, DTF / DTG print preparation.",
+        "heading": "We Can Recreate Your Artwork",
+        "heading_level": "h2",
+        "eager": false,
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -683,6 +705,7 @@
     "gd_capabilities",
     "gd_process",
     "gd_turnaround_banner",
+    "gd_redrawn_banner",
     "gd_turnaround",
     "gd_gallery",
     "gd_why",
