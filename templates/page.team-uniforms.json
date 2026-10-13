@@ -10,88 +10,53 @@
 {
   "sections": {
     "hero": {
-      "type": "gpl-cc-hero",
+      "type": "gpl-banner",
       "settings": {
-        "image_asset": "tu-hero.jpg",
-        "image_alt": "Athletes from several sports in custom Toronto team uniforms",
-        "image_position": "center right",
-        "scrim": 0.9,
-        "min_height": 660,
-        "min_height_mobile": 620,
+        "image": "shopify://shop_images/tu-hero-group-orders-banner.webp",
+        "alt": "Group orders. Bigger savings. Less hassle. One group, one design, everyone gets exactly what they need. Toronto based, fast turnaround, premium quality, no minimums, volume discounts, delivery options.",
+        "heading": "Group Orders. Bigger Savings. Less Hassle.",
         "heading_level": "h1",
-        "eyebrow": "Custom uniforms · teamwear · fanwear · and more",
-        "line1": "Built for your team.",
-        "line1_accent": false,
-        "line2": "Designed to",
-        "line2_accent": false,
-        "line3": "represent you.",
-        "line3_accent": true,
-        "subheading": "",
-        "paragraph": "<p>Custom uniforms, teamwear, fanwear and team merchandise for every sport. From the first sketch to game day, GTA Print Lab helps teams create a complete apparel program — locally in Toronto or through our dedicated overseas manufacturing operation.</p>",
-        "button_1_text": "Design Your Uniforms",
-        "button_1_link": "/collections/all",
-        "button_2_text": "Request a Quote",
-        "button_2_link": "#consultation",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
         "color_accent": "#D71920",
-        "color_background": "#0B0B0B"
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
       },
       "blocks": {
-        "c1": {
-          "type": "chip",
+        "start": {
+          "type": "hotspot",
           "settings": {
-            "icon": "leaf",
-            "line1": "Toronto",
-            "line2": "based"
+            "label": "Start a group order",
+            "link": "/pages/quote",
+            "x": 4,
+            "y": 73,
+            "w": 18,
+            "h": 9
           }
         },
-        "c2": {
-          "type": "chip",
+        "store": {
+          "type": "hotspot",
           "settings": {
-            "icon": "pencil",
-            "line1": "Custom",
-            "line2": "designs"
-          }
-        },
-        "c3": {
-          "type": "chip",
-          "settings": {
-            "icon": "bolt",
-            "line1": "Fast",
-            "line2": "turnaround"
-          }
-        },
-        "c4": {
-          "type": "chip",
-          "settings": {
-            "icon": "building",
-            "line1": "Local + overseas",
-            "line2": "manufacturing"
-          }
-        },
-        "c5": {
-          "type": "chip",
-          "settings": {
-            "icon": "tag",
-            "line1": "Team",
-            "line2": "stores"
-          }
-        },
-        "c6": {
-          "type": "chip",
-          "settings": {
-            "icon": "coins",
-            "line1": "Fund",
-            "line2": "raising"
+            "label": "Create a group store",
+            "link": "#consultation",
+            "x": 23,
+            "y": 73,
+            "w": 19,
+            "h": 9
           }
         }
       },
       "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6"
+        "start",
+        "store"
       ]
     },
     "more": {
