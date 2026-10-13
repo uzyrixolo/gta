@@ -637,7 +637,8 @@
             "icon": "none",
             "title": "Alumni Groups",
             "text": "",
-            "image_alt": "Alumni group jackets"
+            "image_alt": "Alumni group jackets",
+            "image": "shopify://shop_images/vj-who-alumni.webp"
           }
         },
         "k10": {
