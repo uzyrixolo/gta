@@ -351,17 +351,17 @@
       "name": "GPL Delivery Speed",
       "settings": {
         "heading": "Choose Your",
+        "eyebrow": "Turnaround",
+        "heading_accent": "Delivery Speed",
+        "tagline": "Same day. Next day. Standard.",
+        "tagline_accent": "You choose.",
         "heading_color": "#ffffff",
         "section_bg_color": "#111111",
         "arrow_color": "#d71920",
         "card_radius": 4,
         "card_gap": 16,
         "padding_top": 56,
-        "padding_bottom": 0,
-        "eyebrow": "Turnaround",
-        "heading_accent": "Delivery Speed",
-        "tagline": "Same day. Next day. Standard.",
-        "tagline_accent": "You choose."
+        "padding_bottom": 0
       }
     },
     "delivery_banner": {
@@ -880,7 +880,10 @@
       "name": "Favorite Collections",
       "settings": {
         "title": "Our",
+        "eyebrow": "Explore",
+        "title_accent": "Solutions",
         "subtitle": "Fundraisers. Concerts.",
+        "subtitle_accent": "Group orders.",
         "image_ratio": "landscape",
         "columns_desktop": 3,
         "bg_color": "#111111",
@@ -889,10 +892,7 @@
         "columns_mobile": "1",
         "swipe_on_mobile": true,
         "padding_top": 36,
-        "padding_bottom": 36,
-        "eyebrow": "Explore",
-        "title_accent": "Solutions",
-        "subtitle_accent": "Group orders."
+        "padding_bottom": 36
       }
     },
     "banner_with_slider_YxwgLJ": {
@@ -928,15 +928,15 @@
       "name": "Collage",
       "settings": {
         "heading": "Some Of Our",
+        "eyebrow": "Our work",
+        "heading_accent": "Happy Customers",
         "heading_size": "hxxl",
         "subheading": "Get inspired by customers showing off their",
+        "subheading_accent": "custom apparel.",
         "bg_color": "#111111",
         "text_color": "#ffffff",
         "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "eyebrow": "Our work",
-        "heading_accent": "Happy Customers",
-        "subheading_accent": "custom apparel."
+        "mobile_layout": "collage"
       }
     },
     "image_with_text_1_BXrpjc": {
@@ -1103,7 +1103,7 @@
         "slider_item_KbkKWb": {
           "type": "slider_item",
           "settings": {
-            "background": "shopify://shop_images/Varsity_Jacket_1.png",
+            "background": "shopify://shop_images/Toronto_Custom_Varsity_Jacket_Showcase.webp",
             "content_in_container": false,
             "content_position": "center middle",
             "text_alignment": "center",
