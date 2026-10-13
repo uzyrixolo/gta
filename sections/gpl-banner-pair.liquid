@@ -1,0 +1,105 @@
+{%- comment -%}
+  GTA Print Lab — two finished artworks side by side.
+
+  For a pair of bands that carry their own headlines (e.g. "We can create
+  your artwork" next to "Design for print"). Each column is as wide as its
+  image's aspect ratio, so two differently shaped images land at the same
+  height. Each image can carry one clickable area over a button drawn into
+  it. Stacks on phones.
+{%- endcomment -%}
+
+{%- assign s = section.settings -%}
+{%- assign id = section.id -%}
+{%- assign ar1 = 1.5 -%}{%- assign ar2 = 1.5 -%}
+{%- if s.image_1 != blank -%}{%- assign ar1 = s.image_1.aspect_ratio -%}{%- endif -%}
+{%- if s.image_2 != blank -%}{%- assign ar2 = s.image_2.aspect_ratio -%}{%- endif -%}
+
+<section id="gpl-bp-{{ id }}" class="gpl-bp">
+  <div class="gpl-bp__inner">
+    {%- for i in (1..2) -%}
+      {%- assign img_key = 'image_' | append: i -%}
+      {%- assign alt_key = 'alt_' | append: i -%}
+      {%- assign heading_key = 'heading_' | append: i -%}
+      {%- assign label_key = 'hotspot_' | append: i | append: '_label' -%}
+      {%- assign link_key = 'hotspot_' | append: i | append: '_link' -%}
+      {%- assign x_key = 'hotspot_' | append: i | append: '_x' -%}
+      {%- assign y_key = 'hotspot_' | append: i | append: '_y' -%}
+      {%- assign w_key = 'hotspot_' | append: i | append: '_w' -%}
+      {%- assign h_key = 'hotspot_' | append: i | append: '_h' -%}
+      {%- assign img = s[img_key] -%}
+      <figure class="gpl-bp__col">
+        {%- if s[heading_key] != blank -%}<h2 class="visually-hidden">{{ s[heading_key] }}</h2>{%- endif -%}
+        {%- if img != blank -%}
+          {% render 'gpl-picture', img: img, class: 'gpl-bp__img', alt: s[alt_key], sizes: '(max-width: 749px) 100vw, 60vw' %}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'gpl-bp__ph' }}
+        {%- endif -%}
+        {%- if s[link_key] != blank -%}
+          <a class="gpl-bp__hotspot" href="{{ s[link_key] }}" aria-label="{{ s[label_key] | default: 'Learn more' | escape }}"
+             style="left: {{ s[x_key] }}%; top: {{ s[y_key] }}%; width: {{ s[w_key] }}%; height: {{ s[h_key] }}%;"></a>
+        {%- endif -%}
+      </figure>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% style %}
+  #gpl-bp-{{ id }} {
+    background: {{ s.color_background }};
+    padding: {{ s.padding_top }}px 0 {{ s.padding_bottom }}px;
+  }
+  #gpl-bp-{{ id }} .gpl-bp__inner {
+    width: min(1520px, calc(100% - clamp(28px, 3.2vw, 48px)));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: {{ ar1 }}fr {{ ar2 }}fr;
+    gap: {{ s.gap }}px;
+    align-items: start;
+  }
+  #gpl-bp-{{ id }} .gpl-bp__col { position: relative; margin: 0; min-width: 0; border-radius: {{ s.corner_radius }}px; overflow: hidden; }
+  #gpl-bp-{{ id }} .gpl-bp__img, #gpl-bp-{{ id }} .gpl-bp__ph { display: block; width: 100%; height: auto; }
+  #gpl-bp-{{ id }} .gpl-bp__ph { aspect-ratio: 3 / 2; background: #262626; fill: rgba(255,255,255,0.25); }
+  #gpl-bp-{{ id }} .gpl-bp__hotspot { position: absolute; display: block; border-radius: 8px; }
+  .shopify-design-mode #gpl-bp-{{ id }} .gpl-bp__hotspot { outline: 2px dashed rgba(255,255,255,0.7); }
+  @media screen and (max-width: 749px) {
+    #gpl-bp-{{ id }} .gpl-bp__inner { grid-template-columns: minmax(0, 1fr); width: min(1520px, calc(100% - 32px)); }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "GPL Banner pair",
+  "tag": "section",
+  "class": "gpl-section-banner-pair",
+  "settings": [
+    { "type": "paragraph", "content": "Two finished artworks side by side. Columns follow each image's shape so both come out the same height; they stack on phones." },
+    { "type": "header", "content": "Left image" },
+    { "type": "image_picker", "id": "image_1", "label": "Image" },
+    { "type": "text", "id": "heading_1", "label": "Heading for search engines", "info": "Not shown — the artwork shows it." },
+    { "type": "text", "id": "alt_1", "label": "Alt text" },
+    { "type": "text", "id": "hotspot_1_label", "label": "Clickable area — what the button says" },
+    { "type": "url", "id": "hotspot_1_link", "label": "Clickable area — link" },
+    { "type": "range", "id": "hotspot_1_x", "label": "Left", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 70 },
+    { "type": "range", "id": "hotspot_1_y", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 85 },
+    { "type": "range", "id": "hotspot_1_w", "label": "Width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 25 },
+    { "type": "range", "id": "hotspot_1_h", "label": "Height", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 10 },
+    { "type": "header", "content": "Right image" },
+    { "type": "image_picker", "id": "image_2", "label": "Image" },
+    { "type": "text", "id": "heading_2", "label": "Heading for search engines" },
+    { "type": "text", "id": "alt_2", "label": "Alt text" },
+    { "type": "text", "id": "hotspot_2_label", "label": "Clickable area — what the button says" },
+    { "type": "url", "id": "hotspot_2_link", "label": "Clickable area — link" },
+    { "type": "range", "id": "hotspot_2_x", "label": "Left", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 70 },
+    { "type": "range", "id": "hotspot_2_y", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 85 },
+    { "type": "range", "id": "hotspot_2_w", "label": "Width", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 25 },
+    { "type": "range", "id": "hotspot_2_h", "label": "Height", "min": 1, "max": 100, "step": 1, "unit": "%", "default": 10 },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "gap", "label": "Gap between images", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_top", "label": "Space above", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Space below", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "color", "id": "color_background", "label": "Background", "default": "#0B0B0B" }
+  ],
+  "presets": [{ "name": "GPL Banner pair" }]
+}
+{% endschema %}
