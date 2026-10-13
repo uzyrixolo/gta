@@ -99,8 +99,11 @@
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media {
     position: relative;
     min-height: 100%;
-    /* the band's photos are near-square; let them set the card height */
+    /* the band's photos are near-square; let them set the card height — but
+       never the card width: with a stretched height, aspect-ratio would
+       otherwise widen the box into the copy column */
     aspect-ratio: 0.96 / 1;
+    width: 100%; max-width: 100%; min-width: 0; overflow: hidden;
     background: #1E1E1E;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media img,
