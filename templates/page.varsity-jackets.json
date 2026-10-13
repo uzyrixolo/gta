@@ -617,7 +617,8 @@
             "icon": "none",
             "title": "Community Groups",
             "text": "",
-            "image_alt": "Community group jackets"
+            "image_alt": "Community group jackets",
+            "image": "shopify://shop_images/vj-who-community.webp"
           }
         },
         "k8": {
