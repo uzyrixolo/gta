@@ -264,7 +264,8 @@
         "color_accent": "#D71920",
         "color_background": "#0B0B0B",
         "color_heading": "#FFFFFF",
-        "color_text": "#C9C9C9"
+        "color_text": "#C9C9C9",
+        "artwork_cards": true
       },
       "blocks": {
         "s1": {
@@ -273,7 +274,8 @@
             "image_asset": "go-step-pick.jpg",
             "title": "Pick your products",
             "text": "Choose from T-shirts, hoodies, hats, jackets and more.",
-            "image_alt": "Choosing products on screen"
+            "image_alt": "Pick your products — Choose from T-shirts, hoodies, hats, jackets and more.",
+            "image": "shopify://shop_images/go-step-1-pick-your-products.webp"
           }
         },
         "s2": {
@@ -282,7 +284,8 @@
             "image_asset": "go-step-share.jpg",
             "title": "Share your link",
             "text": "We create your unique URL to share with your group.",
-            "image_alt": "Sharing the store link"
+            "image_alt": "Share your link — We create your unique URL to share with your group.",
+            "image": "shopify://shop_images/go-step-2-share-your-link.webp"
           }
         },
         "s3": {
@@ -291,7 +294,8 @@
             "image_asset": "go-step-order.jpg",
             "title": "Everyone orders",
             "text": "Each member selects their size, colour and quantity, and pays online.",
-            "image_alt": "Members ordering on their phones"
+            "image_alt": "Everyone orders — Each member selects their size, colour and quantity, and pays online.",
+            "image": "shopify://shop_images/go-step-3-everyone-orders.webp"
           }
         },
         "s4": {
@@ -300,7 +304,8 @@
             "image_asset": "go-step-deliver.jpg",
             "title": "We produce & deliver",
             "text": "Orders are produced and shipped to each person or one location.",
-            "image_alt": "Boxes loaded for delivery"
+            "image_alt": "We produce & deliver — Orders are produced and shipped to each person or one location.",
+            "image": "shopify://shop_images/go-step-4-we-produce-deliver.webp"
           }
         }
       },

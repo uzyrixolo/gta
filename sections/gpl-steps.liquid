@@ -26,8 +26,16 @@
       <ol class="gpl-steps__grid" style="--n: {{ steps.size }};">
         {%- for block in steps -%}
           {%- assign b = block.settings -%}
-          <li class="gpl-steps__step" {{ block.shopify_attributes }}>
+          <li class="gpl-steps__step{% if s.artwork_cards %} gpl-steps__step--art{% endif %}" {{ block.shopify_attributes }}>
             {%- assign step_alt = b.image_alt | default: b.title -%}
+            {%- if s.artwork_cards and b.image != blank -%}
+              {%- comment -%} finished card: number, title and copy are drawn in; shown whole {%- endcomment -%}
+              <div class="gpl-steps__frame">
+                {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-steps__img', alt: step_alt %}
+              </div>
+              {%- if b.title != blank -%}<h3 class="gpl-steps__sr">{{ b.title }}</h3>{%- endif -%}
+              {%- continue -%}
+            {%- endif -%}
             {%- if b.image != blank or b.image_asset != blank -%}
               <div class="gpl-steps__frame">
                 {% render 'gpl-picture', img: b.image, asset: b.image_asset, class: 'gpl-steps__img', alt: step_alt %}
@@ -83,6 +91,9 @@
     position: relative; aspect-ratio: {{ s.image_ratio }}; border-radius: 12px; overflow: hidden; background: #111;
   }
   #gpl-steps-{{ id }} .gpl-steps__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gpl-steps-{{ id }} .gpl-steps__step--art .gpl-steps__frame { aspect-ratio: auto; background: transparent; }
+  #gpl-steps-{{ id }} .gpl-steps__step--art .gpl-steps__img { height: auto; }
+  #gpl-steps-{{ id }} .gpl-steps__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   #gpl-steps-{{ id }} .gpl-steps__num {
     position: absolute; top: 10px; left: 10px; min-width: 44px; height: 44px; padding: 0 8px;
     border-radius: 999px; background: var(--a); color: #FFF; font-weight: 900; font-size: 18px;
@@ -136,6 +147,13 @@
       "id": "anchor_id",
       "label": "Anchor name",
       "info": "Optional. Lets a button elsewhere link here, e.g. \"how-it-works\" for #how-it-works."
+    },
+    {
+      "type": "checkbox",
+      "id": "artwork_cards",
+      "label": "Steps are finished cards",
+      "info": "For artwork with the number, title and copy drawn in: each image shows whole and the text fields are not displayed.",
+      "default": false
     },
     {
       "type": "checkbox",
