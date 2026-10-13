@@ -116,7 +116,8 @@
             "description": "Original artwork for apparel, streetwear, events, brands, fundraisers and more.",
             "turnaround": "1-3 Business Days",
             "title_accent": "T-Shirt Design",
-            "image_asset": "gd-svc-1.jpg"
+            "image_asset": "gd-svc-1.jpg",
+            "image": "shopify://shop_images/gd-custom-tshirt-design.webp"
           }
         },
         "svc_logo": {
@@ -126,7 +127,8 @@
             "description": "Build a strong brand identity with logos, brand marks, business cards, colour palettes and more.",
             "turnaround": "3-5 Business Days",
             "title_accent": "Branding",
-            "image_asset": "gd-svc-2.jpg"
+            "image_asset": "gd-svc-2.jpg",
+            "image": "shopify://shop_images/gd-logo-design-branding.webp"
           }
         },
         "svc_sports": {
@@ -136,7 +138,8 @@
             "description": "Team logos, jerseys, championship graphics, player graphics and more.",
             "turnaround": "1-3 Business Days",
             "title_accent": "Graphics",
-            "image_asset": "gd-svc-3.jpg"
+            "image_asset": "gd-svc-3.jpg",
+            "image": "shopify://shop_images/gd-sports-graphics.webp"
           }
         },
         "svc_street": {
@@ -146,7 +149,8 @@
             "description": "Premium streetwear graphics, typography, oversized prints and limited drops.",
             "turnaround": "2-5 Business Days",
             "title_accent": "& Fashion Design",
-            "image_asset": "gd-svc-4.jpg"
+            "image_asset": "gd-svc-4.jpg",
+            "image": "shopify://shop_images/gd-streetwear-fashion-design.webp"
           }
         },
         "svc_corp": {
@@ -156,7 +160,8 @@
             "description": "Company apparel, marketing materials, uniforms, flyers, social media and more.",
             "turnaround": "2-5 Business Days",
             "title_accent": "Business Design",
-            "image_asset": "gd-svc-5.jpg"
+            "image_asset": "gd-svc-5.jpg",
+            "image": "shopify://shop_images/gd-corporate-business-design.webp"
           }
         },
         "svc_event": {
@@ -166,7 +171,8 @@
             "description": "Event logos, flyers, posters, banners, social media graphics and more.",
             "turnaround": "1-3 Business Days",
             "title_accent": "Promotional Graphics",
-            "image_asset": "gd-svc-6.jpg"
+            "image_asset": "gd-svc-6.jpg",
+            "image": "shopify://shop_images/gd-event-promotional-graphics.webp"
           }
         }
       },
