@@ -14,22 +14,29 @@
     {%- if section.blocks.size > 0 -%}
       <div class="gpl-pod-svc__grid">
         {%- for block in section.blocks -%}
-          <article class="gpl-pod-svc-card" {{ block.shopify_attributes }}>
+          {%- comment -%} card_art: the image is the finished card (title and copy drawn in), shown whole {%- endcomment -%}
+          {%- assign card_art = false -%}
+          {%- if block.settings.card_art and block.settings.image != blank -%}{%- assign card_art = true -%}{%- endif -%}
+          {%- assign img_alt = block.settings.image.alt | default: block.settings.title -%}
+          <article class="gpl-pod-svc-card{% if card_art %} gpl-pod-svc-card--art{% endif %}" {{ block.shopify_attributes }}>
             <div class="gpl-pod-svc-card__media">
               {%- if block.settings.image != blank -%}
                 {{
                   block.settings.image
-                  | image_url: width: 700
+                  | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
                     sizes: '(max-width: 749px) 90vw, (max-width: 1199px) 30vw, 18vw',
-                    widths: '250, 400, 550, 700',
-                    alt: block.settings.image.alt | escape
+                    widths: '250, 400, 550, 700, 900, 1200',
+                    alt: img_alt | escape
                 }}
               {%- else -%}
                 {{ 'image' | placeholder_svg_tag: 'gpl-pod-svc-card__ph' }}
               {%- endif -%}
             </div>
+            {%- if card_art -%}
+              {%- if block.settings.title != blank -%}<h3 class="gpl-pod-svc-card__title gpl-pod-svc-card__sr">{{ block.settings.title }}</h3>{%- endif -%}
+            {%- else -%}
             <div class="gpl-pod-svc-card__body">
               {%- if block.settings.title != blank -%}
                 <h3 class="gpl-pod-svc-card__title">{{ block.settings.title }}</h3>
@@ -54,6 +61,7 @@
                 </ul>
               {%- endif -%}
             </div>
+            {%- endif -%}
           </article>
         {%- endfor -%}
       </div>
@@ -122,6 +130,11 @@
     object-fit: cover;
   }
   #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__ph { background: #262626; fill: rgba(255,255,255,0.25); }
+  /* finished-card artwork: its own ratio, nothing cropped, no border doubling the one drawn in */
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card--art { background: transparent; border: 0; }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card--art .gpl-pod-svc-card__media { aspect-ratio: auto; background: transparent; }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card--art .gpl-pod-svc-card__media img { height: auto; object-fit: contain; }
+  #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   #gpl-pod-svc-{{ section.id }} .gpl-pod-svc-card__body {
     flex: 1 1 auto;
     padding: clamp(12px, 1.2vw, 18px);
@@ -225,6 +238,7 @@
       "limit": 8,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image", "info": "Optional — a placeholder shows until an image is set." },
+        { "type": "checkbox", "id": "card_art", "label": "Image is the finished card", "default": false, "info": "For artwork with the title and copy drawn in: shown whole, and the text fields below are not displayed." },
         { "type": "text", "id": "title", "label": "Title", "default": "Apparel POD" },
         { "type": "textarea", "id": "intro", "label": "Intro line", "default": "T-Shirts, Hoodies, Sweatshirts, Tank Tops, Long Sleeves & More." },
         { "type": "textarea", "id": "features", "label": "Feature list", "info": "One item per line.", "default": "DTG, DTF, All Over Prints\nPremium Blank Options\nMen, Women, Youth\nPlus Sizes Available" }

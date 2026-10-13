@@ -99,46 +99,51 @@
         "svc_apparel": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-svc-apparel.jpg",
+            "image": "shopify://shop_images/pod-apparel-card.webp",
             "title": "Apparel POD",
             "intro": "T-Shirts, Hoodies, Sweatshirts, Tank Tops, Long Sleeves & More.",
-            "features": "DTG, DTF, All Over Prints\nPremium Blank Options\nMen, Women, Youth\nPlus Sizes Available"
+            "features": "DTG, DTF, All Over Prints\nPremium Blank Options\nMen, Women, Youth\nPlus Sizes Available",
+            "card_art": true
           }
         },
         "svc_headwear": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-svc-headwear.jpg",
+            "image": "shopify://shop_images/pod-headwear-card-v2.webp",
             "title": "Headwear POD",
             "intro": "Hats, Beanies, Snapbacks & Visors.",
-            "features": "Embroidered & Printed\nMultiple Styles\nPremium Quality\nCustom Branding"
+            "features": "Embroidered & Printed\nMultiple Styles\nPremium Quality\nCustom Branding",
+            "card_art": true
           }
         },
         "svc_access": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-svc-access.jpg",
+            "image": "shopify://shop_images/pod-accessories-card-v2.webp",
             "title": "Accessories POD",
             "intro": "Phone Cases, Mugs, Tote Bags, Bottles, Posters & More.",
-            "features": "Hundreds of Products\nHigh Quality Printing\nPerfect for Any Niche\nGreat Profit Margins"
+            "features": "Hundreds of Products\nHigh Quality Printing\nPerfect for Any Niche\nGreat Profit Margins",
+            "card_art": true
           }
         },
         "svc_allover": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-svc-allover.jpg",
+            "image": "shopify://shop_images/pod-all-over-print-card-v2.webp",
             "title": "All Over Print POD",
             "intro": "Sublimation All Over Prints for Apparel & Accessories.",
-            "features": "Vibrant, Long Lasting Prints\nUnlimited Design Areas\nStand Out From The Crowd\nPerfect for Bold Brands"
+            "features": "Vibrant, Long Lasting Prints\nUnlimited Design Areas\nStand Out From The Crowd\nPerfect for Bold Brands",
+            "card_art": true
           }
         },
         "svc_private": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-svc-private.jpg",
+            "image": "shopify://shop_images/pod-private-label-card.webp",
             "title": "Private Label POD",
             "intro": "Custom Neck Labels, Tags, Packaging & Inserts.",
-            "features": "Your Brand, Our Fulfillment\nBranded Packaging\nThank You Cards\nBuild Brand Loyalty"
+            "features": "Your Brand, Our Fulfillment\nBranded Packaging\nThank You Cards\nBuild Brand Loyalty",
+            "card_art": true
           }
         }
       },
