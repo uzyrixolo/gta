@@ -382,7 +382,8 @@
         "heading": "Our Design Process",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "gd_turnaround": {
       "type": "gpl-gd-turnaround",
