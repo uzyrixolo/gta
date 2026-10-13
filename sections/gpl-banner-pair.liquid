@@ -28,7 +28,7 @@
       {%- assign h_key = 'hotspot_' | append: i | append: '_h' -%}
       {%- assign img = s[img_key] -%}
       <figure class="gpl-bp__col">
-        {%- if s[heading_key] != blank -%}<h2 class="visually-hidden">{{ s[heading_key] }}</h2>{%- endif -%}
+        {%- if s[heading_key] != blank -%}<h2 class="gpl-bp__sr">{{ s[heading_key] }}</h2>{%- endif -%}
         {%- if img != blank -%}
           {% render 'gpl-picture', img: img, class: 'gpl-bp__img', alt: s[alt_key], sizes: '(max-width: 749px) 100vw, 60vw' %}
         {%- else -%}
@@ -56,6 +56,7 @@
     gap: {{ s.gap }}px;
     align-items: start;
   }
+  #gpl-bp-{{ id }} .gpl-bp__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   #gpl-bp-{{ id }} .gpl-bp__col { position: relative; margin: 0; min-width: 0; border-radius: {{ s.corner_radius }}px; overflow: hidden; }
   #gpl-bp-{{ id }} .gpl-bp__img, #gpl-bp-{{ id }} .gpl-bp__ph { display: block; width: 100%; height: auto; }
   #gpl-bp-{{ id }} .gpl-bp__ph { aspect-ratio: 3 / 2; background: #262626; fill: rgba(255,255,255,0.25); }
