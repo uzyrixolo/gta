@@ -525,7 +525,8 @@
         "s3",
         "s4",
         "s5"
-      ]
+      ],
+      "disabled": true
     },
     "who": {
       "type": "gpl-cards",
@@ -758,6 +759,29 @@
         "w5",
         "w6"
       ]
+    },
+    "turnaround_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/vj-turnaround-band.webp",
+        "alt": "Fast turnaround, built around your deadline. 2–3 weeks is the typical target for many custom varsity jacket orders, depending on materials, customization, quantity, production route and final approval. Design, approval, production, quality check, delivery. Ask about rush options when available.",
+        "heading": "Fast Turnaround. Built Around Your Deadline.",
+        "heading_level": "h2",
+        "eager": false,
+        "anchor_id": "turnaround",
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -767,6 +791,7 @@
     "program",
     "quality",
     "capability",
+    "turnaround_banner",
     "turnaround",
     "who",
     "why"
