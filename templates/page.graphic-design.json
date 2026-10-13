@@ -656,7 +656,7 @@
       "type": "gpl-banner",
       "settings": {
         "full_bleed": true,
-        "padding_top": 0,
+        "padding_top": 40,
         "padding_bottom": 0,
         "corner_radius": 0,
         "color_background": "#0B0B0B",
