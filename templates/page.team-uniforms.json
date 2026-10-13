@@ -797,10 +797,97 @@
         "color_accent": "#D71920",
         "color_background": "#0B0B0B"
       }
+    },
+    "hero_backup": {
+      "type": "gpl-cc-hero",
+      "settings": {
+        "image_asset": "tu-hero.jpg",
+        "image_alt": "Athletes from several sports in custom Toronto team uniforms",
+        "image_position": "center right",
+        "scrim": 0.9,
+        "min_height": 660,
+        "min_height_mobile": 620,
+        "heading_level": "h1",
+        "eyebrow": "Custom uniforms · teamwear · fanwear · and more",
+        "line1": "Built for your team.",
+        "line1_accent": false,
+        "line2": "Designed to",
+        "line2_accent": false,
+        "line3": "represent you.",
+        "line3_accent": true,
+        "subheading": "",
+        "paragraph": "<p>Custom uniforms, teamwear, fanwear and team merchandise for every sport. From the first sketch to game day, GTA Print Lab helps teams create a complete apparel program — locally in Toronto or through our dedicated overseas manufacturing operation.</p>",
+        "button_1_text": "Design Your Uniforms",
+        "button_1_link": "/collections/all",
+        "button_2_text": "Request a Quote",
+        "button_2_link": "#consultation",
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B"
+      },
+      "blocks": {
+        "c1": {
+          "type": "chip",
+          "settings": {
+            "icon": "leaf",
+            "line1": "Toronto",
+            "line2": "based"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "icon": "pencil",
+            "line1": "Custom",
+            "line2": "designs"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "icon": "bolt",
+            "line1": "Fast",
+            "line2": "turnaround"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "icon": "building",
+            "line1": "Local + overseas",
+            "line2": "manufacturing"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "icon": "tag",
+            "line1": "Team",
+            "line2": "stores"
+          }
+        },
+        "c6": {
+          "type": "chip",
+          "settings": {
+            "icon": "coins",
+            "line1": "Fund",
+            "line2": "raising"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "disabled": true
     }
   },
   "order": [
     "hero",
+    "hero_backup",
     "more",
     "sports",
     "program",
