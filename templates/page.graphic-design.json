@@ -439,7 +439,8 @@
         "footnote": "Turnaround times depend on project complexity and current production volume.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "gd_gallery": {
       "type": "gpl-gd-gallery",
@@ -649,6 +650,28 @@
         "padding_bottom": 24,
         "color_background": "#0B0B0B"
       }
+    },
+    "gd_turnaround_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "image": "shopify://shop_images/gd-how-long-does-graphic-design-take.webp",
+        "alt": "How long does graphic design take? Express design: same day. Standard design: 1-3 business days. Professional branding: 3-5 business days. Complex / custom projects: 5+ business days.",
+        "heading": "How Long Does Graphic Design Take?",
+        "heading_level": "h2",
+        "eager": false,
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -658,6 +681,7 @@
     "gd_capability_bands",
     "gd_capabilities",
     "gd_process",
+    "gd_turnaround_banner",
     "gd_turnaround",
     "gd_gallery",
     "gd_why",
