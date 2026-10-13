@@ -627,7 +627,8 @@
             "icon": "none",
             "title": "Fashion Brands",
             "text": "",
-            "image_alt": "Fashion brand jacket"
+            "image_alt": "Fashion brand jacket",
+            "image": "shopify://shop_images/vj-who-fashion.webp"
           }
         },
         "k9": {
