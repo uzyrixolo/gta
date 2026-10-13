@@ -348,7 +348,8 @@
             "icon": "diamond",
             "title": "Premium Materials",
             "text": "High-quality wool and leather options.",
-            "image_alt": "Chenille letter on wool"
+            "image_alt": "Chenille letter on wool",
+            "image": "shopify://shop_images/vj-qual-materials.webp"
           }
         },
         "k2": {
@@ -358,7 +359,8 @@
             "icon": "pencil",
             "title": "Expert Construction",
             "text": "Attention to detail and clean, durable stitching.",
-            "image_alt": "Stitching detail on a leather sleeve"
+            "image_alt": "Stitching detail on a leather sleeve",
+            "image": "shopify://shop_images/vj-qual-construction.webp"
           }
         },
         "k3": {
@@ -368,7 +370,8 @@
             "icon": "gear",
             "title": "Quality Hardware",
             "text": "Durable snaps, zippers and premium finishes.",
-            "image_alt": "Snap fastener detail"
+            "image_alt": "Snap fastener detail",
+            "image": "shopify://shop_images/vj-qual-hardware.webp"
           }
         },
         "k4": {
@@ -378,7 +381,8 @@
             "icon": "star",
             "title": "Custom Lining",
             "text": "Add a premium lining for a high-end look.",
-            "image_alt": "Quilted red lining"
+            "image_alt": "Quilted red lining",
+            "image": "shopify://shop_images/vj-qual-lining.webp"
           }
         },
         "k5": {
@@ -388,7 +392,8 @@
             "icon": "check-circle",
             "title": "Final Inspection",
             "text": "Every jacket is checked for quality before delivery.",
-            "image_alt": "Knit rib trim detail"
+            "image_alt": "Knit rib trim detail",
+            "image": "shopify://shop_images/vj-qual-inspection.webp"
           }
         }
       },
