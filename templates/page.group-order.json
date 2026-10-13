@@ -410,18 +410,18 @@
         "heading_tail": "",
         "subheading": "Any group that needs to look like one group.",
         "columns": 8,
-        "image_ratio": "1 / 1",
-        "image_fit": "cover",
+        "image_ratio": "9 / 16",
+        "image_fit": "contain",
         "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#F4F4F4",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.08
       },
       "blocks": {
         "k1": {
@@ -429,9 +429,10 @@
           "settings": {
             "image_asset": "go-for-sports.jpg",
             "icon": "none",
-            "title": "Sports Teams & Leagues",
+            "title": "",
             "text": "",
-            "image_alt": "A sports team"
+            "image_alt": "Sports Teams & Leagues",
+            "image": "shopify://shop_images/go-for-sports-card.webp"
           }
         },
         "k2": {
@@ -439,9 +440,10 @@
           "settings": {
             "image_asset": "go-for-schools.jpg",
             "icon": "none",
-            "title": "Schools & Universities",
+            "title": "",
             "text": "",
-            "image_alt": "Students"
+            "image_alt": "Schools & Universities",
+            "image": "shopify://shop_images/go-for-schools-card.webp"
           }
         },
         "k3": {
@@ -449,9 +451,10 @@
           "settings": {
             "image_asset": "go-for-businesses.jpg",
             "icon": "none",
-            "title": "Businesses & Employees",
+            "title": "",
             "text": "",
-            "image_alt": "A staff team"
+            "image_alt": "Businesses & Employees",
+            "image": "shopify://shop_images/go-for-businesses-card.webp"
           }
         },
         "k4": {
@@ -459,9 +462,10 @@
           "settings": {
             "image_asset": "go-for-churches.jpg",
             "icon": "none",
-            "title": "Churches & Community Groups",
+            "title": "",
             "text": "",
-            "image_alt": "A church group"
+            "image_alt": "Churches & Community Groups",
+            "image": "shopify://shop_images/go-for-churches-card.webp"
           }
         },
         "k5": {
@@ -469,9 +473,10 @@
           "settings": {
             "image_asset": "go-for-concert.jpg",
             "icon": "none",
-            "title": "Concert Crews & Events",
+            "title": "",
             "text": "",
-            "image_alt": "A concert crew"
+            "image_alt": "Concert Crews & Events",
+            "image": "shopify://shop_images/go-for-concert-card.webp"
           }
         },
         "k6": {
@@ -479,9 +484,10 @@
           "settings": {
             "image_asset": "go-for-families.jpg",
             "icon": "none",
-            "title": "Families & Reunions",
+            "title": "",
             "text": "",
-            "image_alt": "A family reunion"
+            "image_alt": "Families & Reunions",
+            "image": "shopify://shop_images/go-for-families-card.webp"
           }
         },
         "k7": {
@@ -489,9 +495,10 @@
           "settings": {
             "image_asset": "go-for-fundraisers.jpg",
             "icon": "none",
-            "title": "Fundraisers",
+            "title": "",
             "text": "",
-            "image_alt": "A fundraiser group"
+            "image_alt": "Fundraisers",
+            "image": "shopify://shop_images/go-for-fundraisers-card.webp"
           }
         },
         "k8": {
@@ -499,9 +506,10 @@
           "settings": {
             "image_asset": "go-for-clubs.jpg",
             "icon": "none",
-            "title": "Clubs & Organizations",
+            "title": "",
             "text": "",
-            "image_alt": "A club"
+            "image_alt": "Clubs & Organizations",
+            "image": "shopify://shop_images/go-for-clubs-card.webp"
           }
         }
       },
