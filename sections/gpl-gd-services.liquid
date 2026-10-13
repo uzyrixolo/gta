@@ -90,9 +90,9 @@
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    background: #141414;
-    border: 1px solid color-mix(in srgb, var(--gpl-accent) 55%, transparent);
-    border-radius: 12px;
+    background: #0D0D0D;
+    border: 1.5px solid color-mix(in srgb, var(--gpl-accent) 70%, transparent);
+    border-radius: 14px;
     overflow: hidden;
     min-width: 0;
   }
@@ -126,32 +126,34 @@
     font-family: var(--gpl-font-heading, inherit);
     font-weight: 800;
     text-transform: uppercase;
-    line-height: 1.05;
-    font-size: clamp(17px, 1.45vw, 24px);
+    line-height: 1.02;
+    letter-spacing: 0;
+    font-size: clamp(20px, 2vw, 32px);
     display: flex; flex-direction: column;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__desc {
     margin: 0 0 clamp(12px, 1.2vw, 18px);
-    color: #A8A8A8;
-    font-size: clamp(11.5px, 0.78vw, 13px);
-    line-height: 1.5;
+    color: #E6E6E6;
+    font-size: clamp(13px, 1.05vw, 16.5px);
+    line-height: 1.45;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__turn {
     margin: auto 0 0;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 10px;
     color: #FFFFFF;
     font-weight: 800;
     text-transform: uppercase;
-    font-size: clamp(10px, 0.7vw, 12px);
-    letter-spacing: 0.02em;
+    font-size: clamp(12px, 1.05vw, 16px);
+    letter-spacing: 0.01em;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__title-accent { color: var(--gpl-accent); }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__turn-icon { display: flex; color: var(--gpl-accent); }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__turn-icon svg {
-    width: clamp(14px, 1vw, 17px);
-    height: clamp(14px, 1vw, 17px);
+    width: clamp(22px, 1.9vw, 30px);
+    height: clamp(22px, 1.9vw, 30px);
+    stroke-width: 1.7;
   }
 
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc__cta { margin-top: clamp(18px, 2vw, 28px); text-align: center; }
