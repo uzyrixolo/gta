@@ -195,7 +195,7 @@
         "subheading": "High performance. Custom designs. Any sport.",
         "columns": 8,
         "image_ratio": "1 / 3",
-        "image_fit": "contain",
+        "image_fit": "natural",
         "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#F4F4F4",

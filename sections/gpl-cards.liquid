@@ -77,9 +77,14 @@
     display: flex; flex-direction: column;
   }
   #gpl-cards-{{ id }} .gpl-cards__frame { position: relative; aspect-ratio: {{ s.image_ratio }}; background: {{ s.color_frame }}; }
+  {%- if s.image_fit == 'natural' %}
+  /* finished-card artwork: each frame takes its own image's shape, so exports that differ by a few pixels never letterbox */
+  #gpl-cards-{{ id }} .gpl-cards__frame { aspect-ratio: auto; }
+  #gpl-cards-{{ id }} .gpl-cards__img { height: auto; object-fit: fill; }
+  {%- endif %}
   /* "contain" is for product shots: the whole garment shows, letterboxed on the
      card colour, rather than being cropped to fill the frame. */
-  #gpl-cards-{{ id }} .gpl-cards__img { width: 100%; height: 100%; object-fit: {{ s.image_fit }}; display: block; }
+  #gpl-cards-{{ id }} .gpl-cards__img { width: 100%; height: 100%; object-fit: {% if s.image_fit == 'natural' %}contain{% else %}{{ s.image_fit }}{% endif %}; display: block; }
 
   /* the whole card is the hit area when the block has a link */
   #gpl-cards-{{ id }} .gpl-cards__card.is-link { position: relative; transition: transform .18s ease, box-shadow .18s ease; }
@@ -209,6 +214,10 @@
         {
           "value": "contain",
           "label": "Show the whole photo (no crop)"
+        },
+        {
+          "value": "natural",
+          "label": "Image sets the frame (finished cards)"
         }
       ],
       "info": "Use \"show the whole photo\" for product shots so a garment is never cut off."
