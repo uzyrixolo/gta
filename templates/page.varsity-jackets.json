@@ -657,7 +657,8 @@
             "icon": "none",
             "title": "Individual Customers",
             "text": "",
-            "image_alt": "Individual customer jacket"
+            "image_alt": "Individual customer jacket",
+            "image": "shopify://shop_images/vj-who-individual.webp"
           }
         }
       },
