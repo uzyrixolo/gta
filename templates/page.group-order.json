@@ -324,7 +324,7 @@
         "heading_tail": "",
         "subheading": "Choose the products, we handle the rest.",
         "columns": 5,
-        "image_ratio": "1 / 1",
+        "image_ratio": "3 / 4",
         "image_fit": "contain",
         "show_badges": false,
         "color_accent": "#D71920",
@@ -335,7 +335,7 @@
         "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.08
       },
       "blocks": {
         "k1": {
@@ -343,9 +343,10 @@
           "settings": {
             "image_asset": "go-prod-tshirts.jpg",
             "icon": "none",
-            "title": "T-Shirts",
+            "title": "",
             "text": "",
-            "image_alt": "Custom group t-shirts"
+            "image_alt": "Custom group t-shirts",
+            "image": "shopify://shop_images/go-prod-tshirts-card.webp"
           }
         },
         "k2": {
@@ -353,9 +354,10 @@
           "settings": {
             "image_asset": "go-prod-hoodies.jpg",
             "icon": "none",
-            "title": "Hoodies",
+            "title": "",
             "text": "",
-            "image_alt": "Custom group hoodies"
+            "image_alt": "Custom group hoodies",
+            "image": "shopify://shop_images/go-prod-hoodies-card.webp"
           }
         },
         "k3": {
@@ -363,9 +365,10 @@
           "settings": {
             "image_asset": "go-prod-hats.jpg",
             "icon": "none",
-            "title": "Hats",
+            "title": "",
             "text": "",
-            "image_alt": "Custom caps"
+            "image_alt": "Custom caps",
+            "image": "shopify://shop_images/go-prod-hats-card.webp"
           }
         },
         "k4": {
@@ -373,9 +376,10 @@
           "settings": {
             "image_asset": "go-prod-jackets.jpg",
             "icon": "none",
-            "title": "Jackets",
+            "title": "",
             "text": "",
-            "image_alt": "Custom jackets"
+            "image_alt": "Custom jackets",
+            "image": "shopify://shop_images/go-prod-jackets-card.webp"
           }
         },
         "k5": {
@@ -383,9 +387,10 @@
           "settings": {
             "image_asset": "go-prod-accessories.jpg",
             "icon": "none",
-            "title": "Accessories",
+            "title": "",
             "text": "",
-            "image_alt": "Bags and drinkware"
+            "image_alt": "Bags and drinkware",
+            "image": "shopify://shop_images/go-prod-accessories-card.webp"
           }
         }
       },
