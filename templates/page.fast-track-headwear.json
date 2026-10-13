@@ -15,7 +15,7 @@
         "background_image": "shopify://shop_images/Toronto_Custom_Headwear_Showcase.webp",
         "image_position": "center right",
         "image_position_mobile": "",
-        "scrim_strength": 30,
+        "scrim_strength": 0,
         "min_height": 640,
         "min_height_mobile": 720,
         "badge_text": "",
@@ -31,7 +31,8 @@
         "button_2_text": "",
         "button_2_link": "",
         "color_accent": "#d71920",
-        "color_background": "#0a0a0a"
+        "color_background": "#0a0a0a",
+        "height_mode": "fit"
       }
     },
     "gpl_ft_hero_RMqEgW": {

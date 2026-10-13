@@ -7,6 +7,11 @@
 {%- assign s = section.settings -%}
 {%- assign section_id = section.id -%}
 {%- assign scrim = s.scrim_strength | divided_by: 100.0 -%}
+{%- comment -%} every scrim stop scales with the setting: 90% is the designed look, 0 is no overlay {%- endcomment -%}
+{%- assign k = scrim | divided_by: 0.9 | at_most: 1.0 -%}
+{%- comment -%} 'fit' sizes the band to the picked image so nothing is cropped {%- endcomment -%}
+{%- assign fit = false -%}
+{%- if s.height_mode == 'fit' and s.background_image != blank -%}{%- assign fit = true -%}{%- endif -%}
 
 <section id="gpl-ft-hero-{{ section_id }}" class="gpl-ft-hero">
   <div class="gpl-ft-hero__bg">
@@ -124,7 +129,11 @@
     align-items: center;
     overflow: hidden;
     background: var(--gpl-bg);
+    {%- if fit %}
+    min-height: 0; aspect-ratio: {{ s.background_image.width }} / {{ s.background_image.height }};
+    {%- else %}
     min-height: {{ s.min_height }}px;
+    {%- endif %}
   }
   #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__bg { position: absolute; inset: 0; z-index: 0; }
   #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__bg-img {
@@ -139,8 +148,8 @@
     inset: 0;
     z-index: 1;
     background:
-      linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim }}) 40%, rgba(8,8,8,0.55) 62%, rgba(8,8,8,0.2) 100%),
-      linear-gradient(0deg, rgba(8,8,8,0.65) 0%, rgba(8,8,8,0) 45%);
+      linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ scrim }}) 40%, rgba(8,8,8,{{ 0.55 | times: k }}) 62%, rgba(8,8,8,{{ 0.2 | times: k }}) 100%),
+      linear-gradient(0deg, rgba(8,8,8,{{ 0.65 | times: k }}) 0%, rgba(8,8,8,0) 45%);
   }
 
   #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__badge {
@@ -275,12 +284,16 @@
     #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__content { max-width: 100%; }
     #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__scrim {
       background:
-        linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,0.72) 70%, rgba(8,8,8,0.55) 100%),
-        linear-gradient(0deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0) 50%);
+        linear-gradient(90deg, rgba(8,8,8,{{ scrim }}) 0%, rgba(8,8,8,{{ 0.72 | times: k }}) 70%, rgba(8,8,8,{{ 0.55 | times: k }}) 100%),
+        linear-gradient(0deg, rgba(8,8,8,{{ 0.7 | times: k }}) 0%, rgba(8,8,8,0) 50%);
     }
   }
   @media screen and (max-width: 749px) {
+    {%- if fit and s.background_image_mobile != blank %}
+    #gpl-ft-hero-{{ section_id }} { aspect-ratio: {{ s.background_image_mobile.width }} / {{ s.background_image_mobile.height }}; }
+    {%- elsif fit == false %}
     #gpl-ft-hero-{{ section_id }} { min-height: {{ s.min_height_mobile }}px; }
+    {%- endif %}
     {%- if s.background_image_mobile != blank -%}
       #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__bg-img--desktop { display: none; }
       #gpl-ft-hero-{{ section_id }} .gpl-ft-hero__bg-img--mobile { display: block; }
@@ -316,7 +329,11 @@
       { "value": "center right", "label": "Right" }
     ] },
     { "type": "text", "id": "image_position_mobile", "label": "Image focal point (mobile)", "info": "Optional CSS object-position for phones, e.g. \"50% center\". Leave blank to use the desktop focal point." },
-    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 30, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "range", "id": "scrim_strength", "label": "Dark overlay on text side", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "select", "id": "height_mode", "label": "Height", "options": [
+      { "value": "fixed", "label": "Minimum height below" },
+      { "value": "fit", "label": "Fit the image (no cropping)" }
+    ], "default": "fixed" },
     { "type": "range", "id": "min_height", "label": "Minimum height", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 620 },
     { "type": "range", "id": "min_height_mobile", "label": "Minimum height (mobile)", "min": 280, "max": 900, "step": 10, "unit": "px", "default": 620 },
 
