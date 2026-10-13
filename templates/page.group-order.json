@@ -651,7 +651,7 @@
     "compare_banner": {
       "type": "gpl-banner",
       "settings": {
-        "image": "shopify://shop_images/go-old-way-vs-gta-way.webp",
+        "image": "shopify://shop_images/go-old-way-vs-gta-way-v2.webp",
         "alt": "The old way versus the GTA Print Lab way. Old way: collecting sizes by text or email, chasing payments, managing spreadsheets, confusing and time consuming, sorting and distributing boxes. GTA Print Lab way: share one simple link, members choose their own sizes, individual payment options, organized fulfillment, ship to each person or one location, less work for the organizer. Group order savings: more pieces can mean better per-piece pricing at 12+, 25+, 50+ and 100+.",
         "heading": "The Old Way Versus The GTA Print Lab Way",
         "heading_level": "h2",
@@ -676,9 +676,9 @@
             "label": "Ask about volume pricing",
             "link": "/pages/quote",
             "x": 67,
-            "y": 73,
+            "y": 77,
             "w": 31,
-            "h": 9
+            "h": 12
           }
         }
       },
