@@ -36,10 +36,13 @@
                 <span class="gpl-cards__badge" aria-hidden="true">{% render 'gpl-quote-icon', name: b.icon %}</span>
               {%- endif -%}
             </div>
+            {%- comment -%} image-only cards (finished artwork) carry no body {%- endcomment -%}
+            {%- if b.title != blank or b.text != blank -%}
             <div class="gpl-cards__body">
               {%- if b.title != blank -%}<h3 class="gpl-cards__title">{{ b.title }}</h3>{%- endif -%}
               {%- if b.text != blank -%}<p class="gpl-cards__text">{{ b.text }}</p>{%- endif -%}
             </div>
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ul>

@@ -695,6 +695,71 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "gd_pod_cards": {
+      "type": "gpl-cards",
+      "settings": {
+        "heading": "",
+        "heading_accent": "",
+        "heading_tail": "",
+        "subheading": "",
+        "columns": 3,
+        "image_ratio": "3 / 4",
+        "image_fit": "contain",
+        "show_badges": false,
+        "color_accent": "#D71920",
+        "color_background": "#0B0B0B",
+        "color_heading": "#FFFFFF",
+        "color_text": "#CCCCCC",
+        "color_card": "#0B0B0B",
+        "color_frame": "#0B0B0B",
+        "color_card_heading": "#FFFFFF",
+        "color_card_text": "#CCCCCC",
+        "shadow": 0
+      },
+      "blocks": {
+        "pod_headwear": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/pod-headwear-card.webp",
+            "image_asset": "",
+            "image_alt": "Headwear POD — hats, beanies, snapbacks and visors. Embroidered and printed, multiple styles, premium quality, custom branding.",
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "link": ""
+          }
+        },
+        "pod_accessories": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/pod-accessories-card.webp",
+            "image_asset": "",
+            "image_alt": "Accessories POD — phone cases, mugs, tote bags, bottles, posters and more. Hundreds of products, high quality printing, perfect for any niche, great profit margins.",
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "link": ""
+          }
+        },
+        "pod_allover": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/pod-all-over-print-card.webp",
+            "image_asset": "",
+            "image_alt": "All Over Print POD — sublimation all-over prints for apparel and accessories. Vibrant, long-lasting prints, unlimited design areas, stand out from the crowd, perfect for bold brands.",
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "pod_headwear",
+        "pod_accessories",
+        "pod_allover"
+      ]
     }
   },
   "order": [
@@ -706,6 +771,7 @@
     "gd_process",
     "gd_turnaround_banner",
     "gd_redrawn_banner",
+    "gd_pod_cards",
     "gd_turnaround",
     "gd_gallery",
     "gd_why",
