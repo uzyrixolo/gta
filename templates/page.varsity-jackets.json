@@ -758,7 +758,8 @@
         "w4",
         "w5",
         "w6"
-      ]
+      ],
+      "disabled": true
     },
     "turnaround_banner": {
       "type": "gpl-banner",
@@ -782,6 +783,44 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "why_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/vj-why-band.webp",
+        "alt": "Your jacket. Your colours. Your story. Start designing your custom varsity jacket, or talk to GTA Print Lab about an individual, small group or large group order.",
+        "heading": "Why GTA Print Lab?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started",
+            "link": "/pages/quote",
+            "x": 45,
+            "y": 58,
+            "w": 21,
+            "h": 10
+          }
+        }
+      },
+      "block_order": [
+        "start"
+      ]
     }
   },
   "order": [
@@ -794,6 +833,7 @@
     "turnaround_banner",
     "turnaround",
     "who",
+    "why_banner",
     "why"
   ]
 }
