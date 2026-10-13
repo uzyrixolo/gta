@@ -568,7 +568,8 @@
             "icon": "none",
             "title": "Schools",
             "text": "",
-            "image_alt": "School varsity jacket"
+            "image_alt": "School varsity jacket",
+            "image": "shopify://shop_images/vj-who-schools.webp"
           }
         },
         "k3": {
