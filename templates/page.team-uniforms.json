@@ -102,18 +102,18 @@
         "heading_tail": "",
         "subheading": "Your team needs more than a jersey. GTA Print Lab can help you build a complete team apparel program — from game uniforms and practice gear to coach apparel, fan merchandise and fundraising products.",
         "columns": 6,
-        "image_ratio": "1 / 1",
-        "image_fit": "cover",
+        "image_ratio": "9 / 16",
+        "image_fit": "natural",
         "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#FFFFFF",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.08
       },
       "blocks": {
         "k1": {
@@ -121,9 +121,10 @@
           "settings": {
             "image_asset": "tu-more-gameday.jpg",
             "icon": "none",
-            "title": "Game Day",
-            "text": "Uniforms built for competition.",
-            "image_alt": "Players in game-day uniforms"
+            "title": "",
+            "text": "",
+            "image_alt": "Game Day — Uniforms built for competition.",
+            "image": "shopify://shop_images/tu-more-game-day-card.webp"
           }
         },
         "k2": {
@@ -131,9 +132,10 @@
           "settings": {
             "image_asset": "tu-more-teamwear.jpg",
             "icon": "none",
-            "title": "Teamwear",
-            "text": "Hoodies, warm-ups, sweats, jackets and training apparel.",
-            "image_alt": "Team in warm-up apparel"
+            "title": "",
+            "text": "",
+            "image_alt": "Teamwear — Hoodies, warm-ups, sweats, jackets and training apparel.",
+            "image": "shopify://shop_images/tu-more-teamwear-card.webp"
           }
         },
         "k3": {
@@ -141,9 +143,10 @@
           "settings": {
             "image_asset": "tu-more-coaches.jpg",
             "icon": "none",
-            "title": "Coaches",
-            "text": "Polos, jackets, hats and sideline gear.",
-            "image_alt": "Coach in sideline gear"
+            "title": "",
+            "text": "",
+            "image_alt": "Coaches — Polos, jackets, hats and sideline gear.",
+            "image": "shopify://shop_images/tu-more-coaches-card.webp"
           }
         },
         "k4": {
@@ -151,9 +154,10 @@
           "settings": {
             "image_asset": "tu-more-fanwear.jpg",
             "icon": "none",
-            "title": "Fanwear",
-            "text": "Give supporters apparel they actually want to wear.",
-            "image_alt": "Fans in team apparel"
+            "title": "",
+            "text": "",
+            "image_alt": "Fanwear — Give supporters apparel they actually want to wear.",
+            "image": "shopify://shop_images/tu-more-fanwear-card.webp"
           }
         },
         "k5": {
@@ -161,9 +165,10 @@
           "settings": {
             "image_asset": "tu-more-swag.jpg",
             "icon": "none",
-            "title": "Team Swag",
-            "text": "Hats, bags, accessories, drinkware and more.",
-            "image_alt": "Team bags and accessories"
+            "title": "",
+            "text": "",
+            "image_alt": "Team Swag — Hats, bags, accessories, drinkware and more.",
+            "image": "shopify://shop_images/tu-more-team-swag-card.webp"
           }
         },
         "k6": {
@@ -171,9 +176,10 @@
           "settings": {
             "image_asset": "tu-more-fundraising.jpg",
             "icon": "none",
-            "title": "Fundraising",
-            "text": "Turn your team apparel into a revenue opportunity.",
-            "image_alt": "Supporters in fundraiser shirts"
+            "title": "",
+            "text": "",
+            "image_alt": "Fundraising — Turn your team apparel into a revenue opportunity.",
+            "image": "shopify://shop_images/tu-more-fundraising-card.webp"
           }
         }
       },
