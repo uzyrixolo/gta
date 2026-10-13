@@ -602,7 +602,8 @@
             "title": "Corporate Teams",
             "text": "",
             "image_alt": "Corporate team jackets"
-          }
+          },
+          "disabled": true
         },
         "k6": {
           "type": "card",
@@ -612,7 +613,8 @@
             "title": "Clubs & Organizations",
             "text": "",
             "image_alt": "Club jackets"
-          }
+          },
+          "disabled": true
         },
         "k7": {
           "type": "card",
