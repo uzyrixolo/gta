@@ -445,7 +445,8 @@
             "icon": "building",
             "title": "Overseas Manufacturing Capability",
             "text": "For larger programs and specialized production, we utilize our dedicated manufacturing operation in Pakistan.",
-            "image_alt": "The manufacturing floor"
+            "image_alt": "The manufacturing floor",
+            "image": "shopify://shop_images/vj-cap-overseas.webp"
           }
         }
       },
