@@ -931,10 +931,110 @@
         "c4"
       ],
       "disabled": true
+    },
+    "hero_banner_backup": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/Toronto_Custom_Varsity_Jacket_Showcase.webp",
+        "alt": "Custom varsity jackets — your style, your brand, we print it. Premium custom varsity jackets for teams, schools, businesses and brands, fully customizable with your logos, names, numbers and more. Fast turnaround, premium quality, no minimums, delivery available. Styles: classic varsity, embroidered, leather sleeves, women’s crop, hooded varsity, team jackets.",
+        "heading": "Custom Varsity Jackets",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "style_1": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Classic varsity",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 2,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        },
+        "style_2": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Embroidered",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 18,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        },
+        "style_3": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Leather sleeves",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 34,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        },
+        "style_4": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Women's crop",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 50,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        },
+        "style_5": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Hooded varsity",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 66,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        },
+        "style_6": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Team jackets",
+            "link": "#shopify-section-template--34625044971773__materials",
+            "x": 82,
+            "y": 66,
+            "w": 15,
+            "h": 30
+          }
+        }
+      },
+      "block_order": [
+        "style_1",
+        "style_2",
+        "style_3",
+        "style_4",
+        "style_5",
+        "style_6"
+      ],
+      "disabled": true
     }
   },
   "order": [
     "hero",
+    "hero_banner_backup",
     "hero_backup",
     "built_for",
     "materials",
