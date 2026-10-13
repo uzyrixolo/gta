@@ -557,7 +557,8 @@
             "icon": "none",
             "title": "Sports Teams",
             "text": "",
-            "image_alt": "Sports team varsity jacket"
+            "image_alt": "Sports team varsity jacket",
+            "image": "shopify://shop_images/vj-who-sports.webp"
           }
         },
         "k2": {
