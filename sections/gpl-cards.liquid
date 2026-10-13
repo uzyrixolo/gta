@@ -80,6 +80,7 @@
   {%- if s.image_fit == 'natural' %}
   /* finished-card artwork: each frame takes its own image's shape, so exports that differ by a few pixels never letterbox */
   #gpl-cards-{{ id }} .gpl-cards__frame { aspect-ratio: auto; }
+  #gpl-cards-{{ id }} .gpl-cards__grid { align-items: start; }
   #gpl-cards-{{ id }} .gpl-cards__img { height: auto; object-fit: fill; }
   {%- endif %}
   /* "contain" is for product shots: the whole garment shows, letterboxed on the
