@@ -108,31 +108,28 @@
         "svc_headwear": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/pod-headwear-card.webp",
+            "image": "shopify://shop_images/gpl-pod-svc-headwear.jpg",
             "title": "Headwear POD",
             "intro": "Hats, Beanies, Snapbacks & Visors.",
-            "features": "Embroidered & Printed\nMultiple Styles\nPremium Quality\nCustom Branding",
-            "card_art": true
+            "features": "Embroidered & Printed\nMultiple Styles\nPremium Quality\nCustom Branding"
           }
         },
         "svc_access": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/pod-accessories-card.webp",
+            "image": "shopify://shop_images/gpl-pod-svc-access.jpg",
             "title": "Accessories POD",
             "intro": "Phone Cases, Mugs, Tote Bags, Bottles, Posters & More.",
-            "features": "Hundreds of Products\nHigh Quality Printing\nPerfect for Any Niche\nGreat Profit Margins",
-            "card_art": true
+            "features": "Hundreds of Products\nHigh Quality Printing\nPerfect for Any Niche\nGreat Profit Margins"
           }
         },
         "svc_allover": {
           "type": "service",
           "settings": {
-            "image": "shopify://shop_images/pod-all-over-print-card.webp",
+            "image": "shopify://shop_images/gpl-pod-svc-allover.jpg",
             "title": "All Over Print POD",
             "intro": "Sublimation All Over Prints for Apparel & Accessories.",
-            "features": "Vibrant, Long Lasting Prints\nUnlimited Design Areas\nStand Out From The Crowd\nPerfect for Bold Brands",
-            "card_art": true
+            "features": "Vibrant, Long Lasting Prints\nUnlimited Design Areas\nStand Out From The Crowd\nPerfect for Bold Brands"
           }
         },
         "svc_private": {
