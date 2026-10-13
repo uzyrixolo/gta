@@ -12,7 +12,7 @@
     "hero": {
       "type": "gpl-banner",
       "settings": {
-        "image": "shopify://shop_images/Varsity_Jacket_1.png",
+        "image": "shopify://shop_images/Toronto_Custom_Varsity_Jacket_Showcase.webp",
         "alt": "Custom varsity jackets — your style, your brand, we print it. Premium custom varsity jackets for teams, schools, businesses and brands, fully customizable with your logos, names, numbers and more. Fast turnaround, premium quality, no minimums, delivery available. Styles: classic varsity, embroidered, leather sleeves, women’s crop, hooded varsity, team jackets.",
         "heading": "Custom Varsity Jackets",
         "heading_level": "h1",
@@ -35,7 +35,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Classic varsity",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 2,
             "y": 66,
             "w": 15,
@@ -46,7 +46,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Embroidered",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 18,
             "y": 66,
             "w": 15,
@@ -57,7 +57,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Leather sleeves",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 34,
             "y": 66,
             "w": 15,
@@ -68,7 +68,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Women's crop",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 50,
             "y": 66,
             "w": 15,
@@ -79,7 +79,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Hooded varsity",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 66,
             "y": 66,
             "w": 15,
@@ -90,7 +90,7 @@
           "type": "hotspot",
           "settings": {
             "label": "Team jackets",
-            "link": "#materials",
+            "link": "#shopify-section-template--34625044971773__materials",
             "x": 82,
             "y": 66,
             "w": 15,
