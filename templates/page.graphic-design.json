@@ -324,7 +324,8 @@
         "print_text_accent": "We prepare your artwork for the best results on every product.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "gd_process": {
       "type": "gpl-gd-process",
@@ -518,7 +519,8 @@
         "button_link": "",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "gd_why": {
       "type": "gpl-gd-why",
@@ -619,12 +621,74 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
       }
+    },
+    "gd_recreate_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "image": "shopify://shop_images/gd-recreate-your-artwork.webp",
+        "alt": "Before and after: we can create your artwork. Old logos, low-res images and shirt photos recreated as clean, high-res, print-ready artwork — clean & recreate, vector conversion, enhance & improve, ready for print, fast turnaround. Send us your image, we'll do the rest.",
+        "heading": "We Can Create Your Artwork",
+        "heading_level": "h2",
+        "eager": false,
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "send_image": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Send us your image",
+            "link": "/pages/quote",
+            "x": 73,
+            "y": 86,
+            "w": 25,
+            "h": 10
+          }
+        }
+      },
+      "block_order": [
+        "send_image"
+      ]
+    },
+    "gd_print_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "image": "shopify://shop_images/gd-design-for-print.webp",
+        "alt": "Design for print — not every design that looks good on screen will print properly; we prepare your artwork for the best results on every product. DTF transfer prints, DTG direct to garment, embroidery-ready files, screen printing colour separations, promotional products.",
+        "heading": "Design for Print",
+        "heading_level": "h2",
+        "eager": false,
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
     "gd_hero",
     "gd_audience",
     "gd_services",
+    "gd_recreate_banner",
+    "gd_print_banner",
     "gd_capabilities",
     "gd_process",
     "gd_turnaround",
