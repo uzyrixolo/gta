@@ -577,7 +577,8 @@
             "icon": "none",
             "title": "Universities",
             "text": "",
-            "image_alt": "University varsity jacket"
+            "image_alt": "University varsity jacket",
+            "image": "shopify://shop_images/vj-who-universities.webp"
           }
         },
         "k4": {
