@@ -8,6 +8,7 @@
 
   eyebrow         — small red line above (optional)
   light / accent  — the heading: white words, then red words
+  trail           — white words after the accent (optional)
   tagline         — bold line under the rule (optional; the rule shows either way)
   tagline_accent  — red tail of the tagline (optional)
   tone            — 'dark' (default: white text, for dark bands) or 'light'
@@ -20,6 +21,7 @@
   <{{ level }} class="gpl-sh__heading">
     {%- if light != blank -%}<span class="gpl-sh__light">{{ light }}</span>{%- endif -%}
     {% if accent != blank %} <span class="gpl-sh__accent">{{ accent }}</span>{% endif %}
+    {% if trail != blank %} <span class="gpl-sh__light">{{ trail }}</span>{% endif %}
   </{{ level }}>
   <span class="gpl-sh__rule" aria-hidden="true"></span>
   {%- if tagline != blank or tagline_accent != blank -%}

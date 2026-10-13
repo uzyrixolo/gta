@@ -112,49 +112,61 @@
         "svc_tshirt": {
           "type": "service",
           "settings": {
-            "title": "Custom T-Shirt Design",
+            "title": "Custom",
             "description": "Original artwork for apparel, streetwear, events, brands, fundraisers and more.",
-            "turnaround": "1-3 Business Days"
+            "turnaround": "1-3 Business Days",
+            "title_accent": "T-Shirt Design",
+            "image_asset": "gd-svc-1.jpg"
           }
         },
         "svc_logo": {
           "type": "service",
           "settings": {
-            "title": "Logo Design & Branding",
+            "title": "Logo Design &",
             "description": "Build a strong brand identity with logos, brand marks, business cards, colour palettes and more.",
-            "turnaround": "3-5 Business Days"
+            "turnaround": "3-5 Business Days",
+            "title_accent": "Branding",
+            "image_asset": "gd-svc-2.jpg"
           }
         },
         "svc_sports": {
           "type": "service",
           "settings": {
-            "title": "Sports Graphics",
+            "title": "Sports",
             "description": "Team logos, jerseys, championship graphics, player graphics and more.",
-            "turnaround": "1-3 Business Days"
+            "turnaround": "1-3 Business Days",
+            "title_accent": "Graphics",
+            "image_asset": "gd-svc-3.jpg"
           }
         },
         "svc_street": {
           "type": "service",
           "settings": {
-            "title": "Streetwear & Fashion Design",
+            "title": "Streetwear",
             "description": "Premium streetwear graphics, typography, oversized prints and limited drops.",
-            "turnaround": "2-5 Business Days"
+            "turnaround": "2-5 Business Days",
+            "title_accent": "& Fashion Design",
+            "image_asset": "gd-svc-4.jpg"
           }
         },
         "svc_corp": {
           "type": "service",
           "settings": {
-            "title": "Corporate & Business Design",
+            "title": "Corporate &",
             "description": "Company apparel, marketing materials, uniforms, flyers, social media and more.",
-            "turnaround": "2-5 Business Days"
+            "turnaround": "2-5 Business Days",
+            "title_accent": "Business Design",
+            "image_asset": "gd-svc-5.jpg"
           }
         },
         "svc_event": {
           "type": "service",
           "settings": {
-            "title": "Event & Promotional Graphics",
-            "description": "Event flyers, posters, banners, social media graphics and more.",
-            "turnaround": "1-3 Business Days"
+            "title": "Event &",
+            "description": "Event logos, flyers, posters, banners, social media graphics and more.",
+            "turnaround": "1-3 Business Days",
+            "title_accent": "Promotional Graphics",
+            "image_asset": "gd-svc-6.jpg"
           }
         }
       },
@@ -167,11 +179,13 @@
         "svc_event"
       ],
       "settings": {
-        "heading": "Our Graphic Design Services",
+        "heading": "Our",
         "button_text": "View All Design Examples",
         "button_link": "",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "color_background": "#0A0A0A",
+        "heading_accent": "Graphic Design",
+        "heading_trail": "Services"
       }
     },
     "gd_capabilities": {
