@@ -194,18 +194,18 @@
         "heading_tail": "",
         "subheading": "High performance. Custom designs. Any sport.",
         "columns": 8,
-        "image_ratio": "3 / 4",
-        "image_fit": "cover",
+        "image_ratio": "1 / 3",
+        "image_fit": "contain",
         "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#F4F4F4",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.08
       },
       "blocks": {
         "k1": {
@@ -213,9 +213,10 @@
           "settings": {
             "image_asset": "tu-sport-basketball.jpg",
             "icon": "none",
-            "title": "Basketball",
-            "text": "Jerseys, shorts, shooting shirts, warmups and more.",
-            "image_alt": "Basketball uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Basketball — Jerseys, shorts, shooting shirts, warmups and more.",
+            "image": "shopify://shop_images/tu-sport-basketball-card.webp"
           }
         },
         "k2": {
@@ -223,9 +224,10 @@
           "settings": {
             "image_asset": "tu-sport-football.jpg",
             "icon": "none",
-            "title": "Football",
-            "text": "Game jerseys, pants, practice gear, sideline apparel and accessories.",
-            "image_alt": "Football uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Football — Game jerseys, pants, practice gear, sideline apparel and accessories.",
+            "image": "shopify://shop_images/tu-sport-football-card.webp"
           }
         },
         "k3": {
@@ -233,9 +235,10 @@
           "settings": {
             "image_asset": "tu-sport-flagfootball.jpg",
             "icon": "none",
-            "title": "Flag Football",
-            "text": "Lightweight jerseys, shorts, team apparel, coach gear and more.",
-            "image_alt": "Flag football uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Flag Football — Lightweight jerseys, shorts, team apparel, coach gear and more.",
+            "image": "shopify://shop_images/tu-sport-flag-football-card.webp"
           }
         },
         "k4": {
@@ -243,9 +246,10 @@
           "settings": {
             "image_asset": "tu-sport-soccer.jpg",
             "icon": "none",
-            "title": "Soccer",
-            "text": "Jerseys, shorts, goalkeeper kits, training apparel and more.",
-            "image_alt": "Soccer uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Soccer — Jerseys, shorts, goalkeeper kits, training apparel and more.",
+            "image": "shopify://shop_images/tu-sport-soccer-card.webp"
           }
         },
         "k5": {
@@ -253,9 +257,10 @@
           "settings": {
             "image_asset": "tu-sport-rugby.jpg",
             "icon": "none",
-            "title": "Rugby",
-            "text": "Jerseys, shorts, training apparel, supporter gear and more.",
-            "image_alt": "Rugby uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Rugby — Jerseys, shorts, training apparel, supporter gear and more.",
+            "image": "shopify://shop_images/tu-sport-rugby-card.webp"
           }
         },
         "k6": {
@@ -263,9 +268,10 @@
           "settings": {
             "image_asset": "tu-sport-baseball.jpg",
             "icon": "none",
-            "title": "Baseball",
-            "text": "Jerseys, pants, caps, batting apparel, hoodies and more.",
-            "image_alt": "Baseball uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Baseball — Jerseys, pants, caps, batting apparel, hoodies and more.",
+            "image": "shopify://shop_images/tu-sport-baseball-card.webp"
           }
         },
         "k7": {
@@ -273,9 +279,10 @@
           "settings": {
             "image_asset": "tu-sport-softball.jpg",
             "icon": "none",
-            "title": "Softball",
-            "text": "Jerseys, pants, shorts, warmups, hats and more.",
-            "image_alt": "Softball uniform"
+            "title": "",
+            "text": "",
+            "image_alt": "Softball — Jerseys, pants, shorts, warmups, hats and more.",
+            "image": "shopify://shop_images/tu-sport-softball-card.webp"
           }
         },
         "k8": {
@@ -283,9 +290,10 @@
           "settings": {
             "image_asset": "tu-sport-more.jpg",
             "icon": "none",
-            "title": "And More",
-            "text": "If your sport isn't listed, we can create a custom apparel program for your team.",
-            "image_alt": "Equipment from many sports"
+            "title": "",
+            "text": "",
+            "image_alt": "And More — If your sport isn't listed, we can create a custom apparel program for your team.",
+            "image": "shopify://shop_images/tu-sport-and-more-card.webp"
           }
         }
       },
