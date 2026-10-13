@@ -647,7 +647,8 @@
             "icon": "none",
             "title": "Coaches & Staff",
             "text": "",
-            "image_alt": "Coaches and staff jackets"
+            "image_alt": "Coaches and staff jackets",
+            "image": "shopify://shop_images/vj-who-coaches.webp"
           }
         },
         "k11": {
