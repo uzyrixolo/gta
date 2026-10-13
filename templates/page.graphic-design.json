@@ -759,7 +759,8 @@
         "pod_headwear",
         "pod_accessories",
         "pod_allover"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [
