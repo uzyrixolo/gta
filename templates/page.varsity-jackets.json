@@ -590,7 +590,8 @@
             "icon": "none",
             "title": "Businesses",
             "text": "",
-            "image_alt": "Business varsity jacket"
+            "image_alt": "Business varsity jacket",
+            "image": "shopify://shop_images/vj-who-businesses.webp"
           }
         },
         "k5": {
