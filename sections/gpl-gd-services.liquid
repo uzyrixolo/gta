@@ -99,6 +99,8 @@
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media {
     position: relative;
     min-height: 100%;
+    /* the band's photos are near-square; let them set the card height */
+    aspect-ratio: 0.96 / 1;
     background: #1E1E1E;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media img,
@@ -114,7 +116,8 @@
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__body {
     display: flex;
     flex-direction: column;
-    padding: clamp(14px, 1.3vw, 20px);
+    padding: clamp(16px, 1.6vw, 26px);
+    justify-content: center;
     min-width: 0;
   }
   #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__title {
