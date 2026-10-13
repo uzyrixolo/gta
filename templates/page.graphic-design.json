@@ -25,9 +25,9 @@
         "color_accent": "#D71920",
         "color_button_text": "#FFFFFF",
         "button_align": "center",
-        "button_1_text": "Start Your Design",
+        "button_1_text": "",
         "button_1_link": "/pages/quote",
-        "button_2_text": "Request a Quote",
+        "button_2_text": "",
         "button_2_link": "/pages/quote"
       }
     },
