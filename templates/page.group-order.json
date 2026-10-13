@@ -103,78 +103,84 @@
         "heading_tail": "",
         "subheading": "One order, one design, and nobody chasing anybody for sizes or money.",
         "columns": 6,
-        "image_ratio": "16 / 11",
-        "image_fit": "cover",
-        "show_badges": true,
+        "image_ratio": "2 / 3",
+        "image_fit": "contain",
+        "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#FFFFFF",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0.08
       },
       "blocks": {
         "k1": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-savings.jpg",
-            "icon": "coins",
-            "title": "Volume savings",
-            "text": "Larger quantities can unlock better per-piece pricing.",
-            "image_alt": "Stacks of printed shirts"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Volume savings — Larger quantities can unlock better per-piece pricing.",
+            "image": "shopify://shop_images/go-why-volume-savings.webp"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-design.jpg",
-            "icon": "shirt",
-            "title": "One design, everyone's style",
-            "text": "Mix sizes, colours and approved products.",
-            "image_alt": "A hoodie and tee in the same design"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "One design, everyone's style — Mix sizes, colours and approved products.",
+            "image": "shopify://shop_images/go-why-one-design.webp"
           }
         },
         "k3": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-spreadsheets.jpg",
-            "icon": "doc",
-            "title": "No spreadsheets",
-            "text": "Members can order their own sizes and quantities online.",
-            "image_alt": "The ordering screen on a laptop"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "No spreadsheets — Members can order their own sizes and quantities online.",
+            "image": "shopify://shop_images/go-why-no-spreadsheets.webp"
           }
         },
         "k4": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-payments.jpg",
-            "icon": "click",
-            "title": "Easy payments",
-            "text": "Members can pay individually, or one organizer can manage the order.",
-            "image_alt": "Paying on a phone"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Easy payments — Members can pay individually, or one organizer can manage the order.",
+            "image": "shopify://shop_images/go-why-easy-payments.webp"
           }
         },
         "k5": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-organized.jpg",
-            "icon": "bolt",
-            "title": "Fast & organized",
-            "text": "Consolidated production and order management.",
-            "image_alt": "Boxes being packed"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Fast & organized — Consolidated production and order management.",
+            "image": "shopify://shop_images/go-why-fast-organized.webp"
           }
         },
         "k6": {
           "type": "card",
           "settings": {
             "image_asset": "go-why-custom.jpg",
-            "icon": "user",
-            "title": "Custom for your group",
-            "text": "Teams, schools, businesses, families, events, organizations and concert crews.",
-            "image_alt": "A group in matching apparel"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Custom for your group — Teams, schools, businesses, families, events, organizations and concert crews.",
+            "image": "shopify://shop_images/go-why-custom-for-your-group.webp"
           }
         }
       },
