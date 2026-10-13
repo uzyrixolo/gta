@@ -289,7 +289,8 @@
             "icon": "user",
             "title": "Individual",
             "text": "Order one custom jacket for yourself.",
-            "image_alt": "One custom varsity jacket"
+            "image_alt": "One custom varsity jacket",
+            "image": "shopify://shop_images/vj-prog-individual.webp"
           }
         },
         "k2": {
@@ -299,7 +300,8 @@
             "icon": "handshake",
             "title": "Small Group",
             "text": "Perfect for clubs, families, staff, teams and special groups.",
-            "image_alt": "Small group in matching varsity jackets"
+            "image_alt": "Small group in matching varsity jackets",
+            "image": "shopify://shop_images/vj-prog-small.webp"
           }
         },
         "k3": {
@@ -309,7 +311,8 @@
             "icon": "building",
             "title": "Large Group",
             "text": "Ideal for schools, teams, leagues, companies and organizations.",
-            "image_alt": "A full team in matching varsity jackets"
+            "image_alt": "A full team in matching varsity jackets",
+            "image": "shopify://shop_images/vj-prog-large.webp"
           }
         }
       },
