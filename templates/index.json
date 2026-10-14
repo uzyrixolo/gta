@@ -1248,7 +1248,8 @@
         "right_button_text": "Get A Quote",
         "right_button_link": "/pages/quote",
         "padding_top": 56,
-        "padding_bottom": 56
+        "padding_bottom": 56,
+        "left_artwork": "shopify://shop_images/home-support-card.webp"
       }
     }
   },

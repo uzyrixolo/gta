@@ -18,6 +18,17 @@
     <div class="gplsc__grid">
 
       {%- comment -%} LEFT CARD {%- endcomment -%}
+      {%- if section.settings.left_artwork != blank -%}
+        {%- comment -%} finished artwork: shown whole; each action button block becomes a clickable area over the drawn button {%- endcomment -%}
+        {%- assign art_buttons = section.blocks | where: 'type', 'action_button' -%}
+        <div class="gplsc-card gplsc-card--left gplsc-card--art">
+          {%- if section.settings.left_heading != blank -%}<h3 class="gplsc-sr">{{ section.settings.left_heading }}</h3>{%- endif -%}
+          {% render 'gpl-picture', img: section.settings.left_artwork, class: 'gplsc-art__img', alt: section.settings.left_heading, sizes: '(max-width: 989px) 100vw, 60vw' %}
+          {%- for block in art_buttons limit: 3 -%}
+            <a class="gplsc-art__hit gplsc-art__hit--{{ forloop.index }}" href="{{ block.settings.link | default: '#' }}" aria-label="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}></a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
       <div class="gplsc-card gplsc-card--left">
         <div class="gplsc-card__header">
           <div class="gplsc-card__avatar">
@@ -72,6 +83,8 @@
           </div>
         {%- endif -%}
       </div>
+
+      {%- endif -%}
 
       {%- comment -%} RIGHT CARD {%- endcomment -%}
       <div class="gplsc-card gplsc-card--right">
@@ -129,6 +142,17 @@
     border-radius: 12px;
     padding: 28px;
   }
+
+  /* finished artwork in place of the left card: no padding, the image sets the height,
+     three clickable areas sit over the call / chat / email buttons drawn along its foot */
+  .gplsc-{{ section.id }} .gplsc-card--art { position: relative; padding: 0; overflow: hidden; border-color: transparent; }
+  .gplsc-{{ section.id }} .gplsc-art__img { display: block; width: 100%; height: auto; }
+  .gplsc-{{ section.id }} .gplsc-art__hit { position: absolute; top: 83%; height: 12%; width: 29%; border-radius: 10px; }
+  .gplsc-{{ section.id }} .gplsc-art__hit--1 { left: 5%; width: 31%; }
+  .gplsc-{{ section.id }} .gplsc-art__hit--2 { left: 37%; }
+  .gplsc-{{ section.id }} .gplsc-art__hit--3 { left: 67%; }
+  .shopify-design-mode .gplsc-{{ section.id }} .gplsc-art__hit { outline: 2px dashed rgba(255,255,255,0.7); }
+  .gplsc-{{ section.id }} .gplsc-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
   .gplsc-{{ section.id }} .gplsc-card__header {
     display: flex;
@@ -241,6 +265,7 @@
     { "type": "color", "id": "primary_color", "label": "Buttons colour", "default": "#2F5FA8" },
     { "type": "color", "id": "icon_color", "label": "Icon accent colour", "default": "#E2492F" },
     { "type": "header", "content": "Left card" },
+    { "type": "image_picker", "id": "left_artwork", "label": "Finished artwork for the left card", "info": "Optional. Shown whole in place of the coded card; the three action buttons become clickable areas over the buttons drawn along its foot." },
     { "type": "image_picker", "id": "avatar_image", "label": "Avatar image (circular, 200x200px)" },
     { "type": "text", "id": "left_heading", "label": "Heading", "default": "Need Help With Your Order?" },
     { "type": "richtext", "id": "left_description", "label": "Description", "default": "<p>Need help with your order? Get personalized support from our expert team as your partner from design to delivery.</p>" },
