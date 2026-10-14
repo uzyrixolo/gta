@@ -267,7 +267,9 @@
             "pill_bg_color": "#ffffff",
             "pill_text_color": "#c21a1e",
             "pill_icon_color": "#c21a1e",
-            "pill_border_color": "#c21a1e"
+            "pill_border_color": "#c21a1e",
+            "artwork": "shopify://shop_images/home-delivery-same-day.webp",
+            "artwork_link": "/pages/quote"
           }
         },
         "turnaround_card_3R7iYd": {
@@ -288,7 +290,9 @@
             "pill_bg_color": "#ffffff",
             "pill_text_color": "#111111",
             "pill_icon_color": "#111111",
-            "pill_border_color": "#ffffff"
+            "pill_border_color": "#ffffff",
+            "artwork": "shopify://shop_images/home-delivery-next-day.webp",
+            "artwork_link": "/pages/quote"
           }
         },
         "turnaround_card_zFEFma": {
@@ -309,7 +313,9 @@
             "pill_bg_color": "#e8e8e8",
             "pill_text_color": "#111111",
             "pill_icon_color": "#111111",
-            "pill_border_color": "#e8e8e8"
+            "pill_border_color": "#e8e8e8",
+            "artwork": "shopify://shop_images/home-delivery-standard.webp",
+            "artwork_link": "/pages/quote"
           }
         },
         "bottom_item_xUnT4E": {
