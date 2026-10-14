@@ -87,6 +87,16 @@
       {%- endif -%}
 
       {%- comment -%} RIGHT CARD {%- endcomment -%}
+      {%- if section.settings.right_artwork != blank -%}
+        {%- comment -%} finished artwork: shown whole; the drawn button at its foot carries the button link {%- endcomment -%}
+        <div class="gplsc-card gplsc-card--right gplsc-card--art">
+          {%- if section.settings.right_heading != blank -%}<h3 class="gplsc-sr">{{ section.settings.right_heading }}</h3>{%- endif -%}
+          {% render 'gpl-picture', img: section.settings.right_artwork, class: 'gplsc-art__img', alt: section.settings.right_heading, sizes: '(max-width: 989px) 100vw, 36vw' %}
+          {%- if section.settings.right_button_link != blank -%}
+            <a class="gplsc-art__hit gplsc-art__hit--quote" href="{{ section.settings.right_button_link }}" aria-label="{{ section.settings.right_button_text | default: 'Get a quote' | escape }}"></a>
+          {%- endif -%}
+        </div>
+      {%- else -%}
       <div class="gplsc-card gplsc-card--right">
         {%- if section.settings.right_heading != blank -%}
           <h3 class="gplsc-card__title">{{ section.settings.right_heading }}</h3>
@@ -118,6 +128,7 @@
           </a>
         {%- endif -%}
       </div>
+      {%- endif -%}
 
     </div>
   </div>
@@ -151,6 +162,8 @@
   .gplsc-{{ section.id }} .gplsc-art__hit--1 { left: 5%; width: 31%; }
   .gplsc-{{ section.id }} .gplsc-art__hit--2 { left: 37%; }
   .gplsc-{{ section.id }} .gplsc-art__hit--3 { left: 67%; }
+  .gplsc-{{ section.id }} .gplsc-card--right.gplsc-card--art { align-self: start; }
+  .gplsc-{{ section.id }} .gplsc-art__hit--quote { left: 4%; top: 87%; width: 46%; height: 8%; }
   .shopify-design-mode .gplsc-{{ section.id }} .gplsc-art__hit { outline: 2px dashed rgba(255,255,255,0.7); }
   .gplsc-{{ section.id }} .gplsc-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
@@ -271,6 +284,7 @@
     { "type": "richtext", "id": "left_description", "label": "Description", "default": "<p>Need help with your order? Get personalized support from our expert team as your partner from design to delivery.</p>" },
     { "type": "text", "id": "help_heading", "label": "Help list heading", "default": "How We Can Help" },
     { "type": "header", "content": "Right card" },
+    { "type": "image_picker", "id": "right_artwork", "label": "Finished artwork for the right card", "info": "Optional. Shown whole in place of the coded card; the button link below becomes a clickable area over the button drawn at its foot." },
     { "type": "text", "id": "right_heading", "label": "Heading", "default": "Rush Order Service – Jump the Queue" },
     { "type": "text", "id": "right_line1", "label": "Line 1", "default": "Need your order faster than standard production times?" },
     { "type": "text", "id": "right_line2", "label": "Line 2", "default": "With our Rush Order Service, you can move your job to the front of the line." },
