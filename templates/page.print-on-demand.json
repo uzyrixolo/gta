@@ -365,25 +365,28 @@
         "prod_01": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-tshirt.jpg",
+            "image": "shopify://shop_images/pod-tile-tshirts-art.webp",
             "label": "T-Shirts",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_02": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-hoodie.jpg",
+            "image": "shopify://shop_images/pod-tile-hoodies-art.webp",
             "label": "Hoodies & Sweatshirts",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_03": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-hat.jpg",
+            "image": "shopify://shop_images/pod-tile-hats-art.webp",
             "label": "Hats & Beanies",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_04": {
