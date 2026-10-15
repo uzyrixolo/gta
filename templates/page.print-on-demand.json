@@ -288,7 +288,8 @@
         "brands_image": "shopify://shop_images/gpl-pod-creator.jpg",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a",
-        "brands_artwork": "shopify://shop_images/pod-built-for-creators-banner.webp"
+        "brands_artwork": "shopify://shop_images/pod-built-for-creators-banner.webp",
+        "steps_artwork": "shopify://shop_images/pod-how-it-works-art.webp"
       }
     },
     "pod_diff": {

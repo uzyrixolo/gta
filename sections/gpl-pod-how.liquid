@@ -11,6 +11,22 @@
 
 <section id="gpl-pod-how-{{ section.id }}" class="gpl-pod-how">
   <div class="gpl-pod-how__inner">
+    {%- if s.steps_artwork != blank -%}
+    <div class="gpl-pod-how__panel gpl-pod-how__panel--art">
+      {%- if s.steps_heading != blank -%}
+        <h2 class="gpl-pod-how__sr">{{ s.steps_heading }}</h2>
+      {%- endif -%}
+      {{
+        s.steps_artwork
+        | image_url: width: 1672
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(max-width: 1199px) 100vw, 50vw',
+          widths: '600, 900, 1200, 1672',
+          alt: s.steps_artwork.alt | escape
+      }}
+    </div>
+    {%- else -%}
     <div class="gpl-pod-how__panel gpl-pod-how__panel--steps">
       {%- if s.steps_heading != blank -%}
         <h2 class="gpl-pod-how__heading">{{ s.steps_heading }}</h2>
@@ -54,6 +70,7 @@
         </div>
       {%- endif -%}
     </div>
+    {%- endif -%}
 
     {%- if s.brands_artwork != blank -%}
     <div class="gpl-pod-how__panel gpl-pod-how__panel--art">
@@ -277,6 +294,12 @@
     line-height: 0;
   }
   #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--art img { display: block; width: 100%; height: auto; }
+  {%- if s.steps_artwork != blank and s.brands_artwork != blank -%}
+    {%- assign ar1 = s.steps_artwork.aspect_ratio | default: 1.777 -%}
+    {%- assign ar2 = s.brands_artwork.aspect_ratio | default: 1.777 -%}
+    /* Two artworks: column widths follow their shapes so both stand the same height */
+    #gpl-pod-how-{{ section.id }} .gpl-pod-how__inner { grid-template-columns: minmax(0, {{ ar1 }}fr) minmax(0, {{ ar2 }}fr); }
+  {%- endif -%}
   #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--steps:has(+ .gpl-pod-how__panel--art) {
     display: flex;
     flex-direction: column;
@@ -310,6 +333,7 @@
   "settings": [
     { "type": "header", "content": "Left panel — steps" },
     { "type": "text", "id": "steps_heading", "label": "Heading", "default": "How Print On Demand Works" },
+    { "type": "image_picker", "id": "steps_artwork", "label": "Finished artwork", "info": "Optional. Replaces the whole left panel with this image, shown in full and never cropped. The heading above is kept for search engines only." },
 
     { "type": "header", "content": "Right panel — built for brands" },
     { "type": "text", "id": "brands_heading", "label": "Heading", "default": "Built for Creators, Entrepreneurs and Brands." },
