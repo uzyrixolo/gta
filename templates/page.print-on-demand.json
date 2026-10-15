@@ -356,7 +356,8 @@
         "heading": "Why GTA Print Lab POD Is Different",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
-      }
+      },
+      "disabled": true
     },
     "pod_products": {
       "type": "gpl-pod-products",
@@ -699,6 +700,30 @@
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
       }
+    },
+    "pod_diff_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/pod-why-different-banner.webp",
+        "alt": "Why GTA Print Lab POD is different: boutique service, super fast turnaround with orders shipping in 24 to 48 hours, premium quality, no minimums, global shipping and dedicated support by chat, email and phone.",
+        "heading": "Why GTA Print Lab POD Is Different",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -707,6 +732,7 @@
     "pod_services",
     "pod_how",
     "pod_diff",
+    "pod_diff_banner",
     "pod_products",
     "pod_tools",
     "pod_stats",
