@@ -55,6 +55,22 @@
       {%- endif -%}
     </div>
 
+    {%- if s.brands_artwork != blank -%}
+    <div class="gpl-pod-how__panel gpl-pod-how__panel--art">
+      {%- if s.brands_heading != blank -%}
+        <h2 class="gpl-pod-how__sr">{{ s.brands_heading }}</h2>
+      {%- endif -%}
+      {{
+        s.brands_artwork
+        | image_url: width: 1672
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(max-width: 1199px) 100vw, 42vw',
+          widths: '600, 900, 1200, 1672',
+          alt: s.brands_artwork.alt | escape
+      }}
+    </div>
+    {%- else -%}
     <div class="gpl-pod-how__panel gpl-pod-how__panel--brands">
       <div class="gpl-pod-how__brands-copy">
         {%- if s.brands_heading != blank -%}
@@ -90,6 +106,7 @@
         </div>
       {%- endif -%}
     </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -252,6 +269,24 @@
     object-fit: cover;
   }
 
+  /* Finished artwork in place of the coded right panel: shown whole, never cropped */
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--art {
+    padding: 0;
+    overflow: hidden;
+    align-self: start;
+    line-height: 0;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--art img { display: block; width: 100%; height: auto; }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__panel--steps:has(+ .gpl-pod-how__panel--art) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  #gpl-pod-how-{{ section.id }} .gpl-pod-how__sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
   @media screen and (max-width: 1199px) {
     #gpl-pod-how-{{ section.id }} .gpl-pod-how__inner { grid-template-columns: minmax(0, 1fr); }
   }
@@ -280,6 +315,7 @@
     { "type": "text", "id": "brands_heading", "label": "Heading", "default": "Built for Creators, Entrepreneurs and Brands." },
     { "type": "textarea", "id": "brands_text", "label": "Text", "default": "Whether you're just starting or scaling to 7-figures, our POD service is built to grow with you." },
     { "type": "image_picker", "id": "brands_image", "label": "Photo", "info": "Optional." },
+    { "type": "image_picker", "id": "brands_artwork", "label": "Finished artwork", "info": "Optional. Replaces the whole right panel with this image, shown in full and never cropped. The heading above is kept for search engines only." },
 
     { "type": "header", "content": "Colours" },
     { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },

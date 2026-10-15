@@ -287,9 +287,9 @@
         "brands_text": "Whether you're just starting or scaling to 7-figures, our POD service is built to grow with you.",
         "brands_image": "shopify://shop_images/gpl-pod-creator.jpg",
         "color_accent": "#d71920",
-        "color_background": "#0a0a0a"
-      },
-      "disabled": true
+        "color_background": "#0a0a0a",
+        "brands_artwork": "shopify://shop_images/pod-built-for-creators-banner.webp"
+      }
     },
     "pod_diff": {
       "type": "gpl-pod-diff",
@@ -698,30 +698,6 @@
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
       }
-    },
-    "pod_built_banner": {
-      "type": "gpl-banner",
-      "settings": {
-        "image": "shopify://shop_images/pod-built-for-creators-banner.webp",
-        "alt": "Built for creators, entrepreneurs and brands. No inventory, no upfront costs, no packing or shipping. Focus on marketing and sales while GTA Print Lab handles print, pack and delivery.",
-        "heading": "Built for Creators, Entrepreneurs and Brands",
-        "heading_level": "h2",
-        "eager": false,
-        "full_bleed": false,
-        "max_width": 1260,
-        "side_padding": 20,
-        "padding_top": 0,
-        "padding_bottom": 40,
-        "corner_radius": 8,
-        "color_background": "#0A0A0A",
-        "color_accent": "#D71920",
-        "color_button_text": "#FFFFFF",
-        "button_align": "center",
-        "button_1_text": "",
-        "button_1_link": "",
-        "button_2_text": "",
-        "button_2_link": ""
-      }
     }
   },
   "order": [
@@ -729,7 +705,6 @@
     "pod_features",
     "pod_services",
     "pod_how",
-    "pod_built_banner",
     "pod_diff",
     "pod_products",
     "pod_tools",
