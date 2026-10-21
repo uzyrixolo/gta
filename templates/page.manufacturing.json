@@ -603,8 +603,7 @@
         "button_link": "",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      },
-      "disabled": true
+      }
     },
     "mfg_cta": {
       "type": "gpl-pod-cta",
