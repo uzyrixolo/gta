@@ -515,7 +515,8 @@
         "button_link": "",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "web_why": {
       "type": "gpl-pod-diff",

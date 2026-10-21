@@ -12,6 +12,11 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
+      {%- comment -%} Tell the browser the real card width so it downloads a sharp enough image {%- endcomment -%}
+      {%- assign cols = s.columns_desktop | default: 5 | plus: 0 -%}
+      {%- assign vw_desk = 100 | divided_by: cols -%}
+      {%- assign px_desk = 1520 | divided_by: cols -%}
+      {%- capture img_sizes -%}(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 34vw, min({{ vw_desk }}vw, {{ px_desk }}px){%- endcapture -%}
       <div class="gpl-pod-svc__grid">
         {%- for block in section.blocks -%}
           {%- comment -%} card_art: the image is the finished card (title and copy drawn in), shown whole {%- endcomment -%}
@@ -26,7 +31,7 @@
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
-                    sizes: '(max-width: 749px) 90vw, (max-width: 1199px) 30vw, 18vw',
+                    sizes: img_sizes,
                     widths: '250, 400, 550, 700, 900, 1200',
                     alt: img_alt | escape
                 }}

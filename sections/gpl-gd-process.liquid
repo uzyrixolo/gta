@@ -14,6 +14,11 @@
     {%- if section.blocks.size > 0 -%}
       <div class="gpl-gd-proc__grid">
         <span class="gpl-gd-proc__rail" aria-hidden="true"></span>
+        {%- if s.art_columns == '3' -%}
+          {%- assign proc_sizes = '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 34vw, min(34vw, 510px)' -%}
+        {%- else -%}
+          {%- assign proc_sizes = '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 34vw, min(17vw, 255px)' -%}
+        {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.card_art and block.settings.image != blank -%}
           <article class="gpl-gd-proc-card gpl-gd-proc-card--art" {{ block.shopify_attributes }}>
@@ -25,7 +30,7 @@
               | image_url: width: 941
               | image_tag:
                 loading: 'lazy',
-                sizes: '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 33vw, 17vw',
+                sizes: proc_sizes,
                 widths: '300, 450, 600, 941',
                 alt: block.settings.image.alt | default: block.settings.title | escape
             }}
