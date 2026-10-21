@@ -115,7 +115,8 @@
             "title": "Cut & Sew Manufacturing",
             "intro": "We make your products from scratch. Custom fabrics, trims, labels, packaging and everything in between.",
             "features": "T-Shirts, Hoodies, Sweatsuits\nPolo Shirts, Jackets, Pants\nActivewear & Athleisure\nKids, Women's, Men's",
-            "image": "shopify://shop_images/gpl-mfg-svc-cutsew.jpg"
+            "image": "shopify://shop_images/mfg-svc-cutsew-art.webp",
+            "card_art": true
           }
         },
         "s_full": {
@@ -124,7 +125,8 @@
             "title": "Full Package Production",
             "intro": "We handle the entire process from A to Z so you can focus on your brand.",
             "features": "Product Development\nSampling & Prototyping\nMaterial Sourcing\nManufacturing & Finishing\nQuality Control\nPacking & Shipping",
-            "image": "shopify://shop_images/gpl-mfg-svc-full.jpg"
+            "image": "shopify://shop_images/mfg-svc-fullpackage-art.webp",
+            "card_art": true
           }
         },
         "s_label": {
@@ -133,7 +135,8 @@
             "title": "Private Label & Custom Branding",
             "intro": "Bring your brand to life with custom labels, tags, packaging and branding.",
             "features": "Woven Labels\nHang Tags\nCustom Packaging\nBranding & Finishing",
-            "image": "shopify://shop_images/gpl-mfg-svc-label.jpg"
+            "image": "shopify://shop_images/mfg-svc-privatelabel-art.webp",
+            "card_art": true
           }
         },
         "s_source": {
@@ -142,7 +145,8 @@
             "title": "Sourcing & Materials",
             "intro": "High-quality fabrics and materials sourced globally for the best results.",
             "features": "Premium Fabrics\nTrims & Accessories\nSustainable Options\nCustom Materials",
-            "image": "shopify://shop_images/gpl-mfg-svc-source.jpg"
+            "image": "shopify://shop_images/mfg-svc-sourcing-art.webp",
+            "card_art": true
           }
         },
         "s_sample": {
@@ -151,7 +155,8 @@
             "title": "Sample Development",
             "intro": "We develop samples to ensure perfect fit, quality and construction before bulk production.",
             "features": "Proto Samples\nFit Samples\nPre-Production Samples",
-            "image": "shopify://shop_images/gpl-mfg-svc-sample.jpg"
+            "image": "shopify://shop_images/mfg-svc-sample-art.webp",
+            "card_art": true
           }
         }
       },
