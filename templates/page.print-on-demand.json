@@ -392,41 +392,46 @@
         "prod_04": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-case.jpg",
+            "image": "shopify://shop_images/pod-tile-cases-art.webp",
             "label": "Phone Cases",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_05": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-mug.jpg",
+            "image": "shopify://shop_images/pod-tile-mugs-art.webp",
             "label": "Mugs",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_06": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-tote.jpg",
+            "image": "shopify://shop_images/pod-tile-totes-art.webp",
             "label": "Tote Bags",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_07": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-bottle.jpg",
+            "image": "shopify://shop_images/pod-tile-bottles-art.webp",
             "label": "Water Bottles",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         },
         "prod_08": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/gpl-pod-tile-poster.jpg",
+            "image": "shopify://shop_images/pod-tile-posters-art.webp",
             "label": "Posters & Wall Art",
-            "link": ""
+            "link": "",
+            "card_art": true
           }
         }
       },
