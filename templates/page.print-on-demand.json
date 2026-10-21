@@ -656,7 +656,7 @@
           "type": "button",
           "settings": {
             "label": "Start Your POD Store",
-            "link": "",
+            "link": "/pages/contact",
             "style": "primary"
           }
         },
@@ -771,9 +771,21 @@
             "w": 18,
             "h": 9
           }
+        },
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your POD store",
+            "link": "/pages/contact",
+            "x": 4,
+            "y": 62,
+            "w": 24,
+            "h": 9
+          }
         }
       },
       "block_order": [
+        "start",
         "quote"
       ]
     }
