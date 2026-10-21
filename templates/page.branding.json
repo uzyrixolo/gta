@@ -360,7 +360,8 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A",
         "left_image": "shopify://shop_images/gpl-brand-duo.jpg"
-      }
+      },
+      "disabled": true
     },
     "brand_process": {
       "type": "gpl-gd-process",
@@ -687,6 +688,34 @@
         "premium",
         "vip"
       ]
+    },
+    "brand_duo_pair": {
+      "type": "gpl-banner-pair",
+      "settings": {
+        "image_1": "shopify://shop_images/brand-legendary-art.webp",
+        "heading_1": "Let's Build Something Legendary.",
+        "alt_1": "Your brand, our expertise. Let's build something legendary: complete brand development, custom merch and design, professional photos and videos, high-converting online store, social media content, packaging, everything under one roof.",
+        "hotspot_1_label": "",
+        "hotspot_1_link": "",
+        "hotspot_1_x": 70,
+        "hotspot_1_y": 85,
+        "hotspot_1_w": 25,
+        "hotspot_1_h": 10,
+        "image_2": "shopify://shop_images/brand-idea-to-icon-art.webp",
+        "heading_2": "From Idea to Icon.",
+        "alt_2": "All-in-one branding solution, from idea to icon: strategy and planning, design and branding, content creation, launch and growth.",
+        "hotspot_2_label": "",
+        "hotspot_2_link": "",
+        "hotspot_2_x": 70,
+        "hotspot_2_y": 85,
+        "hotspot_2_w": 25,
+        "hotspot_2_h": 10,
+        "gap": 16,
+        "corner_radius": 8,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "color_background": "#0A0A0A"
+      }
     }
   },
   "order": [
@@ -694,6 +723,7 @@
     "brand_features",
     "brand_services",
     "brand_duo",
+    "brand_duo_pair",
     "brand_process",
     "brand_packages",
     "brand_packages_banner",
