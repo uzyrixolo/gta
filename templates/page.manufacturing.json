@@ -434,7 +434,8 @@
             "title": "Cut & Sew",
             "intro": "Complete garment construction from scratch.",
             "features": "",
-            "image": "shopify://shop_images/gpl-mfg-cap-cutsew.jpg"
+            "image": "shopify://shop_images/mfg-cap-cutsew-art.webp",
+            "card_art": true
           }
         },
         "c_print": {
@@ -443,7 +444,8 @@
             "title": "Printing",
             "intro": "DTF, DTG, Screen Printing, Sublimation and more.",
             "features": "",
-            "image": "shopify://shop_images/gpl-mfg-cap-print.jpg"
+            "image": "shopify://shop_images/mfg-cap-printing-art.webp",
+            "card_art": true
           }
         },
         "c_emb": {
@@ -452,7 +454,8 @@
             "title": "Embroidery",
             "intro": "High-quality embroidery for logos, patches and more.",
             "features": "",
-            "image": "shopify://shop_images/gpl-mfg-cap-emb.jpg"
+            "image": "shopify://shop_images/mfg-cap-embroidery-art.webp",
+            "card_art": true
           }
         },
         "c_pack": {
@@ -461,7 +464,8 @@
             "title": "Packaging",
             "intro": "Custom packaging, poly bags, boxes and more.",
             "features": "",
-            "image": "shopify://shop_images/gpl-mfg-cap-pack.jpg"
+            "image": "shopify://shop_images/mfg-cap-packaging-art.webp",
+            "card_art": true
           }
         },
         "c_ship": {
@@ -470,7 +474,8 @@
             "title": "Global Shipping",
             "intro": "Worldwide shipping with reliable partners you can trust.",
             "features": "",
-            "image": "shopify://shop_images/gpl-mfg-cap-ship.jpg"
+            "image": "shopify://shop_images/mfg-cap-shipping-art.webp",
+            "card_art": true
           }
         }
       },
