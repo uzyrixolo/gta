@@ -119,7 +119,8 @@
             "reverse": false,
             "image_1": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_11_06_AM.png",
             "overlay_text": "",
-            "badge_text": ""
+            "badge_text": "",
+            "artwork": "shopify://shop_images/about-why-toronto-art.webp"
           }
         },
         "row_production": {
