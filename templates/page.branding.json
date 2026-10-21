@@ -370,7 +370,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M16.5 16.5 21 21\"/></svg>",
             "title": "Discover",
-            "description": "We learn about your goals, audience, and vision."
+            "description": "We learn about your goals, audience, and vision.",
+            "image": "shopify://shop_images/brand-step-1-discover.webp",
+            "card_art": true
           }
         },
         "p_strategy": {
@@ -378,7 +380,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h11l5 5v9H4z\"/><path d=\"M8 10h6M8 14h4\"/></svg>",
             "title": "Strategy",
-            "description": "We create a custom brand strategy tailored to you."
+            "description": "We create a custom brand strategy tailored to you.",
+            "image": "shopify://shop_images/brand-step-2-strategy.webp",
+            "card_art": true
           }
         },
         "p_design": {
@@ -386,7 +390,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l6 6-8.5 8.5L3 20l2.5-6.5z\"/><circle cx=\"10.5\" cy=\"13.5\" r=\"1.3\"/></svg>",
             "title": "Design",
-            "description": "We design your brand identity and creative assets."
+            "description": "We design your brand identity and creative assets.",
+            "image": "shopify://shop_images/brand-step-3-design.webp",
+            "card_art": true
           }
         },
         "p_create": {
@@ -394,7 +400,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"6\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"12\" cy=\"13\" r=\"3.6\"/><path d=\"M8.5 6l1.5-2.5h4L15.5 6\"/></svg>",
             "title": "Create",
-            "description": "We produce content, visuals, photos, and videos."
+            "description": "We produce content, visuals, photos, and videos.",
+            "image": "shopify://shop_images/brand-step-4-create.webp",
+            "card_art": true
           }
         },
         "p_launch": {
@@ -402,7 +410,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15c-1.8-3.6-1-8 3.5-11 1 1 2.2 3.2 2 5.6-.2 2.8-2.5 5-5.5 5.4z\"/><path d=\"M12 15l-3-3c-1.7.6-3.4 2.3-4 5.6 3.3-.6 5-2.3 5.6-4z\"/><path d=\"M12 15c.6 1.7-.4 4.2-3 5.6.2-2 .6-3.4 1.4-4.4\"/><circle cx=\"14.7\" cy=\"7.3\" r=\"1.3\"/></svg>",
             "title": "Launch",
-            "description": "We launch your brand with impact and consistency."
+            "description": "We launch your brand with impact and consistency.",
+            "image": "shopify://shop_images/brand-step-5-launch.webp",
+            "card_art": true
           }
         },
         "p_grow": {
@@ -410,7 +420,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20V10M10 20V4M16 20v-9M21 20H3\"/></svg>",
             "title": "Grow",
-            "description": "We help you scale your brand and grow your audience."
+            "description": "We help you scale your brand and grow your audience.",
+            "image": "shopify://shop_images/brand-step-6-grow.webp",
+            "card_art": true
           }
         }
       },
@@ -425,7 +437,8 @@
       "settings": {
         "heading": "Our Branding Process",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "color_background": "#0A0A0A",
+        "art_columns": "3"
       }
     },
     "brand_packages": {
