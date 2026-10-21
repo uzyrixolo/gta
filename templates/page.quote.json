@@ -181,7 +181,9 @@
         "strip_note": "Toronto-based, nationwide delivery",
         "color_accent": "#D71920",
         "color_background": "#FFFFFF",
-        "steps_artwork": "shopify://shop_images/quote-how-it-works-art.webp"
+        "steps_artwork": "shopify://shop_images/quote-how-it-works-art.webp",
+        "account_artwork": "shopify://shop_images/quote-request-account-art.webp",
+        "why_artwork": "shopify://shop_images/quote-why-account-art.webp"
       }
     },
     "hero_banner": {

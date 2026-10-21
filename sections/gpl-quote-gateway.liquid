@@ -70,9 +70,25 @@
   {%- endif -%}
 
   {%- comment -%} ---------- form + why ---------- {%- endcomment -%}
+  {%- assign acct_art = false -%}
+  {%- if s.account_artwork != blank and signed_in == false -%}{%- assign acct_art = true -%}{%- endif -%}
   <div class="gpl-qg__main">
-    <div class="gpl-qg__wrap gpl-qg__cols">
+    <div class="gpl-qg__wrap gpl-qg__cols{% if acct_art %} gpl-qg__cols--art{% endif %}">
 
+      {%- if acct_art -%}
+      {%- comment -%} artwork with the real, working form laid over the form drawn into it {%- endcomment -%}
+      <div class="gpl-qg__acct">
+        {{
+          s.account_artwork
+          | image_url: width: 1672
+          | image_tag:
+            loading: 'lazy',
+            class: 'gpl-qg__acct-img',
+            sizes: '(max-width: 989px) 1px, (max-width: 1247px) 100vw, 1200px',
+            widths: '900, 1200, 1672',
+            alt: s.account_artwork.alt | escape
+        }}
+      {%- endif -%}
       <div class="gpl-qg__card gpl-qg__form-card" id="request">
         {%- if signed_in -%}
 
@@ -196,8 +212,23 @@
 
         {%- endif -%}
       </div>
+      {%- if acct_art -%}</div>{%- endif -%}
 
-      {%- if benefits.size > 0 -%}
+      {%- if s.why_artwork != blank -%}
+        <aside class="gpl-qg__why-art">
+          <h2 class="gpl-qg__sr">{{ s.why_heading }}</h2>
+          {{
+            s.why_artwork
+            | image_url: width: 1672
+            | image_tag:
+              loading: 'lazy',
+              class: 'gpl-qg__why-img',
+              sizes: '(max-width: 1247px) 100vw, 1200px',
+              widths: '600, 900, 1200, 1672',
+              alt: s.why_artwork.alt | escape
+          }}
+        </aside>
+      {%- elsif benefits.size > 0 -%}
         <aside class="gpl-qg__card gpl-qg__why">
           <h2 class="gpl-qg__why-h">{{ s.why_heading }}</h2>
           <div class="gpl-qg__benefits">
@@ -301,6 +332,21 @@
   #gpl-qg-{{ id }} .gpl-qg__cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(20px, 2.6vw, 36px); align-items: start; }
   #gpl-qg-{{ id }} .gpl-qg__card { border-radius: 16px; padding: clamp(24px, 3vw, 40px); }
   #gpl-qg-{{ id }} .gpl-qg__form-card { background: #F1F1F1; }
+  /* finished artwork: why panel shown whole; account artwork carries the real form on top of its drawn form */
+  #gpl-qg-{{ id }} .gpl-qg__why-img { display: block; width: 100%; height: auto; border-radius: 8px; }
+  #gpl-qg-{{ id }} .gpl-qg__cols--art { grid-template-columns: minmax(0, 1fr); }
+  #gpl-qg-{{ id }} .gpl-qg__acct-img { display: none; }
+  @media screen and (min-width: 990px) {
+    #gpl-qg-{{ id }} .gpl-qg__acct { position: relative; }
+    #gpl-qg-{{ id }} .gpl-qg__acct-img { display: block; width: 100%; height: auto; border-radius: 8px; }
+    #gpl-qg-{{ id }} .gpl-qg__acct .gpl-qg__form-card {
+      position: absolute; left: 55%; top: 15.6%; width: 36.3%; min-height: 78.2%; box-sizing: border-box;
+      background: #FFFFFF; border-radius: clamp(14px, 1.6vw, 20px); padding: clamp(16px, 1.9vw, 26px) clamp(16px, 1.9vw, 26px) clamp(12px, 1.4vw, 18px);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+    }
+    #gpl-qg-{{ id }} .gpl-qg__acct .gpl-qg__inputs { gap: clamp(8px, 0.9vw, 12px); margin-bottom: clamp(12px, 1.3vw, 18px); }
+    #gpl-qg-{{ id }} .gpl-qg__acct .gpl-qg__card-h { font-size: clamp(20px, 2.1vw, 28px); }
+  }
   #gpl-qg-{{ id }} .gpl-qg__card-h { margin: 0 0 8px; font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; text-transform: uppercase; color: #111; line-height: 1.1; }
   #gpl-qg-{{ id }} .gpl-qg__card-sub { margin: 0 0 24px; color: #5B5B5B; font-size: 15px; }
   #gpl-qg-{{ id }} .gpl-qg__card-sub a { color: {{ accent }}; font-weight: 700; }
@@ -508,6 +554,18 @@
     {
       "type": "header",
       "content": "Why create an account"
+    },
+    {
+      "type": "image_picker",
+      "id": "account_artwork",
+      "label": "Request-an-account artwork",
+      "info": "Optional. Shown to signed-out visitors on desktop with the real, working form laid over the form drawn into it. Phones and tablets show the plain form."
+    },
+    {
+      "type": "image_picker",
+      "id": "why_artwork",
+      "label": "Why-create-an-account artwork",
+      "info": "Optional. Replaces the benefits panel with this image, shown in full. The heading below is kept for search engines."
     },
     {
       "type": "text",
