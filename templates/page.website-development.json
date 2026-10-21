@@ -595,7 +595,7 @@
           "type": "button",
           "settings": {
             "label": "Start Your Project",
-            "link": "",
+            "link": "/pages/contact",
             "style": "primary"
           }
         },
@@ -617,7 +617,8 @@
         "text": "Let's build a high-converting website that showcases your brand, sells your products, and grows your business.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "web_duo_pair": {
       "type": "gpl-banner-pair",
@@ -747,6 +748,58 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "web_cta_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/web-cta-banner.webp",
+        "alt": "Ready to build your website? Let's build a high-converting website that showcases your brand, sells your products and grows your business.",
+        "heading": "Ready to Build Your Website?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your project",
+            "link": "/pages/contact",
+            "x": 5,
+            "y": 54,
+            "w": 25,
+            "h": 10
+          }
+        },
+        "quote": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Request a quote",
+            "link": "/pages/quote",
+            "x": 30,
+            "y": 54,
+            "w": 20,
+            "h": 10
+          }
+        }
+      },
+      "block_order": [
+        "start",
+        "quote"
+      ]
     }
   },
   "order": [
@@ -761,6 +814,7 @@
     "web_projects",
     "web_why",
     "web_why_banner",
-    "web_cta"
+    "web_cta",
+    "web_cta_banner"
   ]
 }
