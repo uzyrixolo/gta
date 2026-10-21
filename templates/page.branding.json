@@ -589,7 +589,7 @@
           "type": "button",
           "settings": {
             "label": "Start Your Brand",
-            "link": "",
+            "link": "/pages/contact",
             "style": "primary"
           }
         },
@@ -611,7 +611,8 @@
         "text": "Let's turn your vision into a brand that stands out, sells more, and grows your legacy.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "brand_packages_banner": {
       "type": "gpl-banner",
@@ -716,6 +717,58 @@
         "padding_bottom": 40,
         "color_background": "#0A0A0A"
       }
+    },
+    "brand_cta_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/brand-cta-banner.webp",
+        "alt": "Ready to build your brand? Let's turn your vision into a brand that stands out, sells more and grows your legacy.",
+        "heading": "Ready to Build Your Brand?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your brand",
+            "link": "/pages/contact",
+            "x": 4,
+            "y": 74,
+            "w": 29,
+            "h": 9
+          }
+        },
+        "quote": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Request a quote",
+            "link": "/pages/quote",
+            "x": 35,
+            "y": 74,
+            "w": 23,
+            "h": 9
+          }
+        }
+      },
+      "block_order": [
+        "start",
+        "quote"
+      ]
     }
   },
   "order": [
@@ -728,6 +781,7 @@
     "brand_packages",
     "brand_packages_banner",
     "brand_work",
-    "brand_cta"
+    "brand_cta",
+    "brand_cta_banner"
   ]
 }
