@@ -327,7 +327,8 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A",
         "left_image": "shopify://shop_images/gpl-web-duo.jpg"
-      }
+      },
+      "disabled": true
     },
     "web_process": {
       "type": "gpl-gd-process",
@@ -603,6 +604,34 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
       }
+    },
+    "web_duo_pair": {
+      "type": "gpl-banner-pair",
+      "settings": {
+        "image_1": "shopify://shop_images/web-grow-business-art.webp",
+        "heading_1": "We Build Websites That Grow Your Business",
+        "alt_1": "We build websites that grow your business: modern designs, mobile-first and fully responsive, high-converting product pages, secure checkout, easy product management, SEO structure, fast loading and ongoing support.",
+        "hotspot_1_label": "",
+        "hotspot_1_link": "",
+        "hotspot_1_x": 70,
+        "hotspot_1_y": 85,
+        "hotspot_1_w": 25,
+        "hotspot_1_h": 10,
+        "image_2": "shopify://shop_images/web-pod-success-art.webp",
+        "heading_2": "Built for Print on Demand Success",
+        "alt_2": "Built for print on demand success: customer places order, we fulfill and print, we pack and ship, customer receives order. No inventory, no upfront costs, automated fulfillment, focus on marketing and sales.",
+        "hotspot_2_label": "",
+        "hotspot_2_link": "",
+        "hotspot_2_x": 70,
+        "hotspot_2_y": 85,
+        "hotspot_2_w": 25,
+        "hotspot_2_h": 10,
+        "gap": 16,
+        "corner_radius": 8,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "color_background": "#0A0A0A"
+      }
     }
   },
   "order": [
@@ -610,6 +639,7 @@
     "web_features",
     "web_services",
     "web_duo",
+    "web_duo_pair",
     "web_process",
     "web_packages",
     "web_projects",
