@@ -344,7 +344,8 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A",
         "image": "shopify://shop_images/gpl-mfg-factory.jpg"
-      }
+      },
+      "disabled": true
     },
     "mfg_process": {
       "type": "gpl-gd-process",
@@ -672,6 +673,34 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "mfg_why_pair": {
+      "type": "gpl-banner-pair",
+      "settings": {
+        "image_1": "shopify://shop_images/mfg-why-choose-art.webp",
+        "heading_1": "Why Choose GTA Print Lab for Manufacturing?",
+        "alt_1": "Why choose GTA Print Lab for manufacturing: our own dedicated plant overseas, latest technology and skilled workforce, fastest production times, strict quality control, competitive pricing, low minimums, global shipping support, ethical and sustainable manufacturing.",
+        "hotspot_1_label": "",
+        "hotspot_1_link": "",
+        "hotspot_1_x": 70,
+        "hotspot_1_y": 85,
+        "hotspot_1_w": 25,
+        "hotspot_1_h": 10,
+        "image_2": "shopify://shop_images/mfg-factory-numbers-art.webp",
+        "heading_2": "Our Factory by the Numbers",
+        "alt_2": "Our factory by the numbers: 150,000+ units produced monthly, 200+ skilled workers and staff, 100+ global brands trust us, 15+ years of industry experience.",
+        "hotspot_2_label": "",
+        "hotspot_2_link": "",
+        "hotspot_2_x": 70,
+        "hotspot_2_y": 85,
+        "hotspot_2_w": 25,
+        "hotspot_2_h": 10,
+        "gap": 16,
+        "corner_radius": 8,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "color_background": "#0A0A0A"
+      }
     }
   },
   "order": [
@@ -681,6 +710,7 @@
     "mfg_industries",
     "mfg_industries_banner",
     "mfg_why",
+    "mfg_why_pair",
     "mfg_process",
     "mfg_capabilities",
     "mfg_speed",
