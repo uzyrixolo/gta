@@ -587,7 +587,7 @@
           "type": "button",
           "settings": {
             "label": "Start Your Design",
-            "link": "",
+            "link": "/pages/contact",
             "style": "primary",
             "icon": ""
           }
@@ -622,7 +622,8 @@
         "text": "Whether you're starting a clothing brand, launching a business, creating team apparel, promoting an event, or making something for yourself, GTA Print Lab is here to bring your idea to life.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "gd_capability_bands": {
       "type": "gpl-banner-pair",
@@ -761,6 +762,58 @@
         "pod_allover"
       ],
       "disabled": true
+    },
+    "gd_cta_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/gd-cta-banner.webp",
+        "alt": "Ready to create something amazing? Whether you're starting a clothing brand, launching a business, creating team apparel, promoting an event or making something for yourself, GTA Print Lab is here to bring your idea to life.",
+        "heading": "Ready to Create Something Amazing?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "design": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your design",
+            "link": "/pages/contact",
+            "x": 72,
+            "y": 47,
+            "w": 26,
+            "h": 9
+          }
+        },
+        "quote": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Request a quote",
+            "link": "/pages/quote",
+            "x": 72,
+            "y": 57,
+            "w": 26,
+            "h": 9
+          }
+        }
+      },
+      "block_order": [
+        "design",
+        "quote"
+      ]
     }
   },
   "order": [
@@ -776,6 +829,7 @@
     "gd_turnaround",
     "gd_gallery",
     "gd_why",
-    "gd_cta"
+    "gd_cta",
+    "gd_cta_banner"
   ]
 }
