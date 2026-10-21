@@ -31,7 +31,8 @@
         "promise_heading": "Our Promise",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
-      }
+      },
+      "disabled": true
     },
     "ab_story": {
       "type": "gpl-ab-story",
@@ -284,10 +285,33 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "ab_hero_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/about-hero-banner.webp",
+        "alt": "About GTA Print Lab: more than printing, a higher standard. We turn ideas into apparel that makes an impact for individuals, businesses and brands.",
+        "heading": "About Us",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0B0B0B",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
     "ab_hero",
+    "ab_hero_banner",
     "ab_story",
     "ab_story_banner",
     "ab_stats",
