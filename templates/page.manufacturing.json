@@ -542,48 +542,48 @@
           "type": "item",
           "settings": {
             "category": "Apparel",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-1.jpg"
+            "caption": "Custom Fight Club zip hoodies and joggers with red and white prints",
+            "image": "shopify://shop_images/mfg-proj-1-apparel.webp"
           }
         },
         "proj_02": {
           "type": "item",
           "settings": {
             "category": "Activewear",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-2.jpg"
+            "caption": "Black branded activewear: tank, shorts, sports bra and leggings",
+            "image": "shopify://shop_images/mfg-proj-2-activewear.webp"
           }
         },
         "proj_03": {
           "type": "item",
           "settings": {
             "category": "Streetwear",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-3.jpg"
+            "caption": "Black streetwear tee with a large Your Brand Here print on the production table",
+            "image": "shopify://shop_images/mfg-proj-3-streetwear.webp"
           }
         },
         "proj_04": {
           "type": "item",
           "settings": {
             "category": "Uniforms",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-4.jpg"
+            "caption": "Team Canada basketball jerseys in white and black with red numbers",
+            "image": "shopify://shop_images/mfg-proj-4-uniforms.webp"
           }
         },
         "proj_05": {
           "type": "item",
           "settings": {
             "category": "Teamwear",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-5.jpg"
+            "caption": "Polo shirts in navy, black, sand and orange on a rail",
+            "image": "shopify://shop_images/mfg-proj-5-teamwear.webp"
           }
         },
         "proj_06": {
           "type": "item",
           "settings": {
             "category": "Private Label",
-            "caption": "",
-            "image": "shopify://shop_images/gpl-mfg-proj-6.jpg"
+            "caption": "Black private label mailer box printed Your Brand Here",
+            "image": "shopify://shop_images/mfg-proj-6-privatelabel.webp"
           }
         }
       },
@@ -598,7 +598,7 @@
       "settings": {
         "heading": "Recent Manufacturing Projects",
         "all_label": "All",
-        "tile_ratio": "4 / 3",
+        "tile_ratio": "1 / 1",
         "button_text": "View Full Portfolio",
         "button_link": "",
         "color_accent": "#D71920",
