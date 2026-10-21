@@ -72,7 +72,8 @@
         "min_height_mobile": 480,
         "color_accent": "#D71920",
         "color_background": "#0B0B0B"
-      }
+      },
+      "disabled": true
     },
     "gateway": {
       "type": "gpl-quote-gateway",
@@ -181,10 +182,51 @@
         "color_accent": "#D71920",
         "color_background": "#FFFFFF"
       }
+    },
+    "hero_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/quote-hero-banner.webp",
+        "alt": "Get a quote. Create an account to request a quote and get personalized pricing for custom apparel, uniforms and merchandise. Create your account, submit your details, receive your quote, approve and get started.",
+        "heading": "Get a Quote",
+        "heading_level": "h1",
+        "eager": true,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 24,
+        "padding_bottom": 32,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "step1": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Create your account",
+            "link": "#request",
+            "x": 0,
+            "y": 75,
+            "w": 25,
+            "h": 25
+          }
+        }
+      },
+      "block_order": [
+        "step1"
+      ]
     }
   },
   "order": [
     "hero",
+    "hero_banner",
     "gateway"
   ]
 }
