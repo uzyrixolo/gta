@@ -14,14 +14,16 @@
     {%- if section.blocks.size > 0 -%}
       <div class="gpl-gd-proc__grid">
         <span class="gpl-gd-proc__rail" aria-hidden="true"></span>
-        {%- if s.art_columns == '3' -%}
+        {%- if s.art_columns == 'fit' -%}
+          {%- assign proc_sizes = '(max-width: 749px) 100vw, min(36vw, 560px)' -%}
+        {%- elsif s.art_columns == '3' -%}
           {%- assign proc_sizes = '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 34vw, min(34vw, 510px)' -%}
         {%- else -%}
           {%- assign proc_sizes = '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 34vw, min(17vw, 255px)' -%}
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.card_art and block.settings.image != blank -%}
-          <article class="gpl-gd-proc-card gpl-gd-proc-card--art" {{ block.shopify_attributes }}>
+          <article class="gpl-gd-proc-card gpl-gd-proc-card--art" style="--ar: {{ block.settings.image.aspect_ratio | default: 1.333 }};" {{ block.shopify_attributes }}>
             {%- if block.settings.title != blank -%}
               <h3 class="gpl-gd-proc__sr">{{ block.settings.title }}</h3>
             {%- endif -%}
@@ -157,6 +159,18 @@
   #gpl-gd-proc-{{ section.id }} .gpl-gd-proc-card--art { padding: 0; background: none; border: 0; border-radius: 0; line-height: 0; align-self: start; }
   #gpl-gd-proc-{{ section.id }} .gpl-gd-proc-card--art img { display: block; width: 100%; height: auto; }
   #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid:has(.gpl-gd-proc-card--art) .gpl-gd-proc__rail { display: none; }
+  {%- if s.art_columns == 'fit' -%}
+    /* Mixed-shape artwork: every card the same height, width follows its own shape; rows wrap and centre */
+    @media screen and (min-width: 750px) {
+      #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid:has(.gpl-gd-proc-card--art) {
+        display: flex; flex-wrap: wrap; justify-content: center; --row-h: min(17.2vw, 275px);
+      }
+      #gpl-gd-proc-{{ section.id }} .gpl-gd-proc-card--art { flex: 0 0 auto; width: calc(var(--row-h) * var(--ar)); }
+    }
+    @media screen and (max-width: 749px) {
+      #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid:has(.gpl-gd-proc-card--art) { grid-template-columns: minmax(0, 1fr) !important; }
+    }
+  {%- endif -%}
   {%- if s.art_columns == '3' -%}
     @media screen and (min-width: 1200px) {
       #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid:has(.gpl-gd-proc-card--art) { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: clamp(14px, 1.4vw, 22px); }
@@ -190,8 +204,9 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Our Design Process" },
     { "type": "select", "id": "art_columns", "label": "Cards per row on desktop (finished artwork)", "default": "6", "options": [
       { "value": "6", "label": "All in one row" },
-      { "value": "3", "label": "Three per row" }
-    ], "info": "Only applies when the steps show finished card artwork. Three per row suits landscape artwork." },
+      { "value": "3", "label": "Three per row" },
+      { "value": "fit", "label": "Same height, width follows each shape" }
+    ], "info": "Only applies when the steps show finished card artwork. Three per row suits landscape artwork; 'same height' suits artwork in mixed shapes." },
     { "type": "color", "id": "color_accent", "label": "Accent", "default": "#D71920" },
     { "type": "color", "id": "color_background", "label": "Background", "default": "#0A0A0A" }
   ],

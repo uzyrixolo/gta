@@ -338,7 +338,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M16.5 16.5 21 21\"/><path d=\"M8 12.5l2 2 4-4.5\"/></svg>",
             "title": "Discover",
-            "description": "We learn about your business, goals, and target audience."
+            "description": "We learn about your business, goals, and target audience.",
+            "image": "shopify://shop_images/web-step-1-discover.webp",
+            "card_art": true
           }
         },
         "p_plan": {
@@ -346,7 +348,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.4\"/></svg>",
             "title": "Plan & Strategy",
-            "description": "We plan your website structure, features, and user experience."
+            "description": "We plan your website structure, features, and user experience.",
+            "image": "shopify://shop_images/web-step-2-plan.webp",
+            "card_art": true
           }
         },
         "p_design": {
@@ -354,7 +358,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l6 6-8.5 8.5L3 20l2.5-6.5z\"/><circle cx=\"10.5\" cy=\"13.5\" r=\"1.3\"/></svg>",
             "title": "Design",
-            "description": "We create a modern, branded design tailored to your business."
+            "description": "We create a modern, branded design tailored to your business.",
+            "image": "shopify://shop_images/web-step-3-design.webp",
+            "card_art": true
           }
         },
         "p_dev": {
@@ -362,7 +368,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 7l-5 5 5 5M16 7l5 5-5 5\"/><path d=\"M13.5 4.5l-3 15\"/></svg>",
             "title": "Development",
-            "description": "We build your website with clean, fast, and secure code."
+            "description": "We build your website with clean, fast, and secure code.",
+            "image": "shopify://shop_images/web-step-4-development.webp",
+            "card_art": true
           }
         },
         "p_launch": {
@@ -370,7 +378,9 @@
           "settings": {
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 15c-1.8-3.6-1-8 3.5-11 1 1 2.2 3.2 2 5.6-.2 2.8-2.5 5-5.5 5.4z\"/><path d=\"M12 15l-3-3c-1.7.6-3.4 2.3-4 5.6 3.3-.6 5-2.3 5.6-4z\"/><path d=\"M12 15c.6 1.7-.4 4.2-3 5.6.2-2 .6-3.4 1.4-4.4\"/><circle cx=\"14.7\" cy=\"7.3\" r=\"1.3\"/></svg>",
             "title": "Launch & Support",
-            "description": "We launch your website and provide ongoing support."
+            "description": "We launch your website and provide ongoing support.",
+            "image": "shopify://shop_images/web-step-5-launch.webp",
+            "card_art": true
           }
         }
       },
@@ -384,7 +394,8 @@
       "settings": {
         "heading": "Our Website Development Process",
         "color_accent": "#D71920",
-        "color_background": "#0A0A0A"
+        "color_background": "#0A0A0A",
+        "art_columns": "fit"
       }
     },
     "web_packages": {
