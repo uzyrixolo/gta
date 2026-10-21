@@ -180,7 +180,8 @@
         "strip_tagline": "Custom apparel. Branded solutions. Toronto proud.",
         "strip_note": "Toronto-based, nationwide delivery",
         "color_accent": "#D71920",
-        "color_background": "#FFFFFF"
+        "color_background": "#FFFFFF",
+        "steps_artwork": "shopify://shop_images/quote-how-it-works-art.webp"
       }
     },
     "hero_banner": {

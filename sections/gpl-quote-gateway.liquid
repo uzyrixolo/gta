@@ -23,7 +23,24 @@
 <section id="gpl-qg-{{ id }}" class="gpl-qg">
 
   {%- comment -%} ---------- how it works ---------- {%- endcomment -%}
-  {%- if steps.size > 0 -%}
+  {%- if s.steps_artwork != blank -%}
+    {%- comment -%} finished artwork in place of the coded steps; the heading stays for search engines {%- endcomment -%}
+    <div class="gpl-qg__steps-band gpl-qg__steps-band--art">
+      <div class="gpl-qg__wrap">
+        <h2 class="gpl-qg__sr">{{ s.steps_heading }}</h2>
+        {{
+          s.steps_artwork
+          | image_url: width: 1672
+          | image_tag:
+            loading: 'lazy',
+            class: 'gpl-qg__steps-art',
+            sizes: '(max-width: 1247px) 100vw, 1200px',
+            widths: '600, 900, 1200, 1672',
+            alt: s.steps_artwork.alt | escape
+        }}
+      </div>
+    </div>
+  {%- elsif steps.size > 0 -%}
     <div class="gpl-qg__steps-band">
       <div class="gpl-qg__wrap">
         <div class="gpl-qg__ruled">
@@ -238,6 +255,9 @@
 
   /* ---- how it works ---- */
   #gpl-qg-{{ id }} .gpl-qg__steps-band { padding: clamp(44px, 5.5vw, 80px) 0 clamp(32px, 4vw, 56px); }
+  #gpl-qg-{{ id }} .gpl-qg__steps-band--art { padding: clamp(24px, 3vw, 40px) 0 clamp(20px, 2.6vw, 36px); }
+  #gpl-qg-{{ id }} .gpl-qg__steps-art { display: block; width: 100%; height: auto; border-radius: 8px; }
+  #gpl-qg-{{ id }} .gpl-qg__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   #gpl-qg-{{ id }} .gpl-qg__ruled { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 3vw, 28px); }
   #gpl-qg-{{ id }} .gpl-qg__rule { flex: 0 1 clamp(40px, 14vw, 190px); height: 3px; background: {{ accent }}; }
   #gpl-qg-{{ id }} .gpl-qg__h2 {
@@ -406,6 +426,12 @@
       "id": "steps_sub",
       "label": "Subheading",
       "default": "Getting a quote is simple. Just create an account and you'll be ready in minutes."
+    },
+    {
+      "type": "image_picker",
+      "id": "steps_artwork",
+      "label": "Finished artwork",
+      "info": "Optional. Replaces the heading, subheading and step blocks with this image, shown in full and never cropped. The heading above is kept for search engines."
     },
     {
       "type": "range",
