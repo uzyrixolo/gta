@@ -585,7 +585,8 @@
         "heading": "Why Choose GTA Print Lab?",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "web_cta": {
       "type": "gpl-pod-cta",
@@ -722,6 +723,30 @@
         "pod",
         "advanced"
       ]
+    },
+    "web_why_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/web-why-choose-banner.webp",
+        "alt": "Why choose GTA Print Lab? All-in-one solution, expert team, fast turnaround, ongoing support and results-driven websites built to convert.",
+        "heading": "Why Choose GTA Print Lab?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -735,6 +760,7 @@
     "web_packages_banner",
     "web_projects",
     "web_why",
+    "web_why_banner",
     "web_cta"
   ]
 }
