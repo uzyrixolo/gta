@@ -123,7 +123,8 @@
             "title": "eCommerce Website Design",
             "intro": "Professional online stores built to convert visitors into customers. Beautiful, fast, and effective.",
             "features": "Shopify Experts\nConversion Focused\nCustom Store Design\nMobile Optimized",
-            "image": "shopify://shop_images/gpl-web-svc-ecom.jpg"
+            "image": "shopify://shop_images/web-svc-ecom-art.webp",
+            "card_art": true
           }
         },
         "s_pod": {
@@ -132,7 +133,8 @@
             "title": "Print On Demand Websites",
             "intro": "We build POD websites that connect with your production and fulfillment workflow seamlessly.",
             "features": "Product Customization\nInventory Sync\nAutomated Fulfillment\nScalable Solutions",
-            "image": "shopify://shop_images/gpl-web-svc-pod.jpg"
+            "image": "shopify://shop_images/web-svc-pod-art.webp",
+            "card_art": true
           }
         },
         "s_custom": {
@@ -141,7 +143,8 @@
             "title": "Custom Website Design",
             "intro": "Fully custom websites designed to match your brand and vision.",
             "features": "Unique Design\nUser Experience (UX)\nBrand Focused\nUnlimited Possibilities",
-            "image": "shopify://shop_images/gpl-web-svc-custom.jpg"
+            "image": "shopify://shop_images/web-svc-custom-art.webp",
+            "card_art": true
           }
         },
         "s_landing": {
@@ -150,7 +153,8 @@
             "title": "Landing Pages That Convert",
             "intro": "High-converting landing pages for products, campaigns, and promotions.",
             "features": "Sales Focused\nFast & Lightweight\nLead Generation\nA/B Testing Ready",
-            "image": "shopify://shop_images/gpl-web-svc-landing.jpg"
+            "image": "shopify://shop_images/web-svc-landing-art.webp",
+            "card_art": true
           }
         },
         "s_apps": {
@@ -159,7 +163,8 @@
             "title": "App & Integration Setup",
             "intro": "We integrate the best tools to automate and grow your business.",
             "features": "Shopify & Shopify Apps\nPayment Gateways\nPrintful, Printify, TeeInBlue\nShipping & Tracking",
-            "image": "shopify://shop_images/gpl-web-svc-apps.jpg"
+            "image": "shopify://shop_images/web-svc-apps-art.webp",
+            "card_art": true
           }
         },
         "s_perf": {
@@ -168,7 +173,8 @@
             "title": "Speed, SEO & Performance",
             "intro": "We optimize your website for speed, search engines, and overall performance.",
             "features": "Technical SEO\nMobile Performance\nSpeed Optimization\nBetter Rankings",
-            "image": "shopify://shop_images/gpl-web-svc-perf.jpg"
+            "image": "shopify://shop_images/web-svc-perf-art.webp",
+            "card_art": true
           }
         }
       },
