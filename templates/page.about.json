@@ -48,7 +48,8 @@
         "photo_role": "Founder & CEO",
         "color_accent": "#d71920",
         "color_background": "#0e0e0e"
-      }
+      },
+      "disabled": true
     },
     "ab_stats": {
       "type": "gpl-gd-why",
@@ -259,11 +260,36 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "ab_story_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/about-our-story-art.webp",
+        "alt": "Our story, from vision to a global apparel powerhouse: GTA Print Lab, founded by a visionary entrepreneur with over 10 years in custom apparel and manufacturing, now based in Toronto.",
+        "heading": "Our Story",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "corner_radius": 8,
+        "color_background": "#0E0E0E",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
     "ab_hero",
     "ab_story",
+    "ab_story_banner",
     "ab_stats",
     "ab_split",
     "ab_mission",
