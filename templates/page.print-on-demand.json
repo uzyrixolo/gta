@@ -365,7 +365,7 @@
         "prod_01": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/pod-tile-tshirts-art.webp",
+            "image": "shopify://shop_images/pod-tile-tshirts-art-v2.webp",
             "label": "T-Shirts",
             "link": "",
             "card_art": true
