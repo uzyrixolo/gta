@@ -84,7 +84,7 @@
           | image_tag:
             loading: 'lazy',
             class: 'gpl-qg__acct-img',
-            sizes: '(max-width: 989px) 1px, (max-width: 1247px) 100vw, 1200px',
+            sizes: '(max-width: 1149px) 1px, (max-width: 1247px) 100vw, 1200px',
             widths: '900, 1200, 1672',
             alt: s.account_artwork.alt | escape
         }}
@@ -336,7 +336,7 @@
   #gpl-qg-{{ id }} .gpl-qg__why-img { display: block; width: 100%; height: auto; border-radius: 8px; }
   #gpl-qg-{{ id }} .gpl-qg__cols--art { grid-template-columns: minmax(0, 1fr); }
   #gpl-qg-{{ id }} .gpl-qg__acct-img { display: none; }
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 1150px) {
     #gpl-qg-{{ id }} .gpl-qg__acct { position: relative; }
     #gpl-qg-{{ id }} .gpl-qg__acct-img { display: block; width: 100%; height: auto; border-radius: 8px; }
     #gpl-qg-{{ id }} .gpl-qg__acct .gpl-qg__form-card {
@@ -559,7 +559,7 @@
       "type": "image_picker",
       "id": "account_artwork",
       "label": "Request-an-account artwork",
-      "info": "Optional. Shown to signed-out visitors on desktop with the real, working form laid over the form drawn into it. Phones and tablets show the plain form."
+      "info": "Optional. Shown to signed-out visitors on wide screens (1150px and up) with the real, working form laid over the form drawn into it. Phones and tablets show the plain form."
     },
     {
       "type": "image_picker",
