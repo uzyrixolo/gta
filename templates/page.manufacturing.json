@@ -612,7 +612,7 @@
           "type": "button",
           "settings": {
             "label": "Start Your Project",
-            "link": "",
+            "link": "/pages/contact",
             "style": "primary"
           }
         },
@@ -666,7 +666,8 @@
         "text": "Let's build something amazing together. From concept to creation, GTA Print Lab is your trusted manufacturing partner.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "mfg_industries_banner": {
       "type": "gpl-banner",
@@ -743,6 +744,58 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "mfg_cta_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/mfg-cta-banner.webp",
+        "alt": "Ready to manufacture your next big idea? Let's build something amazing together. From concept to creation, GTA Print Lab is your trusted manufacturing partner.",
+        "heading": "Ready to Manufacture Your Next Big Idea?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your project",
+            "link": "/pages/contact",
+            "x": 3,
+            "y": 76,
+            "w": 31,
+            "h": 8
+          }
+        },
+        "quote": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Request a quote",
+            "link": "/pages/quote",
+            "x": 3,
+            "y": 86,
+            "w": 31,
+            "h": 8
+          }
+        }
+      },
+      "block_order": [
+        "start",
+        "quote"
+      ]
     }
   },
   "order": [
@@ -758,6 +811,7 @@
     "mfg_speed",
     "mfg_speed_banner",
     "mfg_projects",
-    "mfg_cta"
+    "mfg_cta",
+    "mfg_cta_banner"
   ]
 }
