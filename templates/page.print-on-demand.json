@@ -710,7 +710,8 @@
         "text": "Start your print on demand business today and let us handle the printing, packing and shipping while you focus on growing your brand.",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
-      }
+      },
+      "disabled": true
     },
     "pod_diff_banner": {
       "type": "gpl-banner",
@@ -735,6 +736,46 @@
         "button_2_text": "",
         "button_2_link": ""
       }
+    },
+    "pod_cta_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/pod-launch-cta-banner.webp",
+        "alt": "Ready to launch your POD store? Start your print on demand business today and let us handle printing, packing and shipping. Risk free, easy to start, big potential, we handle the rest.",
+        "heading": "Ready to Launch Your POD Store?",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "quote": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Request a quote",
+            "link": "/pages/quote",
+            "x": 29,
+            "y": 62,
+            "w": 18,
+            "h": 9
+          }
+        }
+      },
+      "block_order": [
+        "quote"
+      ]
     }
   },
   "order": [
@@ -747,6 +788,7 @@
     "pod_products",
     "pod_tools",
     "pod_stats",
-    "pod_cta"
+    "pod_cta",
+    "pod_cta_banner"
   ]
 }
