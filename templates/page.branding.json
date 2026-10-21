@@ -495,7 +495,8 @@
         "footnote": "All packages include revisions, support, and files you own 100%.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "brand_work": {
       "type": "gpl-gd-gallery",
@@ -597,6 +598,82 @@
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
       }
+    },
+    "brand_packages_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/brand-packages-banner.webp",
+        "alt": "Branding packages that fit your vision: Starter Brand from $500, Growth Brand from $1,500, Premium Brand from $2,500, VIP Brand from $4,000+.",
+        "heading": "Branding Packages That Fit Your Vision",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "starter": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with Starter Brand",
+            "link": "/pages/contact",
+            "x": 5,
+            "y": 81,
+            "w": 19,
+            "h": 7
+          }
+        },
+        "growth": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with Growth Brand",
+            "link": "/pages/contact",
+            "x": 29,
+            "y": 81,
+            "w": 19,
+            "h": 7
+          }
+        },
+        "premium": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with Premium Brand",
+            "link": "/pages/contact",
+            "x": 53,
+            "y": 81,
+            "w": 19,
+            "h": 7
+          }
+        },
+        "vip": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with VIP Brand",
+            "link": "/pages/contact",
+            "x": 77,
+            "y": 81,
+            "w": 19,
+            "h": 7
+          }
+        }
+      },
+      "block_order": [
+        "starter",
+        "growth",
+        "premium",
+        "vip"
+      ]
     }
   },
   "order": [
@@ -606,6 +683,7 @@
     "brand_duo",
     "brand_process",
     "brand_packages",
+    "brand_packages_banner",
     "brand_work",
     "brand_cta"
   ]
