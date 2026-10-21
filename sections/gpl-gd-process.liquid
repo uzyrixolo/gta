@@ -15,6 +15,23 @@
       <div class="gpl-gd-proc__grid">
         <span class="gpl-gd-proc__rail" aria-hidden="true"></span>
         {%- for block in section.blocks -%}
+          {%- if block.settings.card_art and block.settings.image != blank -%}
+          <article class="gpl-gd-proc-card gpl-gd-proc-card--art" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="gpl-gd-proc__sr">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {{
+              block.settings.image
+              | image_url: width: 941
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 419px) 100vw, (max-width: 749px) 50vw, (max-width: 1199px) 33vw, 17vw',
+                widths: '300, 450, 600, 941',
+                alt: block.settings.image.alt | default: block.settings.title | escape
+            }}
+          </article>
+          {%- continue -%}
+          {%- endif -%}
           <article class="gpl-gd-proc-card" {{ block.shopify_attributes }}>
             <span class="gpl-gd-proc-card__num" aria-hidden="true">
               {%- if forloop.index < 10 -%}0{%- endif -%}{{ forloop.index }}
@@ -131,6 +148,15 @@
     line-height: 1.45;
   }
 
+  /* Finished step artwork: the image already carries its number, icon and copy; shown whole */
+  #gpl-gd-proc-{{ section.id }} .gpl-gd-proc-card--art { padding: 0; background: none; border: 0; border-radius: 0; line-height: 0; align-self: start; }
+  #gpl-gd-proc-{{ section.id }} .gpl-gd-proc-card--art img { display: block; width: 100%; height: auto; }
+  #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid:has(.gpl-gd-proc-card--art) .gpl-gd-proc__rail { display: none; }
+  #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
   @media screen and (max-width: 1199px) {
     #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 14px; }
     #gpl-gd-proc-{{ section.id }} .gpl-gd-proc__rail { display: none; }
@@ -164,7 +190,9 @@
         { "type": "paragraph", "content": "Steps are numbered automatically (01, 02, 03…) in the order they appear here." },
         { "type": "html", "id": "icon", "label": "Icon (SVG code)" },
         { "type": "text", "id": "title", "label": "Title", "default": "Tell Us Your Idea" },
-        { "type": "textarea", "id": "description", "label": "Description", "default": "Upload your artwork, sketch, photo or explain your idea. Don't have artwork? That's okay!" }
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Upload your artwork, sketch, photo or explain your idea. Don't have artwork? That's okay!" },
+        { "type": "image_picker", "id": "image", "label": "Finished card artwork", "info": "Optional." },
+        { "type": "checkbox", "id": "card_art", "label": "Show the artwork instead of the coded card", "default": false, "info": "For artwork with the number, icon and copy drawn in: shown whole, never cropped. The title above is kept for search engines." }
       ]
     }
   ],
