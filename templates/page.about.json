@@ -137,7 +137,8 @@
             "image_1": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_11_06_AM_de5d81fc-8c6d-40ce-9573-2fa7ff5dcf20.png",
             "overlay_text": "",
             "image_2": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_04_11_06_AM_03eb2c6f-50a4-450d-8454-13dfbaa37d53.png",
-            "badge_text": "Our Factory Pakistan"
+            "badge_text": "Our Factory Pakistan",
+            "artwork": "shopify://shop_images/about-global-production-art.webp"
           }
         }
       },
