@@ -195,7 +195,8 @@
       "settings": {
         "color_accent": "#d71920",
         "color_background": "#ffffff"
-      }
+      },
+      "disabled": true
     },
     "ab_cta": {
       "type": "gpl-gd-cta",
@@ -233,6 +234,30 @@
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
       }
+    },
+    "ab_mission_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/about-mission-goals-team.webp",
+        "alt": "Our mission, our goals and our team at GTA Print Lab.",
+        "heading": "Our Mission, Goals and Team",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "corner_radius": 0,
+        "color_background": "#FFFFFF",
+        "color_accent": "#D71920",
+        "color_button_text": "#111111",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -241,6 +266,7 @@
     "ab_stats",
     "ab_split",
     "ab_mission",
+    "ab_mission_banner",
     "ab_cta"
   ]
 }
