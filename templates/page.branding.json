@@ -107,7 +107,8 @@
             "title": "Brand Strategy",
             "intro": "We create the foundation of your brand. From positioning to messaging, we build a strategy that sets you apart from the competition.",
             "features": "Brand Discovery\nBrand Positioning\nMarket Research\nMessaging & Voice",
-            "image": "shopify://shop_images/gpl-brand-svc-strategy.jpg"
+            "image": "shopify://shop_images/brand-svc-strategy-art.webp",
+            "card_art": true
           }
         },
         "s_logo": {
@@ -116,7 +117,8 @@
             "title": "Logo & Visual Identity",
             "intro": "Memorable logos and visual identities that represent your brand everywhere your customers see you.",
             "features": "Logo Design\nBrand Colors\nTypography\nBrand Guidelines",
-            "image": "shopify://shop_images/gpl-brand-svc-logo.jpg"
+            "image": "shopify://shop_images/brand-svc-logo-art.webp",
+            "card_art": true
           }
         },
         "s_merch": {
@@ -125,7 +127,8 @@
             "title": "Merch Branding",
             "intro": "We brand your merch for impact. Unique designs that make your products stand out and sell more.",
             "features": "Custom Apparel Design\nTags & Labels\nPrint Ready Files\nCollection Development",
-            "image": "shopify://shop_images/gpl-brand-svc-merch.jpg"
+            "image": "shopify://shop_images/brand-svc-merch-art.webp",
+            "card_art": true
           }
         },
         "s_photo": {
@@ -134,7 +137,8 @@
             "title": "Photography",
             "intro": "High-quality product and lifestyle photography that makes your brand look professional and premium.",
             "features": "Product Photography\nLifestyle Shoots\nStudio Photography\nRetouching & Editing",
-            "image": "shopify://shop_images/gpl-brand-svc-photo.jpg"
+            "image": "shopify://shop_images/brand-svc-photo-art.webp",
+            "card_art": true
           }
         },
         "s_video": {
@@ -143,7 +147,8 @@
             "title": "Video & Reels",
             "intro": "Engaging videos and reels that capture attention and tell your brand story across all platforms.",
             "features": "Reels & Short Videos\nBrand Story Videos\nProduct Videos\nVideo Editing",
-            "image": "shopify://shop_images/gpl-brand-svc-video.jpg"
+            "image": "shopify://shop_images/brand-svc-video-art.webp",
+            "card_art": true
           }
         },
         "s_social": {
@@ -152,7 +157,8 @@
             "title": "Social Media Branding",
             "intro": "Consistent, eye-catching content that builds your brand and grows your following.",
             "features": "Content Strategy\nPost Design\nHighlight Icons\nTemplates & Carousels",
-            "image": "shopify://shop_images/gpl-brand-svc-social.jpg"
+            "image": "shopify://shop_images/brand-svc-social-art.webp",
+            "card_art": true
           }
         },
         "s_pack": {
@@ -161,7 +167,8 @@
             "title": "Packaging & Unboxing",
             "intro": "Custom packaging that creates an unforgettable unboxing experience and builds brand loyalty.",
             "features": "Custom Packaging\nThank You Cards\nTissue Paper & Stickers\nBranded Mailers",
-            "image": "shopify://shop_images/gpl-brand-svc-pack.jpg"
+            "image": "shopify://shop_images/brand-svc-pack-art.webp",
+            "card_art": true
           }
         },
         "s_store": {
@@ -170,7 +177,8 @@
             "title": "E-Commerce & Store Design",
             "intro": "We design powerful online stores that look amazing and convert visitors into loyal customers.",
             "features": "Shopify Store Design\nProduct Page Design\nUser Experience (UX)\nConversion Optimization",
-            "image": "shopify://shop_images/gpl-brand-svc-store.jpg"
+            "image": "shopify://shop_images/brand-svc-store-art.webp",
+            "card_art": true
           }
         }
       },
