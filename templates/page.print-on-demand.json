@@ -374,7 +374,7 @@
         "prod_02": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/pod-tile-hoodies-art.webp",
+            "image": "shopify://shop_images/pod-tile-hoodies-art-v2.webp",
             "label": "Hoodies & Sweatshirts",
             "link": "",
             "card_art": true
