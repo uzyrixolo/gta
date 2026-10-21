@@ -411,7 +411,7 @@
             "price_note": "One-Time",
             "features": "Up to 10 Products\nMobile Responsive\nBasic SEO\nPayment Integration",
             "button_text": "Get Started",
-            "button_link": ""
+            "button_link": "/pages/contact"
           }
         },
         "pkg_growth": {
@@ -424,7 +424,7 @@
             "price_note": "One-Time",
             "features": "Up to 50 Products\nCustom Design\nSEO Optimized\nApp Integrations",
             "button_text": "Get Started",
-            "button_link": ""
+            "button_link": "/pages/contact"
           }
         },
         "pkg_pod": {
@@ -437,7 +437,7 @@
             "price_note": "One-Time",
             "features": "POD Integration\nProduct Customization\nAutomated Fulfillment\nShipping Setup",
             "button_text": "Get Started",
-            "button_link": ""
+            "button_link": "/pages/contact"
           }
         },
         "pkg_advanced": {
@@ -450,7 +450,7 @@
             "price_note": "Custom",
             "features": "Unlimited Products\nAdvanced Features\nCustom Integrations\nPriority Support",
             "button_text": "Get Started",
-            "button_link": ""
+            "button_link": "/pages/contact"
           }
         }
       },
@@ -465,7 +465,8 @@
         "footnote": "All packages include training, support, and a website you own 100%.",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "web_projects": {
       "type": "gpl-gd-gallery",
@@ -644,6 +645,83 @@
         "padding_bottom": 40,
         "color_background": "#0A0A0A"
       }
+    },
+    "web_packages_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/web-packages-banner.webp",
+        "alt": "Website packages: Starter Store from $699, Growth Store from $1,299, POD Store from $1,499, Advanced Store $2,499+ custom. All packages include training, support and a website you own 100%.",
+        "heading": "Website Solutions for Every Business",
+        "heading_level": "h2",
+        "show_heading": true,
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "corner_radius": 8,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "starter": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with the Starter Store",
+            "link": "/pages/contact",
+            "x": 3,
+            "y": 78,
+            "w": 21,
+            "h": 8
+          }
+        },
+        "growth": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with the Growth Store",
+            "link": "/pages/contact",
+            "x": 28,
+            "y": 78,
+            "w": 21,
+            "h": 8
+          }
+        },
+        "pod": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with the POD Store",
+            "link": "/pages/contact",
+            "x": 52,
+            "y": 78,
+            "w": 21,
+            "h": 8
+          }
+        },
+        "advanced": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Get started with the Advanced Store",
+            "link": "/pages/contact",
+            "x": 76,
+            "y": 78,
+            "w": 21,
+            "h": 8
+          }
+        }
+      },
+      "block_order": [
+        "starter",
+        "growth",
+        "pod",
+        "advanced"
+      ]
     }
   },
   "order": [
@@ -654,6 +732,7 @@
     "web_duo_pair",
     "web_process",
     "web_packages",
+    "web_packages_banner",
     "web_projects",
     "web_why",
     "web_cta"
