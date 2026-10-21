@@ -599,7 +599,8 @@
         "extra_text": "We help you build a real brand.",
         "extra_image": "shopify://shop_images/gpl-pod-extra.jpg",
         "color_accent": "#d71920",
-        "color_background": "#0a0a0a"
+        "color_background": "#0a0a0a",
+        "tools_artwork": "shopify://shop_images/pod-tools-integrations-art.webp"
       }
     },
     "pod_stats": {

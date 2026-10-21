@@ -11,6 +11,22 @@
 
 <section id="gpl-pod-tools-{{ section.id }}" class="gpl-pod-tools">
   <div class="gpl-pod-tools__inner">
+    {%- if s.tools_artwork != blank -%}
+    <div class="gpl-pod-tools__panel gpl-pod-tools__panel--art">
+      {%- if s.tools_heading != blank -%}
+        <h2 class="gpl-pod-tools__sr">{{ s.tools_heading }}</h2>
+      {%- endif -%}
+      {{
+        s.tools_artwork
+        | image_url: width: 1672
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(max-width: 1199px) 100vw, 50vw',
+          widths: '600, 900, 1200, 1672',
+          alt: s.tools_artwork.alt | escape
+      }}
+    </div>
+    {%- else -%}
     <div class="gpl-pod-tools__panel">
       {%- if s.tools_heading != blank -%}
         <h2 class="gpl-pod-tools__heading">{{ s.tools_heading }}</h2>
@@ -68,6 +84,7 @@
         {%- endif -%}
       </div>
     </div>
+    {%- endif -%}
 
     <div class="gpl-pod-tools__panel">
       {%- if s.extra_heading != blank -%}
@@ -131,6 +148,13 @@
     background: #101010;
     padding: clamp(16px, 1.8vw, 26px);
     min-width: 0;
+  }
+  /* Finished artwork in place of the coded left panel: shown whole, never cropped */
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel--art { padding: 0; overflow: hidden; align-self: start; line-height: 0; }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__panel--art img { display: block; width: 100%; height: auto; }
+  #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
   #gpl-pod-tools-{{ section.id }} .gpl-pod-tools__heading {
     margin: 0 0 8px;
@@ -275,6 +299,7 @@
     { "type": "text", "id": "tools_heading", "label": "Heading", "default": "Powerful Tools & Integrations" },
     { "type": "textarea", "id": "tools_text", "label": "Text", "default": "We integrate with the leading platforms to make selling easy." },
     { "type": "image_picker", "id": "tools_image", "label": "Image", "info": "Optional — e.g. laptop screenshot." },
+    { "type": "image_picker", "id": "tools_artwork", "label": "Finished artwork", "info": "Optional. Replaces the whole left panel with this image, shown in full and never cropped. The heading above is kept for search engines only." },
 
     { "type": "header", "content": "Right panel — more than printing" },
     { "type": "text", "id": "extra_heading", "label": "Heading", "default": "More Than Just Printing" },
