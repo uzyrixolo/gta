@@ -7,6 +7,9 @@
 {%- endcomment -%}
 
 {%- assign s = section.settings -%}
+{%- comment -%} the photo frame follows the first card's photo shape, so photos are never trimmed {%- endcomment -%}
+{%- assign media_ratio = 0.96 -%}
+{%- for b in section.blocks -%}{%- if b.settings.image != blank -%}{%- assign media_ratio = b.settings.image.aspect_ratio -%}{%- break -%}{%- endif -%}{%- endfor -%}
 
 <section id="gpl-gd-svc-{{ section.id }}" class="gpl-gd-svc">
   <div class="gpl-gd-svc__inner">
@@ -102,7 +105,7 @@
     /* the band's photos are near-square; let them set the card height — but
        never the card width: with a stretched height, aspect-ratio would
        otherwise widen the box into the copy column */
-    aspect-ratio: 0.96 / 1;
+    aspect-ratio: {{ media_ratio }};
     width: 100%; max-width: 100%; min-width: 0; overflow: hidden;
     background: #1E1E1E;
   }
@@ -194,7 +197,7 @@
   }
   @media screen and (max-width: 419px) {
     #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card { grid-template-columns: minmax(0, 1fr); }
-    #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media { min-height: 0; aspect-ratio: 16 / 9; }
+    #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media { min-height: 0; aspect-ratio: {{ media_ratio }}; }
     #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media img,
     #gpl-gd-svc-{{ section.id }} .gpl-gd-svc-card__media svg { position: static; }
   }
