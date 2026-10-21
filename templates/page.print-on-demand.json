@@ -646,7 +646,8 @@
         "quote": "Our mission is simple: help you build a brand people love with premium products, fast shipping, and world-class service.",
         "color_accent": "#d71920",
         "color_background": "#0a0a0a"
-      }
+      },
+      "disabled": true
     },
     "pod_cta": {
       "type": "gpl-pod-cta",
