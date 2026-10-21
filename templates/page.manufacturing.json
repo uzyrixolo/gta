@@ -532,7 +532,8 @@
         "statement": "Production times in the industry",
         "color_accent": "#D71920",
         "color_background": "#0A0A0A"
-      }
+      },
+      "disabled": true
     },
     "mfg_projects": {
       "type": "gpl-gd-gallery",
@@ -718,6 +719,30 @@
         "padding_bottom": 40,
         "color_background": "#0A0A0A"
       }
+    },
+    "mfg_speed_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/mfg-speed-quality-banner.webp",
+        "alt": "Speed. Quality. Every time. Advanced technology, skilled craftsmanship and strict quality control: record-breaking production times, premium quality control, consistent results you can trust. Fastest production times in the industry.",
+        "heading": "Speed. Quality. Every Time.",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": false,
+        "max_width": 1260,
+        "side_padding": 20,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#000000",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      }
     }
   },
   "order": [
@@ -731,6 +756,7 @@
     "mfg_process",
     "mfg_capabilities",
     "mfg_speed",
+    "mfg_speed_banner",
     "mfg_projects",
     "mfg_cta"
   ]
