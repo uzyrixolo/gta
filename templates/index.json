@@ -405,57 +405,64 @@
         "product_EAgNX3": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_49_09_PM.png",
-            "label": "T-Shrts",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-tshirts.webp",
+            "label": "T-Shirts",
+            "link": "",
+            "card_art": true
           }
         },
         "product_MfjpfX": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_53_02_PM.png",
-            "label": "hoodies",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-hoodies.webp",
+            "label": "Hoodies",
+            "link": "",
+            "card_art": true
           }
         },
         "product_3G3XCc": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_54_05_PM.png",
-            "label": "golf shirts",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-golf.webp",
+            "label": "Golf Shirts",
+            "link": "",
+            "card_art": true
           }
         },
         "product_XazDFk": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_56_13_PM.png",
-            "label": "hats & toques",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-hats.webp",
+            "label": "Hats & Toques",
+            "link": "",
+            "card_art": true
           }
         },
         "product_YDUQ7a": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_58_02_PM.png",
-            "label": "jackets",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-jackets.webp",
+            "label": "Jackets",
+            "link": "",
+            "card_art": true
           }
         },
         "product_nynr7h": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_09_59_27_PM.png",
-            "label": "team uniforms",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-uniforms.webp",
+            "label": "Team Uniforms",
+            "link": "",
+            "card_art": true
           }
         },
         "product_VaMVEQ": {
           "type": "product",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_22_2026_10_05_29_PM.png",
-            "label": "promo products",
-            "link": ""
+            "image": "shopify://shop_images/print-tile-promo.webp",
+            "label": "Promo Products",
+            "link": "",
+            "card_art": true
           }
         }
       },

@@ -19,16 +19,20 @@
     {%- if section.settings.show_more_tile -%}{%- assign total_tiles = total_tiles | plus: 1 -%}{%- endif -%}
     {%- if total_tiles < 1 -%}{%- assign total_tiles = 1 -%}{%- endif -%}
 
-    <div class="gpl-print__track" style="--gpl-tile-count: {{ total_tiles }};">
+    {%- assign any_art = false -%}
+    {%- for b in section.blocks -%}{%- if b.settings.card_art and b.settings.image != blank -%}{%- assign any_art = true -%}{%- endif -%}{%- endfor -%}
+    <div class="gpl-print__track{% if any_art %} gpl-print__track--art{% endif %}" style="--gpl-tile-count: {{ total_tiles }};">
       {%- for block in section.blocks -%}
         {%- if block.type == 'product' -%}
-          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="gpl-print-tile" {{ block.shopify_attributes }}>
+          {%- assign tile_art = false -%}
+          {%- if block.settings.card_art and block.settings.image != blank -%}{%- assign tile_art = true -%}{%- endif -%}
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="gpl-print-tile{% if tile_art %} gpl-print-tile--art{% endif %}" {{ block.shopify_attributes }}>
             <div class="gpl-print-tile__image">
               {%- if block.settings.image != blank -%}
                 <img
                   src="{{ block.settings.image | image_url: width: 500 }}"
-                  srcset="{{ block.settings.image | image_url: width: 320 }} 320w, {{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 700 }} 700w"
-                  sizes="(min-width: 990px) 14vw, 40vw"
+                  srcset="{{ block.settings.image | image_url: width: 320 }} 320w, {{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 700 }} 700w{% if tile_art %}, {{ block.settings.image | image_url: width: 1000 }} 1000w{% endif %}"
+                  sizes="(min-width: 990px) min(14vw, 180px), (min-width: 550px) 25vw, 45vw"
                   alt="{{ block.settings.image.alt | default: block.settings.label | escape }}"
                   width="{{ block.settings.image.width }}"
                   height="{{ block.settings.image.height }}"
@@ -38,7 +42,7 @@
                 <div class="gpl-print-tile__placeholder">{{ block.settings.label }}</div>
               {%- endif -%}
             </div>
-            <span class="gpl-print-tile__label">{{ block.settings.label }}</span>
+            <span class="gpl-print-tile__label{% if tile_art %} gpl-print-tile__label--sr{% endif %}">{{ block.settings.label }}</span>
           </a>
         {%- endif -%}
       {%- endfor -%}
@@ -100,6 +104,15 @@
     background: #D71920; color: #FFFFFF; align-items: center; justify-content: center; aspect-ratio: 1 / 1.15;
   }
   .gpl-print-{{ section.id }} .gpl-print-tile__more-label { font-weight: 800; font-size: 15px; text-transform: uppercase; }
+  /* finished card artwork: the image carries its own frame and label, shown whole */
+  .gpl-print-{{ section.id }} .gpl-print__track--art { background: none; border: 0; gap: clamp(6px, 0.8vw, 12px); align-items: start; }
+  .gpl-print-{{ section.id }} .gpl-print-tile--art { background: none; }
+  .gpl-print-{{ section.id }} .gpl-print-tile--art .gpl-print-tile__image { aspect-ratio: auto; padding: 0; }
+  .gpl-print-{{ section.id }} .gpl-print-tile--art .gpl-print-tile__image img { height: auto; }
+  .gpl-print-{{ section.id }} .gpl-print__track--art .gpl-print-tile--more { aspect-ratio: 3 / 4; border-radius: 10px; margin: 3.2%; }
+  .gpl-print-{{ section.id }} .gpl-print-tile__label--sr {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 
   @media screen and (max-width: 989px) {
     .gpl-print-{{ section.id }} .gpl-print__track { grid-template-columns: repeat(min(var(--gpl-tile-count, 8), 4), minmax(0, 1fr)); }
@@ -141,6 +154,7 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "label", "label": "Label", "default": "T-Shirts" },
+        { "type": "checkbox", "id": "card_art", "label": "Image is the finished card", "default": false, "info": "Shows the image whole, without the white frame and label bar. The label is kept for screen readers." },
         { "type": "url", "id": "link", "label": "Link", "info": "Optional — falls back to the Products page." }
       ]
     }
