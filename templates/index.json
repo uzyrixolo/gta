@@ -480,7 +480,8 @@
         "eyebrow": "What We Print",
         "show_more_tile": true,
         "more_text": "And More!",
-        "more_link": "#"
+        "more_link": "#",
+        "more_image": "shopify://shop_images/print-tile-more.webp"
       }
     },
     "featured_collection_fCmtxc": {
