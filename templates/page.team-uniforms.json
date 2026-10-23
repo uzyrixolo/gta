@@ -298,7 +298,7 @@
         "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
-        "shadow": 0.1
+        "shadow": 0
       },
       "blocks": {
         "k1": {
@@ -306,9 +306,10 @@
           "settings": {
             "image_asset": "tu-prog-uniforms.jpg",
             "icon": "none",
-            "title": "Game Uniforms",
+            "title": "",
             "text": "",
-            "image_alt": "Custom game jersey"
+            "image_alt": "Game uniforms: custom team jersey and shorts",
+            "image": "shopify://shop_images/tu-prog-game-uniforms-card.webp"
           }
         },
         "k2": {
@@ -316,9 +317,10 @@
           "settings": {
             "image_asset": "tu-prog-practice.jpg",
             "icon": "none",
-            "title": "Practice Gear",
+            "title": "",
             "text": "",
-            "image_alt": "Practice gear"
+            "image_alt": "Practice gear: training shirt and shorts",
+            "image": "shopify://shop_images/tu-prog-practice-gear-card.webp"
           }
         },
         "k3": {
@@ -326,9 +328,10 @@
           "settings": {
             "image_asset": "tu-prog-swag.jpg",
             "icon": "none",
-            "title": "Team Swag",
+            "title": "",
             "text": "",
-            "image_alt": "Team hoodie"
+            "image_alt": "Team swag: custom team hoodie",
+            "image": "shopify://shop_images/tu-prog-team-swag-card.webp"
           }
         },
         "k4": {
@@ -336,9 +339,10 @@
           "settings": {
             "image_asset": "tu-prog-coaching.jpg",
             "icon": "none",
-            "title": "Coaching Swag",
+            "title": "",
             "text": "",
-            "image_alt": "Coaching jacket"
+            "image_alt": "Coaching swag: custom coach polo",
+            "image": "shopify://shop_images/tu-prog-coaching-swag-card.webp"
           }
         },
         "k5": {
@@ -346,9 +350,10 @@
           "settings": {
             "image_asset": "tu-prog-fan.jpg",
             "icon": "none",
-            "title": "Fan Swag",
+            "title": "",
             "text": "",
-            "image_alt": "Fan hoodie"
+            "image_alt": "Fan swag: team fan hoodie",
+            "image": "shopify://shop_images/tu-prog-fan-swag-card.webp"
           }
         },
         "k6": {
@@ -356,9 +361,10 @@
           "settings": {
             "image_asset": "tu-prog-travel.jpg",
             "icon": "none",
-            "title": "Travel Gear",
+            "title": "",
             "text": "",
-            "image_alt": "Team travel bag"
+            "image_alt": "Travel gear: team duffel bag and backpack",
+            "image": "shopify://shop_images/tu-prog-travel-gear-card.webp"
           }
         },
         "k7": {
@@ -376,9 +382,10 @@
           "settings": {
             "image_asset": "tu-prog-accessories.jpg",
             "icon": "none",
-            "title": "Accessories",
+            "title": "",
             "text": "",
-            "image_alt": "Team accessories"
+            "image_alt": "Accessories: team water bottle, cap, backpack and towel",
+            "image": "shopify://shop_images/tu-prog-accessories-card.webp"
           }
         }
       },
