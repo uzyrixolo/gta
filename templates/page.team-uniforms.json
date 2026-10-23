@@ -697,7 +697,8 @@
         "k6",
         "k7",
         "k8"
-      ]
+      ],
+      "disabled": true
     },
     "season": {
       "type": "gpl-steps",
