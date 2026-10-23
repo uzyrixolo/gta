@@ -402,14 +402,14 @@
         "subheading": "Players, coaches, parents, fans, alumni, volunteers and sponsors — one programme covers them all.",
         "columns": 2,
         "image_ratio": "16 / 11",
-        "image_fit": "cover",
-        "show_badges": true,
+        "image_fit": "natural",
+        "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#F4F4F4",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
         "shadow": 0.1
@@ -419,20 +419,22 @@
           "type": "card",
           "settings": {
             "image_asset": "tu-merch.jpg",
-            "icon": "shirt",
-            "title": "One kit, everyone covered",
-            "text": "Game uniforms, teamwear, fan swag and accessories, all designed together so your team looks like one team.",
-            "image_alt": "Team merchandise laid out together"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "One kit, everyone covered: game uniforms, teamwear, fan swag and accessories, all designed together so your team looks like one team.",
+            "image": "shopify://shop_images/tu-store-one-kit-card.webp"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "tu-store.jpg",
-            "icon": "click",
-            "title": "Turn your team into a store",
-            "text": "One link, everyone orders. We create a dedicated online team store, players and fans choose approved products, members pay online, and you choose direct-to-member shipping or group shipping.",
-            "image_alt": "The team store on a laptop and phone"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Turn your team into a store: one link, everyone orders. A dedicated online team store where members pay online, with direct-to-member or group shipping.",
+            "image": "shopify://shop_images/tu-store-team-store-card.webp"
           }
         }
       },
