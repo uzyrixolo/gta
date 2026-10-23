@@ -452,14 +452,14 @@
         "subheading": "Let your teamwear help pay for the season — and choose the production route that fits the job.",
         "columns": 3,
         "image_ratio": "16 / 11",
-        "image_fit": "cover",
-        "show_badges": true,
+        "image_fit": "natural",
+        "show_badges": false,
         "color_accent": "#D71920",
         "color_background": "#FFFFFF",
         "color_heading": "#111111",
         "color_text": "#5B5B5B",
         "color_card": "#FFFFFF",
-        "color_frame": "#111111",
+        "color_frame": "#FFFFFF",
         "color_card_heading": "#111111",
         "color_card_text": "#5B5B5B",
         "shadow": 0.1
@@ -469,30 +469,33 @@
           "type": "card",
           "settings": {
             "image_asset": "tu-fundraising.jpg",
-            "icon": "coins",
-            "title": "Team fundraising",
-            "text": "Build your collection, set your retail price, we create your online store, share the link with your community, and we produce and fulfill the orders.",
-            "image_alt": "Team taking a selfie in fundraiser shirts"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Team fundraising: build your collection, set your retail price, we create your online store, share the link with your community, and we produce and fulfill the orders.",
+            "image": "shopify://shop_images/tu-how-fundraising-card.webp"
           }
         },
         "k2": {
           "type": "card",
           "settings": {
             "image_asset": "tu-local.jpg",
-            "icon": "leaf",
-            "title": "Made locally",
-            "text": "For projects that need local production, fast turnaround and GTA service, we manufacture through our Toronto-area operations.",
-            "image_alt": "The Toronto skyline"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Made locally: for projects that need local production, fast turnaround and GTA service, we manufacture through our Toronto-area operations.",
+            "image": "shopify://shop_images/tu-how-made-locally-card.webp"
           }
         },
         "k3": {
           "type": "card",
           "settings": {
             "image_asset": "tu-overseas.jpg",
-            "icon": "building",
-            "title": "Dedicated overseas operation",
-            "text": "For larger custom uniform programs and specialized manufacturing, we use our dedicated manufacturing operation in Pakistan.",
-            "image_alt": "Our manufacturing floor"
+            "icon": "none",
+            "title": "",
+            "text": "",
+            "image_alt": "Dedicated overseas operation: for larger custom uniform programs and specialized manufacturing, we use our dedicated manufacturing operation in Pakistan.",
+            "image": "shopify://shop_images/tu-how-overseas-card.webp"
           }
         }
       },
