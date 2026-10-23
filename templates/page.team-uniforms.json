@@ -583,7 +583,8 @@
         "w4",
         "w5",
         "w6"
-      ]
+      ],
+      "disabled": true
     },
     "built": {
       "type": "gpl-cards",
@@ -849,6 +850,44 @@
         "c6"
       ],
       "disabled": true
+    },
+    "why_banner": {
+      "type": "gpl-banner",
+      "settings": {
+        "image": "shopify://shop_images/tu-why-teams-choose.webp",
+        "alt": "Why teams choose GTA Print Lab: one partner, local accountability, custom manufacturing, fast turnaround, team stores and one-stop team apparel.",
+        "heading": "Why Teams Choose GTA Print Lab",
+        "heading_level": "h2",
+        "eager": false,
+        "full_bleed": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "corner_radius": 0,
+        "color_background": "#0A0A0A",
+        "color_accent": "#D71920",
+        "color_button_text": "#FFFFFF",
+        "button_align": "center",
+        "button_1_text": "",
+        "button_1_link": "",
+        "button_2_text": "",
+        "button_2_link": ""
+      },
+      "blocks": {
+        "start": {
+          "type": "hotspot",
+          "settings": {
+            "label": "Start your team program",
+            "link": "#consultation",
+            "x": 3,
+            "y": 43,
+            "w": 37,
+            "h": 12
+          }
+        }
+      },
+      "block_order": [
+        "start"
+      ]
     }
   },
   "order": [
@@ -860,6 +899,7 @@
     "store",
     "how",
     "why",
+    "why_banner",
     "built",
     "season",
     "consult"
