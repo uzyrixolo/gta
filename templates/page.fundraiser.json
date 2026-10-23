@@ -177,60 +177,60 @@
         "k1": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Unity_Builds_Stronger__Fundraiser_Shirt_Duo.webp",
+            "image": "shopify://shop_images/fr-prod-tshirts-card.webp",
             "image_asset": "fr-prod-tshirts.jpg",
-            "image_alt": "Custom fundraiser t-shirts",
+            "image_alt": "T-shirts: event shirts, team shirts, supporter tees",
             "icon": "none",
-            "title": "T-Shirts",
-            "text": "Event shirts, team shirts, supporter tees.",
+            "title": "",
+            "text": "",
             "link": ""
           }
         },
         "k2": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Red_Hoodie_with_Motivational_Basketball_Typography.webp",
+            "image": "shopify://shop_images/fr-prod-hoodies-card.webp",
             "image_asset": "fr-prod-hoodies.jpg",
-            "image_alt": "Custom fundraiser hoodie",
+            "image_alt": "Hoodies: premium apparel for your cause",
             "icon": "none",
-            "title": "Hoodies",
-            "text": "Premium apparel for your cause.",
+            "title": "",
+            "text": "",
             "link": ""
           }
         },
         "k3": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Four_Custom_Caps_on_White_Background.webp",
+            "image": "shopify://shop_images/fr-prod-hats-card.webp",
             "image_asset": "fr-prod-hats.jpg",
-            "image_alt": "Custom fundraiser caps",
+            "image_alt": "Hats and headwear: caps, snapbacks, beanies",
             "icon": "none",
-            "title": "Hats & Headwear",
-            "text": "Caps, snapbacks, beanies.",
+            "title": "",
+            "text": "",
             "link": ""
           }
         },
         "k4": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Varsity_Jacket_and_Custom_Logo_Polo_Mockup.webp",
+            "image": "shopify://shop_images/fr-prod-jackets-card.webp",
             "image_asset": "fr-prod-jackets.jpg",
-            "image_alt": "Custom varsity jacket and polo",
+            "image_alt": "Jackets and polos: varsity jackets, polos, team jackets",
             "icon": "none",
-            "title": "Jackets & Polos",
-            "text": "Varsity jackets, polos, team jackets.",
+            "title": "",
+            "text": "",
             "link": ""
           }
         },
         "k5": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/Branded_Backpack_and_Support_Bottle_Set.webp",
+            "image": "shopify://shop_images/fr-prod-bags-card.webp",
             "image_asset": "fr-prod-bags.jpg",
-            "image_alt": "Custom backpack and water bottle",
+            "image_alt": "Bags and accessories: totes, backpacks, drinkware and more",
             "icon": "none",
-            "title": "Bags & Accessories",
-            "text": "Totes, backpacks, drinkware and more.",
+            "title": "",
+            "text": "",
             "link": ""
           }
         }
@@ -248,7 +248,7 @@
         "heading_tail": "we print",
         "subheading": "One catalogue, every way your supporters like to wear it.",
         "columns": 5,
-        "image_ratio": "1 / 1",
+        "image_ratio": "3 / 4",
         "image_fit": "contain",
         "show_badges": false,
         "color_accent": "#d71920",
