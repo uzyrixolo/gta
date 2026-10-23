@@ -286,7 +286,7 @@
         "heading_accent": "team program",
         "heading_tail": "",
         "subheading": "Don't stop at the jersey. We provide everything your team needs, on and off the field.",
-        "columns": 8,
+        "columns": 7,
         "image_ratio": "3 / 4",
         "image_fit": "contain",
         "show_badges": false,
@@ -375,7 +375,8 @@
             "title": "Team Jackets",
             "text": "",
             "image_alt": "Team jacket"
-          }
+          },
+          "disabled": true
         },
         "k8": {
           "type": "card",
